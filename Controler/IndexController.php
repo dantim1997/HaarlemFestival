@@ -1,6 +1,6 @@
 <?php
 	require_once( "Autoloader.php");
-class IndexController implements IController
+class IndexController 
 {
 	private $IndexModel;
 	private $Session;
@@ -9,8 +9,6 @@ class IndexController implements IController
 	public function __construct($indexModel){
 		$this->IndexModel = $indexModel;
 		$this->Config = Config::getInstance();
-		$this->Session = new SessionUser();
-		$this->IndexModel->SetCurrentUser($this->Session->CheckSession());
 	}
 	
 	//get config

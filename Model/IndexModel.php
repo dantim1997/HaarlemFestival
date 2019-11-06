@@ -1,6 +1,6 @@
 <?php
 require_once( "Autoloader.php");
-class IndexModel implements IModel
+class IndexModel
 {
 	private $CurrentUser;
 	function __construct(){
