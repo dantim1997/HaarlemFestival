@@ -13,12 +13,19 @@
 }
 
 .HomepageImages{
-	height: 100%;
+	height: 700px;
 }
 
 .HomepageImage{
-	margin-right: 0px;
-	width: 1200px;
+	margin-right: -240px;
+	width: 500px;
+	clip-path: polygon(42% 0%, 92% 0%, 55% 100%, 5% 100%);
+}
+
+.HomepageImage:hover{
+	margin-right: -240px;
+	width: 500px;
+	opacity: 50%;
 }
 
 .lol{
