@@ -29,7 +29,7 @@ class IndexView
 		return "<div id='main'>
 		<div class='lol'></div>
 			<div class='RedBar'></div>
-			<div class='HomepageImages'>
+			<div classs='HomepageImages'>
 				<image classs='Logo' src='Images/Logo.png'>
 					<image class='HomepageImage' src='Images/Food.png'>
 					<image class='HomepageImage' src='Images/Dance.png'>
