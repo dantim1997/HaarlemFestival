@@ -30,7 +30,7 @@ class IndexView
 		<div class='lol'></div>
 			<div class='RedBar'></div>
 			<div class='HomepageImages'>
-				<image class='Logo' src='Images/Logo.png'>
+				<image classs='Logo' src='Images/Logo.png'>
 					<image class='HomepageImage' src='Images/Food.png'>
 					<image class='HomepageImage' src='Images/Dance.png'>
 					<image class='HomepageImage' src='Images/Historic.png'>
