@@ -25,8 +25,8 @@ class IndexView
 	}
 
 	private function Body(){
-		//setnav()
-		return "<div id='main'>
+		$nav = new Nav();
+		return $nav->SetNavBar(). "<div id='main'>
 		<div class='lol'></div>
 			<div class='RedBar'></div>
 			<div class='HomepageImages'>

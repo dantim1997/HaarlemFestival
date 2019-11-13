@@ -28,10 +28,6 @@
 	opacity: 50%;
 }
 
-.lol{
-	margin-top: 90px;
-}
-
 .rotate {
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
@@ -57,4 +53,75 @@
 	margin-top: 6px;
 	margin-left: 30%;
 	font-size: 20px;
+}
+
+#NavBar{
+	margin-left: 30%;
+}
+
+#NavBarBorder{
+	background-image: url("Images/NavImage.png");
+	background-repeat: no-repeat;
+	height: 104px;
+	width: 94%;
+	margin-top: 20px;
+	margin-left: 6%;
+	margin-bottom: 10px;
+}
+
+.NavBarImg{
+	margin-left: 50px;
+	margin-top: 10px;
+	height: 80px;
+	float: left
+}
+
+.NavLinks{
+	height: 100%;
+	margin-top: 5px;
+	font-weight: bold;
+	padding: 20px;
+	float: left;
+	font-size: 30px;
+	margin-left: 40px;
+
+}
+
+.Active{
+	height: 100%;
+	margin-top: 5px;
+	font-weight: bold;
+	padding: 20px;
+	font-size: 30px;
+	margin-left: 40px;
+	
+	width: 200px;
+	text-align: center;
+	color: white;
+	background-color: #DD042B;
+	float: left;
+	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+
+}
+
+.Active:hover{
+	color: white;
+	background-color: #DD042B;
+	height: 100%;
+	font-weight: bold;
+	padding: 20px;
+	float: left;
+	font-size: 35px;
+	margin-left: 40px;
+
+}
+
+.NavLinks:hover{
+	color: #DD042B;
+	font-weight: bold;
+	height: 100%;
+	padding: 20px;
+	float: left;
+	font-size: 35px;
+	margin-left: 40px;
 }
