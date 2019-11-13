@@ -51,6 +51,9 @@
 	margin-top: 10px;
 	border: solid 1px;
 	height: 45px;
+	background-color: #FFFFFF;
+	bottom: 0;
+	width: 100%;
 }
 
 #DesignedBy{

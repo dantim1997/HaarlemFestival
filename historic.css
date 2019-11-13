@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css?family=Heebo');
+@import url('https://fonts.googleapis.com/css?family=Heebo:900');
+
+body {
+ background-image: url("Images/backgroundHistoric.png");
+ background-color: #cccccc;
+ background-repeat: no-repeat;
+ max-width: 1920px;
+ max-height: 1080px;
+ margin: auto;
+}
+
+
+.historicHomeButtons{
+	width: 350px;
+	padding: 12px 25px;
+	font-size: 25px;
+	font-weight: black;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	background-color: #c10326;
+	border: none;
+	border-radius: 6px;
+	color: #FFFFFF;
+	text-decoration: none;
+	display: inline-block;
+	box-shadow: 2px 2px 2px 2px #808080;
+}
+
+#downloadRouteBTN{
+	margin-left: 40.5%;
+}
+
+.historicHomeButtons:hover{
+	background-color: #990000;
+}
+
+
+.historicBoxCenter{
+	background-color: #FFFFFF;
+	text-align: center;
+	font-family: 'Heebo', sans-serif;
+	width: 41%;
+	padding-top: 2%;
+	padding-bottom: 5px;
+	margin: 0 auto;
+	border-radius: 30px;
+	box-shadow: 2px 2px 2px 2px #808080;
+}
+
+.historicBox{
+	background-color: #FFFFFF;
+	text-align: center;
+	font-family: 'Heebo', sans-serif;
+	width: 41%;
+	height: 60%;
+	padding-top: 1%;
+	padding-bottom: 5px;
+	float: left;
+	margin-top: 4%;
+	margin-left: 5%;
+	border-radius: 30px;
+	box-shadow: 2px 2px 2px 2px #808080;
+}
+
+.historicBoxes{
+	margin-left: 1%;
+	width: 100%;
+	height: 500px;
+}
+
+.boxText{
+	padding-left: 10%;
+	padding-right: 10%;
+	font-size: 14pt;
+}
+
+.blackBar{
+	width: 14%;
+	float: left;
+	height: 3px;
+	margin-top: 4%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.blackBar2{
+	width: 33%;
+	float: left;
+	height: 3px;
+	margin-top: 3%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.headerContainer{
+	width: 100%;
+	margin-left: 2%;
+	float: left;
+}
+
+.venueList{
+	list-style-type: none;
+	float: left;
+	margin-left: 3%;
+	font-size: 14pt;
+}
+
+.pricesList{
+	margin-top: 3%;
+	float: left;
+	margin-left: 26%;
+	font-size: 16pt;
+	margin-bottom: 6.3%;
+}
+
+h1{
+	font-weight: bold;
+	font-size: 47pt;
+	padding-left: 2%;
+	float: left;
+}
+
+h2{
+	font-weight: bold;
+	font-size: 35pt;
+	padding-left: 3%;
+	float: left;
+}
+
+h4{
+	font-weight: bold;
+}
+
