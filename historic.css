@@ -30,6 +30,7 @@ body {
 
 #downloadRouteBTN{
 	margin-left: 40.5%;
+	font-family: 'Heebo', black;
 }
 
 .historicHomeButtons:hover{
@@ -133,5 +134,85 @@ h2{
 
 h4{
 	font-weight: bold;
+	font-family: 'Heebo';
 }
 
+
+/* HAARLEM VENUES: */
+
+.venueContainer{
+	width: 300px;
+	background-color: #FFFFFF;
+	float: left;
+	padding: 0;
+	height: 400px;
+	margin-left: 20px;
+	box-shadow: 2px 3px 2px 2px #808080; 
+}
+
+.venueImgs{
+	width: 100%;
+	padding: 0;
+	max-height: 42%;
+}
+
+.venueText{
+	font-family: 'Heebo', sans-serif;
+	padding: 4%;
+	padding-top: 0;
+}
+
+.venueHeaders{
+	padding: 4%;
+	padding-bottom: 0;
+}
+
+.row1{
+	float: left;
+	margin-bottom: 2%;
+	margin-left: 7.8%;
+}
+
+.row2{
+	float: left;
+	margin-left: 16.1%;
+}
+
+/* HAARLEM Ticket INFO: */
+
+.ticketInfoContainer{
+	background-color: #FFFFFF;
+	padding: 10px;
+	width: 35%;
+	margin-left: 6%;
+	margin-top: 4%;
+	height: 600px;
+	float: left;
+}
+
+.pageCenter{
+	margin: auto;
+	width: 80%;
+	margin-left: 15%;
+}
+
+
+.blackBar3{
+	width: 16%;
+	float: left;
+	height: 3px;
+	margin-top: 6%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.blackBar4{
+	width: 14%;
+	float: left;
+	height: 3px;
+	margin-top: 6%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}

@@ -2,13 +2,13 @@
 require_once("Autoloader.php");
 class HistoricHomeView
 {
-	private $HistoricController;
-	private $HistoricModel;
+	private $HistoricHomeController;
+	private $HistoricHomeModel;
 
-	public function __construct($historicController, $historicModel)
+	public function __construct($historicHomeController, $historicHomeModel)
 	{
-		$this->HistoricController = $historicController;
-		$this->HistoricModel = $historicModel;
+		$this->HistoricHomeController = $historicHomeController;
+		$this->HistoricHomeModel = $historicHomeModel;
 	}
 
 	//output to html
@@ -21,7 +21,7 @@ class HistoricHomeView
 	}
 
 	private function Header(){
-		return $this->HistoricController->GetConfig()->GetHeader("Historic");
+		return $this->HistoricHomeController->GetConfig()->GetHeader("Historic");
 	}
 
 	private function Body(){
@@ -36,7 +36,7 @@ class HistoricHomeView
 
 			<div class='historicBoxes'>
 				<div class='historicBox'>
-					<div class='headerContainer'><div class='blackBar2'></div><h2>Venues</h1><div class='blackBar2'></div></div><br>
+					<div class='headerContainer'><div class='blackBar2'></div><h2>Venues</h2><div class='blackBar2'></div></div><br>
 					<h4><b>The venues we are going to visit during the guided tour:</b></h4>
 					<ul class='venueList'>
 						<li>Church of St. Bavo</li>
@@ -62,15 +62,15 @@ class HistoricHomeView
 
 				
 				<div class='historicBox'>
-					<div class='headerContainer'><div class='blackBar2'></div><h2>Tickets</h1><div class='blackBar2'></div></div><br>
+					<div class='headerContainer'><div class='blackBar2'></div><h2>Tickets</h2><div class='blackBar2'></div></div><br>
 					<ul class='pricesList'>
 						<li>Regular Participant: € 17,50 ,-</li>
 						<li>Family tickets (4 participants): € 60 ,-</li>
 					</ul>
 
 					<!-- Tickets button -->
-					<form method='post' action='historicTickets.php'>	
-						<input class='historicHomeButtons' type='submit' value='Order tickets' name='histroricTicketsBTN'>
+					<form method='post' action='historicTicketInfo.php'>	
+						<input class='historicHomeButtons' type='submit' value='Order tickets' name='histroricTicketInfoBTN'>
 					</form>
 				</div>
 			</div>
