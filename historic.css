@@ -188,6 +188,7 @@ h4{
 	margin-top: 4%;
 	height: 600px;
 	float: left;
+	box-shadow: 2px 3px 2px 2px #808080; 
 }
 
 .pageCenter{
