@@ -32,6 +32,13 @@ class HistoricHomeView
 				<div class='headerContainer'><div class='blackBar'></div><h1>Haarlem historic</h1><div class='blackBar'></div></div><br>
 				<h4>a stroll through time</h4>
 				<p class='boxText'>The city of Haarlem has a rich history and dates back to the 10th century. We as Haarlem festival provide a <b>guided tour</b> in which we visit several venues with great historic value. <p>
+
+				<h4>The tours will be available in:</h4>
+				<div class='languageFlagsHome'>
+						<img class='languageFlagHome' src='Images/Dutchflag.png'>
+						<img class='languageFlagHome' src='Images/Englishflag.png'>
+						<img class='languageFlagHome' src='Images/Chinaflag.png'>
+					</div>
 			</div>
 
 			<div class='historicBoxes'>
