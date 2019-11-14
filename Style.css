@@ -1,3 +1,27 @@
+ /* unvisited link */
+a:link {
+  color: black;
+   text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  color: black;
+   text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  color: black;
+   text-decoration: none;
+}
+
+/* selected link */
+a:active {
+  color: black;
+   text-decoration: none;
+} 
+
 .RedBar{
 	width: 100%;
 	height: 20px;
@@ -57,13 +81,15 @@
 
 #NavBar{
 	margin-left: 30%;
+	height: 104px;
+	width: 1200px;
 }
 
 #NavBarBorder{
 	background-image: url("Images/NavImage.png");
 	background-repeat: no-repeat;
 	height: 104px;
-	width: 94%;
+	width: 100%;
 	margin-top: 20px;
 	margin-left: 6%;
 	margin-bottom: 10px;
@@ -77,51 +103,87 @@
 }
 
 .NavLinks{
-	height: 100%;
+	height: 90px;
 	margin-top: 5px;
 	font-weight: bold;
-	padding: 20px;
+	padding-top: 20px;
+	padding-left: 20px;
 	float: left;
-	font-size: 30px;
-	margin-left: 40px;
+	width: 150px;
 
 }
 
 .Active{
-	height: 100%;
+	height: 90px;
 	margin-top: 5px;
 	font-weight: bold;
 	padding: 20px;
 	font-size: 30px;
-	margin-left: 40px;
-	
+	margin-left: 20px;
 	width: 200px;
-	text-align: center;
-	color: white;
+	
+	color: white !important;
 	background-color: #DD042B;
 	float: left;
 	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
 
 }
 
-.Active:hover{
-	color: white;
-	background-color: #DD042B;
-	height: 100%;
-	font-weight: bold;
-	padding: 20px;
-	float: left;
-	font-size: 35px;
-	margin-left: 40px;
-
+.NavText{
+	text-align: center;
+	font-size: 	25px;
 }
 
-.NavLinks:hover{
-	color: #DD042B;
-	font-weight: bold;
-	height: 100%;
-	padding: 20px;
+.NavActive{
+	text-align: center;
+	font-size: 	25px;
+	color: white !important;
+}
+
+.NavText:hover{
+	font-size: 	30px;
+	color: #DD042B !important;
+}
+
+.NavActive:hover{
+	font-size: 	30px;
+	color: white !important;
+}
+
+.Languages{
+	margin-left: 50px;
+	margin-top: 15px;
 	float: left;
-	font-size: 35px;
-	margin-left: 40px;
+	height: 90px;
+}
+.LanguagesImages{
+	float: left;
+	width: 100px;
+	height: 60px;
+	margin-left: 5px;
+}
+
+.ActiveLanguage{
+	border: solid 1px;
+}
+
+.ShoppingCart{
+	background-image: url("Images/ShoppingCart.png");
+	background-size: cover;
+	float: left;
+	margin-top: 10px;
+	margin-left: 30px;
+	width: 90px;
+	height: 80px;
+}
+
+.shopcartItems{
+	clip-path: circle(50% at 50% 50%);
+	background-color: #FF9933;
+	width: 30px;
+	height: 30px;
+	float: right;
+	text-align: center;
+	font-weight: bold;
+	color:white;
 }
