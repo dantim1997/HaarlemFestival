@@ -21,7 +21,7 @@ class HistoricVenuesView
 	}
 
 	private function Header(){
-		return $this->HistoricVenuesController->GetConfig()->GetHeader("Historic");
+		return $this->HistoricVenuesController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='historic.css'>";
 	}
 
 	private function Body(){

@@ -21,7 +21,7 @@ class HistoricOrderTicketsView
 	}
 
 	private function Header(){
-		return $this->HistoricOrderTicketsController->GetConfig()->GetHeader("Historic");
+		return $this->HistoricOrderTicketsController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='historic.css'>";
 	}
 
 	private function Body(){
