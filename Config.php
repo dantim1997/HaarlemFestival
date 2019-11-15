@@ -35,7 +35,7 @@ class Config
 				<script src='https://www.google.com/recaptcha/api.js?hl=en' async defer></script>
 				<link rel='stylesheet' type='text/css' href='Style.css'>
 				<link rel='stylesheet' type='text/css' href='StyleJazz.css'>
-				<link rel='stylesheet' type='text/css' href='historic.css'></head><body>";
+				</head><body>";
 	}
 }
 ?>

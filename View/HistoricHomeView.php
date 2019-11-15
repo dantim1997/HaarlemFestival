@@ -21,7 +21,7 @@ class HistoricHomeView
 	}
 
 	private function Header(){
-		return $this->HistoricHomeController->GetConfig()->GetHeader("Historic");
+		return $this->HistoricHomeController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='historic.css'>";
 	}
 
 	private function Body(){

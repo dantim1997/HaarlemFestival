@@ -21,7 +21,7 @@ class JazzView
 	}
 
 	private function Header(){
-		return $this->JazzController->GetConfig()->GetHeader("Jazz");
+		return $this->JazzController->GetConfig()->GetHeader("Jazz")."<link rel='stylesheet' type='text/css' href='StyleJazz.css'>";
 	}
 
 	private function Body(){
