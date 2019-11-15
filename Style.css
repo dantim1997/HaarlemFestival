@@ -1,3 +1,27 @@
+ /* unvisited link */
+a:link {
+  color: black;
+   text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  color: black;
+   text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  color: black;
+   text-decoration: none;
+}
+
+/* selected link */
+a:active {
+  color: black;
+   text-decoration: none;
+} 
+
 .RedBar{
 	width: 100%;
 	height: 20px;
@@ -26,10 +50,6 @@
 	margin-right: -240px;
 	width: 500px;
 	opacity: 50%;
-}
-
-.lol{
-	margin-top: 90px;
 }
 
 .rotate {
@@ -61,4 +81,113 @@
 	margin-top: 6px;
 	margin-left: 30%;
 	font-size: 20px;
+}
+
+#NavBar{
+	margin-left: 30%;
+	height: 104px;
+	width: 1200px;
+}
+
+#NavBarBorder{
+	background-image: url("Images/NavImage.png");
+	background-repeat: no-repeat;
+	height: 104px;
+	width: 100%;
+	margin-top: 20px;
+	margin-left: 6%;
+	margin-bottom: 10px;
+}
+
+.NavBarImg{
+	margin-left: 50px;
+	margin-top: 10px;
+	height: 80px;
+	float: left
+}
+
+.NavLinks{
+	height: 90px;
+	margin-top: 5px;
+	font-weight: bold;
+	padding-top: 20px;
+	padding-left: 20px;
+	float: left;
+	width: 150px;
+
+}
+
+.Active{
+	height: 90px;
+	margin-top: 5px;
+	font-weight: bold;
+	padding: 20px;
+	font-size: 30px;
+	margin-left: 20px;
+	width: 200px;
+	
+	color: white !important;
+	background-color: #DD042B;
+	float: left;
+	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+
+}
+
+.NavText{
+	text-align: center;
+	font-size: 	25px;
+}
+
+.NavActive{
+	text-align: center;
+	font-size: 	25px;
+	color: white !important;
+}
+
+.NavText:hover{
+	font-size: 	30px;
+	color: #DD042B !important;
+}
+
+.NavActive:hover{
+	font-size: 	30px;
+	color: white !important;
+}
+
+.Languages{
+	margin-left: 50px;
+	margin-top: 15px;
+	float: left;
+	height: 90px;
+}
+.LanguagesImages{
+	float: left;
+	width: 100px;
+	height: 60px;
+	margin-left: 5px;
+}
+
+.ActiveLanguage{
+	border: solid 1px;
+}
+
+.ShoppingCart{
+	background-image: url("Images/ShoppingCart.png");
+	background-size: cover;
+	float: left;
+	margin-top: 10px;
+	margin-left: 30px;
+	width: 90px;
+	height: 80px;
+}
+
+.shopcartItems{
+	clip-path: circle(50% at 50% 50%);
+	background-color: #FF9933;
+	width: 30px;
+	height: 30px;
+	float: right;
+	text-align: center;
+	font-weight: bold;
+	color:white;
 }
