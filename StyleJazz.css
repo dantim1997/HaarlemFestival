@@ -296,3 +296,36 @@ h2 {
 hr {
     border-top: 1px solid white;
 }
+
+.tickets {
+    background-color: rgb(51, 51, 51);
+    width: 80%;
+}
+
+.form {
+    width: 19%;
+    margin-top: 14px;
+    float: right;
+}
+
+button {
+    background-color: rgba(0, 153, 102, 1);
+    width: 33%;
+    height: 57px;
+    color: white;
+    font-weight: bold;
+}
+
+input {
+    width: 33%;
+    height: 57px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.addCart {
+    background-color: rgba(0, 153, 102, 1);
+    color: white;
+    text-align: center;
+    width: 100%;
+}

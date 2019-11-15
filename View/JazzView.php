@@ -166,26 +166,118 @@ class JazzView
 					<image class='arrow-up' src='Images/arrow-up.png'>
 				</div>
 				<div class='thursday'>
-				</div>
-				<div class='friday'>
-				</div>
-				<div class='saturday'>
-					<h1>Saturday</h1>
-					<p>blalbabla</p>
+				<h1>Thursday - Tickets</h1>
+				<br>
+				<div class='form'>
+					<form action='addTicket.php' method='post'>
+						<button>-</button><input type='text' value='0' name='ticket1'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket2'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket3'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket4'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket5'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket6'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket7'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket8'><button>+</button><br>
+						<br>
+						<input class='addCart' type='submit' value='Add Tickets'>
+					</form>
+					</div>
+				<div class='tickets'>
+					<hr>
+					18:00 - 19:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Gare du Nord<hr>
+					18:00 - 19:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Han Bennik<hr>
+					19:30 - 20:30&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Rilan & The Bom<hr>
+					19:30 - 20:30&nbsp;&nbsp;Third Hall&nbsp;&nbsp;The Nordanians<hr>
+					21:00 - 22:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Soul Six<hr>
+					21:00 - 22:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Lilith Merlot<hr>
+					All Access pass for Saturday for the event 'Jazz'<hr>
+					All Acces pass for the whole event 'Jazz'<hr>
 					<br>
-					<h2>Programme</h2>
 					<br>
-					15:00 - 16:00&nbsp;&nbsp;Ruis Soundsystem<hr>
-					16:00 - 17:00&nbsp;&nbsp;Wicked Jazz Sounds<hr>
-					17:00 - 18:00&nbsp;&nbsp;Evolve<hr>
-					18:00 - 19:00&nbsp;&nbsp;The Nordanians<hr>
-					19:00 - 20:00&nbsp;&nbsp;Gumbo Kings<hr>
-					20:00 - 21:00&nbsp;&nbsp;Gare du Nord
+					<br>
+					<br>
 					<br>
 					<br>
 					<h2>Location<h2>
 					<p class='location'>Patronaat<br>Zijlsingel 2, 2013 DN Haarlem</p>
 					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+				</div>
+				</div>
+				<div class='friday'>
+				<h1>Friday - Tickets</h1>
+				<br>
+				<div class='form'>
+					<form action='addTicket.php' method='post'>
+						<button>-</button><input type='text' value='0' name='ticket9'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket10'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket11'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket12'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket13'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket14'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket15'><button>+</button><br>
+						<button>-</button><input type='text' value='0' name='ticket16'><button>+</button><br>
+						<br>
+						<input class='addCart' type='submit' value='Add Tickets'>
+					</form>
+					</div>
+				<div class='tickets'>
+					<hr>
+					18:00 - 19:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Gare du Nord<hr>
+					18:00 - 19:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Han Bennik<hr>
+					19:30 - 20:30&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Rilan & The Bom<hr>
+					19:30 - 20:30&nbsp;&nbsp;Third Hall&nbsp;&nbsp;The Nordanians<hr>
+					21:00 - 22:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Soul Six<hr>
+					21:00 - 22:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Lilith Merlot<hr>
+					All Access pass for Saturday for the event 'Jazz'<hr>
+					All Acces pass for the whole event 'Jazz'<hr>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<h2>Location<h2>
+					<p class='location'>Patronaat<br>Zijlsingel 2, 2013 DN Haarlem</p>
+					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+				</div>
+				</div>
+				<div class='saturday'>
+					<h1>Saturday - Tickets</h1>
+					<br>
+					<div class='form'>
+						<form action='addTicket.php' method='post'>
+							<button>-</button><input type='text' value='0' name='ticket17'><button>+</button><br>
+							<button>-</button><input type='text' value='0' name='ticket18'><button>+</button><br>
+							<button>-</button><input type='text' value='0' name='ticket19'><button>+</button><br>
+							<button>-</button><input type='text' value='0' name='ticket20'><button>+</button><br>
+							<button>-</button><input type='text' value='0' name='ticket21'><button>+</button><br>
+							<button>-</button><input type='text' value='0' name='ticket22'><button>+</button><br>
+							<button>-</button><input type='text' value='0' name='ticket23'><button>+</button><br>
+							<button>-</button><input type='text' value='0' name='ticket24'><button>+</button><br>
+							<br>
+							<input class='addCart' type='submit' value='Add Tickets'>
+						</form>
+						</div>
+					<div class='tickets'>
+						<hr>
+						18:00 - 19:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Gare du Nord<hr>
+						18:00 - 19:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Han Bennik<hr>
+						19:30 - 20:30&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Rilan & The Bom<hr>
+						19:30 - 20:30&nbsp;&nbsp;Third Hall&nbsp;&nbsp;The Nordanians<hr>
+						21:00 - 22:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Soul Six<hr>
+						21:00 - 22:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Lilith Merlot<hr>
+						All Access pass for Saturday for the event 'Jazz'<hr>
+						All Acces pass for the whole event 'Jazz'<hr>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<h2>Location<h2>
+						<p class='location'>Patronaat<br>Zijlsingel 2, 2013 DN Haarlem</p>
+						<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+					</div>
 				</div>
 				<div class='sunday'>
 					<h1>Sunday - Free access for all visitors</h1>
