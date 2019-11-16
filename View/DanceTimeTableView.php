@@ -53,7 +53,7 @@ class DanceTimeTableView
 					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Caprera</label><br/>
 					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Lichtenfabriek</label>
 
-					   	<i class='SearchNow'>Search Dance event</i>
+					   	<a href='AdvancedDanceSearch.php'><i class='SearchNow'>Search Dance event</i></a>
 					  </div>
 					</div>
 			    
