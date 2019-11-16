@@ -25,8 +25,8 @@ class HistoricHomeView
 	}
 
 	private function Body(){
-		//setnav()
-		return "<div id='main'>
+		$nav = new Nav();
+		return $nav->SetNavBar(). "<div id='main'>
 		<div class='lol'></div>
 			<div class='historicBoxCenter'>
 				<div class='headerContainer'><div class='blackBar'></div><h1>Haarlem historic</h1><div class='blackBar'></div></div><br>

@@ -116,26 +116,31 @@ a:active {
 	width: 150px;
 
 }
+.ActiveWrapper{
+	filter: drop-shadow(-3px 6px 4px rgba(50, 50, 0, 0.5));
+}
 
 .Active{
-	height: 90px;
-	margin-top: 5px;
+	height: 65px;
+	margin-top: 18px;
 	font-weight: bold;
-	padding: 20px;
+	padding-top: 14px;
 	font-size: 30px;
 	margin-left: 20px;
-	width: 200px;
-	
+	width: 150px;
+
 	color: white !important;
 	background-color: #DD042B;
 	float: left;
-	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+	clip-path: polygon(12% 0%, 100% 0%, 86% 100%, 0% 100%);
+
 
 }
 
 .NavText{
 	text-align: center;
 	font-size: 	25px;
+	margin-top: 8px;
 }
 
 .NavActive{
@@ -155,8 +160,8 @@ a:active {
 }
 
 .Languages{
-	margin-left: 50px;
-	margin-top: 15px;
+	margin-left: 90px;
+	margin-top: 23px;
 	float: left;
 	height: 90px;
 }
@@ -175,17 +180,21 @@ a:active {
 	background-image: url("Images/ShoppingCart.png");
 	background-size: cover;
 	float: left;
-	margin-top: 10px;
-	margin-left: 30px;
-	width: 90px;
-	height: 80px;
+	margin-top: 20px;
+	margin-left: 60px;
+	width: 70px;
+	height: 60px;
+}
+
+.ShoppingCart:hover{
+	background-image: url("Images/ShoppingCartRed.png");
 }
 
 .shopcartItems{
 	clip-path: circle(50% at 50% 50%);
 	background-color: #FF9933;
-	width: 30px;
-	height: 30px;
+	width: 25px;
+	height: 25px;
 	float: right;
 	text-align: center;
 	font-weight: bold;
