@@ -7,7 +7,6 @@ body {
  background-repeat: no-repeat;
  max-width: 1920px;
  max-height: 1080px;
- margin: auto;
 }
 
 .historicHomeButtons{
@@ -31,6 +30,7 @@ body {
 	margin-left: 40.5%;
 	margin-top: 2%;
 	font-family: 'Heebo', black;
+	color: #FFFFFF;
 }
 
 .historicHomeButtons:hover{
