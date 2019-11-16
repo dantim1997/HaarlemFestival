@@ -22,9 +22,11 @@ class Nav
 					<img class='LanguagesImages ActiveLanguage' src='Images/EnglishFlag.png'>
 					<img class='LanguagesImages' src='Images/NederlandFlag.jpg'>
 				</div>
-				<div class='ShoppingCart'>
-					<div class='shopcartItems'>1</div>
-				</div>
+				<a href='checkout.php'>
+					<div class='ShoppingCart'>
+						<div class='shopcartItems'>1</div>
+					</div>
+				</a>
 		</div>";
 	}
 }
