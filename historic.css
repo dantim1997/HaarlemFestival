@@ -24,7 +24,7 @@ body {
 	color: #FFFFFF;
 	text-decoration: none;
 	display: inline-block;
-	box-shadow: 2px 2px 2px 2px #808080;
+	box-shadow: 2px 2px 2px 2px #333333;
 }
 
 #downloadRouteBTN{
@@ -48,7 +48,7 @@ body {
 	padding-bottom: 5px;
 	margin: 0 auto;
 	border-radius: 30px;
-	box-shadow: 2px 2px 2px 2px #808080;
+	box-shadow: 2px 2px 2px 2px #333333;
 }
 
 .historicBox{
@@ -63,7 +63,7 @@ body {
 	margin-top: 4%;
 	margin-left: 5%;
 	border-radius: 30px;
-	box-shadow: 2px 2px 2px 2px #808080;
+	box-shadow: 2px 2px 2px 2px #333333;
 }
 
 
@@ -166,7 +166,7 @@ h4{
 	padding: 0;
 	height: 400px;
 	margin-left: 20px;
-	box-shadow: 2px 3px 2px 2px #808080; 
+	box-shadow: 2px 3px 2px 2px #333333; 
 }
 
 .venueImgs{
@@ -207,7 +207,7 @@ h4{
 	margin-top: 4%;
 	height: 600px;
 	float: left;
-	box-shadow: 2px 3px 2px 2px #808080; 
+	box-shadow: 2px 3px 2px 2px #333333; 
 	font-family: 'Heebo', sans-serif;
 	text-align: center;
 }
@@ -303,7 +303,7 @@ h5{
 	color: #FFFFFF;
 	text-decoration: none;
 	display: inline-block;
-	box-shadow: 2px 2px 2px 2px #808080;
+	box-shadow: 2px 2px 2px 2px #333333;
 }
 
 .orderNowButton:hover{
@@ -315,11 +315,10 @@ h5{
 .orderTicketsSelection{
 	width: 1100px;
 	background-color: #FFFFFF;
-	float: left;
-	margin-left: 22%;
+	margin: 0 auto;
 	padding: 0;
 	height: 600px;
-	box-shadow: 2px 3px 2px 2px #808080;
+	box-shadow: 2px 3px 2px 2px #333333;
 	font-family: 'Heebo', sans-serif;
 }
 
