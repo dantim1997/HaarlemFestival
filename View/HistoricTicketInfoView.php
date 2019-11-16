@@ -25,8 +25,9 @@ class HistoricTicketInfoView
 	}
 
 	private function Body(){
-		//setnav()
-		return "<div id='main'>
+		$nav = new Nav();
+		return $nav->SetNavBar().
+		"<div id='main'>
 		<div class='lol'></div>
 		<div class='pageCenter'>
 			<div class='ticketInfoContainer'>

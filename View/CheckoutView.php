@@ -26,7 +26,8 @@ class CheckoutView
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar()."<div id='main'>
+		return $nav->SetNavBar().
+		"<div id='main'>
 		<div class='lol'></div>
 			<div class='checkoutContainer'>
 				<h2 id='checkoutlbl'>Checkout</h2>
