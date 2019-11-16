@@ -25,8 +25,9 @@ class HistoricOrderTicketsView
 	}
 
 	private function Body(){
-		//setnav()
-		return "<div id='main'>
+		$nav = new Nav();
+		return $nav->SetNavBar().
+		"<div id='main'>
 		<div class='lol'></div>
 			<div class='orderTicketsSelection'>
 				<div class='orderTicketsheaderContainer'><div class='blackBar5'></div><h2 class='orderTicketsHeader'>Order tickets</h2><div class='blackBar5'></div><br>
