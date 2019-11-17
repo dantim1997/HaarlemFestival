@@ -26,9 +26,8 @@ class JazzView
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar(). "<div id='main'>
+		return $nav->SetNavBar(). "<div class='main'>
 			<div class='container'>
-				<image class='banner' src='Images/jazzbanner.png'>
 				<div class='title'>Jazz</div>
 			</div>
 			<div class='content'>
