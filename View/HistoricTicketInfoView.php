@@ -35,7 +35,7 @@ class HistoricTicketInfoView
 				<h5 id='centerAndWide'>The tours will be available in:</h5>
 					<div class='languageFlags'>
 						<img class='languageFlag' src='Images/Dutchflag.png'><h5>Dutch</h5>
-						<img class='languageFlag' src='Images/Englishflag.png'><h5>English</h5>
+						<img class='languageFlag' src='Images/EnglishFlag.png'><h5>English</h5>
 						<img class='languageFlag' src='Images/Chinaflag.png'><h5>Chinese</h5>
 					</div>
 				<h5 id='centerAndWide'>The guided tours will be held on:</h5>
