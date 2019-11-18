@@ -22,7 +22,8 @@ class DanceTimeTableView
 
 	private function Header(){
 		return $this->DanceTimeTableController->GetConfig()->GetHeader("Index"). "
-		<link rel='stylesheet' type='text/css' href='DanceStyle.css'>. 
+		<link rel='stylesheet' type='text/css' href='DanceStyle.css'> 
+		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
@@ -31,7 +32,7 @@ class DanceTimeTableView
 		return "
 		<div id='main'>
 			<div class='container-fluid'>
-			  <div class='row'>
+			  <div class='row TimeTable'>
 			    <div class='col-sm-1' ></div>
 			    <div class='col-sm-10'>
 				    <div class='dropdown'>
@@ -94,69 +95,7 @@ class DanceTimeTableView
 					    </TR>
 					  </THEAD>
 					  <TBODY>
-					    <TR>
-					      <TD>location</TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='11' class='Event'>
-					        <div class='AddText'>Armin van Buuren <br>€ 75</div>
-					        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
-					      </TD>
-					      <TD colspan='1' class=''></TD>
-					    </TR>
-					    <TR>
-					      <TD>location</TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='11' class='Event'>
-					        <div class='AddText'>Armin van Buuren <br>€ 75</div>
-					        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
-					      </TD>
-					      <TD colspan='1' class=''></TD>
-					    </TR>
-					    <TR>
-					      <TD>location</TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='11' class='Event'>
-					        <div class='AddText'>Armin van Buuren <br>€ 75</div>
-					        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
-					      </TD>
-					      <TD colspan='1' class=''></TD>
-					    </TR>
+					    ".$this->DanceTimeTableController->AddEvent()."
 					   </TBODY>
 					  </TABLE>
 					  <div class='Special'>
