@@ -25,8 +25,9 @@ class HistoricHomeView
 	}
 
 	private function Body(){
-		//setnav()
-		return "<div id='main'>
+		$nav = new Nav();
+		return $nav->SetNavBar(). 
+		"<div id='main'>
 		<div class='lol'></div>
 			<div class='historicBoxCenter'>
 				<div class='headerContainer'><div class='blackBar'></div><h1>Haarlem historic</h1><div class='blackBar'></div></div><br>
@@ -36,7 +37,7 @@ class HistoricHomeView
 				<h4>The tours will be available in:</h4>
 				<div class='languageFlagsHome'>
 						<img class='languageFlagHome' src='Images/Dutchflag.png'>
-						<img class='languageFlagHome' src='Images/Englishflag.png'>
+						<img class='languageFlagHome' src='Images/EnglishFlag.png'>
 						<img class='languageFlagHome' src='Images/Chinaflag.png'>
 					</div>
 			</div>
