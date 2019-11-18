@@ -5,8 +5,7 @@ body {
  background-image: url("Images/backgroundHistoric.png");
  background-color: #cccccc;
  background-repeat: no-repeat;
- max-width: 1920px;
- max-height: 1080px;
+ background-size: cover;
 }
 
 .historicHomeButtons{
@@ -37,7 +36,6 @@ body {
 	background-color: #990000;
 }
 
-
 .historicBoxCenter{
 	background-color: #FFFFFF;
 	text-align: center;
@@ -46,7 +44,8 @@ body {
 	height: 400px;
 	padding-top: 2%;
 	padding-bottom: 5px;
-	margin: 0 auto;
+	margin-top: 2%;
+	margin-left: 29%;
 	border-radius: 30px;
 	box-shadow: 2px 2px 2px 2px #333333;
 }
@@ -56,11 +55,10 @@ body {
 	text-align: center;
 	font-family: 'Heebo', sans-serif;
 	width: 41%;
-	height: 75%;
+	height: 100%;
 	padding-top: 1%;
 	padding-bottom: 5px;
 	float: left;
-	margin-top: 4%;
 	margin-left: 5%;
 	border-radius: 30px;
 	box-shadow: 2px 2px 2px 2px #333333;
@@ -68,9 +66,10 @@ body {
 
 
 .historicBoxes{
-	margin-left: 1%;
-	width: 100%;
-	height: 400px;
+	margin-left: 2%;
+	width: 98%;
+	height: 300px;
+	margin-top: 2%;
 	margin-bottom: 0;
 }
 
@@ -315,8 +314,9 @@ h5{
 .orderTicketsSelection{
 	width: 1100px;
 	background-color: #FFFFFF;
-	margin: 0 auto;
-	padding: 0;
+	margin-top: 3%;
+	margin-left: 21.5%;
+	margin-right: 0;
 	height: 600px;
 	box-shadow: 2px 3px 2px 2px #333333;
 	font-family: 'Heebo', sans-serif;
@@ -331,13 +331,13 @@ h5{
 	margin-left: 2%;
 	background-color: #000000;
 }
+
 .orderTicketsHeader{
 	margin-top: 2%;
 }
 
 .orderTicketsheaderContainer{
 	margin-left: 22%;
-
 }
 
 .orderTicketslabels{
@@ -361,10 +361,10 @@ h5{
 }
 
 .dayLabel{
-	width: 100%;
+	width: 90%;
 	margin-left: 43%;
+	margin-bottom: 10px;
 	float: left;
-	margin-bottom: 0;
 }
 
 .normalTicket{
@@ -374,8 +374,10 @@ h5{
 	font-weight: normal;
 	color: #FFFFFF;
 	background-color: #0066CC;
-	margin-bottom: 1%;
+	margin: 0;
+	border-right: 1px solid #000000;
 }
+
 .familyTicket{
 	text-align: center;
 	padding: 3px;
@@ -383,7 +385,8 @@ h5{
 	font-weight: normal;
 	color: #FFFFFF;
 	background-color: #FF6600;
-	margin-bottom: 1%;
+	margin: 0;
+	border-left: 1px solid #000000;
 }
 
 .ticketsContainer{
@@ -393,61 +396,116 @@ h5{
 
 .normalTickets{
 	float: left;
-	margin-left: 0.8%;
+	width: 465px;
+	height: 180px;
+	padding: 13px;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 1px;
+}
+
+.normalTicketsLabels{
+	float: left;
+	width: 60%;
+}
+
+.normalTicketButtons{
+	float: right;
+	width: 40%;
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+
+.ticketForm{
+	float: right;
+	width: 100%;
+	margin-bottom: 20px;
+	text-align: right;
 }
 
 .familyTickets{
-	float: right;
-	margin-right: 11.5%;
+	float: left;
+	width: 465px;
+	height: 180px;
+	padding: 13px;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 1px;
 }
 
+.familyTicketsLabels{
+	float: left;
+	width: 75%;
+}
+
+.familyTicketButtons{
+	float: right;
+	width: 25%;
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+
+
 .ticket{
-	margin-top: 0;
-	margin-bottom: 20px;
+	margin-top: 15px;
 }
 
 .ticketTxt{
-	width: 20px;
+	width: 30px;
 	height: 30px;
+	text-align: center;
 }
 
-.addRemoveBTN{
+.addBTN{
 	height: 30px;
-	margin-bottom: 0;
-	margin-top: 0;
+	width: 30px;
+	border-radius: 50%;
+	background-color: #e6e6e6;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #bfbfbf;
+	font-weight: bold;
+	font-size: 14pt;
+	color: #00cc00;
+
 }
 
-.formLeft{
-	float: right;
-	margin-left: 120px;
-	margin-right: 0;
-	margin-top: 0;
-	height: 20px;
+.removeBTN{
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	background-color: #e6e6e6;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #bfbfbf;
+	font-weight: bold;
+	color: #ff0000;
 }
 
-.formRight{
-	float: right;
-	margin-top: 0;
-	height: 20px;
-	margin-left: 40px;
+.addBTN:hover{
+	background-color: #d9d9d9;
+}
+
+.removeBTN:hover{
+	background-color: #d9d9d9;
 }
 
 .addToCartBTN{
-	width: 40%;
-	margin-top: 1%;
-	margin-left: 30.7%;
-	color: #FFFFFF;
+	width: 20%;
+	height: 40px;
+	margin-left: 40%;
+	color: #000000;
 	font-size: 15pt;
 	border: none;
-	border-radius: 6px;
+	border-bottom-left-radius: 9px; 
+	border-bottom-right-radius: 9px;
 	text-decoration: none;
 	display: inline-block;
-	box-shadow: 2px 2px 2px 2px #808080;
-	background-color: #009900;
+	background-color: #ffcc00;
 }
 
 .addToCartBTN:hover{
-	background-color: #008000;
+	background-color: #ffdb4d;
 }
 
 .proceedToCheckoutButton{
@@ -456,8 +514,8 @@ h5{
 	font-weight: normal;
 	text-align: center;
 	cursor: pointer;
-	margin-left: 38%;
-	margin-top: 2%;
+	margin-left: 37.3%;
+	margin-top: 1%;
 	outline: none;
 	background-color: #c10326;
 	border: none;
