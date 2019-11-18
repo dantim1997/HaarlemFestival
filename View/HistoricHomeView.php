@@ -28,7 +28,6 @@ class HistoricHomeView
 		$nav = new Nav();
 		return $nav->SetNavBar(). 
 		"<div id='main'>
-		<div class='lol'></div>
 			<div class='historicBoxCenter'>
 				<div class='headerContainer'><div class='blackBar'></div><h1>Haarlem historic</h1><div class='blackBar'></div></div><br>
 				<h4>a stroll through time</h4>
