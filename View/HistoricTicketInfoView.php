@@ -28,7 +28,6 @@ class HistoricTicketInfoView
 		$nav = new Nav();
 		return $nav->SetNavBar().
 		"<div id='main'>
-		<div class='lol'></div>
 		<div class='pageCenter'>
 			<div class='ticketInfoContainer'>
 				<div class='headerContainer'><div class='blackBar3'></div><h2>Time & date</h2><div class='blackBar3'></div></div><br>
