@@ -28,107 +28,114 @@ class HistoricOrderTicketsView
 		$nav = new Nav();
 		return $nav->SetNavBar().
 		"<div id='main'>
-			<div class='orderTicketsSelection'>
-				<div class='orderTicketsheaderContainer'><div class='blackBar5'></div><h2 class='orderTicketsHeader'>Order tickets</h2><div class='blackBar5'></div><br>
-						<p class='orderTicketslabels'>
-							Select language:<br>
-							Select day:
-						</p>
-						<div class='orderTicketsDropdwn'>
-							<select class='dropDown'>
-								<option value='-'>-</option>
-								<option value='English'>English</option>
-								<option value='Dutch'>Dutch</option>
-								<option value='Chinese'>Chinese</option>
-							</select><br>
-							<select class='dropDown'>
-								<option value='-'>-</option>
-								<option value='day1'>Thursday 26th of Juli</option>
-								<option value='day2'>Friday 27th of Juli</option>
-								<option value='day3'>Saturday 28th of Juli</option>
-								<option value='day4'>Sunday 29th of Juli</option>
-							</select>
-						</div>		
-			</div>
+			<div class='orderTicketsContainer'>
+				<div class='orderTicketsSelection'>
+							<div class='orderTicketsheaderContainer'>
+								<div class='blackBar5'></div>
+									<h2 class='orderTicketsHeader'>Order tickets</h2>
+								<div class='blackBar5'></div>
+							</div>
+
+							<p class='orderTicketslabels'>
+								Select language:<br>
+								Select day:
+							</p>
+							<div class='orderTicketsDropdwn'>
+								<select class='dropDown'>
+									<option value='-'>-</option>
+									<option value='English'>English</option>
+									<option value='Dutch'>Dutch</option>
+									<option value='Chinese'>Chinese</option>
+								</select><br>
+								<select class='dropDown'>
+									<option value='-'>-</option>
+									<option value='day1'>Thursday 26th of Juli</option>
+									<option value='day2'>Friday 27th of Juli</option>
+									<option value='day3'>Saturday 28th of Juli</option>
+									<option value='day4'>Sunday 29th of Juli</option>
+								</select>
+							</div>		
+				</div>
 
 
-			<h5 class='dayLabel'>Saturday Juli 28th</h5>
+				<h5 class='dayLabel'>Saturday Juli 28th</h5>
 
-			<div class='ticketsContainer'>
-				<h5 class='normalTicket'>Normal ticket € 17,50</h5>
-				<h5 class='familyTicket'>Family ticket 4 people € 60 (€ 15 p.p.)</h5>
+				<div class='ticketsContainer'>
+					<h5 class='normalTicket'>Normal ticket € 17,50</h5>
+					<h5 class='familyTicket'>Family ticket 4 people € 60 (€ 15 p.p.)</h5>
 
-				<div class='normalTickets'> 
-					<div class='normalTicketsLabels'>
-						<h5 class=ticket>English tour, 10:00 - 12:30</h5>
-						<h5 class=ticket>English tour, 13:00 - 15:30</h5>
-						<h5 class=ticket>English tour, 16:00 - 18:30</h5>
+					<div class='normalTickets'> 
+						<div class='normalTicketsLabels'>
+							<h5 class=ticket>English tour, 10:00 - 12:30</h5>
+							<h5 class=ticket>English tour, 13:00 - 15:30</h5>
+							<h5 class=ticket>English tour, 16:00 - 18:30</h5>
+						</div>
+						<div class='normalTicketButtons'>
+							<!-- adding and removing buttons -->
+							<div class='ticketButtons'>	
+								<button class='removeBTN' type='button' >-</button>
+								<input class='ticketTxt' type='text' value='0'>
+								<button class='addBTN' type='button'>+</button>
+								<button class='addToCartBTN' type='button'></button>
+							</div>
+
+							<!-- adding and removing buttons -->
+							<div class='ticketButtons'>	
+								<button class='removeBTN' type='button'>-</button>
+								<input class='ticketTxt' type='text' value='0'>
+								<button class='addBTN' type='button'>+</button>
+								<button class='addToCartBTN' type='button'></button>
+							</div>	
+
+							<!-- adding and removing buttons -->
+							<div class='ticketButtons'>	
+								<button class='removeBTN' type='button'>-</button>
+								<input class='ticketTxt' type='text' value='0'>
+								<button class='addBTN' type='button' >+</button>
+								<button class='addToCartBTN' type='button'></button>
+							</div>
+						</div>
 					</div>
-					<div class='normalTicketButtons'>
-						<!-- adding and removing buttons -->
-						<form method='post' action='' class='ticketForm'>	
-							<input class='removeBTN' type='submit' value='-' name='??????'>
-							<input class='ticketTxt' type='text' value='0' name='??????'>
-							<input class='addBTN' type='submit' value='+' name='??????'>
-						</form>
 
-						<!-- adding and removing buttons -->
-						<form method='post' action='' class='ticketForm'>	
-							<input class='removeBTN' type='submit' value='-' name='??????'>
-							<input class='ticketTxt' type='text' value='0' name='??????'>
-							<input class='addBTN' type='submit' value='+' name='??????'>
-						</form>	
+					<div class='familyTickets'>
+						<div class='familyTicketsLabels'>
+							<h5 class=ticket>English Family ticket, 10:00 - 12:30</h5>
+							<h5 class=ticket>English Family ticket, 13:00 - 15:30</h5>
+							<h5 class=ticket>English Family ticket, 16:00 - 18:30</h5>
+						</div>
+						<div class='familyTicketButtons'>
+							<!-- adding and removing buttons -->
+							<div class='ticketButtons'>	
+								<button class='removeBTN' type='button'>-</button>
+								<input class='ticketTxt' type='text' value='0'>
+								<button class='addBTN' type='button' >+</button>
+								<button class='addToCartBTN' type='button'></button>
+							</div>
 
-						<!-- adding and removing buttons -->
-						<form method='post' action='' class='ticketForm'>	
-							<input class='removeBTN' type='submit' value='-' name='??????'>
-							<input class='ticketTxt' type='text' value='0' name='??????'>
-							<input class='addBTN' type='submit' value='+' name='??????'>
-						</form>
+							<!-- adding and removing buttons -->
+							<div class='ticketButtons'>	
+								<button class='removeBTN' type='button'>-</button>
+								<input class='ticketTxt' type='text' value='0'>
+								<button class='addBTN' type='button' >+</button>
+								<button class='addToCartBTN' type='button'></button>
+							</div>		
+
+							<!-- adding and removing buttons -->
+							<div class='ticketButtons'>	
+								<button class='removeBTN' type='button'>-</button>
+								<input class='ticketTxt' type='text' value='0'>
+								<button class='addBTN' type='button' >+</button>
+								<button class='addToCartBTN' type='button'></button>
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<div class='familyTickets'>
-					<div class='familyTicketsLabels'>
-						<h5 class=ticket>English Family ticket, 10:00 - 12:30</h5>
-						<h5 class=ticket>English Family ticket, 13:00 - 15:30</h5>
-						<h5 class=ticket>English Family ticket, 16:00 - 18:30</h5>
-					</div>
-					<div class='familyTicketButtons'>
-						<!-- adding and removing buttons -->
-						<form method='post' action='' class='ticketForm'>	
-							<input class='removeBTN' type='submit' value='-' name='??????'>
-							<input class='ticketTxt' type='text' value='0' name='??????'>
-							<input class='addBTN' type='submit' value='+' name='??????'>
-						</form>
-
-						<!-- adding and removing buttons -->
-						<form method='post' action='' class='ticketForm'>	
-							<input class='removeBTN' type='submit' value='-' name='??????'>
-							<input class='ticketTxt' type='text' value='0' name='??????'>
-							<input class='addBTN' type='submit' value='+' name='??????'>
-						</form>		
-
-						<!-- adding and removing buttons -->
-						<form method='post' action='' class='ticketForm'>	
-							<input class='removeBTN' type='submit' value='-' name='??????'>
-							<input class='ticketTxt' type='text' value='0' name='??????'>
-							<input class='addBTN' type='submit' value='+' name='??????'>
-						</form>
-					</div>
-				</div>
+				<!-- Proceed to checkout button -->
+				<form method='post' action='checkout.php'>	
+					<input class='proceedToCheckoutButton' type='submit' value='Proceed to checkout' name='ProceedToCheckout'>
+				</form>
 			</div>
-
-			<!-- adding and removing buttons -->
-			<form method='post' action=''>	
-				<input class='addToCartBTN' type='submit' value='Add selection to cart' name='??????'>
-			</form><br>
-
-			<!-- Proceed to checkout button -->
-			<form method='post' action='checkout.php'>	
-				<input class='proceedToCheckoutButton' type='submit' value='Proceed to checkout' name='ProceedToCheckout'>
-			</form>
-
 		</div>";
 	}
 

@@ -316,23 +316,29 @@ h5{
 }
 
 /* HISTORIC ORDER TICKETSPAGE */
-
-.orderTicketsSelection{
-	width: 1100px;
+.orderTicketsContainer{
+	width: 1350px;
 	background-color: #FFFFFF;
 	margin-top: 3%;
-	margin-left: 21.5%;
+	margin-left: 15%;
 	margin-right: 0;
-	height: 600px;
+	height: 650px;
 	box-shadow: 2px 3px 2px 2px #333333;
 	font-family: 'Heebo', sans-serif;
 }
 
+.orderTicketsSelection{
+	width: 1350px;
+	margin-top: 3%;
+	height: 200px;
+}
+
+
 .blackBar5{
 	width: 14%;
 	float: left;
-	height: 3px;
-	margin-top: 5%; 
+	height: 4px;
+	margin-top: 4%; 
 	padding-left: 2%;
 	margin-left: 2%;
 	background-color: #000000;
@@ -343,20 +349,21 @@ h5{
 }
 
 .orderTicketsheaderContainer{
-	margin-left: 22%;
+	margin-left: 21%;
+	height: 120px;
+	width: 90%;
 }
 
 .orderTicketslabels{
 	float: left;
-	width: 45%;
-	margin-left: 4%;
-	margin-top: 2%;
+	width: 200px;
+	margin-left: 33%;
 	font-size: 15pt;
 }
 
 .orderTicketsDropdwn{
-	margin-right: 30%;
-	margin-top: 2%;
+	margin-right: 33%;
+	width: 200px;
 	float: right;
 	text-align: right;
 }
@@ -367,16 +374,16 @@ h5{
 }
 
 .dayLabel{
-	width: 90%;
-	margin-left: 43%;
-	margin-bottom: 10px;
+	width: 500px;
+	margin-left: 590px;
+	margin-bottom: 20px;
 	float: left;
 }
 
 .normalTicket{
 	padding: 3px;
 	text-align: center;
-	width: 45%;
+	width: 600px;
 	font-weight: normal;
 	color: #FFFFFF;
 	background-color: #0066CC;
@@ -387,7 +394,7 @@ h5{
 .familyTicket{
 	text-align: center;
 	padding: 3px;
-	width: 45%;
+	width: 600px;
 	font-weight: normal;
 	color: #FFFFFF;
 	background-color: #FF6600;
@@ -396,14 +403,14 @@ h5{
 }
 
 .ticketsContainer{
-	margin-left: 8%;
+	margin-left: 5.4%;
 	width: 94%;
 }
 
 .normalTickets{
 	float: left;
-	width: 465px;
-	height: 180px;
+	width: 600px;
+	height: 200px;
 	padding: 13px;
 	border-style: solid;
 	border-color: #000000;
@@ -416,23 +423,24 @@ h5{
 }
 
 .normalTicketButtons{
-	float: right;
+	float: left;
 	width: 40%;
 	margin-top: 10px;
 	margin-bottom: 25px;
 }
 
-.ticketForm{
+.ticketButtons{
 	float: right;
 	width: 100%;
+	height: 40px;
 	margin-bottom: 20px;
-	text-align: right;
+	text-align: left;
 }
 
 .familyTickets{
 	float: left;
-	width: 465px;
-	height: 180px;
+	width: 600px;
+	height: 200px;
 	padding: 13px;
 	border-style: solid;
 	border-color: #000000;
@@ -441,25 +449,29 @@ h5{
 
 .familyTicketsLabels{
 	float: left;
-	width: 75%;
+	width: 63%;
 }
 
 .familyTicketButtons{
-	float: right;
-	width: 25%;
+	float: left;
+	width: 37%;
 	margin-top: 10px;
 	margin-bottom: 25px;
 }
 
 
 .ticket{
-	margin-top: 15px;
+	margin-top: 22px;
 }
 
 .ticketTxt{
 	width: 30px;
 	height: 30px;
+	float: left;
 	text-align: center;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
 }
 
 .addBTN{
@@ -473,6 +485,8 @@ h5{
 	font-weight: bold;
 	font-size: 14pt;
 	color: #00cc00;
+	float: left;
+	margin-top: 5px;
 
 }
 
@@ -486,6 +500,8 @@ h5{
 	border-color: #bfbfbf;
 	font-weight: bold;
 	color: #ff0000;
+	float: left;
+	margin-top: 5px;
 }
 
 .addBTN:hover{
@@ -497,17 +513,21 @@ h5{
 }
 
 .addToCartBTN{
-	width: 20%;
+	width: 60px;
 	height: 40px;
-	margin-left: 40%;
+	margin-left: 10px;
+	float: right;
 	color: #000000;
-	font-size: 15pt;
+	font-size: 5pt;
 	border: none;
-	border-bottom-left-radius: 9px; 
-	border-bottom-right-radius: 9px;
+	border-radius: 8%;
 	text-decoration: none;
 	display: inline-block;
 	background-color: #ffcc00;
+	background-image: url("Images/add-to-cart-icon-.jpg");
+	background-repeat: no-repeat;
+	background-position: 50% 40%;
+	background-size: 28px;
 }
 
 .addToCartBTN:hover{
@@ -519,9 +539,10 @@ h5{
 	font-size: 19pt;
 	font-weight: normal;
 	text-align: center;
+	float: left;
 	cursor: pointer;
-	margin-left: 37.3%;
-	margin-top: 1%;
+	margin-left: 40%;
+	margin-top: 3%;
 	outline: none;
 	background-color: #c10326;
 	border: none;
