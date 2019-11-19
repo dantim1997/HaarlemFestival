@@ -6,3 +6,8 @@ function ToggleAdvanced() {
     x.style.display = 'block';
   }
 }
+
+function ShowPopup() {
+  	var popup = document.getElementById("myPopup");
+  	popup.classList.toggle("show");
+}

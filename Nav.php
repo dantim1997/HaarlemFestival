@@ -27,6 +27,12 @@ class Nav
 						<div class='shopcartItems'>1</div>
 					</div>
 				</a>
+		</div>
+
+		<div class='popup'>
+			<span class='popuptext' id='myPopup'>Ticket(s) added to cart!
+				<p>test tekstje</p>
+			</span>
 		</div>";
 	}
 }
