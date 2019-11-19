@@ -28,8 +28,14 @@ body {
 #downloadRouteBTN{
 	margin-left: 40.5%;
 	margin-top: 2%;
+	text-align: left;
+	padding-left: 45px;
 	font-family: 'Heebo', black;
 	color: #FFFFFF;
+	background-image: url("Images/routeIcon.png");
+	background-repeat: no-repeat;
+	background-position: 92% 40%;
+	background-size: 40px;
 }
 
 .historicHomeButtons:hover{
