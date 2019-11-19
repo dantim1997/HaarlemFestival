@@ -48,10 +48,10 @@ class DanceView
 						<div class='Special'>
 							<h2>Special Tickets</h2>
 							<table>
-								<tr><td>All-Acces Pass Friday</td><td>&euro; 125,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass Saturday</td><td>&euro; 150,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass Sunday</td><td>&euro; 150,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass (Fri-Sat-Sun)</td><td>&euro; 250,--</td><td>Add to cart</td></tr>
+								<tr><td>All-Acces Pass Friday</td><td>&euro; 125,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass Saturday</td><td>&euro; 150,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass Sunday</td><td>&euro; 150,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass (Fri-Sat-Sun)</td><td>&euro; 250,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
 							</table>
 							<p>* The capacity of the Club sessions is very limited. Availability for All-Access pas holders can not be garanteed due to safety regulations.</p>
 						</div>

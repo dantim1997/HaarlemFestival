@@ -39,22 +39,13 @@ class DanceTimeTableView
 					  <button onclick='ToggleAdvanced()' class='dropbtn Search'>Advanced Search</button>
 					  <div id='AdvancedSearch' class='dropdown-content'>
 					  <h3>Artists:</h3>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Hardwell</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Armin</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Martin Garrix</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Tiësto</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Nickey Romero</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>AfroJack</label><br/>
-
+					  <form method='get' action='AdvancedDanceSearch.php'>
+					   	".$this->DanceTimeTableController->MakeArtistAdvancedSearch()."
 					   	<h3>Locations:</h3>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Hardwell</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Caprera Openluchttheater</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Jopenkerk</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Xo the Club</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Caprera</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Lichtenfabriek</label>
+					   		".$this->DanceTimeTableController->MakeLocationAdvancedSearch()."
 
-					   	<a href='AdvancedDanceSearch.php'><i class='SearchNow'>Search Dance event</i></a>
+					   	<input type='submit' class='SearchNow' value='Search Dance event'>
+					   </form>
 					  </div>
 					</div>
 			    
@@ -101,10 +92,10 @@ class DanceTimeTableView
 					  <div class='Special'>
 							<h2>Special Tickets</h2>
 							<table>
-								<tr><td>All-Acces Pass Friday</td><td>&euro; 125,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass Saturday</td><td>&euro; 150,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass Sunday</td><td>&euro; 150,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass (Fri-Sat-Sun)</td><td>&euro; 250,--</td><td>Add to cart</td></tr>
+								<tr><td>All-Acces Pass Friday</td><td>&euro; 125,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass Saturday</td><td>&euro; 150,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass Sunday</td><td>&euro; 150,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass (Fri-Sat-Sun)</td><td>&euro; 250,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
 							</table>
 							<p>* The capacity of the Club sessions is very limited. Availability for All-Access pas holders can not be garanteed due to safety regulations.</p>
 						</div>

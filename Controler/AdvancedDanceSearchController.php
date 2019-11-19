@@ -15,5 +15,12 @@ class AdvancedDanceSearchController
 	public function GetConfig(){
 		return $this->Config;
 	}
+
+	public function GetSearchResults(){
+		if(isset($_GET['ArtistCheckbox']))
+		{
+		    var_dump($_GET['ArtistCheckbox']);
+		}
+	}
 }
 ?>

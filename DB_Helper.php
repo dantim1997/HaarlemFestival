@@ -61,29 +61,34 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Types from Artists");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from Artists");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $Name, $Types); 
+		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor); 
 		$artists = array();
 		while ($stmt -> fetch()) { 
-			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types);
+			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor);
 			$artists[] = $artist;
 		}
 		return $artists;
 	}
 
 	//get user by Id from DB by Id
-	public function GetEventByArtist($id){
+	public function GetEventsByArtist($id){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, PerformingId, VenueId, Deschription, StartDateTime, EndDateTime, Price Artist FROM event as e join venue as v on v.Id = e.VenueId");
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, Artist 
+			FROM event as e 
+			join venue as v on v.Id = e.VenueId
+			join performingact as p on p.EventId = e.PerformingId
+			where p.ArtistId = ?");
+		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $venue, $location, $description, $startDateTime, $endDateTime, $price, $artist); 
+		$stmt-> bind_result($Id, $venue, $description, $startDateTime, $endDateTime, $price, $artist); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$Id, "Venue"=>$venue, "location"=>$location, "description"=>$description, "StartDateTime"=>$startDateTime, "endDateTime"=>$endDateTime, "price"=>$price, "artist"=>$artist);
+			$event = array("ID"=>$Id, "Venue"=>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "endDateTime"=>$endDateTime, "Price"=>$price, "artist"=>$artist);
 			$events[] = $event;
 		}
 		//return $array;

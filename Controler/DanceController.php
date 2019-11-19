@@ -48,7 +48,6 @@ class DanceController
 	public function GetModals(){
 		$modals = "";
 		foreach ($this->Artists as $artist) {
-			var_dump("");
 			$modals .= $this->GetModal($artist);	
 		}
 		return $modals;
@@ -62,30 +61,24 @@ class DanceController
 		      <div class='modal-content'>
 		        <div class='modal-header'>
 		          <button type='button' class='close' data-dismiss='modal'>&times;</button>
-		          <h4 class='modal-title'>Hardwell</h4>
+		          <h4 class='modal-title'>".$artist["Name"]."</h4>
 		        </div>
 		        <div class='modal-body ModalHeight'>
 		          <div class='ArtistInfo'>
-		            <img src='Images/Artists/Hardwell.png'>
+		            <img src='Images/Artists/".$artist["Name"].".png'>
 		            <br>
-		            Genre: Dance, House
+		            Genre: ".$artist["Types"]."
 		            <br>
 		            <h4>Known for:</h4>
-		            <ul>
-		                <li>ttt</li>
-		                <li>Tea</li>
-		                <li>Milk</li>
-		            </ul> 
+		            ".$this->SetKnownFor($artist["KnownFor"])."
 		          </div>
-		          <div>
-		            <p>Robbert van de Corput or Hardwell was born on the 7th of january 1988 in Breda. He’s one of the Leading DJ's in the Dance scene. With numbers popular all over the world, like Apollo, Follow me and Power. This summer he will play his DJ-set in Haarlem!
+		          <div class='ArtistTickets'>
+		            <p>".$artist["About"]."
 		            </p>
 		            <h4>Optredens:</h4>
 		            <table>
-		              <tr><td>Location:</td><td>Time</td><td>Price</td><td></td></tr>
-		              <tr><td>Jopenkerk</td><td>Friday 23:01:00</td><td>20</td> <td></td></tr>
-		              <tr><td>Caperea Openluchttheater</td><td>Friday 23:01:00</td><td>20</td> <td></td></tr>
-		              <tr><td>Xo the Club</td><td>Friday 23:01:00</td><td>20</td><td></td></tr>
+		              <tr class='tr'><td class='td'>Location:</td><td class='td'>Time</td><td class='td'>Price</td><td></td><td></td></tr>
+		            ".$this->SetTable($artist["Id"])."
 		            </table>
 		          </div>
 		          <div class='ArtistTickets'></div>
@@ -93,6 +86,32 @@ class DanceController
 		      </div>
 		      </div>
 		    </div>";
+	}
+
+	public function SetTable($artistId){
+		$Sessions = $this->DB_Helper->GetEventsByArtist($artistId);
+		$tablerows ="";
+		foreach ($Sessions as $session) {
+			$tablerows.="<tr>
+							<td class='td'>".$session["Venue"]."</td>
+							<td class='td'>".$session["StartDateTime"]."</td>
+							<td class='td'>€".$session["Price"]."</td> <td>
+							<td class='td'>
+								<button class='AddButton' value='1' name=''>Add to cart</button></td> 
+							<td></td>
+						</tr>";
+		}
+		return $tablerows;
+	}
+
+	public function SetKnownFor($allKnownFor){
+		$types = explode(",", $allKnownFor);
+		$typelist = "<ul>";
+		foreach ($types as $type) {
+			$typelist .= " <li>".$type."</li>";
+		}
+ 		$typelist .= "</ul>";
+		return $typelist;
 	}
 }
 ?>

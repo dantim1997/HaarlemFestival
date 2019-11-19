@@ -13,6 +13,7 @@ class AdvancedDanceSearchView
 
 	//output to html
 	public function output(){
+		$this->DanceTimeTableController->GetSearchResults();
 		$page = "";
 		$page .= $this->Header();
 		$page .= $this->Body();
@@ -22,7 +23,8 @@ class AdvancedDanceSearchView
 
 	private function Header(){
 		return $this->DanceTimeTableController->GetConfig()->GetHeader("Index"). "
-		<link rel='stylesheet' type='text/css' href='DanceStyle.css'>. 
+		<link rel='stylesheet' type='text/css' href='DanceStyle.css'>.
+		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
@@ -43,8 +45,6 @@ class AdvancedDanceSearchView
 							<p class='SessionInfo'>Haarlem Dance 14:00 - 20:00, Hardwell/Marting Garrix/Armin van Buuren,Caprera OpenLucht theater     € 110 ,-</p>
 							<input class='SessionAdd' type='button' value='+'>
 							</div>
-							<a href='checkout.php'><div class='ProceeToCheckout'>Proceed to checkout</div>
-							</a>
 						</div>
 						<div class='AdvancedFilter'>
 							<div class='dropdown'>
@@ -68,6 +68,9 @@ class AdvancedDanceSearchView
 						   	<a href='AdvancedDanceSearch.php'><i class='SearchNow'>Search Dance event</i></a>
 						  </div>
 						</div>
+						</div>
+						<div><a href='checkout.php'><div class='ProceeToCheckout'>Proceed to checkout</div>
+							</a></div>
 					</div>
 			    <div class='col-sm-1'></div>
 			  </div>
