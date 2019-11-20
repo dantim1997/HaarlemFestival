@@ -7,6 +7,10 @@ function ToggleAdvanced() {
   }
 }
 
+function ShowPopup() {
+  	var popup = document.getElementById("myPopup");
+  	popup.classList.toggle("show");
+}
 function ToEvent(src){
 	if (src.includes("Historic")) {
 		window.open("historicHome.php");
