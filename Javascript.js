@@ -6,3 +6,18 @@ function ToggleAdvanced() {
     x.style.display = 'block';
   }
 }
+
+function ToEvent(src){
+	if (src.includes("Historic")) {
+		window.open("historicHome.php");
+	}
+	if (src.includes("Jazz")) {
+		window.open("jazz.php");
+	}
+	if (src.includes("Dance")) {
+		window.open("Dance.php");
+	}
+	if (src.includes("Food")) {
+		window.open("food.php");
+	}
+}
