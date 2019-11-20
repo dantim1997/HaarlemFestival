@@ -2,8 +2,6 @@
 class Config
 {
 	private static $instance = null;	
-
-
 	private function __construct()
 	{
 	}
@@ -17,12 +15,10 @@ class Config
 		   
 		return self::$instance;
 	}
-
 	public function GetAPIKey(){
 		//return APIKey
 		return "6LePibwUAAAAALoQwjvKnqjQEd_P2ZcDiHY54oTX";
 	}
-
 	public function GetHeader($header){
 	//return header of each page
 	return "<!DOCTYPE html>
