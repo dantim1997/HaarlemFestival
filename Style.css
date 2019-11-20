@@ -33,18 +33,20 @@ a:active {
 
 .Logo{
 	text-align: right;
-	width: 550px;
+	width: 500px;
 	margin-left: 50px;
-	margin-top: 50px;
+	margin-right: 50px;
+	margin-bottom: 40px;
 }
 
 .HomepageImages{
-	height: 700px;
+	height: 685px;
 }
 
 .HomepageImage{
 	margin-right: -240px;
 	width: 500px;
+	height: 680px;
 	clip-path: polygon(42% 0%, 92% 0%, 55% 100%, 5% 100%);
 }
 
@@ -71,6 +73,7 @@ a:active {
 
 .Footer{
 	margin-top: 10px;
+	margin-bottom: 0;
 	border: solid 1px;
 	height: 45px;
 	background-color: #FFFFFF;
