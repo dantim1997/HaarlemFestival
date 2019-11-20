@@ -23,7 +23,6 @@ class HistoricOrderTicketsView
 	private function Header(){
 		return $this->HistoricOrderTicketsController->GetConfig()->GetHeader("Historic")
 		."<link rel='stylesheet' type='text/css' href='historic.css'>"
-		."<link rel='stylesheet' type='text/css' href='Popup.css'>"
 		."<script src='Javascript.js'></script>";
 	}
 
@@ -87,7 +86,7 @@ class HistoricOrderTicketsView
 								<button class='removeBTN' type='button'>-</button>
 								<input class='ticketTxt' type='text' value='0'>
 								<button class='addBTN' type='button'>+</button>
-								<button class='addToCartBTN' type='button'></button>
+								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
 							</div>	
 
 							<!-- adding and removing buttons -->
@@ -95,7 +94,7 @@ class HistoricOrderTicketsView
 								<button class='removeBTN' type='button'>-</button>
 								<input class='ticketTxt' type='text' value='0'>
 								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button'></button>
+								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
 							</div>
 						</div>
 					</div>
@@ -112,7 +111,7 @@ class HistoricOrderTicketsView
 								<button class='removeBTN' type='button'>-</button>
 								<input class='ticketTxt' type='text' value='0'>
 								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button'></button>
+								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
 							</div>
 
 							<!-- adding and removing buttons -->
@@ -120,7 +119,7 @@ class HistoricOrderTicketsView
 								<button class='removeBTN' type='button'>-</button>
 								<input class='ticketTxt' type='text' value='0'>
 								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button'></button>
+								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
 							</div>		
 
 							<!-- adding and removing buttons -->
@@ -128,7 +127,7 @@ class HistoricOrderTicketsView
 								<button class='removeBTN' type='button'>-</button>
 								<input class='ticketTxt' type='text' value='0'>
 								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button'></button>
+								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
 							</div>
 						</div>
 					</div>
