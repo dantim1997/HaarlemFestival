@@ -76,16 +76,16 @@ class DanceTimeTableController
 		$this->Locations =$this->DB_Helper->GetArtists();
 		$artistsSearchlist = "";
 		foreach ($this->Locations as $location) {
-			$artistsSearchlist .= "<input type='checkbox' name='ArtistCheckbox[]' value=".$location["Name"]."><label>".$location["Name"]."</label><br/>";
+			$artistsSearchlist .= "<input type='checkbox' name='ArtistCheckbox[]' value=".$location["Id"]."><label>".$location["Name"]."</label><br/>";
 		}
 		return $artistsSearchlist;
 	}
 
 	public function MakeLocationAdvancedSearch(){
-		$this->artists =$this->DB_Helper->GetLocations();
+		$this->locations =$this->DB_Helper->GetLocations();
 		$locationSearchlist = "";
-		foreach ($this->artists as $artist) {
-			$locationSearchlist .= "<input type='checkbox' name='".$artist["Name"]."' value=".$artist["Name"]."><label>".$artist["Name"]."</label><br/>";
+		foreach ($this->locations as $location) {
+			$locationSearchlist .= "<input type='checkbox' name='LocationCheckbox[]' value=".$location["Id"]."><label>".$location["Name"]."</label><br/>";
 		}
 		return $locationSearchlist;
 	}

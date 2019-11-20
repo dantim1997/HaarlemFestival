@@ -149,7 +149,11 @@ body{
 
 .Tickets{
 	float: left;
-	width: 50%
+	width: 60%
+}
+
+.Days{
+	float: left;
 }
 
 .AdvancedFilter{

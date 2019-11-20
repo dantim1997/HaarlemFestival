@@ -2,18 +2,18 @@
 require_once("Autoloader.php");
 class AdvancedDanceSearchView
 {
-	private $DanceTimeTableController;
-	private $DanceTimeTableModel;
+	private $AdvancedDanceSearchController;
+	private $AdvancedDanceSearchModel;
 
-	public function __construct($danceTimeTableController, $danceTimeTableModel)
+	public function __construct($advancedDanceSearchController, $advancedDanceSearchModel)
 	{
-		$this->DanceTimeTableController = $danceTimeTableController;
-		$this->DanceTimeTableModel = $danceTimeTableModel;
+		$this->AdvancedDanceSearchController = $advancedDanceSearchController;
+		$this->AdvancedDanceSearchModel = $advancedDanceSearchModel;
 	}
 
 	//output to html
 	public function output(){
-		$this->DanceTimeTableController->GetSearchResults();
+		$this->Test = $this->AdvancedDanceSearchController->GetSearchResults();
 		$page = "";
 		$page .= $this->Header();
 		$page .= $this->Body();
@@ -22,50 +22,32 @@ class AdvancedDanceSearchView
 	}
 
 	private function Header(){
-		return $this->DanceTimeTableController->GetConfig()->GetHeader("Index"). "
+		return $this->AdvancedDanceSearchController->GetConfig()->GetHeader("Index"). "
 		<link rel='stylesheet' type='text/css' href='DanceStyle.css'>.
 		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
 	private function Body(){
-		//setnav()
-		return "
+		$nav = new Nav();
+		return $nav->SetNavBar(). "
 		<div id='main'>
 			<div class='container-fluid'>
 			  <div class='row'>
 			    <div class='col-sm-1' ></div>
 			    <div class='col-sm-10'>
 				    <div class='Results'>
-					    <div class='Tickets'>
-					    	<h2>Tickets found with the critiria:</h2>
-							<h3>Friday</h3>
-							<hr>
-							<div class='SessionFound'>
-							<p class='SessionInfo'>Haarlem Dance 14:00 - 20:00, Hardwell/Marting Garrix/Armin van Buuren,Caprera OpenLucht theater     € 110 ,-</p>
-							<input class='SessionAdd' type='button' value='+'>
-							</div>
-						</div>
+					    ".$this->AdvancedDanceSearchController->CreateDays($this->Test)."
 						<div class='AdvancedFilter'>
 							<div class='dropdown'>
 						  <div class='dropdownCritiria'>
 						  <h3>Artists:</h3>
-						   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Hardwell</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Armin'><label>Armin</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Martin Garrix</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Tiësto</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Nickey Romero</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>AfroJack</label><br/>
-
-						   	<h3>Locations:</h3>
-						   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Hardwell</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Armin'><label>Caprera Openluchttheater</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Armin'><label>Jopenkerk</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Armin'><label>Xo the Club</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Armin'><label>Caprera</label><br/>
-						   	<input type='checkbox' name='check_list[]' value='Armin'><label>Lichtenfabriek</label>
-
-						   	<a href='AdvancedDanceSearch.php'><i class='SearchNow'>Search Dance event</i></a>
+						   	<form method='get' action='AdvancedDanceSearch.php'>
+							   	".$this->AdvancedDanceSearchController->MakeArtistAdvancedSearch()."
+							   	<h3>Locations:</h3>
+							   	".$this->AdvancedDanceSearchController->MakeLocationAdvancedSearch()."
+							   	<input type='submit' class='SearchNow' value='Search Dance event'>
+							</form>
 						  </div>
 						</div>
 						</div>

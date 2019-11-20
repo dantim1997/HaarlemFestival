@@ -111,6 +111,26 @@ class DB_Helper
 	}
 
 	//get user by Id from DB by Id
+	public function GetSearch($artistSearch, $locationSearch){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, Artist FROM event as e 
+			join venue as v on v.Id = e.VenueId
+			JOIN performingact as p on p.EventId = e. PerformingId 
+			WHERE ".$artistSearch." ".$locationSearch." GROUP BY e.Id");
+		//$stmt->bind_param("ss", $artistSearch, $locationSearch);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $venue, $description, $startDateTime, $endDateTime, $price, $artist); 
+		$events = array();
+		while ($stmt -> fetch()) { 
+			$event = array("ID"=>$Id, "Venue"=>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "Price"=>$price, "artist"=>$artist);
+			$events[] = $event;
+		}
+		//return $array;
+		return $events;
+	}
+
+	//get user by Id from DB by Id
 	public function GetUser($Id){
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
