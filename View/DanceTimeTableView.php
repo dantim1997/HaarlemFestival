@@ -22,7 +22,8 @@ class DanceTimeTableView
 
 	private function Header(){
 		return $this->DanceTimeTableController->GetConfig()->GetHeader("Index"). "
-		<link rel='stylesheet' type='text/css' href='DanceStyle.css'>. 
+		<link rel='stylesheet' type='text/css' href='DanceStyle.css'> 
+		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
@@ -31,29 +32,20 @@ class DanceTimeTableView
 		return "
 		<div id='main'>
 			<div class='container-fluid'>
-			  <div class='row'>
+			  <div class='row TimeTable'>
 			    <div class='col-sm-1' ></div>
 			    <div class='col-sm-10'>
 				    <div class='dropdown'>
 					  <button onclick='ToggleAdvanced()' class='dropbtn Search'>Advanced Search</button>
 					  <div id='AdvancedSearch' class='dropdown-content'>
 					  <h3>Artists:</h3>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Hardwell</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Armin</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Martin Garrix</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Tiësto</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Nickey Romero</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>AfroJack</label><br/>
-
+					  <form method='get' action='AdvancedDanceSearch.php'>
+					   	".$this->DanceTimeTableController->MakeArtistAdvancedSearch()."
 					   	<h3>Locations:</h3>
-					   	<input type='checkbox' name='check_list[]' value='Hardwell'><label>Hardwell</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Caprera Openluchttheater</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Jopenkerk</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Xo the Club</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Caprera</label><br/>
-					   	<input type='checkbox' name='check_list[]' value='Armin'><label>Lichtenfabriek</label>
+					   		".$this->DanceTimeTableController->MakeLocationAdvancedSearch()."
 
-					   	<a href='AdvancedDanceSearch.php'><i class='SearchNow'>Search Dance event</i></a>
+					   	<input type='submit' class='SearchNow' value='Search Dance event'>
+					   </form>
 					  </div>
 					</div>
 			    
@@ -94,78 +86,16 @@ class DanceTimeTableView
 					    </TR>
 					  </THEAD>
 					  <TBODY>
-					    <TR>
-					      <TD>location</TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='11' class='Event'>
-					        <div class='AddText'>Armin van Buuren <br>€ 75</div>
-					        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
-					      </TD>
-					      <TD colspan='1' class=''></TD>
-					    </TR>
-					    <TR>
-					      <TD>location</TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='11' class='Event'>
-					        <div class='AddText'>Armin van Buuren <br>€ 75</div>
-					        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
-					      </TD>
-					      <TD colspan='1' class=''></TD>
-					    </TR>
-					    <TR>
-					      <TD>location</TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='1' class=''></TD>
-					      <TD colspan='11' class='Event'>
-					        <div class='AddText'>Armin van Buuren <br>€ 75</div>
-					        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
-					      </TD>
-					      <TD colspan='1' class=''></TD>
-					    </TR>
+					    ".$this->DanceTimeTableController->AddEvent()."
 					   </TBODY>
 					  </TABLE>
 					  <div class='Special'>
 							<h2>Special Tickets</h2>
 							<table>
-								<tr><td>All-Acces Pass Friday</td><td>&euro; 125,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass Saturday</td><td>&euro; 150,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass Sunday</td><td>&euro; 150,--</td><td>Add to cart</td></tr>
-								<tr><td>All-Acces Pass (Fri-Sat-Sun)</td><td>&euro; 250,--</td><td>Add to cart</td></tr>
+								<tr><td>All-Acces Pass Friday</td><td>&euro; 125,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass Saturday</td><td>&euro; 150,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass Sunday</td><td>&euro; 150,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
+								<tr><td>All-Acces Pass (Fri-Sat-Sun)</td><td>&euro; 250,--</td><td><button class='AddButton' value='1' name=''>Add to cart</button></td></tr>
 							</table>
 							<p>* The capacity of the Club sessions is very limited. Availability for All-Access pas holders can not be garanteed due to safety regulations.</p>
 						</div>
