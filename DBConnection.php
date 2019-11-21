@@ -9,7 +9,7 @@ class DBConnection
 	private $host = 'localhost';
 	private $user = 'root';
 	private $pass = '';
-	private $name = 'HaarlemFestival';
+	private $name = 'test';
 
 	// The db connection is established in the private constructor.
 	private function __construct()
