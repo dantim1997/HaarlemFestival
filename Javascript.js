@@ -13,15 +13,15 @@ function ShowPopup() {
 }
 function ToEvent(src){
 	if (src.includes("Historic")) {
-		window.open("historicHome.php");
+		location.href = "historicHome.php";
 	}
 	if (src.includes("Jazz")) {
-		window.open("jazz.php");
+		location.href = "jazz.php";
 	}
 	if (src.includes("Dance")) {
-		window.open("Dance.php");
+		location.href = "Dance.php";
 	}
 	if (src.includes("Food")) {
-		window.open("food.php");
+		location.href = "food.php";
 	}
 }

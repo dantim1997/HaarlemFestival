@@ -1,15 +1,16 @@
 /* Popup container - can be anything you want */
 .popup {
-  margin-left: 80%;
-  position: fixed;
+  margin-right: 10%;
+  position: sticky;
+  top: 0;
   float: right;
-  display: inline-block;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
+
 
 /* The actual popup */
 .popup .popuptext {
