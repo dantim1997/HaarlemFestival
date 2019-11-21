@@ -22,15 +22,14 @@ class AdvancedDanceSearchView
 	}
 
 	private function Header(){
-		return $this->AdvancedDanceSearchController->GetConfig()->GetHeader("Index"). "
-		<link rel='stylesheet' type='text/css' href='DanceStyle.css'>.
+		return $this->AdvancedDanceSearchController->GetConfig()->GetHeader("Dance"). "
 		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar(). "
+		return $nav->SetNavBar("Dance"). "
 		<div id='main'>
 			<div class='container-fluid'>
 			  <div class='row'>

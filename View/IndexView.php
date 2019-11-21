@@ -21,12 +21,12 @@ class IndexView
 	}
 
 	private function Header(){
-		return $this->IndexController->GetConfig()->GetHeader("Index"). "<script src='Javascript.js'></script>";
+		return $this->IndexController->GetConfig()->GetHeader("Home");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar(). "
+		return $nav->SetNavBar("Home"). "
 		<div id='main'>
 			<div class='RedBar'></div>
 			<div class='HomepageImages'>

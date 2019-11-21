@@ -21,15 +21,14 @@ class DanceTimeTableView
 	}
 
 	private function Header(){
-		return $this->DanceTimeTableController->GetConfig()->GetHeader("Index"). "
-		<link rel='stylesheet' type='text/css' href='DanceStyle.css'> 
+		return $this->DanceTimeTableController->GetConfig()->GetHeader("Dance"). "
 		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
 	private function Body(){
-		//setnav()
-		return "
+		$nav = new Nav();
+		return $nav->SetNavBar("Dance"). "
 		<div id='main'>
 			<div class='container-fluid'>
 			  <div class='row TimeTable'>

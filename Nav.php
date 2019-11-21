@@ -6,18 +6,17 @@ class Nav
 	{
 	}
 
-	function SetNavBar(){
+	function SetNavBar($event){
 		return"
 		<div id='NavBarBorder'>
 				<div><img class='NavBarImg' src='Images/HaarlemImage.png'></div>
-				<div class='ActiveWrapper'>
-					<div class='Active'><a href='index.php'><div class='NavActive'>Home</div></a></div>
-				</div>
-				<div class='NavLinks'><a href='Food.php'><div class='NavText'>Food</div></a></div>
-				<div class='NavLinks'><a href='Dance.php'><div class='NavText'>Dance</div></a></div>
-				<div class='NavLinks'><a href='historicHome.php'><div class='NavText'>Historic</div></a></div>
-				<div class='NavLinks'><a href='jazz.php'><div class='NavText'>Jazz</div></a></div>
-				<div class='NavLinks'><a href='Programme.php'><div class='NavText'>Programme</div></a></div>
+				".$this->SetEvent("Home", $event)."
+				".$this->SetEvent("Food", $event)."
+				".$this->SetEvent("Dance", $event)."
+				".$this->SetEvent("Historic", $event)."
+				".$this->SetEvent("Jazz", $event)."
+				".$this->SetEvent("Programme", $event)."
+				
 				<div class='Languages'>
 					<img class='LanguagesImages ActiveLanguage' src='Images/EnglishFlag.png'>
 					<img class='LanguagesImages' src='Images/NederlandFlag.jpg'>
@@ -42,6 +41,24 @@ class Nav
 			</span>
 		</div>";
 	}
+
+	public function SetEvent($event, $active){
+		if($active == $event){
+			if($event == "Home"){
+				$event = "Index";
+			}
+			return "<div class='ActiveWrapper'>
+					<div class='Active'><a class='Link' href='".$event.".php'><div class='NavActive'>".$event."</div></a></div>
+				</div>";
+		}
+		else{
+			if($event == "Home"){
+				$event = "Index";
+			}
+			return "<div class='NavLinks'><a class='Link' href='".$event.".php'><div class='NavText'>".$event."</div></a></div>";
+		}
+	}
+
 }
 ?>
 

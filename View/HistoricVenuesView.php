@@ -21,12 +21,12 @@ class HistoricVenuesView
 	}
 
 	private function Header(){
-		return $this->HistoricVenuesController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='historic.css'>";
+		return $this->HistoricVenuesController->GetConfig()->GetHeader("Historic");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar().
+		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 			<div class='row1'>
 				<div class='venueContainer'>

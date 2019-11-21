@@ -102,18 +102,10 @@ body{
 }
 
 .ArtistTickets{
+	padding-left: 20px;
 	float: right;
-	width: 70%;
+	width: 65%;
 	height: 200px;
-}
-
-.ModalHeight{
-	height: 400px;
-}
-
-.ModalWidth{
-
-	width: 50%;
 }
 
 .Location{
