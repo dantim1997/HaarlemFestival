@@ -21,8 +21,9 @@ class FoodMainView
 	}
 
 	private function Header(){
-		return $this->FoodMainController->GetConfig()->GetHeader("Food")."<link rel='stylesheet' type='text/css' href='FoodMainStyle.css";
+		return $this->FoodMainController->GetConfig()->GetHeader("FoodMain")."<link rel='stylesheet' type='text/css' href='FoodMainStyle.css'>";
 	}
+
 
 	private function Body(){
 		$nav = new Nav();

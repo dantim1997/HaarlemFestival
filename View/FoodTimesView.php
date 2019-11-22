@@ -37,18 +37,18 @@ class FoodTimesView
 			</div>
 			<div class='timeSelection'>
 				<div class='timeSelLeftSide'>
-					<input type='checkbox' class='timeCheckbox' name='1630'>16:30 <br />
-					<input type='checkbox' class='timeCheckbox' name='1700'>17:00 <br />
-					<input type='checkbox' class='timeCheckbox' name='1730'>17:30 <br />
-					<input type='checkbox' class='timeCheckbox' name='1800'>18:00 <br />
-					<input type='checkbox' class='timeCheckbox' name='1830'>18:30 <br />
+					<label for='1630'><input type='checkbox' class='timeCheckbox' id='1630' name='1630'>16:30</label> <br />
+					<label for='1700'><input type='checkbox' class='timeCheckbox' id='1700' name='1700'>17:00</label> <br />
+					<label for='1730'><input type='checkbox' class='timeCheckbox' id='1730' name='1730'>17:30</label> <br />
+					<label for='1800'><input type='checkbox' class='timeCheckbox' id='1800' name='1800'>18:00</label> <br />
+					<label for='1830'><input type='checkbox' class='timeCheckbox' id='1830' name='1830'>18:30</label> <br />
 				</div>
 				<div class='timeSelRightSide'>
-					<input type='checkbox' class='timeCheckbox' name='1900'>19:00 <br />
-					<input type='checkbox' class='timeCheckbox' name='1930'>19:30 <br />
-					<input type='checkbox' class='timeCheckbox' name='2000'>20:00 <br />
-					<input type='checkbox' class='timeCheckbox' name='2030'>20:30 <br />
-					<input type='checkbox' class='timeCheckbox' name='2100'>21:00 <br />
+					<label for='1900'><input type='checkbox' class='timeCheckbox' id='1900' name='1900'>19:00</label> <br />
+					<label for='1930'><input type='checkbox' class='timeCheckbox' id='1930' name='1930'>19:30</label> <br />
+					<label for='2000'><input type='checkbox' class='timeCheckbox' id='2000' name='2000'>20:00</label> <br />
+					<label for='2030'><input type='checkbox' class='timeCheckbox' id='2030' name='2030'>20:30</label> <br />
+					<label for='2100'><input type='checkbox' class='timeCheckbox' id='2100' name='2100'>21:00</label> <br />
 				</div>
 			</div>
 			<div class='cuisineHeader'>
@@ -56,17 +56,17 @@ class FoodTimesView
 			</div>
 			<div class='cuisineSelection'>
 				<div class='cuisineSelLeftSide'>
-					<input type='checkbox' class='cuisineCheckbox' name='Dutch'>Dutch <br />
-					<input type='checkbox' class='cuisineCheckbox' name='French'>French <br />
-					<input type='checkbox' class='cuisineCheckbox' name='Steakhouse'>Steakhouse <br />
-					<input type='checkbox' class='cuisineCheckbox' name='FishAndSeafood'>Fish and Seafood <br />
-					<input type='checkbox' class='cuisineCheckbox' name='Asian'>Asian <br />
+					<label for='Dutch'><input type='checkbox' class='cuisineCheckbox' id='Dutch' name='Dutch'>Dutch</label> <br />
+					<label for='French'><input type='checkbox' class='cuisineCheckbox' id='French' name='French'>French</label> <br />
+					<label for='Steakhouse'><input type='checkbox' class='cuisineCheckbox' id='Steakhouse' name='Steakhouse'>Steakhouse</label> <br />
+					<label for='FishAndSeafood'><input type='checkbox' class='cuisineCheckbox' id='FishAndSeafood' name='FishAndSeaFood'>Fish and Seafood</label> <br />
+					<label for='Asian'><input type='checkbox' class='cuisineCheckbox' id='Asian' name='Asian'>Asian</label> <br />
 				</div>
 				<div class='cuisineSelRightSide'>
-					<input type='checkbox' class='cuisineCheckbox' name='European'>European <br />
-					<input type='checkbox' class='cuisineCheckbox' name='International'>International <br />
-					<input type='checkbox' class='cuisineCheckbox' name='Modern'>Modern <br />
-					<input type='checkbox' class='cuisineCheckbox' name='Argentinian'>Argentinian <br />
+					<label for='European'><input type='checkbox' class='cuisineCheckbox' id='European' name='European'>European</label> <br />
+					<label for='International'><input type='checkbox' class='cuisineCheckbox' id='International' name='International'>International</label> <br />
+					<label for='Modern'><input type='checkbox' class='cuisineCheckbox' id='Modern' name='Modern'>Modern</label> <br />
+					<label for='Argentinian'><input type='checkbox' class='cuisineCheckbox' id='Argentinian' name='Argentinian'>Argentinian</label> <br />
 					<div class='searchRButton'>
 						<button class='searchRBtn'>Search Restaurants</button>
 					</div>
@@ -90,7 +90,10 @@ class FoodTimesView
 					<img src='./Images/starEmpty.png' class='starEmpty'>
 					<img src='./Images/starEmpty.png' class='starEmpty'>
 				</div>
-				<div class='locationWidget'></div>
+				<div class='locationWidget'>
+					<div class='mapouter'><div class='gmap_canvas'><iframe width='600' height='405' id='gmap_canvas' src='https://maps.google.com/maps?q=Grote%20Markt%2013%202011%20RC%20Haarlem&t=&z=15&ie=UTF8&iwloc=&output=embed' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'></iframe><a href='https://www.whatismyip-address.com'>whatismyip-address.com</a></div><style>.mapouter{position:relative;text-align:right;height:405px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:405px;width:600px;}</style>
+					</div>
+				</div>
 				<div class='prices'>
 					<h2 class='pricesH2'>PRICES</h2>
 					<h4 class='pricesH4'>Reservation fee: €10,- <br /> Normal price: €35,- <br /> Price for children (below the age of 12): €17,50</h4>
