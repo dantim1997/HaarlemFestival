@@ -21,12 +21,12 @@ class JazzView
 	}
 
 	private function Header(){
-		return $this->JazzController->GetConfig()->GetHeader("Jazz")."<link rel='stylesheet' type='text/css' href='StyleJazz.css'>";
+		return $this->JazzController->GetConfig()->GetHeader("Jazz");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar(). "<div class='main'>
+		return $nav->SetNavBar("Jazz"). "<div class='main'>
 			<div class='container'>
 				<div class='title'>Jazz</div>
 			</div>

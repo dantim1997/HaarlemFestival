@@ -21,12 +21,12 @@ class HistoricTicketInfoView
 	}
 
 	private function Header(){
-		return $this->HistoricTicketInfoController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='historic.css'>";
+		return $this->HistoricTicketInfoController->GetConfig()->GetHeader("Historic");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar().
+		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 		<div class='pageCenter'>
 			<div class='ticketInfoContainer'>

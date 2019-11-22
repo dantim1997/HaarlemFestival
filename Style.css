@@ -22,7 +22,10 @@ a:active {
    text-decoration: none;
 } 
 
-
+.Link:hover{
+	color: black;
+   text-decoration: none;
+}
 
 .RedBar{
 	width: 100%;

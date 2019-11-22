@@ -21,14 +21,12 @@ class HistoricOrderTicketsView
 	}
 
 	private function Header(){
-		return $this->HistoricOrderTicketsController->GetConfig()->GetHeader("Historic")
-		."<link rel='stylesheet' type='text/css' href='historic.css'>"
-		."<script src='Javascript.js'></script>";
+		return $this->HistoricOrderTicketsController->GetConfig()->GetHeader("Historic");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar().
+		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 			<div class='orderTicketsContainer'>
 				<div class='orderTicketsSelection'>

@@ -21,13 +21,12 @@ class DanceView
 	}
 
 	private function Header(){
-		return $this->DanceController->GetConfig()->GetHeader("Index"). "
-		<link rel='stylesheet' type='text/css' href='DanceStyle.css'>";
+		return $this->DanceController->GetConfig()->GetHeader("Dance");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar(). "
+		return $nav->SetNavBar("Dance"). "
 		<div id='main'>
 			<div class='container-fluid'>
 			  <div class='row'>
