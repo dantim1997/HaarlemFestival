@@ -54,19 +54,19 @@ class DanceController
 	}
 
 	public function GetModal($artist){
-		return "<div class='modal fade' id='Artists".$artist["Id"]."' role='dialog'>
-		    <div class='modal-dialog ModalWidth'>
+		return "
+		<div class='modal fade' id='Artists".$artist["Id"]."' role='dialog'>
+		    <div class='modal-dialog modal-lg ModalWidth'>
 		    
 		      <!-- Modal content-->
 		      <div class='modal-content'>
 		        <div class='modal-header'>
-		          <button type='button' class='close' data-dismiss='modal'>&times;</button>
 		          <h4 class='modal-title'>".$artist["Name"]."</h4>
+		          <button type='button' class='close' data-dismiss='modal'>&times;</button>
 		        </div>
 		        <div class='modal-body ModalHeight'>
 		          <div class='ArtistInfo'>
 		            <img src='Images/Artists/".$artist["Name"].".png'>
-		            <br>
 		            Genre: ".$artist["Types"]."
 		            <br>
 		            <h4>Known for:</h4>

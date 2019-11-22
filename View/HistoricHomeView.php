@@ -21,12 +21,12 @@ class HistoricHomeView
 	}
 
 	private function Header(){
-		return $this->HistoricHomeController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='historic.css'>";
+		return $this->HistoricHomeController->GetConfig()->GetHeader("Historic");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar(). 
+		return $nav->SetNavBar("Historic"). 
 		"<div id='main'>
 			<div class='historicBoxCenter'>
 				<div class='headerContainer'><div class='blackBar'></div><h1>Haarlem historic</h1><div class='blackBar'></div></div><br>
