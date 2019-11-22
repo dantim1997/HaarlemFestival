@@ -32,7 +32,7 @@ class IndexView
 			<div class='HomepageImages'>
 				<image class='Logo' src='Images/Logo.png'>
 					<image class='HomepageImage' src='Images/Food.png' onclick='ToEvent(src)'>
-					<image class='HomepageImage' src='Images/Dance.png' onclick='ToEvent(src'>
+					<image class='HomepageImage' src='Images/Dance.png' onclick='ToEvent(src)'>
 					<image class='HomepageImage' src='Images/Historic.png' onclick='ToEvent(src)'>
 					<image class='HomepageImage' src='Images/Jazz.png' onclick='ToEvent(src)'>
 			</div>
