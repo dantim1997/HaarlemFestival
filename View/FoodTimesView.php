@@ -104,7 +104,7 @@ class FoodTimesView
 					</div>
 					<div class='peopleAboveOption'>
 						<select class='pplAbove12'>
-							<option value='People &gt;12'>People &gt;12</option>
+							<option value='People &gt;12'>People</option>
             				<option value='0'>0</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
