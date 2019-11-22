@@ -4,6 +4,7 @@ class HistoricOrderTicketsView
 {
 	private $HistoricOrderTicketsController;
 	private $HistoricOrderTicketsModel;
+	private $ticketInformation;
 
 	public function __construct($historicOrderTicketsController, $historicOrderTicketsModel)
 	{
@@ -13,6 +14,7 @@ class HistoricOrderTicketsView
 
 	//output to html
 	public function output(){
+		$this->ticketInformation = $this->HistoricOrderTicketsController->GetTickets();
 		$page = "";
 		$page .= $this->Header();
 		$page .= $this->Body();
@@ -40,94 +42,38 @@ class HistoricOrderTicketsView
 								Select language:<br>
 								Select day:
 							</p>
-							<div class='orderTicketsDropdwn'>
-								<select class='dropDown'>
-									<option value='-'>-</option>
-									<option value='English'>English</option>
-									<option value='Dutch'>Dutch</option>
-									<option value='Chinese'>Chinese</option>
-								</select><br>
-								<select class='dropDown'>
-									<option value='-'>-</option>
-									<option value='day1'>Thursday 26th of Juli</option>
-									<option value='day2'>Friday 27th of Juli</option>
-									<option value='day3'>Saturday 28th of Juli</option>
-									<option value='day4'>Sunday 29th of Juli</option>
-								</select>
-							</div>		
+							<form method='post' action='historicOrderTickets.php'>
+								<div class='orderTicketsDropdwn'>
+									<select name='language' class='dropDown'>
+										<option value='-'>-</option>
+										<option value='English'>English</option>
+										<option value='Dutch'>Dutch</option>
+										<option value='Chinese'>Chinese</option>
+									</select><br>
+									<select name='day' class='dropDown' onchange='this.form.submit()'>
+										<option value='-'>-</option>
+										<option value='2020-07-26'>Thursday 26th of Juli</option>
+										<option value='2020-07-27'>Friday 27th of Juli</option>
+										<option value='2020-07-28'>Saturday 28th of Juli</option>
+										<option value='2020-07-29'>Sunday 29th of Juli</option>
+									</select>
+								</div>	
+							</form>	
 				</div>
 
 
-				<h5 class='dayLabel'>Saturday Juli 28th</h5>
+				<h5 class='dayLabel'>".$this->ticketInformation['day']."</h5>
 
 				<div class='ticketsContainer'>
 					<h5 class='normalTicket'>Normal ticket € 17,50</h5>
 					<h5 class='familyTicket'>Family ticket 4 people € 60 (€ 15 p.p.)</h5>
 
 					<div class='normalTickets'> 
-						<div class='normalTicketsLabels'>
-							<h5 class=ticket>English tour, 10:00 - 12:30</h5>
-							<h5 class=ticket>English tour, 13:00 - 15:30</h5>
-							<h5 class=ticket>English tour, 16:00 - 18:30</h5>
-						</div>
-						<div class='normalTicketButtons'>
-							<!-- adding and removing buttons -->
-							<div class='ticketButtons'>	
-								<button class='removeBTN' type='button' >-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button'>+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
-							</div>
-
-							<!-- adding and removing buttons -->
-							<div class='ticketButtons'>	
-								<button class='removeBTN' type='button'>-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button'>+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
-							</div>	
-
-							<!-- adding and removing buttons -->
-							<div class='ticketButtons'>	
-								<button class='removeBTN' type='button'>-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
-							</div>
-						</div>
+					".$this->ticketInformation['normalTickets']."
 					</div>
 
 					<div class='familyTickets'>
-						<div class='familyTicketsLabels'>
-							<h5 class=ticket>English Family ticket, 10:00 - 12:30</h5>
-							<h5 class=ticket>English Family ticket, 13:00 - 15:30</h5>
-							<h5 class=ticket>English Family ticket, 16:00 - 18:30</h5>
-						</div>
-						<div class='familyTicketButtons'>
-							<!-- adding and removing buttons -->
-							<div class='ticketButtons'>	
-								<button class='removeBTN' type='button'>-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
-							</div>
-
-							<!-- adding and removing buttons -->
-							<div class='ticketButtons'>	
-								<button class='removeBTN' type='button'>-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
-							</div>		
-
-							<!-- adding and removing buttons -->
-							<div class='ticketButtons'>	
-								<button class='removeBTN' type='button'>-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button' >+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
-							</div>
-						</div>
+					".$this->ticketInformation['familyTickets']."
 					</div>
 				</div>
 

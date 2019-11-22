@@ -13,7 +13,7 @@ function ShowPopup() {
 }
 function ToEvent(src){
 	if (src.includes("Historic")) {
-		window.open("historicHome.php");
+		window.open("Historic.php");
 	}
 	if (src.includes("Jazz")) {
 		window.open("jazz.php");
@@ -24,4 +24,8 @@ function ToEvent(src){
 	if (src.includes("Food")) {
 		window.open("food.php");
 	}
+}
+
+function showTickets(){
+	location.href = ("historicOrderTickets.php");
 }
