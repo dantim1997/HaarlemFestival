@@ -21,12 +21,12 @@ class FoodTimesView
 	}
 
 	private function Header(){
-		return $this->FoodTimesController->GetConfig()->GetHeader("FoodTimes")."<link rel='stylesheet' type='text/css' href='FoodTimesStyle.css'>";
+		return $this->FoodTimesController->GetConfig()->GetHeader("Food")."<link rel='stylesheet' type='text/css' href='FoodTimesStyle.css'>";
 	}
 
 	private function Body(){
-		//setnav()
-		return 
+		$nav = new Nav();
+		return $nav->SetNavBar("Food").
 		"
 		<div class='restaurantFilter'>
 			<div class='searchHeader'>

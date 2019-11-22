@@ -1,0 +1,561 @@
+@import url('https://fonts.googleapis.com/css?family=Heebo');
+@import url('https://fonts.googleapis.com/css?family=Heebo:900');
+
+body {
+ background-image: url("Images/backgroundHistoric.png");
+ background-color: #cccccc;
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+
+.historicHomeButtons{
+	width: 350px;
+	padding: 12px 25px;
+	font-size: 25px;
+	font-weight: black;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	background-color: #c10326;
+	border: none;
+	border-radius: 6px;
+	color: #FFFFFF;
+	text-decoration: none;
+	display: inline-block;
+	box-shadow: 2px 2px 2px 2px #333333;
+}
+
+#downloadRouteBTN{
+	margin-left: 40.5%;
+	margin-top: 2%;
+	text-align: left;
+	padding-left: 45px;
+	font-family: 'Heebo', black;
+	color: #FFFFFF;
+	background-image: url("Images/routeIcon.png");
+	background-repeat: no-repeat;
+	background-position: 92% 40%;
+	background-size: 40px;
+}
+
+.historicHomeButtons:hover{
+	background-color: #990000;
+}
+
+.historicBoxCenter{
+	background-color: #FFFFFF;
+	text-align: center;
+	font-family: 'Heebo', sans-serif;
+	width: 41%;
+	height: 400px;
+	padding-top: 2%;
+	padding-bottom: 5px;
+	margin-top: 2%;
+	margin-left: 29%;
+	border-radius: 30px;
+	box-shadow: 2px 2px 2px 2px #333333;
+}
+
+.historicBox{
+	background-color: #FFFFFF;
+	text-align: center;
+	font-family: 'Heebo', sans-serif;
+	width: 41%;
+	height: 100%;
+	padding-top: 1%;
+	padding-bottom: 5px;
+	float: left;
+	margin-left: 5%;
+	border-radius: 30px;
+	box-shadow: 2px 2px 2px 2px #333333;
+}
+
+
+.historicBoxes{
+	margin-left: 2%;
+	width: 98%;
+	height: 300px;
+	margin-top: 2%;
+	margin-bottom: 0;
+}
+
+.boxText{
+	padding-left: 10%;
+	padding-right: 10%;
+	font-size: 14pt;
+}
+
+.blackBar{
+	width: 14%;
+	float: left;
+	height: 3px;
+	margin-top: 4%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.blackBar2{
+	width: 33%;
+	float: left;
+	height: 3px;
+	margin-top: 3%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.headerContainer{
+	width: 100%;
+	margin-left: 2%;
+	float: left;
+}
+
+.venueList{
+	list-style-type: none;
+	float: left;
+	margin-left: 3%;
+	font-size: 14pt;
+}
+
+.pricesList{
+	margin-top: 3%;
+	float: left;
+	margin-left: 26%;
+	font-size: 16pt;
+	margin-bottom: 6.3%;
+}
+
+
+.languageFlagHome{
+	float: left;
+	height: 50px;
+	width: 75px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.languageFlagsHome{
+	float: left;
+	margin-left: 31.5%;
+	margin-bottom: 4%;
+	margin-top: 2%;
+}
+
+h1{
+	font-weight: bold;
+	font-size: 47pt;
+	padding-left: 2%;
+	float: left;
+}
+
+h2{
+	font-weight: bold;
+	font-size: 35pt;
+	padding-left: 3%;
+	float: left;
+}
+
+h4{
+	font-weight: bold;
+	font-family: 'Heebo', sans-serif;
+}
+
+
+/* HAARLEM VENUES: */
+
+.venueContainer{
+	width: 300px;
+	background-color: #FFFFFF;
+	float: left;
+	padding: 0;
+	height: 400px;
+	margin-left: 20px;
+	box-shadow: 2px 3px 2px 2px #333333; 
+}
+
+.venueImgs{
+	width: 100%;
+	padding: 0;
+	max-height: 42%;
+}
+
+.venueText{
+	font-family: 'Heebo', sans-serif;
+	padding: 4%;
+	padding-top: 0;
+}
+
+.venueHeaders{
+	padding: 4%;
+	padding-bottom: 0;
+}
+
+.row1{
+	float: left;
+	margin-bottom: 2%;
+	margin-left: 7.8%;
+}
+
+.row2{
+	float: left;
+	margin-left: 16.1%;
+}
+
+/* HAARLEM Ticket INFO: */
+
+.ticketInfoContainer{
+	background-color: #FFFFFF;
+	padding: 10px;
+	width: 35%;
+	margin-left: 6%;
+	margin-top: 4%;
+	height: 600px;
+	float: left;
+	box-shadow: 2px 3px 2px 2px #333333; 
+	font-family: 'Heebo', sans-serif;
+	text-align: center;
+}
+
+.pageCenter{
+	margin: auto;
+	width: 80%;
+	margin-left: 15%;
+}
+
+
+.blackBar3{
+	width: 16%;
+	float: left;
+	height: 3px;
+	margin-top: 6%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.blackBar4{
+	width: 14%;
+	float: left;
+	height: 3px;
+	margin-top: 6%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.languageFlag{
+	float: left;
+	height: 50px;
+	width: 75px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.languageFlags{
+	float: left;
+	margin-left: 4%;
+	margin-top: 5%;
+	margin-bottom: 4%;
+}
+
+h5{
+	float: left;
+	font-weight: bold;
+	margin-top: 3%;
+	margin-bottom: 4%;
+}
+
+.times{
+	text-align: right;
+	float: right;
+	font-weight: bold;
+	margin-right: 5%;
+}
+
+.dates{
+	text-align: left;
+	float: left;
+	margin-left: 5%;
+}
+
+#centerAndWide{
+	width: 100%;
+}
+
+.pricesmoreHeader{
+	text-align: left;
+	font-size: 13pt;
+	margin-left: 25%;
+	margin-top: 10%;
+}
+
+.pricesMoreText{
+	margin-top: 7%;
+}
+
+.orderNowButton{
+	width: 90%;
+	padding: 6px 25px;
+	font-size: 25pt;
+	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	background-color: #c10326;
+	border: none;
+	border-radius: 6px;
+	color: #FFFFFF;
+	text-decoration: none;
+	display: inline-block;
+	box-shadow: 2px 2px 2px 2px #333333;
+}
+
+.orderNowButton:hover{
+	background-color: #990000;
+}
+
+/* HISTORIC ORDER TICKETSPAGE */
+.orderTicketsContainer{
+	width: 1350px;
+	background-color: #FFFFFF;
+	margin-top: 3%;
+	margin-left: 15%;
+	margin-right: 0;
+	height: 650px;
+
+	box-shadow: 2px 3px 2px 2px #333333;
+	font-family: 'Heebo', sans-serif;
+}
+
+.orderTicketsSelection{
+	width: 1350px;
+	margin-top: 3%;
+	height: 200px;
+}
+
+
+.blackBar5{
+	width: 14%;
+	float: left;
+	height: 4px;
+	margin-top: 4%; 
+	padding-left: 2%;
+	margin-left: 2%;
+	background-color: #000000;
+}
+
+.orderTicketsHeader{
+	margin-top: 2%;
+}
+
+.orderTicketsheaderContainer{
+	margin-left: 21%;
+	height: 120px;
+	width: 90%;
+
+}
+
+.orderTicketslabels{
+	float: left;
+	width: 200px;
+	margin-left: 33%;
+	font-size: 15pt;
+}
+
+.orderTicketsDropdwn{
+	margin-right: 33%;
+	width: 200px;
+	float: right;
+	text-align: right;
+}
+
+.dropDown{
+ 	width: 100%;
+ 	margin-top: 2%;
+}
+
+.dayLabel{
+	width: 500px;
+	margin-left: 590px;
+	margin-bottom: 20px;
+	float: left;
+}
+
+.normalTicket{
+	padding: 3px;
+	text-align: center;
+	width: 600px;
+	font-weight: normal;
+	color: #FFFFFF;
+	background-color: #0066CC;
+	margin: 0;
+	border-right: 1px solid #000000;
+}
+
+.familyTicket{
+	text-align: center;
+	padding: 3px;
+	width: 600px;
+	font-weight: normal;
+	color: #FFFFFF;
+	background-color: #FF6600;
+	margin: 0;
+	border-left: 1px solid #000000;
+}
+
+.ticketsContainer{
+	margin-left: 5.4%;
+	width: 94%;
+}
+
+.normalTickets{
+	float: left;
+	width: 600px;
+	height: 200px;
+	padding: 13px;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 1px;
+}
+
+.normalTicketsLabels{
+	float: left;
+	width: 60%;
+}
+
+.normalTicketButtons{
+	float: left;
+	width: 40%;
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+
+.ticketButtons{
+	float: right;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+.familyTickets{
+	float: left;
+	width: 600px;
+	height: 200px;
+	padding: 13px;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 1px;
+}
+
+.familyTicketsLabels{
+	float: left;
+	width: 63%;
+}
+
+.familyTicketButtons{
+	float: left;
+	width: 37%;
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+
+
+.ticket{
+	margin-top: 22px;
+}
+
+.ticketTxt{
+	width: 30px;
+	height: 30px;
+	float: left;
+	text-align: center;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.addBTN{
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	background-color: #e6e6e6;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #bfbfbf;
+	font-weight: bold;
+	font-size: 14pt;
+	color: #00cc00;
+	float: left;
+	margin-top: 5px;
+
+}
+
+.removeBTN{
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	background-color: #e6e6e6;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #bfbfbf;
+	font-weight: bold;
+	color: #ff0000;
+	float: left;
+	margin-top: 5px;
+}
+
+.addBTN:hover{
+	background-color: #d9d9d9;
+}
+
+.removeBTN:hover{
+	background-color: #d9d9d9;
+}
+
+.addToCartBTN{
+	width: 60px;
+	height: 40px;
+	margin-left: 10px;
+	float: right;
+	color: #000000;
+	font-size: 5pt;
+	border: none;
+	border-radius: 8%;
+	text-decoration: none;
+	display: inline-block;
+	background-color: #ffcc00;
+	background-image: url("Images/add-to-cart-icon-.jpg");
+	background-repeat: no-repeat;
+	background-position: 50% 40%;
+	background-size: 28px;
+}
+
+.addToCartBTN:hover{
+	background-color: #ffdb4d;
+}
+
+.proceedToCheckoutButton{
+	padding: 5px 25px;
+	font-size: 19pt;
+	font-weight: normal;
+	text-align: center;
+	float: left;
+	cursor: pointer;
+	margin-left: 40%;
+	margin-top: 3%;
+	margin-bottom: 1000px;
+	outline: none;
+	background-color: #c10326;
+	border: none;
+	border-radius: 6px;
+	color: #FFFFFF;
+	text-decoration: none;
+	display: inline-block;
+	box-shadow: 2px 2px 2px 2px #808080;
+}
+
+.proceedToCheckoutButton:hover{
+	background-color: #990000;
+}

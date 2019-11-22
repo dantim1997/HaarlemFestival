@@ -1,0 +1,338 @@
+body {
+    background-image: url("Images/jazzbanner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.main {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 200px;
+}
+.container {
+    position: relative;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    max-width: 1920px;
+}
+
+.title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    background-color: rgba(0, 153, 102, 1);
+    box-sizing: border-box;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(121, 121, 121, 1);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    font-size: 58px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    color: white;
+    line-height: 1.0;
+    font-weight: 500;
+}
+
+.banner {
+    width: 100%;
+}
+
+.Footer {
+    margin-top: 0px;
+    color: black;
+}
+
+.content {
+    background-color: rgba(0, 153, 102, 1);
+    padding: 40px;
+    color: white;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+.artists {
+    overflow: hidden;
+}
+
+.artist {
+    float: left;
+    margin-right: 25px;
+}
+
+.artistname {
+    background-color: #006666;
+    text-align: center;
+    width: 200px;
+    height: 30px;
+    color: white;
+    margin-left: 25px;
+    margin-bottom: -1px;
+    position: relative;
+    z-index: 1;
+}
+
+.artistcontainer {
+    background-color: #006666;
+    width: 250px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(121, 121, 121, 1);
+}
+
+.artistimage{
+    width: 100%;
+    height: 200px;
+}
+
+.genre0 {
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(121, 121, 121, 1);
+    text-align: center;
+    margin-top: 10px;
+    visibility: hidden;
+}
+
+.genre1 {
+    background-color: rgb(255, 153, 51);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(121, 121, 121, 1);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.genre2 {
+    background-color: rgb(102, 102, 204);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(121, 121, 121, 1);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.genre3 {
+    background-color: rgba(153, 51, 153, 1);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(121, 121, 121, 1);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.genre4 {
+    background-color: rgb(136, 200, 17);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(121, 121, 121, 1);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.genre5 {
+    background-color: rgb(136, 200, 17);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(169, 3, 33);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.tg {
+    border-collapse:collapse;
+    border-spacing:0;
+    width: 100%;
+}
+
+.tg td {
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    padding:10px 5px;
+    border-style:solid;
+    border-width:1px;
+    overflow:hidden;
+    word-break:normal;
+    border-color:#003300;
+}
+
+.tg th {
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    font-weight:normal;
+    padding:10px 5px;
+    border-style:solid;
+    border-width:1px;
+    overflow:hidden;
+    word-break:normal;
+    border-color:#003300;
+}
+
+.tg .tg-qcxk {
+    font-size:20px;
+    background-color:#006666;
+    color:#ffffff;
+    border-color:#003300;
+    text-align:center;
+    vertical-align:top;
+}
+
+.tg .tg-nrh4 {
+    background-color:#249297;
+    color:#ffffff;
+    border-color:#003300;
+    text-align:center;
+    vertical-align:top;
+
+}
+.tg .tg-lh0f {
+    background-color:#006666;
+    color:#ffffff;
+    border-color:#003300;
+    text-align:center;
+    vertical-align:top;
+}
+
+.tg .tg-m4n1 {
+    background-color:#207986;
+    color:#ffffff;
+    border-color:#003300;
+    text-align:center;
+    vertical-align:top;
+}
+
+.tg .tg-6jhs {
+    font-weight:bold;
+    background-color:#006666;
+    color:#ffffff;
+    border-color:#003300;
+    text-align:center;
+    font-size: 18px;
+}
+
+.dates {
+    overflow: hidden;
+}
+
+.selectday {
+    float: left;
+    width: 22%;
+    height: 100px;
+    background-color: rgb(51, 51, 51);
+    text-align: center;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+
+.arrow-up {
+    width: 10%; 
+    height: 27px;
+    float: left;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+}
+
+.thursday {
+    width: 100%;
+    min-height: 600px;
+    background-color: rgb(51, 51, 51);
+    margin-top: 27px;
+    padding: 20px;
+}
+
+.friday {
+    width: 100%;
+    min-height: 600px;
+    background-color: rgb(51, 51, 51);
+    margin-top: 27px;
+    padding: 20px;
+}
+
+.saturday {
+    width: 100%;
+    min-height: 600px;
+    background-color: rgb(51, 51, 51);
+    margin-top: 27px;
+    padding: 20px;
+}
+
+.sunday {
+    width: 100%;
+    min-height: 600px;
+    background-color: rgb(51, 51, 51);
+    margin-top: 27px;
+    padding: 20px;
+}
+
+.location {
+    font-style: italic;
+    font-size: 20px;
+}
+
+.googlemaps {
+    width: 100%;
+    height: 200px;
+}
+
+hr {
+    border-top: 1px solid white;
+}
+
+.tickets {
+    background-color: rgb(51, 51, 51);
+    width: 80%;
+}
+
+.form {
+    width: 19%;
+    margin-top: 14px;
+    float: right;
+}
+
+button {
+    background-color: rgba(0, 153, 102, 1);
+    width: 33%;
+    height: 57px;
+    color: white;
+    font-weight: bold;
+}
+
+input {
+    width: 33%;
+    height: 57px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.addCart {
+    background-color: rgba(0, 153, 102, 1);
+    color: white;
+    text-align: center;
+    width: 100%;
+}

@@ -1,0 +1,185 @@
+body{
+	background-image: url("Images/BackgroundDance.jpg");
+	background-size: cover;
+}
+.Info{
+	border:solid 1px;
+	float: left;
+	width: 35%;
+	height: 220px;
+	margin-right: 2%;
+	background-color: #C9C9C9;
+	padding-left: 10px;
+}
+
+.Locations{
+	border:solid 1px;
+	width: 60%;
+
+	padding-left: 10px;
+	height: 220px;
+	float: left;
+
+	background-color: #C9C9C9;
+}
+
+.Artists{
+	border:solid 1px;
+	width: 55%;
+	float: left;
+	padding-left: 10px;
+
+	margin-top: 10px;
+	margin-right: 1%;
+	background-color: #C9C9C9;
+}
+
+.Artist{
+	font-size: 20px;
+	width: 210px;
+	height: 170px;
+	float: left;
+	margin-right: 5px; 
+	margin-bottom: 10px;
+}
+
+.ArtistImage{
+	width: 100%;
+}
+
+.ArtistImage:hover{
+	width: 100%;
+	opacity: 70%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Special{
+	border:solid 1px;
+	width: 41%;
+	float: left;
+	padding-left: 10px;
+	margin-top: 10px;
+	background-color: #C9C9C9;
+}
+
+.main{
+	height: 1200px;
+	width: 100%;
+	float: none;
+}
+
+.LocationsAndTickets{
+	float: right;
+	width: 280px;
+	height: 90px;
+	color: white;
+	font-size: 30px;
+	font-weight: bold;
+	padding-left: 5px;
+	background-color:  #DD042B;
+	margin-top: 25px;
+	margin-right: 15%;
+}
+
+.LocationsAndTickets:hover{
+	float: right;
+	width: 280px;
+	height: 90px;
+	color: white;
+	font-size: 30px;
+	font-weight: bold;
+	padding-left: 5px;
+	background-color:  #DD042B;
+	margin-top: 25px;
+	margin-right: 15%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ArtistInfo{
+	float: left;
+	width: 30%;
+	height: 100px;
+}
+
+.ArtistTickets{
+	padding-left: 20px;
+	float: right;
+	width: 65%;
+	height: 200px;
+}
+
+.Location{
+	float: left;
+	width: 350px;
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.Results{
+	border:solid 1px;
+	float: left;
+	width: 100%;
+	height: 220px;
+	margin-right: 2%;
+	background-color: #C9C9C9;
+	padding-left: 10px;
+}
+
+.SessionFound{
+	margin-left: 20px;
+	float: left;
+}
+.SessionAdd{
+	float: left;
+	margin-left: 30px;
+	border-radius: 15px;
+}
+
+.SessionInfo{
+	float: left;
+}
+
+.Tickets{
+	float: left;
+	width: 60%
+}
+
+.Days{
+	float: left;
+}
+
+.AdvancedFilter{
+	float: right;
+}
+
+.Results{
+	width: 100%;
+	height: 600px;
+}
+
+.dropdownCritiria {
+	background-color: #f1f1f1;
+	min-width: 160px;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+
+	padding-left: 10px;
+	margin-top: 40px;
+	border: solid 1px;
+	border-radius: 5px;
+	width: 250px;
+	height: 500px;
+}
+
+.tr{
+	width: 200px;
+}
+
+.td{
+	width: 200px;
+}
+
+.AddButton{
+	border-radius: 5px;
+}
