@@ -13,7 +13,7 @@ function ShowPopup() {
 }
 function ToEvent(src){
 	if (src.includes("Historic")) {
-		window.open("Historic.php");
+		location.href = "Historic.php";
 	}
 	if (src.includes("Jazz")) {
 		location.href = "jazz.php";
