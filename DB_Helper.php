@@ -149,20 +149,21 @@ class DB_Helper
 	}
 
 	//Get the sessions for historic
-	public function GetSessionsByFilters($language, $day){
+	public function GetToursByFilters($language, $day){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language from event WHERE Language LIKE ? AND StartDateTime LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language from historictours WHERE Language LIKE ? AND StartDateTime LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("ss", $language, $day);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Description, $StartDateTime, $EndDateTime, $Price, $Language); 
-		$sessions = array();
+		$tours = array();
 		while ($stmt -> fetch()) { 
-			$session = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language);
-			$sessions[] = $session;
+			$tour = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language);
+			$tours[] = $tour;
 		}
-		return $sessions;
+		return $tours;
+	
 	}
 
 
