@@ -43,7 +43,7 @@ class DanceTimeTableController
 		$timeSpan = $datetime1->diff($datetime2);
 		$durationEvent = (($timeSpan->h+($timeSpan->i/60))*2);
 
-		$fullRow = "<TR><TD>".$event["Venue"]."</TD>";
+		$fullRow = "<TR><TD colspan='3'>".$event["Venue"]."</TD>";
 		 
 		for ($i=0; $i < $emptyTime; $i++) { 
 			$fullRow .="<TD colspan='1' class=''></TD>";
@@ -119,7 +119,7 @@ class DanceTimeTableController
 	    	<TABLE class='ArtistTimeTable'> 
 			  <THEAD>
 			    <TR>
-			      <TH></TH>
+			      <TH colspan='3'></TH>
 			      <TH>14:00</TH>
 			      <TH>14:30</TH> 
 			      <TH>15:00</TH>

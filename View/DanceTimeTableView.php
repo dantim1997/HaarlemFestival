@@ -59,7 +59,7 @@ class DanceTimeTableView
 							</table>
 							<p>* The capacity of the Club sessions is very limited. Availability for All-Access pas holders can not be garanteed due to safety regulations.</p>
 						</div>
-						<a href='DanceTimeTable.php'><div class='ProceeToCheckout'>Proceed to checkout</div>
+						<a href='checkout.php'><div class='ProceeToCheckout'>Proceed to checkout</div>
 						</a>
 			    <div class='col-sm-1'></div>
 			  </div>
