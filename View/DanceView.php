@@ -31,7 +31,7 @@ class DanceView
 			<div class='container-fluid'>
 			  <div class='row'>
 			    <div class='col-sm-2' ></div>
-			    <div class='col-sm-8'>
+			    <div class='col-sm-9'>
 			    	<div class='Info'><h2>Haarlem Dance</h2>
 						When you hear Dance you will think of your favorite DJ's. This year we will present the top DJ's of the world, who will play on the Haarlem festival.
 						</div>
