@@ -20,20 +20,25 @@ class HistoricOrderTicketsController
 	public function GetTickets(){
 		if (isset($_POST['day'])) {
 			//Get all the session from the database matching the given filters
-			$sessions = $this->DB_Helper->GetSessionsByFilters($_POST['language'], $_POST['day']);
+			$toursArray = $this->DB_Helper->GetToursByFilters($_POST['language'], $_POST['day']);
+			
+			$tours = array();
+			foreach ($toursArray as $tour) {
+				array_push($tours, new HistoricTours($tour['Id'], $tour['Language'], $tour['Description'], $tour['StartDateTime'], $tour['EndDateTime'], $tour['Price']));
+			}
 
 			//send all output to be created into html code.
-			$ticketInformation = array('normalTickets' => $this->BuildNormalTickets($sessions), 'familyTickets' => $this->BuildFamilyTickets($sessions), 'day' => date("l jS F, Y", strtotime($_POST['day'])));
-			return $ticketInformation;
+			$ticketInformation = array('normalTickets' => $this->BuildNormalTickets($tours), 'familyTickets' => $this->BuildFamilyTickets($tours), 'day' => date("l jS F, Y", strtotime($_POST['day'])));
+			return $ticketInformation;					
 		}
 	}
 
-	public function BuildNormalTickets($sessions){
+	public function BuildNormalTickets($tours){
 		$normalTickets = "<div class='normalTicketsLabels'>";
 
 		//Add the text of each ticket
-		foreach ($sessions as $session) {
-			$normalTickets .= "<h5 class=ticket>".$session['Description']."</h5>";
+		foreach ($tours as $tour) {
+			$normalTickets .= "<h5 class=ticket>".$tour->Description."</h5>";
 		}
 
 		$normalTickets .= "</div>";
@@ -41,7 +46,7 @@ class HistoricOrderTicketsController
 		$normalTickets .= "<div class='normalTicketButtons'>";
 
 		//Add buttons for each ticket
-		foreach ($sessions as $session) {
+		foreach ($tours as $tour) {
 			$normalTickets .= "<div class='ticketButtons'>	
 								<button class='removeBTN' type='button' >-</button>
 								<input class='ticketTxt' type='text' value='0'>
@@ -54,12 +59,12 @@ class HistoricOrderTicketsController
 		return $normalTickets;
 	}
 
-	public function BuildFamilyTickets($sessions){
+	public function BuildFamilyTickets($tours){
 		$normalTickets = "<div class='familyTicketsLabels'>";
 
 		//Add the text of each ticket
-		foreach ($sessions as $session) {
-			$normalTickets .= "<h5 class=ticket>".str_replace("Tour", "Family ticket", $session['Description'])."</h5>";
+		foreach ($tours as $tour) {
+			$normalTickets .= "<h5 class=ticket>".str_replace("Tour", "Family ticket", $tour->Description)."</h5>";
 		}
 
 		$normalTickets .= "</div>";
@@ -67,7 +72,7 @@ class HistoricOrderTicketsController
 		$normalTickets .= "<div class='familyTicketButtons'>";
 
 		//Add buttons for each ticket
-		foreach ($sessions as $session) {
+		foreach ($tours as $tour) {
 			$normalTickets .= "<div class='ticketButtons'>	
 								<button class='removeBTN' type='button' >-</button>
 								<input class='ticketTxt' type='text' value='0'>
