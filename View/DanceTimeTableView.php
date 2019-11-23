@@ -33,7 +33,7 @@ class DanceTimeTableView
 			<div class='container-fluid'>
 			  <div class='row TimeTable'>
 			    <div class='col-sm-1' ></div>
-			    <div class='col-sm-10'>
+			    <div class='col-sm-11'>
 				    <div class='dropdown'>
 					  <button onclick='ToggleAdvanced()' class='dropbtn Search'>Advanced Search</button>
 					  <div id='AdvancedSearch' class='dropdown-content'>
@@ -47,47 +47,8 @@ class DanceTimeTableView
 					   </form>
 					  </div>
 					</div>
-			    
-				    <div class='Days'>
-						<div class='Day'>Friday</div>
-						<div class='Day'>Saturday</div>
-						<div class='Day'>Sunday</div>
-				    </div>
-			    	<TABLE class='ArtistTimeTable'> 
-					  <THEAD>
-					    <TR>
-					      <TH></TH>
-					      <TH>14:00</TH>
-					      <TH>14:30</TH> 
-					      <TH>15:00</TH>
-					      <TH>15:30</TH>  
-					      <TH>16:00</TH>
-					      <TH>16:30</TH>
-					      <TH>17:00</TH>
-					      <TH>17:30</TH>
-					      <TH>18:00</TH>
-					      <TH>18:30</TH>
-					      <TH>19:00</TH>
-					      <TH>19:30</TH>
-					      <TH>20:00</TH>
-					      <TH>20:30</TH>
-					      <TH>21:00</TH>
-					      <TH>21:30</TH>
-					      <TH>22:00</TH>
-					      <TH>22:30</TH>
-					      <TH>23:00</TH>
-					      <TH>23:30</TH>
-					      <TH>00:00</TH>
-					      <TH>00:30</TH>
-					      <TH>01:00</TH>
-					      <TH>01:30</TH>
-					      <TH>02:00</TH>
-					    </TR>
-					  </THEAD>
-					  <TBODY>
-					    ".$this->DanceTimeTableController->AddEvent()."
-					   </TBODY>
-					  </TABLE>
+			    <div>
+				    ".$this->DanceTimeTableController->MakeTimeTables()."
 					  <div class='Special'>
 							<h2>Special Tickets</h2>
 							<table>
