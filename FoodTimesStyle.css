@@ -6,7 +6,6 @@
     outline: 0;
     font-size: 100%;
     vertical-align: baseline;
-    box-sizing: content-box;
 }
 
 /*RESTAURANT FILTER*/
@@ -133,7 +132,7 @@ h2.searchRestaurants {
 .restaurants {
   position: relative;
   left: 330px;
-  top: -270px;
+  top: -400px;
   width: 100%;
   height: auto;
 }
