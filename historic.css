@@ -364,9 +364,9 @@ h5{
 }
 
 .orderTicketsDropdwn{
-	margin-right: 33%;
+	margin-left: 3%;
 	width: 200px;
-	float: right;
+	float: left;
 	text-align: right;
 }
 
@@ -377,7 +377,7 @@ h5{
 
 .dayLabel{
 	width: 500px;
-	margin-left: 590px;
+	margin-left: 560px;
 	margin-bottom: 20px;
 	float: left;
 }
@@ -545,7 +545,6 @@ h5{
 	cursor: pointer;
 	margin-left: 40%;
 	margin-top: 3%;
-	margin-bottom: 1000px;
 	outline: none;
 	background-color: #c10326;
 	border: none;

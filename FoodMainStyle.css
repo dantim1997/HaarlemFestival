@@ -6,7 +6,6 @@
     outline: 0;
     font-size: 100%;
     vertical-align: baseline;
-    box-sizing: content-box;
 }
 
 p {
@@ -95,6 +94,7 @@ p {
     float: left;
     width: 260px;
     font-size: 15px;
+    box-sizing: content-box;
 }
 
 .gridImage {

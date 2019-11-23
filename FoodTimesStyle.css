@@ -6,7 +6,6 @@
     outline: 0;
     font-size: 100%;
     vertical-align: baseline;
-    box-sizing: content-box;
 }
 
 /*RESTAURANT FILTER*/
@@ -58,11 +57,13 @@ h2.searchRestaurants {
 
 .timeSelLeftSide {
   position: relative;
+  top: -6px;
   height: 0px;
 }
 
 .timeSelRightSide {
   position: relative;
+  top: -6px;
   left: 160px;
   height: 0px;
 }
@@ -94,17 +95,19 @@ h2.searchRestaurants {
 
 .cuisineSelLeftSide {
   position: relative;
+  top: -6px;
   height: 0px;
 }
 
 .cuisineSelRightSide {
   position: relative;
+  top: -6px;
   left: 150px;
 }
 
 .searchRButton {
   position: relative;
-  top: 20px;
+  top: 7px;
   right: 20px;
   width: 120px;
   height: 50px;
@@ -129,7 +132,7 @@ h2.searchRestaurants {
 .restaurants {
   position: relative;
   left: 330px;
-  top: -270px;
+  top: -400px;
   width: 100%;
   height: auto;
 }

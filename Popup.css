@@ -1,7 +1,6 @@
 /* Popup container - can be anything you want */
 .popup {
-  margin-left: 80%;
-  position: fixed;
+  position: sticky;
   float: right;
   display: inline-block;
   cursor: pointer;
@@ -10,6 +9,7 @@
   -ms-user-select: none;
   user-select: none;
 }
+
 
 /* The actual popup */
 .popup .popuptext {
