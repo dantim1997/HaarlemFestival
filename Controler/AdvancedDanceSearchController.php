@@ -67,27 +67,25 @@ class AdvancedDanceSearchController
 		   }
 		}
 
-		$test = $this->CreateTickets($this->DB_Helper->GetSearch($searchStringArtist,$searchStringLocation));
-		return $test;
+		$tickets = $this->CreateTickets($this->DB_Helper->GetSearch($searchStringArtist,$searchStringLocation));
+		return $tickets;
 	}
 
 	public function CreateTickets($searchResults){
 		$date = array();
-		$tickets = "";
 		foreach ($searchResults as $searchResult) {
 			$eventDate = date('Y-m-d', strtotime($searchResult["StartDateTime"]));
-			if(!array_key_exists($eventDate ,$searchResults)){
-				$date[$eventDate] = array();
+			if(!array_key_exists($eventDate ,$date)){
+				$date[$eventDate] = "";
 			}
 			$startTime = $this->FromDateTimeToTime($searchResult["StartDateTime"]);
 			$endTime = $this->FromDateTimeToTime($searchResult["EndDateTime"]);
 			
-
-			$tickets = array("<div class='SessionFound'>
+			$tickets = "<div class='SessionFound'>
 							<p class='SessionInfo'>Haarlem Dance ".$startTime." - ".$endTime.", ".$searchResult["artist"]." ,".$searchResult["Venue"]."     € ".$searchResult["Price"].",-</p>
 							<input class='SessionAdd' type='button' value='+'>
-							</div>");
-			$date[$eventDate] =$tickets;
+							</div>";
+			$date[$eventDate] .=$tickets;
 		}
 		return $date;
 	}
@@ -101,16 +99,13 @@ class AdvancedDanceSearchController
 	public function CreateDays($dates){
 		$days = "<div class='Tickets'><h2>Tickets found with the critiria:</h2>";
 		foreach($dates as $key=>$date){
-
             $eventdate = new DateTime($key);
             $SetDate = $eventdate->format('Y-m-d');
             $Day = date('l', strtotime($SetDate));
 			$days .="<div class='Days'><h3>".$Day."</h3>
 			<hr>
 			<div class='SessionFound'>";
-			foreach ($date as $tickets) {
-				$days .= $tickets;
-			}
+				$days .= $date;
 			$days .="</div></div>";
 		}
 		$days .= "</div>";

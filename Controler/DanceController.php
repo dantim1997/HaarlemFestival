@@ -77,7 +77,12 @@ class DanceController
 		            </p>
 		            <h4>Optredens:</h4>
 		            <table>
-		              <tr class='tr'><td class='td'>Location:</td><td class='td'>Time</td><td class='td'>Price</td><td></td><td></td></tr>
+		              <tr>	<td class='td'>Location:</td>
+		              		<td class='td'>Time</td>
+		              		<td class='td'>Price</td>
+		              		<td></td>
+		              		<td></td>
+		              </tr>
 		            ".$this->SetTable($artist["Id"])."
 		            </table>
 		          </div>
@@ -99,8 +104,7 @@ class DanceController
 							<td class='td'>
 								<button class='AddButton' value='1' name=''>Add to cart</button></td> 
 							<td></td>
-						</tr>
-						<hr>";
+						</tr>";
 		}
 		return $tablerows;
 	}
