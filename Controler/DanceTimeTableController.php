@@ -10,18 +10,11 @@ class DanceTimeTableController
 		$this->Dancemodel = $danceModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
-
-		$this->Get_AllDanceEvents();
 	}
 	
 	//get config
 	public function GetConfig(){
 		return $this->Config;
-	}
-
-	public function Get_AllDanceEvents(){
-		$this->DB_Helper->Get_AllDanceEvents();
-
 	}
 
 	public function AddEvent($date){
@@ -35,7 +28,6 @@ class DanceTimeTableController
 	}
 
 	public function AddEventRow($event){
-		$emptyTime = $this->CalculateTimeSpan($event["StartDateTime"]);
 		$emptyTime = $this->CalculateTimeSpan($event["StartDateTime"]);
 
 		$datetime1 = date_create($event["StartDateTime"]);
@@ -72,18 +64,18 @@ class DanceTimeTableController
 	}
 
 	public function MakeArtistAdvancedSearch(){
-		$this->Locations =$this->DB_Helper->GetArtists();
+		$artist =$this->DB_Helper->GetArtists();
 		$artistsSearchlist = "";
-		foreach ($this->Locations as $location) {
-			$artistsSearchlist .= "<input type='checkbox' name='ArtistCheckbox[]' value=".$location["Id"]."><label>".$location["Name"]."</label><br/>";
+		foreach ($artist as $artist) {
+			$artistsSearchlist .= "<input type='checkbox' name='ArtistCheckbox[]' value=".$artist["Id"]."><label>".$artist["Name"]."</label><br/>";
 		}
 		return $artistsSearchlist;
 	}
 
 	public function MakeLocationAdvancedSearch(){
-		$this->locations =$this->DB_Helper->GetLocations();
+		$locations =$this->DB_Helper->GetLocations();
 		$locationSearchlist = "";
-		foreach ($this->locations as $location) {
+		foreach ($locations as $location) {
 			$locationSearchlist .= "<input type='checkbox' name='LocationCheckbox[]' value=".$location["Id"]."><label>".$location["Name"]."</label><br/>";
 		}
 		return $locationSearchlist;
@@ -101,12 +93,12 @@ class DanceTimeTableController
 	}
 
 	public function MakeTimeTables(){
-		$this->Dates =$this->DB_Helper->GetDates();
+		$dates =$this->DB_Helper->GetDates();
 
-		$TimeTables = $this->GetDates($this->Dates);
+		$TimeTables = $this->GetDates($dates);
 
 		$first = "";
-		foreach ($this->Dates as $date) {
+		foreach ($dates as $date) {
 			$TimeTables .= $this->MakeTimeTable($date["Date"], $first);
 			$first = "Hide";
 		}

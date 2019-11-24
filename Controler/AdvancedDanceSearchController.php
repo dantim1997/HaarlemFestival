@@ -18,18 +18,18 @@ class AdvancedDanceSearchController
 	}
 
 	public function MakeArtistAdvancedSearch(){
-		$this->Locations =$this->DB_Helper->GetArtists();
+		$artists =$this->DB_Helper->GetArtists();
 		$artistsSearchlist = "";
-		foreach ($this->Locations as $location) {
-			$artistsSearchlist .= "<input type='checkbox' name='ArtistCheckbox[]' value=".$location["Id"]."><label>".$location["Name"]."</label><br/>";
+		foreach ($artists as $artist) {
+			$artistsSearchlist .= "<input type='checkbox' name='ArtistCheckbox[]' value=".$artist["Id"]."><label>".$artist["Name"]."</label><br/>";
 		}
 		return $artistsSearchlist;
 	}
 
 	public function MakeLocationAdvancedSearch(){
-		$this->locations =$this->DB_Helper->GetLocations();
+		$locations =$this->DB_Helper->GetLocations();
 		$locationSearchlist = "";
-		foreach ($this->locations as $location) {
+		foreach ($locations as $location) {
 			$locationSearchlist .= "<input type='checkbox' name='LocationCheckbox[]' value=".$location["Id"]."><label>".$location["Name"]."</label><br/>";
 		}
 		return $locationSearchlist;
