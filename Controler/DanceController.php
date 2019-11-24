@@ -99,7 +99,8 @@ class DanceController
 							<td class='td'>
 								<button class='AddButton' value='1' name=''>Add to cart</button></td> 
 							<td></td>
-						</tr>";
+						</tr>
+						<hr>";
 		}
 		return $tablerows;
 	}
