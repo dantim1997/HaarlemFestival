@@ -60,6 +60,9 @@ class Config
 		if($event == "Food"){
 			return "";
 		}
+		if($event == "MyProgram"){
+			return "<link rel='stylesheet' type='text/css' href='MyProgram.css'>";
+		}
 	}
 }
 ?>
