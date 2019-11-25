@@ -9,7 +9,7 @@ class DBConnection
 	private $host = 'localhost';
 	private $user = 'root';
 	private $pass = '';
-	private $name = 'test';
+	private $name = 'hfteam3_db';
 
 	// The db connection is established in the private constructor.
 	private function __construct()
