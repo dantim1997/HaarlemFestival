@@ -1,0 +1,257 @@
+/*GLOBAL RESET*/
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+/*RESTAURANT FILTER*/
+.restaurantFilter {
+  position: sticky;
+  left: 10px;
+  top: 170px;
+  width: 270px;
+  height: 440px;
+  border: 1px solid grey;
+  border-radius: 10px;
+}
+
+.searchHeader {
+  position: sticky;
+  width: 270px;
+  height: 35px;
+  background-color: #B2B2B2;
+  border-radius: 10px 10px 0px 0px;
+  text-align: center;
+}
+
+h2.searchRestaurants {
+  font-size: 25px;
+  font-family: 'Arial Bold', 'Arial';
+}
+
+.timeHeader {
+  position: relative;
+  width: 270px;
+  height: 30px;
+  background-color: rgba(242, 242, 242, 1);
+  border-bottom: 1px solid grey;
+  font-family: 'Arial';
+  font-size: 20px;
+}
+
+.timeHeaderP {
+  position: relative;
+  left: 5px;
+}
+
+.timeSelection {
+  position: relative;
+  top: 5px;
+  left: 10px;
+  height: 200px;
+}
+
+.timeSelLeftSide {
+  position: relative;
+  top: -6px;
+  height: 0px;
+}
+
+.timeSelRightSide {
+  position: relative;
+  top: -6px;
+  left: 160px;
+  height: 0px;
+}
+
+.cuisineHeader {
+  position: relative;
+  top: -50px;
+  width: 270px;
+  height: 30px;
+  background-color: rgba(242, 242, 242, 1);
+  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
+  font-family: 'Arial';
+  font-size: 20px;
+}
+
+.cuisineHeaderP {
+  position: relative;
+  left: 5px;
+}
+
+.cuisineSelection {
+  position: relative;
+  top: -40px;
+  left: 10px;
+  height: 200px;
+  width: 270px;
+}
+
+.cuisineSelLeftSide {
+  position: relative;
+  top: -6px;
+  height: 0px;
+}
+
+.cuisineSelRightSide {
+  position: relative;
+  top: -6px;
+  left: 150px;
+}
+
+.searchRButton {
+  position: relative;
+  top: 7px;
+  right: 20px;
+  width: 120px;
+  height: 50px;
+}
+
+.searchRBtn {
+  background-color: rgba(221, 4, 43, 1);
+  color: #FFFFFF;
+  border-radius: 5px;
+}
+
+.searchRBtn:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.timeCheckbox:hover, .cuisineCheckbox:hover {
+  cursor: pointer;
+}
+
+/*RESTAURANTS SECTION*/
+.restaurants {
+  position: relative;
+  left: 330px;
+  top: -400px;
+  width: 100%;
+  height: auto;
+}
+
+.restaurantSection {
+  width: 1500px;
+  height: 680px;
+  margin-bottom: 20px;
+  background-color: #E4E4E4;
+  border: 1px solid black;
+}
+
+.restaurantInfoImages {
+  position: relative;
+  width: 220px;
+  height: 170px;
+  top: 20px;
+  left: 20px;
+}
+
+.information {
+  position: relative;
+  top: -150px;
+  left: 260px;
+}
+
+p.restaurantInfoP {
+  font-size: 20px;
+}
+
+.rating {
+  position: relative;
+  top: -160px;
+  left: 260px;
+}
+
+.locationWidget {
+  position: relative;
+  top: -100px;
+  left: 20px;
+  width: 600px;
+  height: 405px;
+  border: 1px solid black;
+}
+
+.prices {
+  position: relative;
+  top: -730px;
+  left: 850px;
+  width: 520px;
+  height: 160px;
+  border: 1px solid black;
+  background-color: #FFFFFF;
+}
+
+.pricesH2, .pricesH4 {
+  padding: 5px;
+}
+
+.createReservation {
+  position: relative;
+  top: -720px;
+  left: 850px;
+  width: 520px;
+  height: 460px;
+  border: 1px solid black;
+}
+
+.createReservationH2 {
+  position: relative;
+  left: 10px;
+}
+
+.pplBelow12, .pplAbove12 {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  width: 150px;
+  height: 30px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.pickDay, .pickSession {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  width: 250px;
+  height: 30px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.specialNeeds {
+  position: relative;
+  top: 30px;
+  left: 10px;
+  font-weight: bold;
+}
+
+.makeReservation {
+  position: relative;
+  top: 40px;
+  left: 10px;
+}
+
+.makeReservationBtn {
+  font-family: "Verdana";
+  text-decoration: none;
+  text-align: center;
+  border-width: 0px;
+  background-color: rgba(221, 4, 43, 1);
+  font-size: 25px;
+  padding: 8px;
+  color: #FFFFFF;
+  border-radius: 5px;
+}
+
+.makeReservationBtn:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

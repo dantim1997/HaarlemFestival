@@ -1,0 +1,108 @@
+/*GLOBAL RESET*/
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.Footer {
+  margin-top: 885px;
+}
+
+.food-header {
+  border-width: 0px;
+    position: absolute;
+    left: 30px;
+    top: 145px;
+    width: 260px;
+    height: 40px;
+    font-family: 'Arial Bold', 'Arial';
+    font-weight: 600;
+    font-style: normal;
+    font-size: 30px;
+}
+
+.headertext {
+  position: absolute;
+  top: 185px;
+  left: 33px;
+  width: 1000px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.ticketsBtn {
+  font-family: "Verdana";
+  text-decoration: none;
+  position: absolute;
+    left: 1430px;
+    top: 185px;
+    width: 360px;
+    height: 90px;
+  border-width: 0px;
+  background-color: rgba(221, 4, 43, 1);
+    font-size: 32px;
+    color: #FFFFFF;
+    padding-top: 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.ticketsBtn:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.restaurantsGrid-container {
+  grid-template-columns: auto auto auto auto;
+    border-width:0px;
+    position:absolute;
+    left:28px;
+  top:300px;
+    width:1850px;
+    height:550px;
+    display: grid;
+    padding: 10px;
+}
+
+.restaurantsContainer {
+    border-width:0px;
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:1850px;
+    height:550px;
+    background:inherit;
+    background-color:rgba(228, 228, 228, 1);
+    border:none;
+    border-radius:35px;
+    -moz-box-shadow:5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    -webkit-box-shadow:5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    box-shadow:5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+}
+
+.restaurant-item {
+    padding: 15px 100px 15px 100px;
+    text-align: center;
+    float: left;
+    width: 260px;
+    font-size: 15px;
+    box-sizing: content-box;
+}
+
+.gridImage {
+  height: 120px;
+  width: 220px;
+}
+
+.gridImage:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

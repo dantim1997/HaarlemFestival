@@ -21,13 +21,12 @@ class CheckoutView
 	}
 
 	private function Header(){
-		return $this->CheckoutController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='checkout.css'>";
+		return $this->CheckoutController->GetConfig()->GetHeader("Checkout"). "<link rel='stylesheet' type='text/css' href='checkout.css'>";
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar()."<div id='main'>
-		<div class='lol'></div>
+		return $nav->SetNavBar("Checkout")."<div id='main'>
 			<div class='checkoutContainer'>
 				<h2 id='checkoutlbl'>Checkout</h2>
 

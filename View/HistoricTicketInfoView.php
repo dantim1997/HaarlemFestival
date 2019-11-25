@@ -21,21 +21,20 @@ class HistoricTicketInfoView
 	}
 
 	private function Header(){
-		return $this->HistoricTicketInfoController->GetConfig()->GetHeader("Historic"). "<link rel='stylesheet' type='text/css' href='historic.css'>";
+		return $this->HistoricTicketInfoController->GetConfig()->GetHeader("Historic");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar().
+		return $nav->SetNavBar("Historic").
 		"<div id='main'>
-		<div class='lol'></div>
 		<div class='pageCenter'>
 			<div class='ticketInfoContainer'>
 				<div class='headerContainer'><div class='blackBar3'></div><h2>Time & date</h2><div class='blackBar3'></div></div><br>
 				<h5 id='centerAndWide'>The tours will be available in:</h5>
 					<div class='languageFlags'>
 						<img class='languageFlag' src='Images/Dutchflag.png'><h5>Dutch</h5>
-						<img class='languageFlag' src='Images/Englishflag.png'><h5>English</h5>
+						<img class='languageFlag' src='Images/EnglishFlag.png'><h5>English</h5>
 						<img class='languageFlag' src='Images/Chinaflag.png'><h5>Chinese</h5>
 					</div>
 				<h5 id='centerAndWide'>The guided tours will be held on:</h5>

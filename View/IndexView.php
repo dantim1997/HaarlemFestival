@@ -21,20 +21,20 @@ class IndexView
 	}
 
 	private function Header(){
-		return $this->IndexController->GetConfig()->GetHeader("Index");
+		return $this->IndexController->GetConfig()->GetHeader("Home");
 	}
 
 	private function Body(){
 		$nav = new Nav();
-		return $nav->SetNavBar(). "
+		return $nav->SetNavBar("Home"). "
 		<div id='main'>
 			<div class='RedBar'></div>
 			<div class='HomepageImages'>
 				<image class='Logo' src='Images/Logo.png'>
-					<image class='HomepageImage' src='Images/Food.png'>
-					<image class='HomepageImage' src='Images/Dance.png'>
-					<image class='HomepageImage' src='Images/Historic.png'>
-					<image class='HomepageImage' src='Images/Jazz.png'>
+					<image class='HomepageImage' src='Images/Food.png' onclick='ToEvent(src)'>
+					<image class='HomepageImage' src='Images/Dance.png' onclick='ToEvent(src)'>
+					<image class='HomepageImage' src='Images/Historic.png' onclick='ToEvent(src)'>
+					<image class='HomepageImage' src='Images/Jazz.png' onclick='ToEvent(src)'>
 			</div>
 			<div class='RedBar'></div>
 
