@@ -40,3 +40,10 @@ function SelectedDay(date){
 	}
 	elem.style.display = "block";
 }
+
+function ShoppingCartPlus(){
+	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
+	number = number + 1;
+	document.getElementById("shoppingcartCount").innerHTML = number;
+
+}
