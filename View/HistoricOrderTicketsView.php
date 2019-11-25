@@ -52,10 +52,10 @@ class HistoricOrderTicketsView
 									</select><br>
 									<select name='day' class='dropDown' onchange='this.form.submit()'>
 										<option value='-'>-</option>
-										<option value='2020-07-26'>Thursday 26th of Juli</option>
-										<option value='2020-07-27'>Friday 27th of Juli</option>
-										<option value='2020-07-28'>Saturday 28th of Juli</option>
-										<option value='2020-07-29'>Sunday 29th of Juli</option>
+										<option value='2020-07-26'>Sunday 26th of Juli</option>
+										<option value='2020-07-27'>Monday 27th of Juli</option>
+										<option value='2020-07-28'>Tuesday 28th of Juli</option>
+										<option value='2020-07-29'>Wednesday 29th of Juli</option>
 									</select>
 								</div>	
 							</form>	
