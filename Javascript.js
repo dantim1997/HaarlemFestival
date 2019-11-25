@@ -29,3 +29,14 @@ function ToEvent(src){
 function showTickets(){
 	location.href = ("historicOrderTickets.php");
 }
+
+function SelectedDay(date){
+	var elem = document.getElementById(date);
+	var slides = document.getElementsByClassName("HideTimeTable");
+
+	for(var i = 0; i < slides.length; i++)
+	{
+	  slides[i].style.display = "none";
+	}
+	elem.style.display = "block";
+}

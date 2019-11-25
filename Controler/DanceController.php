@@ -11,9 +11,7 @@ class DanceController
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
 
-		$this->Artists =$this->DB_Helper->GetArtists();
-		//$this->DanceModel->SetArtists($test);
-		//var_dump($this->DanceModel->GetArtists());
+		$this->Dancemodel->SetArtists($this->DB_Helper->GetArtists());
 	}
 	
 	//get config
@@ -31,15 +29,11 @@ class DanceController
 
 		return $venues;
 	}
-
-	public function GetEventsByArtist(){
-
-	}
-
+	
 	Public function SetArtists(){
 
 		$artistslist = "";
-		foreach ($this->Artists as $artist) {
+		foreach ($this->Dancemodel->GetArtists() as $artist) {
 			$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='Images/Artists/".$artist["Name"].".png'> </div>";
 		}
 		return $artistslist;
@@ -47,7 +41,7 @@ class DanceController
 
 	public function GetModals(){
 		$modals = "";
-		foreach ($this->Artists as $artist) {
+		foreach ($this->Dancemodel->GetArtists() as $artist) {
 			$modals .= $this->GetModal($artist);	
 		}
 		return $modals;
@@ -77,7 +71,12 @@ class DanceController
 		            </p>
 		            <h4>Optredens:</h4>
 		            <table>
-		              <tr class='tr'><td class='td'>Location:</td><td class='td'>Time</td><td class='td'>Price</td><td></td><td></td></tr>
+		              <tr>	<td class='td'>Location:</td>
+		              		<td class='td'>Time</td>
+		              		<td class='td'>Price</td>
+		              		<td></td>
+		              		<td></td>
+		              </tr>
 		            ".$this->SetTable($artist["Id"])."
 		            </table>
 		          </div>
@@ -99,7 +98,8 @@ class DanceController
 							<td class='td'>
 								<button class='AddButton' value='1' name=''>Add to cart</button></td> 
 							<td></td>
-						</tr>";
+						</tr>
+						<hr>";
 		}
 		return $tablerows;
 	}
