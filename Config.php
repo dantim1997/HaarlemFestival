@@ -57,7 +57,10 @@ class Config
 		if($event == "Jazz"){
 			return "<link rel='stylesheet' type='text/css' href='StyleJazz.css'>";
 		}
-		if($event == "Food"){
+		if($event == "FoodMain"){
+			return "<link rel='stylesheet' type='text/css' href='FoodMainStyle.css'>";
+		}
+		if($event == "FoodTimes"){
 			return "<link rel='stylesheet' type='text/css' href='FoodTimesStyle.css'>";
 		}
 	}

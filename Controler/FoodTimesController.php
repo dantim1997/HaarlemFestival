@@ -128,10 +128,10 @@ class FoodTimesController
 		$sessions = "";
 		$foodSessions = $this->DB_Helper->GetAllFoodSessions($name);
 		foreach ($foodSessions as $foodSession) {
-			if (strlen($foodSession["SessionStartTime"]) > 5) {
-				$startTime = substr($foodSession["SessionStartTime"], 0, -3);
+			if (strlen($foodSession["SessionStartDateTime"]) > 5) {
+				$startDateTime = substr($foodSession["SessionStartDateTime"], 0, -3);
 			}
-		 	$sessions .= "<option value='".$startTime."'>".$startTime."</option>
+		 	$sessions .= "<option value='".$startDateTime."'>".$startDateTime."</option>
 		 	";
 		}
 		return $sessions;
