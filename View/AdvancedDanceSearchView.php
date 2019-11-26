@@ -13,7 +13,7 @@ class AdvancedDanceSearchView
 
 	//output to html
 	public function output(){
-		$this->Test = $this->AdvancedDanceSearchController->GetSearchResults();
+		$this->Tickets = $this->AdvancedDanceSearchController->GetSearchResults();
 		$page = "";
 		$page .= $this->Header();
 		$page .= $this->Body();
@@ -36,7 +36,7 @@ class AdvancedDanceSearchView
 			    <div class='col-sm-1' ></div>
 			    <div class='col-sm-10'>
 				    <div class='Results'>
-					    ".$this->AdvancedDanceSearchController->CreateDays($this->Test)."
+					    ".$this->AdvancedDanceSearchController->CreateDays($this->Tickets)."
 						<div class='AdvancedFilter'>
 							<div class='dropdown'>
 						  <div class='dropdownCritiria'>

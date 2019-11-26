@@ -29,16 +29,18 @@ class Nav
 		</div>
 
 		<div class='popup'>
-			<span class='popuptext' id='myPopup'>
-				<p id='#popupHeader'>Tickets added to cart!</p>
-				<hr id='hrBars'>
-				<p>Tekst enzo en nog een beetje hier en daar</p>
-				<hr id='hrBars'>
-				<p>Tekst enzo en nog een beetje hier en daar en mogelijk daar links nog een restje</p>
-				<hr id='hrBars'>
-				<a href='checkout.php' class='toCheckoutBTN'>To Cart</a>
-				<button class='closePopup' type='button' onclick='ShowPopup()'>Close</button>
-			</span>
+			<div class='popupContent'>
+				<span class='popuptext' id='myPopup'>
+					<p id='#popupHeader'>Tickets added to cart!</p>
+					<hr id='hrBars'>
+					<p>Tekst enzo en nog een beetje hier en daar</p>
+					<hr id='hrBars'>
+					<p>Tekst enzo en nog een beetje hier en daar en mogelijk daar links nog een restje</p>
+					<hr id='hrBars'>
+					<a href='checkout.php' class='toCheckoutBTN'>To Cart</a>
+					<button class='closePopup' type='button' onclick='ShowPopup()'>Close</button>
+				</span>
+			</div>
 		</div>";
 	}
 

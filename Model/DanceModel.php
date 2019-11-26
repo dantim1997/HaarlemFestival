@@ -2,16 +2,15 @@
 require_once( "Autoloader.php");
 class DanceModel
 {
-	Public $Artists;
+	private $Artists;
 	function __construct(){
 	}
 
 	Public function GetArtists(){
-		return $Artists;
+		return $this->Artists;
 	}
 
 	Public function SetArtists($value){
-		var_dump($value);
 		$this->Artists = $value;
 	}
 }

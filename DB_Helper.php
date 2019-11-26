@@ -27,7 +27,7 @@ class DB_Helper
 	//gets all users for DB by role
 	public function Get_AllDanceEvents(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, e.Artist FROM event as e join venue as v on v.Id = e.VenueId");
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name venue, v.Location location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join Dancevenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId GROUP by e.Id ");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
@@ -44,7 +44,7 @@ class DB_Helper
 	//gets all users for DB by role
 	public function Get_AllDanceEventsByDate($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, e.Artist FROM event as e join venue as v on v.Id = e.VenueId where StartDateTime LIKE ?");
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join Dancevenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId where StartDateTime LIKE ? GROUP by e.Id");
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
@@ -61,7 +61,7 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from Artists");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from DanceArtist");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
@@ -75,12 +75,29 @@ class DB_Helper
 	}
 
 	//get user by Id from DB by Id
+	public function GetDates(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT DISTINCT DATE(StartDateTime) as Date FROM DanceEvent ");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Date); 
+		$dates = array();
+		while ($stmt -> fetch()) { 
+			$date = array("Date"=>$Date);
+			$dates[] = $date;
+		}
+		return $dates;
+	}
+
+	//get user by Id from DB by Id
 	public function GetEventsByArtist($id){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, Artist 
-			FROM event as e 
-			join venue as v on v.Id = e.VenueId
-			join performingact as p on p.EventId = e.PerformingId
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, a.Name Artist 
+			FROM DanceEvent as e 
+			join Dancevenue as v on v.Id = e.VenueId
+			join performingact as p on p.EventId = e.Id
+			join DanceArtist a on a.Id = p.ArtistId
 			where p.ArtistId = ?");
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
@@ -98,7 +115,7 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetLocations(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Location from Venue");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Location from DanceVenue");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Name, $Location); 
@@ -113,9 +130,10 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetSearch($artistSearch, $locationSearch){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, Artist FROM event as e 
-			join venue as v on v.Id = e.VenueId
-			JOIN performingact as p on p.EventId = e. PerformingId 
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, GROUP_CONCAT(a.Name) Artist FROM DanceEvent as e 
+			join DanceVenue as v on v.Id = e.VenueId
+			JOIN performingact as p on p.EventId = e.Id 
+			join DanceArtist a on a.Id = p.ArtistId
 			WHERE ".$artistSearch." ".$locationSearch." GROUP BY e.Id");
 		//$stmt->bind_param("ss", $artistSearch, $locationSearch);
 		$stmt->execute();
@@ -149,20 +167,21 @@ class DB_Helper
 	}
 
 	//Get the sessions for historic
-	public function GetSessionsByFilters($language, $day){
+	public function GetToursByFilters($language, $day){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language from event WHERE Language LIKE ? AND StartDateTime LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language from historictours WHERE Language LIKE ? AND StartDateTime LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("ss", $language, $day);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Description, $StartDateTime, $EndDateTime, $Price, $Language); 
-		$sessions = array();
+		$tours = array();
 		while ($stmt -> fetch()) { 
-			$session = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language);
-			$sessions[] = $session;
+			$tour = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language);
+			$tours[] = $tour;
 		}
-		return $sessions;
+		return $tours;
+	
 	}
 
 	public function GetAllFoodSections() {
