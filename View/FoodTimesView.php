@@ -22,7 +22,7 @@ class FoodTimesView
 	}
 
 	private function Header(){
-		return $this->FoodTimesController->GetConfig()->GetHeader("Food");
+		return $this->FoodTimesController->GetConfig()->GetHeader("FoodTimes");
 	}
 
 	private function Body(){
