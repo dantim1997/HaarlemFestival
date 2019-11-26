@@ -1,10 +1,16 @@
 .checkoutContainer{
+	display: inline-block;
+	padding: 5px;
 	width: 1500px;
-	height: 700px;
 	background-color: #E4E4E4;
-	margin: 0 auto;
+	margin-left: 200px;
 	box-shadow: 2px 3px 2px 2px #333333;
 	font-family: 'Verdana';
+}
+.bottomHalfCheckout{
+	width: 100%;
+	height: 460px;
+	float: left;
 }
 
 #checkoutlbl{
@@ -70,19 +76,28 @@
 	margin-bottom: 4%;
 }
 
+.selectlblextra{
+	margin-bottom: 8%;
+}
+
+.selectlblextra2{
+	margin-top: 8%;
+}
+
 .dropDown2{
 	float: right;
 	width: 40%;
 	height: 30px;
 	font-weight: bold;
-	margin-bottom: 2%;
+	margin-bottom: 7%;
 }
 
-.emailtxt{
+.lbltxt{
 	float: right;
 	height: 30px;
 	width: 100%;
 	font-weight: bold;
+	margin-bottom: 2%;
 	font-size: 12pt;
 	padding-left: 10px;
 }
