@@ -50,18 +50,21 @@ body {
     background-color: rgba(0, 153, 102, 1);
     padding: 40px;
     color: white;
+    font-size: 20px;
 }
 
 h1 {
-    font-size: 48px;
+    font-size: 70px;
 }
 
 h2 {
-    font-size: 40px;
+    font-size: 46px;
+    margin-bottom: 20px;
+    margin-top: 40px;
 }
 
-h2 {
-    font-size: 32px;
+p {
+    font-size: 22px;
 }
 
 .artists {
@@ -171,7 +174,7 @@ h2 {
 
 .tg td {
     font-family:Arial, sans-serif;
-    font-size:14px;
+    font-size:20px;
     padding:10px 5px;
     border-style:solid;
     border-width:1px;
@@ -182,7 +185,7 @@ h2 {
 
 .tg th {
     font-family:Arial, sans-serif;
-    font-size:14px;
+    font-size:20px;
     font-weight:normal;
     padding:10px 5px;
     border-style:solid;
@@ -193,7 +196,7 @@ h2 {
 }
 
 .tg .tg-qcxk {
-    font-size:20px;
+    font-size:26px;
     background-color:#006666;
     color:#ffffff;
     border-color:#003300;
@@ -231,7 +234,7 @@ h2 {
     color:#ffffff;
     border-color:#003300;
     text-align:center;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .dates {
@@ -297,7 +300,7 @@ h2 {
 
 .googlemaps {
     width: 100%;
-    height: 200px;
+    height: 600px;
 }
 
 hr {
@@ -318,14 +321,14 @@ hr {
 button {
     background-color: rgba(0, 153, 102, 1);
     width: 33%;
-    height: 57px;
+    height: 63px;
     color: white;
     font-weight: bold;
 }
 
 input {
     width: 33%;
-    height: 57px;
+    height: 63px;
     text-align: center;
     font-weight: bold;
 }
