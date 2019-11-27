@@ -38,18 +38,10 @@ class FoodTimesView
 			</div>
 			<div class='timeSelection'>
 				<div class='timeSelLeftSide'>
-					<label for='1630'><input type='checkbox' class='timeCheckbox' id='1630' name='1630'>16:30</label> <br />
-					<label for='1700'><input type='checkbox' class='timeCheckbox' id='1700' name='1700'>17:00</label> <br />
-					<label for='1730'><input type='checkbox' class='timeCheckbox' id='1730' name='1730'>17:30</label> <br />
-					<label for='1800'><input type='checkbox' class='timeCheckbox' id='1800' name='1800'>18:00</label> <br />
-					<label for='1830'><input type='checkbox' class='timeCheckbox' id='1830' name='1830'>18:30</label> <br />
+					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5")."
 				</div>
 				<div class='timeSelRightSide'>
-					<label for='1900'><input type='checkbox' class='timeCheckbox' id='1900' name='1900'>19:00</label> <br />
-					<label for='1930'><input type='checkbox' class='timeCheckbox' id='1930' name='1930'>19:30</label> <br />
-					<label for='2000'><input type='checkbox' class='timeCheckbox' id='2000' name='2000'>20:00</label> <br />
-					<label for='2030'><input type='checkbox' class='timeCheckbox' id='2030' name='2030'>20:30</label> <br />
-					<label for='2100'><input type='checkbox' class='timeCheckbox' id='2100' name='2100'>21:00</label> <br />
+					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5 OFFSET 5")."
 				</div>
 			</div>
 			<div class='cuisineHeader'>
