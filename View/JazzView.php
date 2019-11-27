@@ -34,39 +34,42 @@ class JazzView
 				<h1>Haarlem Jazz</h1>
 				<p>Find your Jazz genre on the four different days of the Haarlem Festival and visit the Jazz event!<br>There's free access for everyone on Sundays. So look for the artist or band you like and enjoy!</p>
 				<h2>Artists</h2>
-				<div class='artists'>
-					<div class='artist'>
-						<div class='artistname'>Gumbo Kings</div>
-						<div class='artistcontainer'>
-							<image class='artistimage' src='Images/gumbo.png'>
-							<div class='genre1'>Blues</div>
-							<div class='genre0'>0</div>
+
+
+
+						<form method='GET' action='Jazz.php'>
+					   	".$this->JazzController->MakeGenreAdvancedSearch()."
+					   	<input type='submit' value='Filter Artists'>
+						</form>
+						  
+
+
+				<div id='carouselExampleControls' class='carousel slide' data-ride='carousel'>
+  					<div class='carousel-inner'>
+						<div class='carousel-item active'>
+							<div class='artists'>
+							".$this->JazzController->MakeArtistCarousel()."
+							</div>
+    					</div>
+    					<div class='carousel-item'>
+						<div class='artists'>
+							".$this->JazzController->MakeArtistCarousel()."
 						</div>
-					</div>
-					<div class='artist'>
-						<div class='artistname'>Wicked Jazz Sounds</div>
-						<div class='artistcontainer'>
-							<image class='artistimage' src='Images/wicked.jpg'>
-							<div class='genre2'>Ragtime</div>
-							<div class='genre0'>0</div>
-						</div>
-					</div>
-					<div class='artist'>
-						<div class='artistname'>Evolve</div>
-						<div class='artistcontainer'>
-							<image class='artistimage' src='Images/evolve.png'>
-							<div class='genre1'>Blues</div>
-							<div class='genre0'>0</div>
-						</div>
-					</div>
-					<div class='artist'>
-						<div class='artistname'>Ntjam Rosie</div>
-						<div class='artistcontainer'>
-							<image class='artistimage' src='Images/ntjam.jpg'>
-							<div class='genre3'>Classic Soul</div>
-							<div class='genre4'>Classic</div>
-						</div>
-					</div>
+    					</div>
+    					<div class='carousel-item'>
+							<div class='artists'>
+							".$this->JazzController->MakeArtistCarousel()."
+							</div>
+    					</div>
+  					</div>
+  						<a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
+    					<span class='carousel-control-prev-icon' aria-hidden='true'></span>
+    					<span class='sr-only'>Previous</span>
+  						</a>
+  						<a class='carousel-control-next' href='#carouselExampleControls' role='button' data-slide='next'>
+    					<span class='carousel-control-next-icon' aria-hidden='true'></span>
+    					<span class='sr-only'>Next</span>
+  						</a>
 				</div>
 				<h2>Programme</h2>
 					<table class='tg'>
@@ -184,12 +187,7 @@ class JazzView
 					</div>
 				<div class='tickets'>
 					<hr>
-					18:00 - 19:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Gare du Nord<hr>
-					18:00 - 19:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Han Bennik<hr>
-					19:30 - 20:30&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Rilan & The Bom<hr>
-					19:30 - 20:30&nbsp;&nbsp;Third Hall&nbsp;&nbsp;The Nordanians<hr>
-					21:00 - 22:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Soul Six<hr>
-					21:00 - 22:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Lilith Merlot<hr>
+					".$this->JazzController->FillTickets("2020-07-26")."
 					All Access pass for Saturday for the event 'Jazz'<hr>
 					All Acces pass for the whole event 'Jazz'<hr>
 					<br>
@@ -222,12 +220,7 @@ class JazzView
 					</div>
 				<div class='tickets'>
 					<hr>
-					18:00 - 19:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Gare du Nord<hr>
-					18:00 - 19:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Han Bennik<hr>
-					19:30 - 20:30&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Rilan & The Bom<hr>
-					19:30 - 20:30&nbsp;&nbsp;Third Hall&nbsp;&nbsp;The Nordanians<hr>
-					21:00 - 22:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Soul Six<hr>
-					21:00 - 22:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Lilith Merlot<hr>
+					".$this->JazzController->FillTickets("2020-07-27")."
 					All Access pass for Saturday for the event 'Jazz'<hr>
 					All Acces pass for the whole event 'Jazz'<hr>
 					<br>
@@ -260,12 +253,7 @@ class JazzView
 						</div>
 					<div class='tickets'>
 						<hr>
-						18:00 - 19:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Gare du Nord<hr>
-						18:00 - 19:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Han Bennik<hr>
-						19:30 - 20:30&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Rilan & The Bom<hr>
-						19:30 - 20:30&nbsp;&nbsp;Third Hall&nbsp;&nbsp;The Nordanians<hr>
-						21:00 - 22:00&nbsp;&nbsp;Main Hall&nbsp;&nbsp; Soul Six<hr>
-						21:00 - 22:00&nbsp;&nbsp;Third Hall&nbsp;&nbsp;Lilith Merlot<hr>
+						".$this->JazzController->FillTickets("2020-07-28")."
 						All Access pass for Saturday for the event 'Jazz'<hr>
 						All Acces pass for the whole event 'Jazz'<hr>
 						<br>
@@ -285,12 +273,8 @@ class JazzView
 					<br>
 					<h2>Programme</h2>
 					<br>
-					15:00 - 16:00&nbsp;&nbsp;Ruis Soundsystem<hr>
-					16:00 - 17:00&nbsp;&nbsp;Wicked Jazz Sounds<hr>
-					17:00 - 18:00&nbsp;&nbsp;Evolve<hr>
-					18:00 - 19:00&nbsp;&nbsp;The Nordanians<hr>
-					19:00 - 20:00&nbsp;&nbsp;Gumbo Kings<hr>
-					20:00 - 21:00&nbsp;&nbsp;Gare du Nord
+					<hr>
+					".$this->JazzController->FillTickets("2020-07-29")."
 					<br>
 					<br>
 					<h2>Location<h2>

@@ -235,6 +235,74 @@ class DB_Helper
 		return $imageText;
 	}
 
+	//get Artists for Jazz
+	public function GetArtistsJazz($genreFilter){
+		if (empty($genreFilter)){
+			$genreFilter = "Genre LIKE '%'";
+		}
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT ArtistName, ArtistImage, Genre FROM jazz WHERE ".$genreFilter." GROUP BY ArtistName");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $Image, $Genre); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Name"=>$Name, "Name"=>$Name, "Image"=>$Image, "Genre"=>$Genre);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	
+
+	//get Tickets for Jazz (date format yyyy-mm-dd)
+	public function GetTicketsJazz($date){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime, Price, Hall FROM jazz WHERE StartDateTime LIKE '".$date."%' ORDER BY StartDateTime ASC");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime, $Price, $Hall); 
+		$tickets = array();
+		while ($stmt -> fetch()) { 
+			$ticket = array("Name"=>$Name, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Hall"=>$Hall);
+			$tickets[] = $ticket;
+		}
+		return $tickets;
+	}
+
+	//get Tickets for Jazz
+	public function GetTimeTableJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM jazz");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Name"=>$Name, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	public function GetGenresJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Genre FROM jazz GROUP BY Genre");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Genre); 
+		$genres = array();
+		while ($stmt -> fetch()) { 
+			$genre = array("Genre"=>$Genre);
+			$genres[] = $genre;
+		}
+		return $genres;
+	}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
