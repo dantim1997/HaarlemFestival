@@ -17,6 +17,17 @@ class FoodTimesController
 		return $this->Config;
 	}
 
+	public function GetTimes($query) {
+		$foodTimes = $this->DB_Helper->GetAllFoodSessions($query);
+		$times = "";
+		foreach ($foodTimes as $foodTime) {
+			$startDateTime = $this->RemoveDate($foodTime["SessionStartDateTime"]);
+			$cleanName = trim($startDateTime, ':');
+			$times .= "<label for='".$cleanName."'><input type='checkbox' class='timeCheckbox' id='".$cleanName."' name='".$cleanName."'>".$startDateTime."</label> <br />";
+		}
+		return $times;
+	}
+
 	public function GetSections() {
 		$foodSections = $this->DB_Helper->GetAllFoodSections();
 		$sections = "";
@@ -126,14 +137,21 @@ class FoodTimesController
 
 	private function GetSessions($name) {
 		$sessions = "";
-		$foodSessions = $this->DB_Helper->GetAllFoodSessions($name);
+		$foodSessions = $this->DB_Helper->GetFoodSessions($name);
 		foreach ($foodSessions as $foodSession) {
-			if (strlen($foodSession["SessionStartTime"]) > 5) {
-				$startTime = substr($foodSession["SessionStartTime"], 0, -3);
-			}
-		 	$sessions .= "<option value='".$startTime."'>".$startTime."</option>";
+			$startDateTime = $this->RemoveDate($foodSession["SessionStartDateTime"]);
+		 	$sessions .= "<option value='".$startDateTime."'>".$startDateTime."</option>
+		 	";
 		}
 		return $sessions;
+	}
+
+	private function RemoveDate($dateTime) {
+		$startDateTime = substr($dateTime, 11);
+		if (strlen($startDateTime) > 5) {
+			$startDateTime = substr($startDateTime, 0, -3);
+		}
+		return $startDateTime;
 	}
 }
 

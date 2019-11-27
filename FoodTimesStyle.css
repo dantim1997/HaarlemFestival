@@ -127,10 +127,6 @@ h2.searchRestaurants {
   cursor: pointer;
 }
 
-.timeCheckbox:hover, .cuisineCheckbox:hover {
-  cursor: pointer;
-}
-
 /*RESTAURANTS SECTION*/
 .restaurants {
   position: relative;

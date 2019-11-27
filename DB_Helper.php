@@ -197,16 +197,29 @@ class DB_Helper
 		return $foodSections;
 	}
 
-	public function GetAllFoodSessions($name) {
-		$stmt = $this->Conn->prepare("SELECT SessionStartTime, SessionEndTime FROM foodrestaurants WHERE Name LIKE ?");
+	public function GetAllFoodSessions($query) {
+		$stmt = $this->Conn->prepare($query);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($SessionStartDateTime);
+		$foodSessions = array();
+		while ($stmt -> fetch()) {
+			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
+			$foodSessions[] = $foodSession;
+		}
+		return $foodSessions;
+	}
+
+	public function GetFoodSessions($name) {
+		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt->bind_result($SessionStartTime, $SessionEndTime);
+		$stmt->bind_result($SessionStartDateTime);
 		$foodSessions = array();
     
 		while ($stmt -> fetch()) {
-			$foodSession = array("SessionStartTime" => $SessionStartTime, "SessionEndTime" => $SessionEndTime);
+			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
 			$foodSessions[] = $foodSession;
 		}
     
