@@ -1,3 +1,4 @@
+
 function ToggleAdvanced() {
   var x = document.getElementById('AdvancedSearch');
   if (x.style.display === "block") {
@@ -12,16 +13,16 @@ function ShowPopup() {
   	popup.classList.toggle("show");
 }
 function ToEvent(src){
-	if (src.includes("Historic")) {
+	if (src == "Historic") {
 		location.href = "Historic.php";
 	}
-	if (src.includes("Jazz")) {
+	if (src == "Jazz") {
 		location.href = "jazz.php";
 	}
-	if (src.includes("Dance")) {
+	if (src == "Dance") {
 		location.href = "Dance.php";
 	}
-	if (src.includes("Food")) {
+	if (src == "Food") {
 		location.href = "food.php";
 	}
 }
@@ -39,4 +40,11 @@ function SelectedDay(date){
 	  slides[i].style.display = "none";
 	}
 	elem.style.display = "block";
+}
+
+function ShoppingCartPlus(){
+	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
+	number = number + 1;
+	document.getElementById("shoppingcartCount").innerHTML = number;
+
 }

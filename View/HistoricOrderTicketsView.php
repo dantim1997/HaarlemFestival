@@ -5,11 +5,14 @@ class HistoricOrderTicketsView
 	private $HistoricOrderTicketsController;
 	private $HistoricOrderTicketsModel;
 	private $ticketInformation;
+	private $PageContentHelper;
 
 	public function __construct($historicOrderTicketsController, $historicOrderTicketsModel)
 	{
 		$this->HistoricOrderTicketsController = $historicOrderTicketsController;
 		$this->HistoricOrderTicketsModel = $historicOrderTicketsModel;
+		$this->PageContentHelper = new PageContentHelper();
+
 	}
 
 	//output to html
@@ -34,13 +37,13 @@ class HistoricOrderTicketsView
 				<div class='orderTicketsSelection'>
 							<div class='orderTicketsheaderContainer'>
 								<div class='blackBar5'></div>
-									<h2 class='orderTicketsHeader'>Order tickets</h2>
+									<h2 class='orderTicketsHeader'>".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "1")."</h2>
 								<div class='blackBar5'></div>
 							</div>
 
 							<p class='orderTicketslabels'>
-								Select language:<br>
-								Select day:
+								".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "2")."<br>
+								".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "3")."
 							</p>
 							<form method='post' action='historicOrderTickets.php'>
 								<div class='orderTicketsDropdwn'>
@@ -52,10 +55,10 @@ class HistoricOrderTicketsView
 									</select><br>
 									<select name='day' class='dropDown' onchange='this.form.submit()'>
 										<option value='-'>-</option>
-										<option value='2020-07-26'>Thursday 26th of Juli</option>
-										<option value='2020-07-27'>Friday 27th of Juli</option>
-										<option value='2020-07-28'>Saturday 28th of Juli</option>
-										<option value='2020-07-29'>Sunday 29th of Juli</option>
+										<option value='2020-07-26'>Sunday 26th of Juli</option>
+										<option value='2020-07-27'>Monday 27th of Juli</option>
+										<option value='2020-07-28'>Tuesday 28th of Juli</option>
+										<option value='2020-07-29'>Wednesday 29th of Juli</option>
 									</select>
 								</div>	
 							</form>	
@@ -65,8 +68,8 @@ class HistoricOrderTicketsView
 				<h5 class='dayLabel'>".$this->ticketInformation['day']."</h5>
 
 				<div class='ticketsContainer'>
-					<h5 class='normalTicket'>Normal ticket € 17,50</h5>
-					<h5 class='familyTicket'>Family ticket 4 people € 60 (€ 15 p.p.)</h5>
+					<h5 class='normalTicket'>".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "4")."</h5>
+					<h5 class='familyTicket'>".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "5")."</h5>
 
 					<div class='normalTickets'> 
 					".$this->ticketInformation['normalTickets']."
@@ -79,7 +82,7 @@ class HistoricOrderTicketsView
 
 				<!-- Proceed to checkout button -->
 				<form method='post' action='checkout.php'>	
-					<input class='proceedToCheckoutButton' type='submit' value='Proceed to checkout' name='ProceedToCheckout'>
+					<input class='proceedToCheckoutButton' type='submit' value='".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "6")."' name='ProceedToCheckout'>
 				</form>
 			</div>
 		</div>";

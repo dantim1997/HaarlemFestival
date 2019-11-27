@@ -4,6 +4,5 @@ class HistoricOrderTicketsModel
 {
 	function __construct(){
 	}
-
 }
 ?>

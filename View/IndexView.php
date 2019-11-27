@@ -31,10 +31,30 @@ class IndexView
 			<div class='RedBar'></div>
 			<div class='HomepageImages'>
 				<image class='Logo' src='Images/Logo.png'>
-					<image class='HomepageImage' src='Images/Food.png' onclick='ToEvent(src)'>
-					<image class='HomepageImage' src='Images/Dance.png' onclick='ToEvent(src)'>
-					<image class='HomepageImage' src='Images/Historic.png' onclick='ToEvent(src)'>
-					<image class='HomepageImage' src='Images/Jazz.png' onclick='ToEvent(src)'>
+					<div class='Imagecontainer'>
+						<image class='HomepageImage' src='Images/Food.png'>
+					    <div class='overlay' id='Food' onclick='ToEvent(id)'>
+						  <div class='imageText'>Haarlem<br>Food</div>
+						</div>
+					</div>
+					<div class='Imagecontainer'>
+						<image class='HomepageImage' src='Images/Dance.png'>
+						<div class='overlay' id='Dance' onclick='ToEvent(id)'>
+						    <div class='imageText'>Haarlem<br>Dance</div>
+						</div>
+					</div>
+					<div class='Imagecontainer'>
+						<image class='HomepageImage' src='Images/Historic.png'>
+						<div class='overlay' id='Historic' onclick='ToEvent(id)'>
+						    <div class='imageText'>Haarlem<br>Historic</div>
+						</div>
+					</div>
+					<div class='Imagecontainer'>
+						<image class='HomepageImage' src='Images/Jazz.png'>
+						<div class='overlay' id='Jazz' onclick='ToEvent(id)'>
+						    <div class='imageText'>Haarlem<br>Jazz</div>
+						</div>
+					</div>
 			</div>
 			<div class='RedBar'></div>
 

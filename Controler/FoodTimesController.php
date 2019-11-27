@@ -131,8 +131,7 @@ class FoodTimesController
 			if (strlen($foodSession["SessionStartTime"]) > 5) {
 				$startTime = substr($foodSession["SessionStartTime"], 0, -3);
 			}
-		 	$sessions .= "<option value='".$startTime."'>".$startTime."</option>
-		 	";
+		 	$sessions .= "<option value='".$startTime."'>".$startTime."</option>";
 		}
 		return $sessions;
 	}

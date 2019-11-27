@@ -51,7 +51,7 @@ class HistoricOrderTicketsController
 								<button class='removeBTN' type='button' >-</button>
 								<input class='ticketTxt' type='text' value='0'>
 								<button class='addBTN' type='button'>+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
+								<button class='addToCartBTN' type='button' onclick='ShowPopup();ShoppingCartPlus()'></button>
 							</div>";
 		}
 
@@ -77,7 +77,7 @@ class HistoricOrderTicketsController
 								<button class='removeBTN' type='button' >-</button>
 								<input class='ticketTxt' type='text' value='0'>
 								<button class='addBTN' type='button'>+</button>
-								<button class='addToCartBTN' type='button' onclick='ShowPopup()'></button>
+								<button class='addToCartBTN' type='button' onclick='ShowPopup();ShoppingCartPlus()'></button>
 							</div>";
 		}
 
