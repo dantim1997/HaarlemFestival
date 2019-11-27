@@ -217,13 +217,38 @@ class DB_Helper
 		$stmt->store_result();
 		$stmt->bind_result($SessionStartDateTime);
 		$foodSessions = array();
+    
 		while ($stmt -> fetch()) {
 			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
 			$foodSessions[] = $foodSession;
 		}
+    
 		return $foodSessions;
 	}
 
+	public function Get_PageText($page, $sequence){
+		$stmt = $this->Conn->prepare("SELECT ParagraphText FROM EventParagraph WHERE EventPage LIKE ? AND PageSequenceNumber LIKE ?");
+		$stmt->bind_param("ss", $page, $sequence);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($string); 
+		while ($stmt -> fetch()) {
+			$pageText = $string;
+		}
+		return $pageText;
+	}
+
+	public function Get_PageImage($page, $sequence){
+		$stmt = $this->Conn->prepare("SELECT Image FROM EventImage WHERE EventPage LIKE ? AND PageSequenceNumber LIKE ?");
+		$stmt->bind_param("ss", $page, $sequence);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($string); 
+		while ($stmt -> fetch()) {
+			$imageText = $string;
+		}
+		return $imageText;
+	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
