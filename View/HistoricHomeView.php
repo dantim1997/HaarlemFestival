@@ -45,7 +45,6 @@ class HistoricHomeView
 						<img class='languageFlagHome' src='".next($pageImages)."'>
 					</div>
 			</div>
-
 			<div class='historicBoxes'>
 				<div class='historicBox'>
 					<div class='headerContainer'><div class='blackBar2'></div><h2>".next($pageTexts)."</h2><div class='blackBar2'></div></div><br>
