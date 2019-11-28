@@ -28,9 +28,11 @@ class CheckoutView
 
 	private function Body(){
 		$nav = new Nav();
+		//Getting all page content of Historic home in an array
+		$pageTexts = $this->PageContentHelper->GetPageText("Checkout");
 		return $nav->SetNavBar("Checkout")."<div id='main'>
 			<div class='checkoutContainer'>
-				<h2 id='checkoutlbl'>".$this->PageContentHelper->GetPageText("Checkout", "1")."</h2>
+				<h2 id='checkoutlbl'>".current($pageTexts)."</h2>
 
 				<!-- date of ticket in cart -->
 				<h3 id='daylbl'>Saturday Juli 28th (hier kan elke datum als var)</h3>
@@ -75,25 +77,25 @@ class CheckoutView
 							</div>
 
 							<div class='labels'>
-								<h3 class='selectlbl selectlblextra'>".$this->PageContentHelper->GetPageText("Checkout", "3")."</h3>
-								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "4")."</h3>
-								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "5")."</h3>
-								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "6")."</h3>
-								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "7")."</h3>
-								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "8")."</h3>
-								<h3 class='selectlbl selectlblextra2'>".$this->PageContentHelper->GetPageText("Checkout", "9")."</h3>
+								<h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl selectlblextra2'>".next($pageTexts)."</h3>
 							</div>
 
 							<input class='extraNotestxt' type='text' placeholder='Special needs (allergies, wheelchair access, etc.):' name='??????'>
 							
 							<!-- proceed to payment button -->
 							<form method='post' action=''>	
-								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='".$this->PageContentHelper->GetPageText("Checkout", "10")."' name='proceedToPaymentBTN'>
+								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='".next($pageTexts)."' name='proceedToPaymentBTN'>
 							</form>
 
 						</div>
 					
-					<h2 id='totallbl'>".$this->PageContentHelper->GetPageText("Checkout", "2")."</h2>	<!--Hier de totale prijs als var !-->
+					<h2 id='totallbl'>".next($pageTexts)."</h2>	<!--Hier de totale prijs als var !-->
 				</div>
 			</div>
 		</div>";
