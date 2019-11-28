@@ -226,28 +226,32 @@ class DB_Helper
 		return $foodSessions;
 	}
 
-	public function Get_PageText($page, $sequence){
-		$stmt = $this->Conn->prepare("SELECT ParagraphText FROM EventParagraph WHERE EventPage LIKE ? AND PageSequenceNumber LIKE ?");
-		$stmt->bind_param("ss", $page, $sequence);
+	public function Get_PageText($page){
+		$stmt = $this->Conn->prepare("SELECT ParagraphText FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+		$stmt->bind_param("s", $page);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($string); 
+		$stmt-> bind_result($string);
+		$pageTextContent = array(); 
 		while ($stmt -> fetch()) {
 			$pageText = $string;
+			$pageTextContent[] = $pageText;
 		}
-		return $pageText;
+		return $pageTextContent;
 	}
 
-	public function Get_PageImage($page, $sequence){
-		$stmt = $this->Conn->prepare("SELECT Image FROM EventImage WHERE EventPage LIKE ? AND PageSequenceNumber LIKE ?");
-		$stmt->bind_param("ss", $page, $sequence);
+	public function Get_PageImage($page){
+		$stmt = $this->Conn->prepare("SELECT Image FROM EventImage WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+		$stmt->bind_param("s", $page);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($string); 
+		$pageImageContent = array(); 
 		while ($stmt -> fetch()) {
-			$imageText = $string;
+			$imageContent = $string;
+			$pageImageContent[] = $imageContent;
 		}
-		return $imageText;
+		return $pageImageContent;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
