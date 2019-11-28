@@ -29,63 +29,66 @@ class HistoricTicketInfoView
 
 	private function Body(){
 		$nav = new Nav();
+		//Getting all page content of Historic ticket info in an array
+		$pageTexts = $this->PageContentHelper->GetPageText("HistoricTicketInfo");
+		$pageImages = $this->PageContentHelper->GetPageImage("HistoricTicketInfo");
 		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 		<div class='pageCenter'>
 			<div class='ticketInfoContainer'>
-				<div class='headerContainer'><div class='blackBar3'></div><h2>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "1")."</h2><div class='blackBar3'></div></div><br>
-				<h5 id='centerAndWide'>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "2")."</h5>
+				<div class='headerContainer'><div class='blackBar3'></div><h2>".current($pageTexts)."</h2><div class='blackBar3'></div></div><br>
+				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<div class='languageFlags'>
-						<img class='languageFlag' src='".$this->PageContentHelper->GetPageImage("HistoricTicketInfo", "1")."'><h5>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "3")."</h5>
-						<img class='languageFlag' src='".$this->PageContentHelper->GetPageImage("HistoricTicketInfo", "2")."'><h5>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "4")."</h5>
-						<img class='languageFlag' src='".$this->PageContentHelper->GetPageImage("HistoricTicketInfo", "3")."'><h5>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "5")."</h5>
+						<img class='languageFlag' src='".current($pageImages)."'><h5>".next($pageTexts)."</h5>
+						<img class='languageFlag' src='".next($pageImages)."'><h5>".next($pageTexts)."</h5>
+						<img class='languageFlag' src='".next($pageImages)."'><h5>".next($pageTexts)."</h5>
 					</div>
-				<h5 id='centerAndWide'>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "6")."</h5>
+				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<p class='dates'>	
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "7")."<br> 	
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "8")."<br>		
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "9")."<br>	
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "10")."	
+						".next($pageTexts)."<br> 	
+						".next($pageTexts)."<br>		
+						".next($pageTexts)."<br>	
+						".next($pageTexts)."	
 					</p>
 					<p class='times'>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "11")."<br>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "12")."<br>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "13")."<br>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "14")."
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."
 					</p>
 
-				<h5 id='centerAndWide'>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "15")."</h5>
+				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<p class='dates'>	
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "16")."<br>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "17")."<br>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "18")."	
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."	
 					</p>
 					<p class='times'>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "19")."<br>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "20")."<br>
-						".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "21")."
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."
 					</p>
 			</div>
 			<div class='ticketInfoContainer'>
-				<div class='headerContainer'><div class='blackBar4'></div><h2>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "22")."</h2><div class='blackBar4'></div></div><br>
+				<div class='headerContainer'><div class='blackBar4'></div><h2>".next($pageTexts)."</h2><div class='blackBar4'></div></div><br>
 				<p class='pricesmoreHeader'>
-					<b>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "23")."<br>
- 					".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "24")."
+					<b>".next($pageTexts)."<br>
+ 					".next($pageTexts)."
     			</p>
     			<p id='centerAndWide' class='pricesMoreText'>
-					".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "25")."
+					".next($pageTexts)."
     			</p>
     			<p id='centerAndWide' class='pricesMoreText'>
-					".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "26")."
+					".next($pageTexts)."
     			</p>
     			<p id='centerAndWide' class='pricesMoreText'>
-					<b>".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "27")."</b><br>
-					".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "28")."
+					<b>".next($pageTexts)."</b><br>
+					".next($pageTexts)."
     			</p>
 
     			<!-- Order now button -->
 				<form method='post' action='historicOrderTickets.php'>	
-					<input class='orderNowButton' type='submit' value='".$this->PageContentHelper->GetPageText("HistoricTicketInfo", "29")."' name='histroricOrderTicketsBTN'>
+					<input class='orderNowButton' type='submit' value='".next($pageTexts)."' name='histroricOrderTicketsBTN'>
 				</form>
 			</div>
 		</div>

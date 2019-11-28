@@ -31,19 +31,21 @@ class HistoricOrderTicketsView
 
 	private function Body(){
 		$nav = new Nav();
+		//Get all the content and put it in an array
+		$pageTexts = $this->PageContentHelper->GetPageText("HistoricOrderTickets");
 		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 			<div class='orderTicketsContainer'>
 				<div class='orderTicketsSelection'>
 							<div class='orderTicketsheaderContainer'>
 								<div class='blackBar5'></div>
-									<h2 class='orderTicketsHeader'>".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "1")."</h2>
+									<h2 class='orderTicketsHeader'>".current($pageTexts)."</h2>
 								<div class='blackBar5'></div>
 							</div>
 
 							<p class='orderTicketslabels'>
-								".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "2")."<br>
-								".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "3")."
+								".next($pageTexts)."<br>
+								".next($pageTexts)."
 							</p>
 							<form method='post' action='historicOrderTickets.php'>
 								<div class='orderTicketsDropdwn'>
@@ -68,8 +70,8 @@ class HistoricOrderTicketsView
 				<h5 class='dayLabel'>".$this->ticketInformation['day']."</h5>
 
 				<div class='ticketsContainer'>
-					<h5 class='normalTicket'>".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "4")."</h5>
-					<h5 class='familyTicket'>".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "5")."</h5>
+					<h5 class='normalTicket'>".next($pageTexts)."</h5>
+					<h5 class='familyTicket'>".next($pageTexts)."</h5>
 
 					<div class='normalTickets'> 
 					".$this->ticketInformation['normalTickets']."
@@ -82,7 +84,7 @@ class HistoricOrderTicketsView
 
 				<!-- Proceed to checkout button -->
 				<form method='post' action='checkout.php'>	
-					<input class='proceedToCheckoutButton' type='submit' value='".$this->PageContentHelper->GetPageText("HistoricOrderTickets", "6")."' name='ProceedToCheckout'>
+					<input class='proceedToCheckoutButton' type='submit' value='".next($pageTexts)."' name='ProceedToCheckout'>
 				</form>
 			</div>
 		</div>";
