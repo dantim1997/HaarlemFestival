@@ -8,6 +8,16 @@ function ToggleAdvanced() {
   }
 }
 
+function AddToCart(eventId, typeEvent) {
+         $.ajax({ url: 'AddToCart.php',
+         data: {eventId: eventId,typeEvent: typeEvent},
+         type: 'post',
+         success: function(output) {
+                      alert(output);
+         }
+		});
+     }
+
 function ShowPopup() {
   	var popup = document.getElementById("myPopup");
   	setTimeout( popup.style.display = 'block', 10000);

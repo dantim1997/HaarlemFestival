@@ -1,9 +1,10 @@
 <?php
-
+require_once( "Autoloader.php");
 class Nav
 {
 	function __construct()
 	{
+		$this->Session = new Session;
 	}
 
 	function SetNavBar($event){
@@ -23,7 +24,7 @@ class Nav
 				</div>
 				<a href='checkout.php'>
 					<div class='ShoppingCart'>
-						<div class='shopcartItems' id='shoppingcartCount'>0</div>
+						<div class='shopcartItems' id='shoppingcartCount'>".$this->GetCartItems()."</div>
 					</div>
 				</a>
 		</div>
@@ -59,6 +60,15 @@ class Nav
 			}
 			return "<div class='NavLinks'><a class='Link' href='".$event.".php'><div class='NavText'>".$event."</div></a></div>";
 		}
+	}
+
+	public function GetCartItems(){
+		
+		$shoppingCartAmount = 0;
+		foreach ($_SESSION['Tickets'] as $items) {
+			$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+		}
+		return $shoppingCartAmount;
 	}
 
 }
