@@ -8,15 +8,26 @@ function ToggleAdvanced() {
   }
 }
 
-function AddToCart(eventId, typeEvent) {
-         $.ajax({ url: 'AddToCart.php',
-         data: {eventId: eventId,typeEvent: typeEvent},
-         type: 'post',
-         success: function(output) {
-                      alert(output);
-         }
-		});
+function AddToCart(eventId, typeEvent, amount) {
+     $.ajax({ url: 'AddToCart.php',
+     data: {eventId: eventId,typeEvent: typeEvent, amount:amount},
+     type: 'post',
+     success: function(output) {
+                   ShowPopup();
      }
+	});
+}
+
+function RemoveFromCart(self,eventId, typeEvent) {
+     $.ajax({ url: 'RemoveFromCart.php',
+     data: {eventId: eventId,typeEvent: typeEvent},
+     type: 'post',
+     success: function(output) {
+     	ShoppingCartmin(output);
+     	self.parentNode.style.display='none';
+     }
+	});
+}
 
 function ShowPopup() {
   	var popup = document.getElementById("myPopup");
@@ -59,6 +70,12 @@ function SelectedDay(date){
 function ShoppingCartPlus(){
 	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
 	number = number + 1;
+	document.getElementById("shoppingcartCount").innerHTML = number;
+}
+
+function ShoppingCartmin(amount){
+	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
+	number = number - amount;
 	document.getElementById("shoppingcartCount").innerHTML = number;
 
 }

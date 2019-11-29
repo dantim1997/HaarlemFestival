@@ -63,12 +63,13 @@ class Nav
 	}
 
 	public function GetCartItems(){
-		
-		$shoppingCartAmount = 0;
-		foreach ($_SESSION['Tickets'] as $items) {
-			$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+		if(isset($_SESSION['Tickets'])){
+			$shoppingCartAmount = 0;
+			foreach ($_SESSION['Tickets'] as $items) {
+				$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+			}
+			return $shoppingCartAmount;
 		}
-		return $shoppingCartAmount;
 	}
 
 }

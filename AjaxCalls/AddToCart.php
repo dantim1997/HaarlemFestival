@@ -6,6 +6,5 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
     $amount = $_POST['amount'];
     $session = new Session;
     $session->AddToCart($eventId,$TypeEvent,$amount);
-    print "test";
 }
 ?>
