@@ -43,7 +43,7 @@ class DanceTimeTableController
 			$fullRow .="
 	      <TD colspan='".$durationEvent."' class='Event'>
 	        <div class='AddText'>".$event["artist"]."<br>€ ".$event["price"]."</div>
-	        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
+	        <div class='Add'><input class='AddButton' type='Button' onclick='ShowPopup();ShoppingCartPlus()' name='Add' value='+'></div>
 	      </TD>";
 
 	    for ($i=0; $i < (25-($emptyTime + $durationEvent)); $i++) { 

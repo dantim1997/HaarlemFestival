@@ -28,9 +28,9 @@ class Nav
 				</a>
 		</div>
 
-		<div class='popup'>
+		<div id='myPopup' class='popup'>
 			<div class='popupContent'>
-				<span class='popuptext' id='myPopup'>
+				<span class='popuptext' >
 					<p id='#popupHeader'>Tickets added to cart!</p>
 					<hr id='hrBars'>
 					<p>Tekst enzo en nog een beetje hier en daar</p>

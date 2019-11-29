@@ -10,7 +10,11 @@ function ToggleAdvanced() {
 
 function ShowPopup() {
   	var popup = document.getElementById("myPopup");
-  	popup.classList.toggle("show");
+  	setTimeout( popup.style.display = 'block', 10000);
+  	setTimeout(function () {
+  	popup.style.display = 'none';
+    }, 2000);
+  	
 }
 function ToEvent(src){
 	if (src == "Historic") {
