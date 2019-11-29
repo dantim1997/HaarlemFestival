@@ -218,23 +218,6 @@ class DB_Helper
 		return $events;
 	}
 
-	//get user by Id from DB by Id
-	public function GetUser($Id){
-		//clean Id
-		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT u.ID, Username, Role, Email, Registration_date, Image, r.Rolename from user as u inner join role as r on u.Role = r.Id where u.ID = ? limit 1 ");
-		$stmt->bind_param("i", $IdSQL);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($Id, $Username, $role, $email, $registration_date, $image, $RoleName); 
-		$User = array();
-		while ($stmt -> fetch()) { 
-			$user = array("ID"=>$Id, "Username"=>$Username, "Role"=>$role, "Email"=>$email, "Registration_date"=>$registration_date, "Image"=>$image, "RoleName"=>$RoleName);
-			$User = $user;
-		}
-		return $User;
-	}
 
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
