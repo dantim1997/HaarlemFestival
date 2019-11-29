@@ -1,5 +1,5 @@
 /*GLOBAL RESET*/
-*{
+* {
     margin: 0;
     padding: 0;
     border: 0;
@@ -21,10 +21,11 @@
 
 .searchHeader {
   position: sticky;
-  width: 270px;
+  width: 269px;
   height: 35px;
   background-color: #B2B2B2;
   border-radius: 10px 10px 0px 0px;
+  border-right: 1px solid grey;
   text-align: center;
 }
 
@@ -35,10 +36,11 @@ h2.searchRestaurants {
 
 .timeHeader {
   position: relative;
-  width: 270px;
+  width: 269px;
   height: 30px;
   background-color: rgba(242, 242, 242, 1);
   border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
   font-family: 'Arial';
   font-size: 20px;
 }
@@ -71,10 +73,11 @@ h2.searchRestaurants {
 .cuisineHeader {
   position: relative;
   top: -50px;
-  width: 270px;
+  width: 269px;
   height: 30px;
   background-color: rgba(242, 242, 242, 1);
   border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
   border-top: 1px solid grey;
   font-family: 'Arial';
   font-size: 20px;
@@ -121,10 +124,6 @@ h2.searchRestaurants {
 
 .searchRBtn:hover {
   opacity: 0.6;
-  cursor: pointer;
-}
-
-.timeCheckbox:hover, .cuisineCheckbox:hover {
   cursor: pointer;
 }
 
@@ -175,7 +174,6 @@ p.restaurantInfoP {
   left: 20px;
   width: 600px;
   height: 405px;
-  border: 1px solid black;
 }
 
 .prices {

@@ -4,11 +4,14 @@ class HistoricTicketInfoView
 {
 	private $HistoricTicketInfoController;
 	private $HistoricTicketInfoModel;
+	private $PageContentHelper;
 
 	public function __construct($historicTicketInfoController, $historicTicketInfoModel)
 	{
 		$this->HistoricTicketInfoController = $historicTicketInfoController;
 		$this->HistoricTicketInfoModel = $historicTicketInfoModel;
+		$this->PageContentHelper = new PageContentHelper();
+
 	}
 
 	//output to html
@@ -26,69 +29,66 @@ class HistoricTicketInfoView
 
 	private function Body(){
 		$nav = new Nav();
+		//Getting all page content of Historic ticket info in an array
+		$pageTexts = $this->PageContentHelper->GetPageText("HistoricTicketInfo");
+		$pageImages = $this->PageContentHelper->GetPageImage("HistoricTicketInfo");
 		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 		<div class='pageCenter'>
 			<div class='ticketInfoContainer'>
-				<div class='headerContainer'><div class='blackBar3'></div><h2>Time & date</h2><div class='blackBar3'></div></div><br>
-				<h5 id='centerAndWide'>The tours will be available in:</h5>
+				<div class='headerContainer'><div class='blackBar3'></div><h2>".current($pageTexts)."</h2><div class='blackBar3'></div></div><br>
+				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<div class='languageFlags'>
-						<img class='languageFlag' src='Images/Dutchflag.png'><h5>Dutch</h5>
-						<img class='languageFlag' src='Images/EnglishFlag.png'><h5>English</h5>
-						<img class='languageFlag' src='Images/Chinaflag.png'><h5>Chinese</h5>
+						<img class='languageFlag' src='".current($pageImages)."'><h5>".next($pageTexts)."</h5>
+						<img class='languageFlag' src='".next($pageImages)."'><h5>".next($pageTexts)."</h5>
+						<img class='languageFlag' src='".next($pageImages)."'><h5>".next($pageTexts)."</h5>
 					</div>
-				<h5 id='centerAndWide'>The guided tours will be held on:</h5>
+				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<p class='dates'>	
-						Thursday 26th of Juli<br> 	
-						Friday 27th of Juli<br>		
-						Saturday 28th of Juli<br>	
-						Sunday 29th of Juli		
+						".next($pageTexts)."<br> 	
+						".next($pageTexts)."<br>		
+						".next($pageTexts)."<br>	
+						".next($pageTexts)."	
 					</p>
 					<p class='times'>
-						10:00, 13:00 and 16:00<br>
-						10:00, 13:00 and 16:00<br>
-						10:00, 13:00 and 16:00<br>
-						10:00, 13:00 and 16:00
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."
 					</p>
 
-				<h5 id='centerAndWide'>However the Chinese tours will only be available at the following days:</h5>
+				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<p class='dates'>	
-						Friday 27th of Juli<br>
-						Saturday 28th of Juli<br>
-						Sunday 29th of Juli	
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."	
 					</p>
 					<p class='times'>
-						13:00<br>
-						13:00 and 16:00<br>
-						10:00 and 13:00
+						".next($pageTexts)."<br>
+						".next($pageTexts)."<br>
+						".next($pageTexts)."
 					</p>
 			</div>
 			<div class='ticketInfoContainer'>
-				<div class='headerContainer'><div class='blackBar4'></div><h2>Prices & more</h2><div class='blackBar4'></div></div><br>
+				<div class='headerContainer'><div class='blackBar4'></div><h2>".next($pageTexts)."</h2><div class='blackBar4'></div></div><br>
 				<p class='pricesmoreHeader'>
-					<b>Regular Participant: € 17,50<br>
- 					Family ticket (max. 4 participants): € 60<br></b>
-    				(tour including one drink p.p.)
+					<b>".next($pageTexts)."<br>
+ 					".next($pageTexts)."
     			</p>
     			<p id='centerAndWide' class='pricesMoreText'>
-					The tour starts near the Church of St. Bavo at the ‘Grote markt’<br>
-					which is located in the centre of Haarlem. The exact starting location<br>
-					will be marked with a giant flag marked ‘Haarlem Historic’
+					".next($pageTexts)."
     			</p>
     			<p id='centerAndWide' class='pricesMoreText'>
-					Each tour has a maximum of 12 participants + 1 guide.<br>
-					The tour will take aproximatly 2,5 hours with a 15-minute break<br> 
-					with refreshments.
+					".next($pageTexts)."
     			</p>
     			<p id='centerAndWide' class='pricesMoreText'>
-					<b>Please note!</b><br>
-					Due to the nature of this walk participants must be a <br>
-					minimum of 12 years old and no strollers are allowed.
+					<b>".next($pageTexts)."</b><br>
+					".next($pageTexts)."
     			</p>
 
     			<!-- Order now button -->
 				<form method='post' action='historicOrderTickets.php'>	
-					<input class='orderNowButton' type='submit' value='Order now' name='histroricOrderTicketsBTN'>
+					<input class='orderNowButton' type='submit' value='".next($pageTexts)."' name='histroricOrderTicketsBTN'>
 				</form>
 			</div>
 		</div>

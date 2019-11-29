@@ -4,11 +4,13 @@ class CheckoutView
 {
 	private $CheckoutController;
 	private $CheckoutModel;
+	private $PageContentHelper;
 
 	public function __construct($checkoutController, $checkoutModel)
 	{
 		$this->CheckoutController = $checkoutController;
 		$this->CheckoutModel = $checkoutModel;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//output to html
@@ -26,9 +28,11 @@ class CheckoutView
 
 	private function Body(){
 		$nav = new Nav();
+		//Getting all page content of Historic home in an array
+		$pageTexts = $this->PageContentHelper->GetPageText("Checkout");
 		return $nav->SetNavBar("Checkout")."<div id='main'>
 			<div class='checkoutContainer'>
-				<h2 id='checkoutlbl'>Checkout</h2>
+				<h2 id='checkoutlbl'>".current($pageTexts)."</h2>
 
 				<!-- date of ticket in cart -->
 				<h3 id='daylbl'>Saturday Juli 28th (hier kan elke datum als var)</h3>
@@ -53,37 +57,46 @@ class CheckoutView
 							</form>
 					</div
 					-->
+				<div class='bottomHalfCheckout'>
+					<div class='bottomBar'></div>
 
-				<div class='bottomBar'></div>
+						<div class='checkoutControls'>
+							<div class='input'>
+								<select class='dropDown2'>
+									<option value='-'>-</option>
+									<option value='IDEAL'>IDEAL</option>
+									<option value='VISA'>VISA</option>
+									<option value='Paypal'>Paypal</option>
+								</select>					
 
-					<div class='checkoutControls'>
-						<div class='input'>
-							<select class='dropDown2'>
-								<option value='-'>-</option>
-								<option value='IDEAL'>IDEAL</option>
-								<option value='VISA'>VISA</option>
-								<option value='Paypal'>Paypal</option>
-							</select>					
+								<input class='lbltxt' type='text' placeholder='Firstname' name='??????'>
+								<input class='lbltxt' type='text' placeholder='Lastname' name='??????'>
+								<input class='lbltxt' type='text' placeholder='Email' name='??????'>
+								<input class='lbltxt' type='text' placeholder='Address' name='??????'>
+								<input class='lbltxt' type='text' placeholder='Phone number' name='??????'>
+							</div>
 
-							<input class='emailtxt' type='text' placeholder='email' name='??????'>
+							<div class='labels'>
+								<h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl'>".next($pageTexts)."</h3>
+								<h3 class='selectlbl selectlblextra2'>".next($pageTexts)."</h3>
+							</div>
+
+							<input class='extraNotestxt' type='text' placeholder='Special needs (allergies, wheelchair access, etc.):' name='??????'>
+							
+							<!-- proceed to payment button -->
+							<form method='post' action=''>	
+								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='".next($pageTexts)."' name='proceedToPaymentBTN'>
+							</form>
+
 						</div>
-
-						<div class='labels'>
-							<h3 class='selectlbl'>Select payment method</h3>
-							<h3 class='selectlbl'>Enter email</h3>
-						</div>
-
-						<input class='extraNotestxt' type='text' placeholder='Special needs (allergies, wheelchair access, etc.):' name='??????'>
-						
-						<!-- proceed to payment button -->
-						<form method='post' action=''>	
-							<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='Proceed to payment' name='proceedToPaymentBTN'>
-						</form>
-
-					</div>
-				
-				<h2 id='totallbl'>Total due:</h2>	<!--Hier de totale prijs als var !-->
-
+					
+					<h2 id='totallbl'>".next($pageTexts)."</h2>	<!--Hier de totale prijs als var !-->
+				</div>
 			</div>
 		</div>";
 	}

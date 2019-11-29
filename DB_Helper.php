@@ -271,7 +271,75 @@ class DB_Helper
 		}
 		return $User;
 	}
+	public function GetAllFoodSections() {
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants  GROUP BY Name");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
+		$foodSections = array();
+		while ($stmt -> fetch()) {
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="data:image/jpeg;base64,'.base64_encode( $Logo ).'" class="restaurantInfoImages"/>', );
+			$foodSections[] = $foodSection;
+		}
+		return $foodSections;
+	}
 
+	public function GetAllFoodSessions($query) {
+		$stmt = $this->Conn->prepare($query);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($SessionStartDateTime);
+		$foodSessions = array();
+		while ($stmt -> fetch()) {
+			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
+			$foodSessions[] = $foodSession;
+		}
+		return $foodSessions;
+	}
+
+	public function GetFoodSessions($name) {
+		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($SessionStartDateTime);
+		$foodSessions = array();
+    
+		while ($stmt -> fetch()) {
+			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
+			$foodSessions[] = $foodSession;
+		}
+    
+		return $foodSessions;
+	}
+
+	public function Get_PageText($page){
+		$stmt = $this->Conn->prepare("SELECT ParagraphText FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+		$stmt->bind_param("s", $page);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($string);
+		$pageTextContent = array(); 
+		while ($stmt -> fetch()) {
+			$pageText = $string;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	public function Get_PageImage($page){
+		$stmt = $this->Conn->prepare("SELECT Image FROM EventImage WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+		$stmt->bind_param("s", $page);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($string); 
+		$pageImageContent = array(); 
+		while ($stmt -> fetch()) {
+			$imageContent = $string;
+			$pageImageContent[] = $imageContent;
+		}
+		return $pageImageContent;
+	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert

@@ -23,7 +23,7 @@ class Nav
 				</div>
 				<a href='checkout.php'>
 					<div class='ShoppingCart'>
-						<div class='shopcartItems'>1</div>
+						<div class='shopcartItems' id='shoppingcartCount'>0</div>
 					</div>
 				</a>
 		</div>
