@@ -42,9 +42,10 @@ class HistoricOrderTicketsController
 	public function BuildNormalTickets($tours){
 		$normalTickets = "<div class='normalTicketsLabels'>";
 
-		//Add the text of each ticket
+		//Add the text of each ticket.
 		foreach ($tours as $tour) {
 			$normalTickets .= "<h5 class=ticket>".$tour->Description."</h5>";
+
 		}
 
 		$normalTickets .= "</div>";
