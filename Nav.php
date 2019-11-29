@@ -16,7 +16,7 @@ class Nav
 				".$this->SetEvent("Dance", $event)."
 				".$this->SetEvent("Historic", $event)."
 				".$this->SetEvent("Jazz", $event)."
-				".$this->SetEvent("Programme", $event)."
+				".$this->SetEvent("MyProgram", $event)."
 				
 				<div class='Languages'>
 					<img class='LanguagesImages ActiveLanguage' src='Images/EnglishFlag.png'>
