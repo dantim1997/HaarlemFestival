@@ -218,23 +218,6 @@ class DB_Helper
 		return $events;
 	}
 
-	//get user by Id from DB by Id
-	public function GetUser($Id){
-		//clean Id
-		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT u.ID, Username, Role, Email, Registration_date, Image, r.Rolename from user as u inner join role as r on u.Role = r.Id where u.ID = ? limit 1 ");
-		$stmt->bind_param("i", $IdSQL);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($Id, $Username, $role, $email, $registration_date, $image, $RoleName); 
-		$User = array();
-		while ($stmt -> fetch()) { 
-			$user = array("ID"=>$Id, "Username"=>$Username, "Role"=>$role, "Email"=>$email, "Registration_date"=>$registration_date, "Image"=>$image, "RoleName"=>$RoleName);
-			$User = $user;
-		}
-		return $User;
-	}
 
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
@@ -339,6 +322,46 @@ class DB_Helper
 			$pageImageContent[] = $imageContent;
 		}
 		return $pageImageContent;
+	}
+
+	//get all tickets by customer
+	public function GetEventInfoFood($Id){
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Id, StartDateTime, EndDateTime, Description from foodrestaurants where u.ID = ? limit 1 ");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $Username, $role, $email, $registration_date, $image, $RoleName); 
+		$User = array();
+		while ($stmt -> fetch()) { 
+			$user = array("ID"=>$Id, "Username"=>$Username, "Role"=>$role, "Email"=>$email, "Registration_date"=>$registration_date, "Image"=>$image, "RoleName"=>$RoleName);
+			$User = $user;
+		}
+		return $User;
+	}
+
+	//get all tickets by customer
+	public function GetEventInfoDance($id){
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM danceevent e
+			JOIN dancevenue v on v.Id = e.VenueId
+			join performingact as p on p.EventId = e.Id 
+			join DanceArtist a on a.Id = p.ArtistId
+			where e.Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $Venue, $StartDateTime, $EndDateTime, $Description, $Price); 
+		$User = array();
+		while ($stmt -> fetch()) { 
+			$user = array("ID"=>$Id, "Venue"=>$Venue, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$Description, "Price"=>$Price);
+			$User = $user;
+		}
+		return $User;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

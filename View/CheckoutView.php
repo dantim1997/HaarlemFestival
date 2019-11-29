@@ -39,13 +39,7 @@ class CheckoutView
 				<div class='blackBar'></div>
 
 					<div class='tickets'>
-						<div class=ticket>
-							<p class=amountTickets>1 x</p>
-							<p class='ticketText'>Restaurant Fris normal tickets 2nd session (19:00 - 20:30)   *Reservation fee*   € 40,-</p>
-								<form method='post' action=''>	
-									<input class='removeCheckoutItem' type='submit' value='&#10006' name='??????'>
-								</form>
-						</div>
+						".$this->CheckoutController->GetAllItems()."
 					</div>	
 
 					<!-- Dit is een ticket template, op de plekken VAR kan een aantal en de tekst van de ticket 
