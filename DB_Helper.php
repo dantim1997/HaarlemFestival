@@ -42,6 +42,23 @@ class DB_Helper
 	}
 
 	//gets all users for DB by role
+	public function Get_AllSpecialEvents(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT e.Id, e.Description, e.Price FROM DanceEvent as e WHERE Special = 1");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $description, $price); 
+		$events = array();
+		while ($stmt -> fetch()) { 
+			$event = array("ID"=>$Id, "description"=>$description, "price"=>$price);
+			$events[] = $event;
+		}
+		//return $array;
+		return $events;
+	}
+
+	//gets all users for DB by role
 	public function Get_AllDanceEventsByDate($date){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join Dancevenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId where StartDateTime LIKE ? GROUP by e.Id");
@@ -347,7 +364,7 @@ class DB_Helper
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM danceevent e
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description 'About', e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM danceevent e
 			JOIN dancevenue v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
@@ -355,10 +372,10 @@ class DB_Helper
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $Venue, $StartDateTime, $EndDateTime, $Description, $Price); 
+		$stmt-> bind_result($Id, $Venue, $About, $StartDateTime, $EndDateTime, $Description, $Price); 
 		$User = array();
 		while ($stmt -> fetch()) { 
-			$user = array("ID"=>$Id, "Venue"=>$Venue, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$Description, "Price"=>$Price);
+			$user = array("ID"=>$Id, "Venue"=>$Venue, "About"=>$About, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$Description, "Price"=>$Price);
 			$User = $user;
 		}
 		return $User;
