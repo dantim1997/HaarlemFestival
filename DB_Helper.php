@@ -61,7 +61,7 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from DanceArtist");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from DanceArtist where Id != 0");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
@@ -115,7 +115,7 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetLocations(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Location from DanceVenue");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Location from DanceVenue where Id != 0");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Name, $Location); 
