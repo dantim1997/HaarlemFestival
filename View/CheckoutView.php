@@ -4,11 +4,13 @@ class CheckoutView
 {
 	private $CheckoutController;
 	private $CheckoutModel;
+	private $PageContentHelper;
 
 	public function __construct($checkoutController, $checkoutModel)
 	{
 		$this->CheckoutController = $checkoutController;
 		$this->CheckoutModel = $checkoutModel;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//output to html
@@ -28,7 +30,7 @@ class CheckoutView
 		$nav = new Nav();
 		return $nav->SetNavBar("Checkout")."<div id='main'>
 			<div class='checkoutContainer'>
-				<h2 id='checkoutlbl'>Checkout</h2>
+				<h2 id='checkoutlbl'>".$this->PageContentHelper->GetPageText("Checkout", "1")."</h2>
 
 				<!-- date of ticket in cart -->
 				<h3 id='daylbl'>Saturday Juli 28th (hier kan elke datum als var)</h3>
@@ -73,25 +75,25 @@ class CheckoutView
 							</div>
 
 							<div class='labels'>
-								<h3 class='selectlbl selectlblextra'>Select payment method</h3>
-								<h3 class='selectlbl'>Enter Firstname</h3>
-								<h3 class='selectlbl'>Enter Lastname</h3>
-								<h3 class='selectlbl'>Enter Email</h3>
-								<h3 class='selectlbl'>Enter Address</h3>
-								<h3 class='selectlbl'>Enter Phone number</h3>
-								<h3 class='selectlbl selectlblextra2'>Special needs</h3>
+								<h3 class='selectlbl selectlblextra'>".$this->PageContentHelper->GetPageText("Checkout", "3")."</h3>
+								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "4")."</h3>
+								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "5")."</h3>
+								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "6")."</h3>
+								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "7")."</h3>
+								<h3 class='selectlbl'>".$this->PageContentHelper->GetPageText("Checkout", "8")."</h3>
+								<h3 class='selectlbl selectlblextra2'>".$this->PageContentHelper->GetPageText("Checkout", "9")."</h3>
 							</div>
 
 							<input class='extraNotestxt' type='text' placeholder='Special needs (allergies, wheelchair access, etc.):' name='??????'>
 							
 							<!-- proceed to payment button -->
 							<form method='post' action=''>	
-								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='Proceed to payment' name='proceedToPaymentBTN'>
+								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='".$this->PageContentHelper->GetPageText("Checkout", "10")."' name='proceedToPaymentBTN'>
 							</form>
 
 						</div>
 					
-					<h2 id='totallbl'>Total due:</h2>	<!--Hier de totale prijs als var !-->
+					<h2 id='totallbl'>".$this->PageContentHelper->GetPageText("Checkout", "2")."</h2>	<!--Hier de totale prijs als var !-->
 				</div>
 			</div>
 		</div>";
