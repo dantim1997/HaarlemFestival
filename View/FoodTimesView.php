@@ -14,6 +14,7 @@ class FoodTimesView
 
 	//output to html
 	public function output(){
+		$this->FoodSections = $this->FoodTimesController->GetFilterResults();
 		$page = "";
 		$page .= $this->Header();
 		$page .= $this->Body();
@@ -38,10 +39,10 @@ class FoodTimesView
 			</div>
 			<div class='timeSelection'>
 				<div class='timeSelLeftSide'>
-					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5")."
+					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants ORDER BY SessionStartDateTime LIMIT 5")."
 				</div>
 				<div class='timeSelRightSide'>
-					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5 OFFSET 5")."
+					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants ORDER BY SessionStartDateTime LIMIT 5 OFFSET 5")."
 				</div>
 			</div>
 			<div class='cuisineHeader'>

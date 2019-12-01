@@ -23,9 +23,23 @@ class FoodTimesController
 		foreach ($foodTimes as $foodTime) {
 			$startDateTime = $this->RemoveDate($foodTime["SessionStartDateTime"]);
 			$cleanName = trim($startDateTime, ':');
-			$times .= "<label for='".$cleanName."'><input type='checkbox' class='timeCheckbox' id='".$cleanName."' name='".$cleanName."'>".$startDateTime."</label> <br />";
+			$times .= "<label for='".$cleanName."'><input type='checkbox' class='timeCheckbox' id='".$cleanName."' name='TimeCheckbox[]'>".$startDateTime."</label> <br />";
 		}
 		return $times;
+	}
+
+	public function GetFilterResults() {
+		if (isset($_GET['TimeCheckbox'])) {
+			$names = array();
+			foreach ($_GET['TimeCheckbox'] as $timeCheckbox ) {
+				$name = $this->DB_Helper->GetRestaurantNames($timeCheckbox);
+				$names[] = $name;
+			}
+			foreach ($names as $name) {
+				$section = $this->DB_Helper->GetFoodSections($name);
+				$this->GetSection($section);
+			}
+		}
 	}
 
 	public function GetSections() {
