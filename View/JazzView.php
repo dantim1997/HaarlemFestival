@@ -35,12 +35,13 @@ class JazzView
 				<p>Find your Jazz genre on the four different days of the Haarlem Festival and visit the Jazz event!<br>There's free access for everyone on Sundays. So look for the artist or band you like and enjoy!</p>
 				<h2>Artists</h2>
 
-
-
+					<button>Filter genre</button>
+					<div class='filter'>
 						<form method='GET' action='Jazz.php'>
 					   	".$this->JazzController->MakeGenreAdvancedSearch()."
-					   	<input type='submit' value='Filter Artists'>
+					   	<input type='submit' class='filterbutton' value='Filter Artists'>
 						</form>
+					</div><br>
 						  
 
 
@@ -80,80 +81,8 @@ class JazzView
 						<th class='tg-qcxk'><span style='font-weight:700'>Saturday - 28 July</span></th>
 						<th class='tg-qcxk'><span style='font-weight:700'>Sunday - 29 July</span></th>
 					</tr>
-					<tr>
-						<td class='tg-6jhs'>15:00 - 16:00</td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'>Ruis Soundsystem</td>
-					</tr>
-					<tr>
-						<td class='tg-6jhs'>16:00 - 17:00</td>
-						<td class='tg-m4n1'></td>
-						<td class='tg-m4n1'></td>
-						<td class='tg-m4n1'></td>
-						<td class='tg-m4n1'>Wicked Jazz Sounds</td>
-					</tr>
-					<tr>
-						<td class='tg-6jhs'>17:00 - 18:00</td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'>Evolve</td>
-					</tr>
-					<tr>
-						<td class='tg-6jhs' rowspan='2' valign='center'>18:00 - 19:00</td>
-						<td class='tg-m4n1'>Gumbo Kings</td>
-						<td class='tg-m4n1'>Fox &amp; The Mayors</td>
-						<td class='tg-m4n1'>Gare du Nord</td>
-						<td class='tg-m4n1'>The Nordanians</td>
-					</tr>
-					<tr>
-						<td class='tg-nrh4'>Wicked Jazz Sounds</td>
-						<td class='tg-nrh4'>Myles Sanko</td>
-						<td class='tg-nrh4'>Han Bennink</td>
-						<td class='tg-nrh4'></td>
-					</tr>
-					<tr>
-						<td class='tg-6jhs'>19:00 - 20:00</td>
-						<td class='tg-m4n1'></td>
-						<td class='tg-m4n1'></td>
-						<td class='tg-m4n1'></td>
-						<td class='tg-m4n1'>Gumbo Kings</td>
-					</tr>
-					<tr>
-						<td class='tg-6jhs' rowspan='2' valign='center'>19:30 - 20:30</td>
-						<td class='tg-nrh4'>Evolve</td>
-						<td class='tg-nrh4'>Uncle Sue</td>
-						<td class='tg-nrh4'>Rilan &amp; The Bombadiers</td>
-						<td class='tg-nrh4'></td>
-					</tr>
-					<tr>
-						<td class='tg-m4n1'>Tom Thomsom Assemble</td>
-						<td class='tg-m4n1'>Ruis Soundsysteem</td>
-						<td class='tg-m4n1'>The Nordanians</td>
-						<td class='tg-m4n1'></td>
-					</tr>
-					<tr>
-						<td class='tg-6jhs'>20:00 - 21:00</td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'></td>
-						<td class='tg-nrh4'>Garde du Nord</td>
-					</tr>
-					<tr>
-						<td class='tg-6jhs' rowspan='2' valign='center'>21:00 - 22:00</td>
-						<td class='tg-m4n1'>Ntjam Rosie</td>
-						<td class='tg-m4n1'>Chris Allen</td>
-						<td class='tg-m4n1'>Soul Six</td>
-						<td class='tg-m4n1'></td>
-					</tr>
-					<tr>
-						<td class='tg-nrh4'>Jonna Frazer</td>
-						<td class='tg-nrh4'>The Family XL</td>
-						<td class='tg-nrh4'>Lilith Merlot</td>
-						<td class='tg-nrh4'></td>
-					</tr>
+					".$this->JazzController->CreateTable()."
+					
 					</table>
 				<h2>Tickets</h2>
 				<div class='dates'>

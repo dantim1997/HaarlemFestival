@@ -359,3 +359,21 @@ input {
     margin-top: -30px;
     margin-right: 60%;
 }
+
+.filter {
+    align-content: right;
+    width: 300px;
+    background-color: darkgreen;
+    padding: 30px;
+}
+
+.filterbutton {
+    background-color: red;
+    color: white;
+    width: 200px;
+}
+
+.checkbox {
+    height: 30px;
+    width: 30px;
+}

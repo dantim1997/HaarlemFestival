@@ -95,21 +95,33 @@ class JazzController
 	public function FillTable(){
 		$artist = $this->DB_Helper->GetTimeTableJazz();
 		$artists = "";
-		//$array = array('' =>  );
+		$array = array();
 		foreach($artist as $artist){
 			if(!empty($array)){
 					$array2 .= $artist["StartDateTime"];
 			}
 			$artist .= $artist["Name"];
+			$output = "<tr>
+						<td class='tg-6jhs'>".$artist["Name"]."</td>
+						<td class='tg-m4n1'>".$artist["Name"]."</td>
+						<td class='tg-m4n1'>".$artist["Name"]."</td>
+						<td class='tg-m4n1'>".$artist["Name"]."</td>
+						<td class='tg-m4n1'>".$artist["Name"]."</td>
+						</tr>";
 		}
+		return $output;
 	}
 
-	//get artists for filter
+
+
+
+
+	//get genre for filter
 	public function MakeGenreAdvancedSearch(){
 		$artist =$this->DB_Helper->GetGenresJazz();
 		$artistsSearchlist = "";
 		foreach ($artist as $artist) {
-			$artistsSearchlist .= "<input type='checkbox' name='GenreCheckbox[]' value=".$artist["Genre"]."><label>".$artist["Genre"]."</label><br/>";
+			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$artist["Genre"]."><label>".$artist["Genre"]."</label><br/>";
 		}
 		return $artistsSearchlist;
 	}
@@ -134,5 +146,38 @@ class JazzController
 		$artists = $this->DB_Helper->GetArtistsJazz($searchStringGenre);
 		return $artists;
 	}
+
+
+
+
+
+	public function CreateTable(){
+		$searchResults = $this->DB_Helper->GetTimeTableJazz();
+		$date = array();
+		foreach ($searchResults as $searchResult) {
+			$eventDate = date('Y-m-d', strtotime($searchResult["StartDateTime"]));
+			if(!array_key_exists($eventDate ,$date)){
+				$date[$eventDate] = "";
+			}
+			$startTime = $this->FromDateTimeToTime($searchResult["StartDateTime"]);
+			$endTime = $this->FromDateTimeToTime($searchResult["EndDateTime"]);
+			
+			$tickets = "<tr>
+			<td class='tg-6jhs'>".$startTime." - ".$endTime."</td>
+			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
+			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
+			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
+			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
+			</tr>";
+			$date[$eventDate] .=$tickets;
+		}
+		return $tickets;
+	}
+
+	public function FromDateTimeToTime($date){
+		$hour = date("H",strtotime($date));
+		$minute = date("i",strtotime($date));
+		return $hour .":". $minute;
+}
 }
 ?>
