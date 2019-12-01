@@ -6,12 +6,12 @@ class PageContentHelper
 	}
 	
 
-	public function GetPageText($page, $sequence){
-		return $this->DB_Helper->Get_PageText($page, $sequence);
+	public function GetPageText($page){
+		return $this->DB_Helper->Get_PageText($page);
 	}
 
-	public function GetPageImage($page, $sequence){
-		return $this->DB_Helper->Get_PageImage($page, $sequence);
+	public function GetPageImage($page){
+		return $this->DB_Helper->Get_PageImage($page);
 	}
 
 }

@@ -65,6 +65,9 @@ class Config
 		if($event == "FoodTimes"){
 			return "<link rel='stylesheet' type='text/css' href='FoodTimesStyle.css'>";
 		}
+		if($event == "MyProgram"){
+			return "<link rel='stylesheet' type='text/css' href='MyProgram.css'>";
+		}
 	}
 }
 ?>
