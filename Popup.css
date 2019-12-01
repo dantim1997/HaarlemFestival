@@ -9,6 +9,8 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  z-index: 10;
+  display: none;
 }
 
 .popupContent{
@@ -21,7 +23,6 @@
 
 /* The actual popup */
 .popup .popuptext {
-  visibility: hidden;
   width: 200px;
   height: 300px;
   background-color: #FFFFFF;

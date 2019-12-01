@@ -10,6 +10,7 @@ class DanceTimeTableController
 		$this->Dancemodel = $danceModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
+		$this->Session = new Session;
 	}
 	
 	//get config
@@ -27,9 +28,24 @@ class DanceTimeTableController
 		return $tableEvent;
 	}
 
+	public function GetSpecialTickets(){
+		$specials = $this->DB_Helper->Get_AllSpecialEvents();
+
+		$specialTickets="";
+		foreach ($specials as $special) {
+			$specialTickets.= "
+			<tr>
+				<td>".$special["description"]."</td><td>&euro; ".$special["price"]."</td>
+				<td><input type='Button' class='AddButton'
+					onclick='ShoppingCartPlus();AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
+			</tr>";
+		}
+
+		return $specialTickets;
+	}
+
 	public function AddEventRow($event){
 		$emptyTime = $this->CalculateTimeSpan($event["StartDateTime"]);
-
 		$datetime1 = date_create($event["StartDateTime"]);
 		$datetime2 = date_create($event["endDateTime"]);
 		$timeSpan = $datetime1->diff($datetime2);
@@ -43,7 +59,7 @@ class DanceTimeTableController
 			$fullRow .="
 	      <TD colspan='".$durationEvent."' class='Event'>
 	        <div class='AddText'>".$event["artist"]."<br>€ ".$event["price"]."</div>
-	        <div class='Add'><input class='AddButton' type='Button' name='Add' value='+'></div>
+	        <div class='Add'><input class='AddButton' type='Button' onclick='ShoppingCartPlus();AddToCart(".$event["ID"].",2,1)' name='Add' value='+'></div>
 	      </TD>";
 
 	    for ($i=0; $i < (25-($emptyTime + $durationEvent)); $i++) { 
