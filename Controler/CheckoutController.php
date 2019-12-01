@@ -48,12 +48,20 @@ class CheckoutController
 		}
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
 		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));
-
 		return "<div class=ticket>
-					<p class=amountTickets>".$amount." x</p>
-					<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["Description"]." (".$startTime." - ".$endTime.")   € ".$eventInfo["Price"].",-</p>
-							<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.")' type='submit' value='&#10006' name='??????'>
-				</div>";
+			<p class=amountTickets>".$amount." x</p>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".$eventInfo["Price"].",-</p>
+					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.")' type='submit' value='&#10006' name='??????'>
+		</div>";
+	}
+
+	public function IsTimeEmtpy($startTime,$endTime){
+		if($startTime == "00:00"){
+			return "";
+		}
+		else{
+			return "(".$startTime." - ".$endTime.")";
+		}
 	}
 }
 
