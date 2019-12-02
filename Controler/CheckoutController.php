@@ -29,7 +29,7 @@ class CheckoutController
 			foreach ($items as $item) {
 				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"]);
 			}
-			foreach ($this->SortedDays as $key => $day) {
+			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
 				$daynumber = date('d', strtotime($key));
 				$dayname = date('l', strtotime($SetDate));
@@ -46,6 +46,7 @@ class CheckoutController
 	}
 
 	public function GetItems($eventId, $typeEvent,$amount){
+		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 1:
 				$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
@@ -64,15 +65,16 @@ class CheckoutController
 		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));
 
 		$eventDate = date('Y-m-d', strtotime($eventInfo["StartDateTime"]));
-		if(!array_key_exists($eventDate ,$this->SortedDays)){
-			$this->SortedDays[$eventDate] = "";
+		if(!array_key_exists($eventDate ,$sortedDays)){
+			$sortedDays[$eventDate] = "";
 		}
 
-		$this->SortedDays[$eventDate] .= "<div class=ticket>
+		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".$eventInfo["Price"].",-</p>
 					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.")' type='submit' value='&#10006' name='??????'>
 		</div>";	
+		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 
 	public function IsTimeEmtpy($startTime,$endTime){
