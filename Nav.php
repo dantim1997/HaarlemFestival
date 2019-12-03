@@ -65,6 +65,9 @@ class Nav
 			}
 			return $shoppingCartAmount;
 		}
+		else{
+			return 0;
+		}
 	}
 
 }

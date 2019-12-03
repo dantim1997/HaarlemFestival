@@ -35,22 +35,19 @@ class CheckoutView
 				<h2 id='checkoutlbl'>".current($pageTexts)."</h2>
 
 				<!-- date of ticket in cart -->
-				<h3 id='daylbl'>Saturday Juli 28th (hier kan elke datum als var)</h3>
-				<div class='blackBar'></div>
+				<div>
+							".$this->CheckoutController->GetAllItems()."
 
-					<div class='tickets'>
-						".$this->CheckoutController->GetAllItems()."
-					</div>	
-
-					<!-- Dit is een ticket template, op de plekken VAR kan een aantal en de tekst van de ticket 
-					<div class=ticket>
-						<p class=amountTickets>VAR x</p>
-						<p class='ticketText'>VAR</p>
-							<form method='post' action=''>	
-								<input class='removeCheckoutItem' type='submit' value='&#10006' name='??????'>
-							</form>
-					</div
-					-->
+						<!-- Dit is een ticket template, op de plekken VAR kan een aantal en de tekst van de ticket 
+						<div class=ticket>
+							<p class=amountTickets>VAR x</p>
+							<p class='ticketText'>VAR</p>
+								<form method='post' action=''>	
+									<input class='removeCheckoutItem' type='submit' value='&#10006' name='??????'>
+								</form>
+						</div
+						-->
+					</div>
 				<div class='bottomHalfCheckout'>
 					<div class='bottomBar'></div>
 

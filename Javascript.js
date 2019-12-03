@@ -23,8 +23,14 @@ function RemoveFromCart(self,eventId, typeEvent) {
      data: {eventId: eventId,typeEvent: typeEvent},
      type: 'post',
      success: function(output) {
+		 var parent = self.parentNode;
+		 var parenttickets = parent.parentNode;
      	ShoppingCartmin(output);
-     	self.parentNode.style.display='none';
+		 self.parentNode.remove(); 
+		 if(parenttickets.children.length == 0){
+			var eventday = parenttickets.parentNode;
+			eventday.remove();
+		}
      }
 	});
 }
