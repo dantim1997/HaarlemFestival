@@ -9,16 +9,16 @@ function ToggleAdvanced() {
 }
 
 function AddToCart(eventId, typeEvent, amount) {
+	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
      data: {eventId: eventId,typeEvent: typeEvent, amount:amount},
      type: 'post',
      success: function(output) {
-     			if (amount > 0) {
                    ShowPopup();
-     			}
                    ShoppingCartPlus(amount);
-     }
-	});
+			}
+		});
+	}
 }
 
 function RemoveFromCart(self,eventId, typeEvent) {
