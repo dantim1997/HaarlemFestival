@@ -61,7 +61,7 @@ class DB_Helper
 	//gets all users for DB by role
 	public function Get_AllDanceEventsByDate($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join Dancevenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId where StartDateTime LIKE ? GROUP by e.Id");
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join DanceVenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId where StartDateTime LIKE ? GROUP by e.Id");
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
@@ -112,7 +112,7 @@ class DB_Helper
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, a.Name Artist 
 			FROM DanceEvent as e 
-			join Dancevenue as v on v.Id = e.VenueId
+			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id
 			join DanceArtist a on a.Id = p.ArtistId
 			where p.ArtistId = ?");
@@ -123,6 +123,26 @@ class DB_Helper
 		$events = array();
 		while ($stmt -> fetch()) { 
 			$event = array("ID"=>$Id, "Venue"=>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "endDateTime"=>$endDateTime, "Price"=>$price, "artist"=>$artist);
+			$events[] = $event;
+		}
+		//return $array;
+		return $events;
+	}
+
+	//get user by Id from DB by Id
+	public function GetSearch($artistSearch, $locationSearch){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, GROUP_CONCAT(a.Name) Artist FROM DanceEvent as e 
+			join DanceVenue as v on v.Id = e.VenueId
+			JOIN performingact as p on p.EventId = e.Id 
+			join DanceArtist a on a.Id = p.ArtistId
+			WHERE ".$artistSearch." ".$locationSearch." GROUP BY e.Id");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $venue, $description, $startDateTime, $endDateTime, $price, $artist); 
+		$events = array();
+		while ($stmt -> fetch()) { 
+			$event = array("ID"=>$Id, "Venue"=>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "Price"=>$price, "artist"=>$artist);
 			$events[] = $event;
 		}
 		//return $array;
@@ -254,6 +274,24 @@ class DB_Helper
 	
 	}
 
+	public function GetFoodSections($queryStringTimes, $queryStringCuisine) {
+		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants";
+		if ($queryStringTimes != "" || $queryStringCuisine != "") {
+			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine;
+		}
+		$query .= " GROUP BY Name";
+		$stmt = $this->Conn->prepare($query);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
+		$foodSections = array();
+		while ($stmt -> fetch()) {
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="data:image/jpeg;base64,'.base64_encode( $Logo ).'" class="restaurantInfoImages"/>', );
+			$foodSections[] = $foodSection;
+		}
+		return $foodSections;
+	}
+    
 	//get all tickets by customer
 	public function GetTickets($Id){
 		//clean Id
@@ -271,18 +309,6 @@ class DB_Helper
 		}
 		return $User;
 	}
-	public function GetAllFoodSections() {
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants  GROUP BY Name");
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
-		$foodSections = array();
-		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="data:image/jpeg;base64,'.base64_encode( $Logo ).'" class="restaurantInfoImages"/>', );
-			$foodSections[] = $foodSection;
-		}
-		return $foodSections;
-	}
 
 	public function GetAllFoodSessions($query) {
 		$stmt = $this->Conn->prepare($query);
@@ -297,19 +323,30 @@ class DB_Helper
 		return $foodSessions;
 	}
 
-	public function GetFoodSessions($name) {
+	public function GetAllCuisines() {
+		$stmt = $this->Conn->prepare("SELECT Cuisines FROM foodrestaurants GROUP BY Cuisines");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Cuisines);
+		$foodCuisines = array();
+		while ($stmt -> fetch()) {
+			$foodCuisine = array("Cuisines" => $Cuisines);
+			$foodCuisines[] = $foodCuisine;
+		}
+		return $foodCuisines;
+	}
+
+	public function GetFoodDateTimes($name) {
 		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionStartDateTime);
 		$foodSessions = array();
-    
 		while ($stmt -> fetch()) {
 			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
 			$foodSessions[] = $foodSession;
 		}
-    
 		return $foodSessions;
 	}
 
@@ -364,8 +401,8 @@ class DB_Helper
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description 'About', e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM danceevent e
-			JOIN dancevenue v on v.Id = e.VenueId
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description 'About', e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM DanceEvent e
+			JOIN DanceVenue v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
 			where e.Id = ?");

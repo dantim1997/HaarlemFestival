@@ -37,7 +37,7 @@ class DanceTimeTableController
 			<tr>
 				<td>".$special["description"]."</td><td>&euro; ".$special["price"]."</td>
 				<td><input type='Button' class='AddButton'
-					onclick='ShoppingCartPlus();AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
+					onclick='AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
 			</tr>";
 		}
 
