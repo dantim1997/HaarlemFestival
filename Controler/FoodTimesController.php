@@ -154,7 +154,7 @@ class FoodTimesController
 		return $stars;
 	}
 
-	private function GetDateTimes($name, $type) {
+private function GetDateTimes($name, $type) {
 		$dateTimes = "";
 		$foodDateTimes = $this->DB_Helper->GetFoodDateTimes($name);
 		foreach ($foodDateTimes as $foodDateTime) {
@@ -176,12 +176,16 @@ class FoodTimesController
 		return $dateTime;
 	}
 
-	private function RemoveDate($dateTime) {
-		$startDateTime = substr($dateTime, 11);
-		if (strlen($startDateTime) > 5) {
-			$startDateTime = substr($startDateTime, 0, -3);
+	private function RemoveDateOrTime($dateTime, $type) {
+		if ($type == "day") {
+			$dateTime = substr($dateTime, 0, 9);
+		} else {
+			$dateTime = substr($dateTime, 11);
+			if (strlen($dateTime) > 5) {
+				$dateTime = substr($dateTime, 0, -3);
+			}
 		}
-		return $startDateTime;
+		return $dateTime;
 	}
 }
 
