@@ -49,7 +49,7 @@ class CheckoutController
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 1:
-				$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
+				// $eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
 				break;
 			case 2:
 				$eventInfo = $this->DB_Helper->GetEventInfoDance($eventId);
@@ -58,7 +58,7 @@ class CheckoutController
 				$eventInfo = $this->DB_Helper->GetEventInfoHistoric($eventId);
 				break;
 			case 4:
-				$eventInfo = $this->DB_Helper->GetEventInfoJazz($eventId);
+				// $eventInfo = $this->DB_Helper->GetEventInfoJazz($eventId);
 				break;
 		}
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));

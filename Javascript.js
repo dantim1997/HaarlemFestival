@@ -13,7 +13,9 @@ function AddToCart(eventId, typeEvent, amount) {
      data: {eventId: eventId,typeEvent: typeEvent, amount:amount},
      type: 'post',
      success: function(output) {
+     			if (amount > 0) {
                    ShowPopup();
+     			}
                    ShoppingCartPlus(amount);
      }
 	});
@@ -98,7 +100,7 @@ function cartAmountPlus(count){
 function cartAmountMinus(count){
 	var indentifier = "amountNumber".concat(count);
 	var number = parseInt(document.getElementById(indentifier).value);
-	if (number > 1) {
+	if (number > 0) {
 		number = number - 1;
 		document.getElementById(indentifier).value = number;
 	}	
