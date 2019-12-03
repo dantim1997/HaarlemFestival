@@ -30,43 +30,42 @@ class FoodTimesView
 		return $nav->SetNavBar("Food").
 		"
 		<div class='restaurantFilter'>
-			<div class='searchHeader'>
-				<h2 class='searchRestaurants'>Search Restaurants</h2>
-			</div>
-			<div class='timeHeader'>
-				<p class='timeHeaderP'>Pick your time</p>
-			</div>
-			<div class='timeSelection'>
-				<div class='timeSelLeftSide'>
-					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5")."
+			<form action='' method='get' class='searchRButton'>
+				<div class='searchHeader'>
+					<h2 class='searchRestaurants'>Search Restaurants</h2>
 				</div>
-				<div class='timeSelRightSide'>
-					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5 OFFSET 5")."
+				<div class='timeHeader'>
+					<p class='timeHeaderP'>Pick your time</p>
 				</div>
-			</div>
-			<div class='cuisineHeader'>
-				<p class='cuisineHeaderP'>Select Cuisine</p>
-			</div>
-			<div class='cuisineSelection'>
-				<div class='cuisineSelLeftSide'>
-					<label for='Dutch'><input type='checkbox' class='cuisineCheckbox' id='Dutch' name='Dutch'>Dutch</label> <br />
-					<label for='French'><input type='checkbox' class='cuisineCheckbox' id='French' name='French'>French</label> <br />
-					<label for='Steakhouse'><input type='checkbox' class='cuisineCheckbox' id='Steakhouse' name='Steakhouse'>Steakhouse</label> <br />
-					<label for='FishAndSeafood'><input type='checkbox' class='cuisineCheckbox' id='FishAndSeafood' name='FishAndSeaFood'>Fish and Seafood</label> <br />
-					<label for='Asian'><input type='checkbox' class='cuisineCheckbox' id='Asian' name='Asian'>Asian</label> <br />
-				</div>
-				<div class='cuisineSelRightSide'>
-					<label for='European'><input type='checkbox' class='cuisineCheckbox' id='European' name='European'>European</label> <br />
-					<label for='International'><input type='checkbox' class='cuisineCheckbox' id='International' name='International'>International</label> <br />
-					<label for='Modern'><input type='checkbox' class='cuisineCheckbox' id='Modern' name='Modern'>Modern</label> <br />
-					<label for='Argentinian'><input type='checkbox' class='cuisineCheckbox' id='Argentinian' name='Argentinian'>Argentinian</label> <br />
-					<div class='searchRButton'>
-						<button class='searchRBtn'>Search Restaurants</button>
+				<div class='timeSelection'>
+					<div class='timeSelLeftSide'>
+						".$this->FoodTimesController->GetFilterTimes("SELECT SessionStartDateTime FROM foodrestaurants ORDER BY SessionStartDateTime LIMIT 5")."
+					</div>
+					<div class='timeSelRightSide'>
+						".$this->FoodTimesController->GetFilterTimes("SELECT SessionStartDateTime FROM foodrestaurants ORDER BY SessionStartDateTime LIMIT 5 OFFSET 5")."
 					</div>
 				</div>
-			</div>
+				<div class='cuisineHeader'>
+					<p class='cuisineHeaderP'>Select Cuisine</p>
+				</div>
+				<div class='cuisineSelection'>
+					<div class='cuisineSelLeftSide'>
+						<label for='Dutch'><input type='checkbox' class='cuisineCheckbox' id='Dutch' name='CuisineCheckbox[]' value='Dutch'>Dutch</label> <br />
+						<label for='Fishandseafood'><input type='checkbox' class='cuisineCheckbox' id='Fishandseafood' name='CuisineCheckbox[]' value='Fish and seafood'>Fish and seafood</label> <br />
+						<label for='Asian'><input type='checkbox' class='cuisineCheckbox' id='Asian' name='CuisineCheckbox[]' value='Asian'>Asian</label> <br />
+						<label for='Steakhouse'><input type='checkbox' class='cuisineCheckbox' id='Steakhouse' name='CuisineCheckbox[]' value='Steakhouse'>Steakhouse</label> <br />
+						<label for='French'><input type='checkbox' class='cuisineCheckbox' id='French' name='CuisineCheckbox[]' value='French'>French</label> <br />
+					</div>
+					<div class='cuisineSelRightSide'>
+						<label for='European'><input type='checkbox' class='cuisineCheckbox' id='European' name='CuisineCheckbox[]' value='European'>European</label> <br />
+						<label for='International'><input type='checkbox' class='cuisineCheckbox' id='International' name='CuisineCheckbox[]' value='International'>International</label> <br />
+						<label for='Modern'><input type='checkbox' class='cuisineCheckbox' id='Modern' name='CuisineCheckbox[]' value='Modern'>Modern</label> <br />
+						<label for='Argentinian'><input type='checkbox' class='cuisineCheckbox' id='Argentinian' name='CuisineCheckbox[]' value='Argentinian'>Argentinian</label> <br />
+						<input type='submit' class='searchRBtn' name='searchButton' value='Search Restaurants' />
+					</div>
+				</div>
+			</form>
 		</div>
-
 		<div class='restaurants'>
 			".$this->FoodTimesController->GetSections()."
 		</div>
