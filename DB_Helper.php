@@ -316,19 +316,17 @@ class DB_Helper
 		return $foodCuisines;
 	}
 
-	public function GetFoodSessions($name) {
+	public function GetFoodDateTimes($name) {
 		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionStartDateTime);
 		$foodSessions = array();
-    
 		while ($stmt -> fetch()) {
 			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
 			$foodSessions[] = $foodSession;
 		}
-    
 		return $foodSessions;
 	}
 
