@@ -42,6 +42,23 @@ class DB_Helper
 	}
 
 	//gets all users for DB by role
+	public function Get_AllSpecialEvents(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT e.Id, e.Description, e.Price FROM DanceEvent as e WHERE Special = 1");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $description, $price); 
+		$events = array();
+		while ($stmt -> fetch()) { 
+			$event = array("ID"=>$Id, "description"=>$description, "price"=>$price);
+			$events[] = $event;
+		}
+		//return $array;
+		return $events;
+	}
+
+	//gets all users for DB by role
 	public function Get_AllDanceEventsByDate($date){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join Dancevenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId where StartDateTime LIKE ? GROUP by e.Id");
@@ -61,7 +78,7 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from DanceArtist");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from DanceArtist where Id != 0");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
@@ -115,7 +132,7 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetLocations(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Location from DanceVenue");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Location from DanceVenue where Id != 0");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Name, $Location); 
@@ -222,7 +239,7 @@ class DB_Helper
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language, TypeTicket from historictours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language, TypeTicket from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("sss", $language, $day, $type);
 		$stmt->execute();
@@ -237,6 +254,24 @@ class DB_Helper
 	
 	}
 
+	public function GetFoodSections($queryStringTimes, $queryStringCuisine) {
+		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants";
+		if ($queryStringTimes != "" || $queryStringCuisine != "") {
+			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine;
+		}
+		$query .= " GROUP BY Name";
+		$stmt = $this->Conn->prepare($query);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
+		$foodSections = array();
+		while ($stmt -> fetch()) {
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="data:image/jpeg;base64,'.base64_encode( $Logo ).'" class="restaurantInfoImages"/>', );
+			$foodSections[] = $foodSection;
+		}
+		return $foodSections;
+	}
+    
 	//get all tickets by customer
 	public function GetTickets($Id){
 		//clean Id
@@ -254,18 +289,6 @@ class DB_Helper
 		}
 		return $User;
 	}
-	public function GetAllFoodSections() {
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants  GROUP BY Name");
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
-		$foodSections = array();
-		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="data:image/jpeg;base64,'.base64_encode( $Logo ).'" class="restaurantInfoImages"/>', );
-			$foodSections[] = $foodSection;
-		}
-		return $foodSections;
-	}
 
 	public function GetAllFoodSessions($query) {
 		$stmt = $this->Conn->prepare($query);
@@ -280,19 +303,17 @@ class DB_Helper
 		return $foodSessions;
 	}
 
-	public function GetFoodSessions($name) {
+	public function GetFoodDateTimes($name) {
 		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionStartDateTime);
 		$foodSessions = array();
-    
 		while ($stmt -> fetch()) {
 			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
 			$foodSessions[] = $foodSession;
 		}
-    
 		return $foodSessions;
 	}
 
@@ -415,7 +436,7 @@ class DB_Helper
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM danceevent e
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description 'About', e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM danceevent e
 			JOIN dancevenue v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
@@ -423,10 +444,10 @@ class DB_Helper
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $Venue, $StartDateTime, $EndDateTime, $Description, $Price); 
+		$stmt-> bind_result($Id, $Venue, $About, $StartDateTime, $EndDateTime, $Description, $Price); 
 		$User = array();
 		while ($stmt -> fetch()) { 
-			$user = array("ID"=>$Id, "Venue"=>$Venue, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$Description, "Price"=>$Price);
+			$user = array("ID"=>$Id, "Venue"=>$Venue, "About"=>$About, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$Description, "Price"=>$Price);
 			$User = $user;
 		}
 		return $User;

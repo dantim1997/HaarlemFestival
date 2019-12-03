@@ -14,6 +14,7 @@ function AddToCart(eventId, typeEvent, amount) {
      type: 'post',
      success: function(output) {
                    ShowPopup();
+                   ShoppingCartPlus(amount);
      }
 	});
 }
@@ -23,8 +24,14 @@ function RemoveFromCart(self,eventId, typeEvent) {
      data: {eventId: eventId,typeEvent: typeEvent},
      type: 'post',
      success: function(output) {
+		 var parent = self.parentNode;
+		 var parenttickets = parent.parentNode;
      	ShoppingCartmin(output);
-     	self.parentNode.style.display='none';
+		 self.parentNode.remove(); 
+		 if(parenttickets.children.length == 0){
+			var eventday = parenttickets.parentNode;
+			eventday.remove();
+		}
      }
 	});
 }
@@ -67,9 +74,9 @@ function SelectedDay(date){
 	elem.style.display = "block";
 }
 
-function ShoppingCartPlus(){
+function ShoppingCartPlus(amount){
 	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
-	number = number + 1;
+	number = number + amount;
 	document.getElementById("shoppingcartCount").innerHTML = number;
 }
 
@@ -78,4 +85,27 @@ function ShoppingCartmin(amount){
 	number = number - amount;
 	document.getElementById("shoppingcartCount").innerHTML = number;
 
+}
+
+
+function cartAmountPlus(count){
+	var indentifier = "amountNumber".concat(count);
+	var number = parseInt(document.getElementById(indentifier).value);
+	number = number + 1;
+	document.getElementById(indentifier).value = number;
+}
+
+function cartAmountMinus(count){
+	var indentifier = "amountNumber".concat(count);
+	var number = parseInt(document.getElementById(indentifier).value);
+	if (number > 1) {
+		number = number - 1;
+		document.getElementById(indentifier).value = number;
+	}	
+}
+
+function GetTicketAmount(count){
+	var indentifier = "amountNumber".concat(count);
+	var number = parseInt(document.getElementById(indentifier).value);
+	return	number;
 }

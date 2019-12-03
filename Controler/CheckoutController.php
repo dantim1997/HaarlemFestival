@@ -6,6 +6,8 @@ class CheckoutController
 	private $Session;
 	private $Config;
 
+	public $SortedDays = array();
+
 	public function __construct($checkoutModel){
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
@@ -25,13 +27,26 @@ class CheckoutController
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$ticketRows .=$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"]);
+				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"]);
+			}
+			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
+				$SetDate = date('Y-m-d', strtotime($key));
+				$daynumber = date('d', strtotime($key));
+				$dayname = date('l', strtotime($SetDate));
+				$ticketRows .= "
+				<div class='".$key."'>
+				<h3 id='daylbl'>".$dayname." Juli ".$daynumber."th (".$SetDate.")</h3>
+					<div class='blackBar'></div>
+					<div class='tickets'>". $day."</div>
+				</div>";
 			}
 		}
+
 		return $ticketRows;
 	}
 
 	public function GetItems($eventId, $typeEvent,$amount){
+		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 1:
 				$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
@@ -49,11 +64,26 @@ class CheckoutController
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
 		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));
 
-		return "<div class=ticket>
-					<p class=amountTickets>".$amount." x</p>
-					<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["Description"]." (".$startTime." - ".$endTime.")   € ".$eventInfo["Price"].",-</p>
-							<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.")' type='submit' value='&#10006' name='??????'>
-				</div>";
+		$eventDate = date('Y-m-d', strtotime($eventInfo["StartDateTime"]));
+		if(!array_key_exists($eventDate ,$sortedDays)){
+			$sortedDays[$eventDate] = "";
+		}
+
+		$sortedDays[$eventDate] .= "<div class=ticket>
+			<p class=amountTickets>".$amount." x</p>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".$eventInfo["Price"].",-</p>
+					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.")' type='submit' value='&#10006' name='??????'>
+		</div>";	
+		$this->CheckoutModel->SetSortedDays($sortedDays);
+	}
+
+	public function IsTimeEmtpy($startTime,$endTime){
+		if($startTime == "00:00"){
+			return "";
+		}
+		else{
+			return "(".$startTime." - ".$endTime.")";
+		}
 	}
 }
 

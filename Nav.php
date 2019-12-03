@@ -32,14 +32,9 @@ class Nav
 		<div id='myPopup' class='popup'>
 			<div class='popupContent'>
 				<span class='popuptext' >
-					<p id='#popupHeader'>Tickets added to cart!</p>
-					<hr id='hrBars'>
-					<p>Tekst enzo en nog een beetje hier en daar</p>
-					<hr id='hrBars'>
-					<p>Tekst enzo en nog een beetje hier en daar en mogelijk daar links nog een restje</p>
+					<p id='#popupHeader'>Ticket(s) added to cart!</p>
 					<hr id='hrBars'>
 					<a href='checkout.php' class='toCheckoutBTN'>To Cart</a>
-					<button class='closePopup' type='button' onclick='ShowPopup()'>Close</button>
 				</span>
 			</div>
 		</div>";
@@ -69,6 +64,9 @@ class Nav
 				$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
 			}
 			return $shoppingCartAmount;
+		}
+		else{
+			return 0;
 		}
 	}
 
