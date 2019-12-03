@@ -11,7 +11,7 @@ class FoodTimesController
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
 	}
-	
+
 	//get config
 	public function GetConfig(){
 		return $this->Config;
@@ -144,17 +144,14 @@ class FoodTimesController
 					<div class='pickDayOption'>
 						<select class='pickDay'>
 							<option value='Pick a day'>Pick a day</option>
-            				<option value='Thursday July 26'>Thursday July 26</option>
-            				<option value='Friday July 27'>Friday July 27</option>
-            				<option value='Saturday July 28'>Saturday July 28</option>
-            				<option value='Sunday July 29'>Sunday July 29</option>
+            				".$this->GetDateTimes($section["Name"], "day")."
             			</select>
 					</div>
             		<br />
 					<div class='pickSessionOption'>
 						<select class='pickSession'>
 							<option value='Pick a session'>Pick a session</option>
-            				".$this->GetSessions($section["Name"])."
+            				".$this->GetDateTimes($section["Name"], "time")."
             			</select>
 					</div>
 					<div class='specialNeeds'>
