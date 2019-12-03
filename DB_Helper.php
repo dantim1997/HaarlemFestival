@@ -303,6 +303,19 @@ class DB_Helper
 		return $foodSessions;
 	}
 
+	public function GetAllCuisines() {
+		$stmt = $this->Conn->prepare("SELECT Cuisines FROM foodrestaurants GROUP BY Cuisines");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Cuisines);
+		$foodCuisines = array();
+		while ($stmt -> fetch()) {
+			$foodCuisine = array("Cuisines" => $Cuisines);
+			$foodCuisines[] = $foodCuisine;
+		}
+		return $foodCuisines;
+	}
+
 	public function GetFoodDateTimes($name) {
 		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);

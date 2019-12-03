@@ -50,18 +50,13 @@ class FoodTimesView
 				</div>
 				<div class='cuisineSelection'>
 					<div class='cuisineSelLeftSide'>
-						<label for='Dutch'><input type='checkbox' class='cuisineCheckbox' id='Dutch' name='CuisineCheckbox[]' value='Dutch'>Dutch</label> <br />
-						<label for='Fishandseafood'><input type='checkbox' class='cuisineCheckbox' id='Fishandseafood' name='CuisineCheckbox[]' value='Fish and seafood'>Fish and seafood</label> <br />
-						<label for='Asian'><input type='checkbox' class='cuisineCheckbox' id='Asian' name='CuisineCheckbox[]' value='Asian'>Asian</label> <br />
-						<label for='Steakhouse'><input type='checkbox' class='cuisineCheckbox' id='Steakhouse' name='CuisineCheckbox[]' value='Steakhouse'>Steakhouse</label> <br />
-						<label for='French'><input type='checkbox' class='cuisineCheckbox' id='French' name='CuisineCheckbox[]' value='French'>French</label> <br />
+						".$this->FoodTimesController->GetCuisines(0, 5)."
 					</div>
 					<div class='cuisineSelRightSide'>
-						<label for='European'><input type='checkbox' class='cuisineCheckbox' id='European' name='CuisineCheckbox[]' value='European'>European</label> <br />
-						<label for='International'><input type='checkbox' class='cuisineCheckbox' id='International' name='CuisineCheckbox[]' value='International'>International</label> <br />
-						<label for='Modern'><input type='checkbox' class='cuisineCheckbox' id='Modern' name='CuisineCheckbox[]' value='Modern'>Modern</label> <br />
-						<label for='Argentinian'><input type='checkbox' class='cuisineCheckbox' id='Argentinian' name='CuisineCheckbox[]' value='Argentinian'>Argentinian</label> <br />
-						<input type='submit' class='searchRBtn' name='searchButton' value='Search Restaurants' />
+						".$this->FoodTimesController->GetCuisines(5, 4)."
+						<div class='searchRButton'>
+							<button class='searchRBtn'>Search Restaurants</button>
+						</div>
 					</div>
 				</div>
 			</form>
