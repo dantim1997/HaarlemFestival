@@ -184,8 +184,13 @@ class DB_Helper
 	
 	}
 
-	public function GetAllFoodSections() {
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants GROUP BY Name");
+	public function GetFoodSections($queryStringTimes, $queryStringCuisine) {
+		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants";
+		if ($queryStringTimes != "" || $queryStringCuisine != "") {
+			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine;
+		}
+		$query .= " GROUP BY Name";
+		$stmt = $this->Conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
@@ -195,34 +200,6 @@ class DB_Helper
 			$foodSections[] = $foodSection;
 		}
 		return $foodSections;
-	}
-
-	public function GetFoodSections($name) {
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants WHERE Name LIKE ?");
-		$stmt->bind_param("s", $name);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
-		$foodSections = array();
-		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="data:image/jpeg;base64,'.base64_encode( $Logo ).'" class="restaurantInfoImages"/>', );
-			$foodSections[] = $foodSection;
-		}
-		return $foodSections;
-	}
-
-	public function GetRestaurantNames($startDateTime) {
-		$stmt = $this->Conn->prepare("SELECT Name FROM foodrestaurants WHERE StartDateTime LIKE ?");
-		$stmt->bind_param("s", $startDateTime);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($Name);
-		$restaurantNames = array();
-		while ($stmt -> fetch()) {
-			$restaurantName = array("Name" => $Name);
-			$restaurantNames[] = $restaurantName;
-		}
-		return $restaurantNames;
 	}
 
 	public function GetAllFoodSessions($query) {
@@ -238,19 +215,17 @@ class DB_Helper
 		return $foodSessions;
 	}
 
-	public function GetFoodSessions($name) {
+	public function GetFoodDateTimes($name) {
 		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionStartDateTime);
 		$foodSessions = array();
-    
 		while ($stmt -> fetch()) {
 			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
 			$foodSessions[] = $foodSession;
 		}
-    
 		return $foodSessions;
 	}
 
