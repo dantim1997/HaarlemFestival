@@ -6,9 +6,9 @@ class DBConnection
 	private $conn;
 	
 	//information about the server interaction
-	private $host = 'localhost';
-	private $user = 'root';
-	private $pass = '';
+	private $host = 'server.infhaarlem.nl';
+	private $user = 'hfteam3_user';
+	private $pass = 'ambFGSR2A';
 	private $name = 'hfteam3_db';
 
 	// The db connection is established in the private constructor.

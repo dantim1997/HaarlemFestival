@@ -154,7 +154,7 @@ class FoodTimesController
 		return $stars;
 	}
 
-	private function GetDateTimes($name, $type) {
+private function GetDateTimes($name, $type) {
 		$dateTimes = "";
 		$foodDateTimes = $this->DB_Helper->GetFoodDateTimes($name);
 		foreach ($foodDateTimes as $foodDateTime) {
@@ -162,6 +162,18 @@ class FoodTimesController
 			$dateTimes .= "<option value='".$dateTime."'>".$dateTime."</option>";
 		}
 		return $dateTimes;
+	}
+
+	private function RemoveDateOrTime($dateTime, $type) {
+		if ($type == "day") {
+			$dateTime = substr($dateTime, 0, 9);
+		} else {
+			$dateTime = substr($dateTime, 11);
+			if (strlen($dateTime) > 5) {
+				$dateTime = substr($dateTime, 0, -3);
+			}
+		}
+		return $dateTime;
 	}
 
 	private function RemoveDateOrTime($dateTime, $type) {

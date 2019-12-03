@@ -43,14 +43,18 @@ class HistoricOrderTicketsController
 		}
 		$normalTickets .= "</div>";
 		$normalTickets .= "<div class='normalTicketButtons'>";
+
+		//create a count so each amount box can be uniquely identified by the javascript.
+		$count = 1;
 		//Add buttons for each ticket
 		foreach ($tours as $tour) {
 			$normalTickets .= "<div class='ticketButtons'>	
-								<button class='removeBTN' type='button' >-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button'>+</button>
-								<button class='addToCartBTN' type='button' onclick='ShoppingCartPlus();AddToCart(".$tour->Id.", 3, 1)'></button>
+								<button class='removeBTN' type='button' onclick='cartAmountMinus(".$count.")'>-</button>
+								<input class='ticketTxt' type='text' value='0' id='amountNumber".$count."'>
+								<button class='addBTN' type='button' onclick='cartAmountPlus(".$count.")'>+</button>
+								<button class='addToCartBTN' type='button' onclick='AddToCart(".$tour->Id.", 3, GetTicketAmount(".$count."))'></button>
 							</div>";
+			$count++;
 		}
 		$normalTickets .= "</div>";
 		return $normalTickets;
@@ -63,14 +67,18 @@ class HistoricOrderTicketsController
 		}
 		$familyTickets .= "</div>";
 		$familyTickets .= "<div class='familyTicketButtons'>";
+
+		//create a count so each amount box can be uniquely identified by the javascript.
+		$count = 4;
 		//Add buttons for each ticket
 		foreach ($tours as $tour) {
 			$familyTickets .= "<div class='ticketButtons'>	
-								<button class='removeBTN' type='button' >-</button>
-								<input class='ticketTxt' type='text' value='0'>
-								<button class='addBTN' type='button'>+</button>
-								<button class='addToCartBTN' type='button' onclick='ShoppingCartPlus();AddToCart(".$tour->Id.", 3, 1)'></button>
+								<button class='removeBTN' type='button' onclick='cartAmountMinus(".$count.")'>-</button>
+								<input class='ticketTxt' type='text' value='0' id='amountNumber".$count."'>
+								<button class='addBTN' type='button' onclick='cartAmountPlus(".$count.")'>+</button>
+								<button class='addToCartBTN' type='button' onclick='AddToCart(".$tour->Id.", 3, GetTicketAmount(".$count."))'></button>
 							</div>";
+			$count++;
 		}
 		$familyTickets .= "</div>";
 		return $familyTickets;
