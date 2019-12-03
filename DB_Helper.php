@@ -61,7 +61,12 @@ class DB_Helper
 	//gets all users for DB by role
 	public function Get_AllDanceEventsByDate($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join DanceVenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId where StartDateTime LIKE ? GROUP by e.Id");
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist 
+		FROM DanceEvent as e 
+		join DanceVenue as v on v.Id = e.VenueId 
+		join performingact p on p.EventId = e.Id 
+		join DanceArtist a on a.Id = p.ArtistId 
+		where StartDateTime LIKE ? AND Special = 0 GROUP by e.Id ");
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
@@ -115,7 +120,7 @@ class DB_Helper
 			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id
 			join DanceArtist a on a.Id = p.ArtistId
-			where p.ArtistId = ?");
+			where p.ArtistId = ? AND Special = 0");
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$stmt->store_result();
@@ -440,76 +445,14 @@ class DB_Helper
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//set the resetkey and the email in the database
-	public function InsertIntoDB($email, $resetKey){
-		$resetKeySQL = mysqli_real_escape_string($this->Conn, $resetKey);
-		$emailSQL = mysqli_real_escape_string($this->Conn, $email);
-
-		//does a prepared query
-		$stmt = $this->Conn->prepare("INSERT INTO resetpassword (Email, ResetKey) VALUES(?, ?)");
-		$stmt->bind_param("ss", $emailSQL, $resetKeySQL);
-		/* Commit or rollback transaction */
-		if ($stmt->execute()) {
-			$this->Conn->commit();
-	    	return "New record created successfully";
-		} else {
-			$this->Conn->rollback();
-	    	return "Error: " . $sql . "<br>" . $this->Conn->error;
-		} 
-		$this->Conn->close();
-	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//update userinfo
-	public function UpdateUser($Id, $Username, $Email, $Image = false, $Role){
-		//cleans all variables
-		$idSQL = mysqli_real_escape_string($this->Conn, $Id);
-		$emailSQL = mysqli_real_escape_string($this->Conn, $Email);
-		$usernameSQL = mysqli_real_escape_string($this->Conn, $Username);
-		$roleSQL = mysqli_real_escape_string($this->Conn, $Role);
-		//checks if image is set if not don't change the image
-		if($Image == false ){
-			$stmt = $this->Conn->prepare("UPDATE user SET Username = ?, Email = ?, Role = ? where ID = ?");
-			$stmt->bind_param("ssii", $usernameSQL, $emailSQL, $roleSQL, $idSQL);
-		}
-		else{
-			$stmt = $this->Conn->prepare("UPDATE user SET Username = ?, Email = ?, Image = ?, Role = ? where ID = ?");
-			$stmt->bind_param("ssbii", $usernameSQL, $emailSQL, $Image, $roleSQL, $idSQL);
-		}
-
-		/* Commit or rollback transaction */
-		if ($stmt->execute()) {
-			$this->Conn->commit();
-		    return "New record Updated successfully";
-		} else {
-			$this->Conn->rollback();
-		   	return "Error: " . $sql . "<br>" . $this->Conn->error;
-		} 
-	}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Delete
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//delete the user from the database
-	public function DeleteUser($Id){
-		//cleans the Id
-		$idSQL = mysqli_real_escape_string($this->Conn, $Id);
-		
-		$stmt = $this->Conn->prepare("DELETE FROM user where ID = ?");
-		$stmt->bind_param("i", $idSQL);
-
-		/* Commit or rollback transaction */
-		if ($stmt->execute()) {
-			$this->Conn->commit();
-			return true;
-		} else {
-			$this->Conn->rollback();
-				return "Error: " . $sql . "<br>" . $this->Conn->error;
-		} 
-	}
 }
 ?>
