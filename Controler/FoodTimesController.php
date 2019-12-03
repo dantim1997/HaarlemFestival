@@ -28,6 +28,30 @@ class FoodTimesController
 		return $times;
 	}
 
+	public function GetCuisines($start, $amount) {
+		$groupedCuisines = $this->DB_Helper->GetAllCuisines();
+		$cuisines = array();
+		$cuisinesWithDuplicates = array();
+		foreach ($groupedCuisines as $cuisine) {
+			$cuisines = explode(",", $cuisine["Cuisines"]);
+			foreach ($cuisines as $cuisine) {
+				$cuisinesWithDuplicates[] = $cuisine;
+			}
+		}
+		$cuisines = array_unique($cuisinesWithDuplicates);
+		$cuisines = array_values($cuisines);
+		return $this->MakeCuisines($cuisines, $start, $amount);
+	}
+
+	private function MakeCuisines($cuisines, $start, $amount) {
+		$allCuisines = "";
+		for ($i=$start; $i < $amount; $i++) { 
+			$allCuisines .= "<label for='".$cuisines[$i]."'><input type='checkbox' class='cuisineCheckbox' id='".$cuisines[$i]."' name='".$cuisines[$i]."'>".$cuisines[$i]."</label> <br />
+				";
+		}
+		return $allCuisines;
+	}
+
 	public function GetSections() {
 		$queryStringTimes = "";
 		$queryStringCuisines = "";
@@ -154,7 +178,7 @@ class FoodTimesController
 		return $stars;
 	}
 
-private function GetDateTimes($name, $type) {
+	private function GetDateTimes($name, $type) {
 		$dateTimes = "";
 		$foodDateTimes = $this->DB_Helper->GetFoodDateTimes($name);
 		foreach ($foodDateTimes as $foodDateTime) {
@@ -162,18 +186,6 @@ private function GetDateTimes($name, $type) {
 			$dateTimes .= "<option value='".$dateTime."'>".$dateTime."</option>";
 		}
 		return $dateTimes;
-	}
-
-	private function RemoveDateOrTime($dateTime, $type) {
-		if ($type == "day") {
-			$dateTime = substr($dateTime, 0, 9);
-		} else {
-			$dateTime = substr($dateTime, 11);
-			if (strlen($dateTime) > 5) {
-				$dateTime = substr($dateTime, 0, -3);
-			}
-		}
-		return $dateTime;
 	}
 
 	private function RemoveDateOrTime($dateTime, $type) {
