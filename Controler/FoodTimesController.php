@@ -181,23 +181,26 @@ class FoodTimesController
 		return $stars;
 	}
 
-	private function GetSessions($name) {
-		$sessions = "";
-		$foodSessions = $this->DB_Helper->GetFoodSessions($name);
-		foreach ($foodSessions as $foodSession) {
-			$startDateTime = $this->RemoveDateOrTime($foodSession["SessionStartDateTime"]);
-		 	$sessions .= "<option value='".$startDateTime."'>".$startDateTime."</option>
-		 	";
+	private function GetDateTimes($name, $type) {
+		$dateTimes = "";
+		$foodDateTimes = $this->DB_Helper->GetFoodDateTimes($name);
+		foreach ($foodDateTimes as $foodDateTime) {
+			$dateTime = $this->RemoveDateOrTime($foodDateTime["SessionStartDateTime"], $type);
+			$dateTimes .= "<option value='".$dateTime."'>".$dateTime."</option>";
 		}
-		return $sessions;
+		return $dateTimes;
 	}
 
-	private function RemoveDateOrTime($dateTime) {
-		$startDateTime = substr($dateTime, 11);
-		if (strlen($startDateTime) > 5) {
-			$startDateTime = substr($startDateTime, 0, -3);
+	private function RemoveDateOrTime($dateTime, $type) {
+		if ($type == "day") {
+			$dateTime = substr($dateTime, 0, 9);
+		} else {
+			$dateTime = substr($dateTime, 11);
+			if (strlen($dateTime) > 5) {
+				$dateTime = substr($dateTime, 0, -3);
+			}
 		}
-		return $startDateTime;
+		return $dateTime;
 	}
 }
 
