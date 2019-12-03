@@ -28,56 +28,59 @@ class HistoricVenuesView
 
 	private function Body(){
 		$nav = new Nav();
+		//Get all the content and put it in an array
+		$pageTexts = $this->PageContentHelper->GetPageText("HistoricVenues");
+		$pageImages = $this->PageContentHelper->GetPageimage("HistoricVenues");
 		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 			<div class='venuesContainer'>
 				<div class='row1'>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "1")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "1")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "10")."</p>
+						<image class='venueImgs' src='".current($pageImages)."'>
+						<h4 class='venueHeaders'>".current($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "2")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "2")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "11")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "3")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "3")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "12")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "4")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "4")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "13")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "5")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "5")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "14")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 				</div>	
 				<div class='row2'>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "6")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "6")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "15")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "7")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "7")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "16")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "8")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "8")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "17")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 					<div class='venueContainer'>
-						<image class='venueImgs' src='".$this->PageContentHelper->GetPageImage("HistoricVenues", "9")."'>
-						<h4 class='venueHeaders'>".$this->PageContentHelper->GetPageText("HistoricVenues", "9")."</h4>
-						<p class='venueText'>".$this->PageContentHelper->GetPageText("HistoricVenues", "18")."</p>
+						<image class='venueImgs' src='".next($pageImages)."'>
+						<h4 class='venueHeaders'>".next($pageTexts)."</h4>
+						<p class='venueText'>".next($pageTexts)."</p>
 					</div>
 				</div>
 			</div>

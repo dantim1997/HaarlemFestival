@@ -29,6 +29,22 @@ class DanceController
 
 		return $venues;
 	}
+
+	public function GetSpecialTickets(){
+		$specials = $this->DB_Helper->Get_AllSpecialEvents();
+
+		$specialTickets="";
+		foreach ($specials as $special) {
+			$specialTickets.= "
+			<tr>
+				<td>".$special["description"]."</td><td>&euro; ".$special["price"]."</td>
+				<td><input type='Button' class='AddButton'
+					onclick='ShoppingCartPlus();AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
+			</tr>";
+		}
+
+		return $specialTickets;
+	}
 	
 	Public function SetArtists(){
 
@@ -80,7 +96,6 @@ class DanceController
 		            ".$this->SetTable($artist["Id"])."
 		            </table>
 		          </div>
-		          <div class='ArtistTickets'></div>
 		        </div>
 		      </div>
 		      </div>
@@ -96,7 +111,8 @@ class DanceController
 							<td class='td'>".$session["StartDateTime"]."</td>
 							<td class='td'>€".$session["Price"]."</td> <td>
 							<td class='td'>
-								<button class='AddButton' value='1' name=''>Add to cart</button></td> 
+								<input type='Button' class='AddButton'
+								onclick='ShoppingCartPlus();AddToCart(".$session["ID"].",2,1)' name='' value='Add to cart'></td> 
 							<td></td>
 						</tr>
 						<hr>";

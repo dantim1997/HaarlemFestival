@@ -175,6 +175,14 @@ class FoodTimesController
 		}
 		return $dateTime;
 	}
+
+	private function RemoveDate($dateTime) {
+		$startDateTime = substr($dateTime, 11);
+		if (strlen($startDateTime) > 5) {
+			$startDateTime = substr($startDateTime, 0, -3);
+		}
+		return $startDateTime;
+	}
 }
 
 ?>
