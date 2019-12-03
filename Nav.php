@@ -1,9 +1,10 @@
 <?php
-
+require_once( "Autoloader.php");
 class Nav
 {
 	function __construct()
 	{
+		$this->Session = new Session;
 	}
 
 	function SetNavBar($event){
@@ -23,22 +24,17 @@ class Nav
 				</div>
 				<a href='checkout.php'>
 					<div class='ShoppingCart'>
-						<div class='shopcartItems' id='shoppingcartCount'>0</div>
+						<div class='shopcartItems' id='shoppingcartCount'>".$this->GetCartItems()."</div>
 					</div>
 				</a>
 		</div>
 
-		<div class='popup'>
+		<div id='myPopup' class='popup'>
 			<div class='popupContent'>
-				<span class='popuptext' id='myPopup'>
-					<p id='#popupHeader'>Tickets added to cart!</p>
-					<hr id='hrBars'>
-					<p>Tekst enzo en nog een beetje hier en daar</p>
-					<hr id='hrBars'>
-					<p>Tekst enzo en nog een beetje hier en daar en mogelijk daar links nog een restje</p>
+				<span class='popuptext' >
+					<p id='#popupHeader'>Ticket(s) added to cart!</p>
 					<hr id='hrBars'>
 					<a href='checkout.php' class='toCheckoutBTN'>To Cart</a>
-					<button class='closePopup' type='button' onclick='ShowPopup()'>Close</button>
 				</span>
 			</div>
 		</div>";
@@ -58,6 +54,19 @@ class Nav
 				$event = "Index";
 			}
 			return "<div class='NavLinks'><a class='Link' href='".$event.".php'><div class='NavText'>".$event."</div></a></div>";
+		}
+	}
+
+	public function GetCartItems(){
+		if(isset($_SESSION['Tickets'])){
+			$shoppingCartAmount = 0;
+			foreach ($_SESSION['Tickets'] as $items) {
+				$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+			}
+			return $shoppingCartAmount;
+		}
+		else{
+			return 0;
 		}
 	}
 

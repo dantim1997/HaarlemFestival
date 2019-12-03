@@ -8,9 +8,40 @@ function ToggleAdvanced() {
   }
 }
 
+function AddToCart(eventId, typeEvent, amount) {
+     $.ajax({ url: 'AddToCart.php',
+     data: {eventId: eventId,typeEvent: typeEvent, amount:amount},
+     type: 'post',
+     success: function(output) {
+                   ShowPopup();
+     }
+	});
+}
+
+function RemoveFromCart(self,eventId, typeEvent) {
+     $.ajax({ url: 'RemoveFromCart.php',
+     data: {eventId: eventId,typeEvent: typeEvent},
+     type: 'post',
+     success: function(output) {
+		 var parent = self.parentNode;
+		 var parenttickets = parent.parentNode;
+     	ShoppingCartmin(output);
+		 self.parentNode.remove(); 
+		 if(parenttickets.children.length == 0){
+			var eventday = parenttickets.parentNode;
+			eventday.remove();
+		}
+     }
+	});
+}
+
 function ShowPopup() {
   	var popup = document.getElementById("myPopup");
-  	popup.classList.toggle("show");
+  	setTimeout( popup.style.display = 'block', 10000);
+  	setTimeout(function () {
+  	popup.style.display = 'none';
+    }, 2000);
+  	
 }
 function ToEvent(src){
 	if (src == "Historic") {
@@ -45,6 +76,12 @@ function SelectedDay(date){
 function ShoppingCartPlus(){
 	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
 	number = number + 1;
+	document.getElementById("shoppingcartCount").innerHTML = number;
+}
+
+function ShoppingCartmin(amount){
+	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
+	number = number - amount;
 	document.getElementById("shoppingcartCount").innerHTML = number;
 
 }
