@@ -18,8 +18,8 @@ class JazzController
 	}
 
 	//Get Artists
-	public function MakeArtistCarousel(){
-		$artist = $this->DB_Helper->GetArtistsJazz("");
+	public function MakeArtistCarousel($filter = null){
+		$artist = $this->DB_Helper->GetArtistsJazz($filter);
 		$artists = "";
 		foreach ($artist as $artist) {
 			$artists .= "
@@ -111,11 +111,7 @@ class JazzController
 		}
 		return $output;
 	}
-
-
-
-
-
+	
 	//get genre for filter
 	public function MakeGenreAdvancedSearch(){
 		$artist =$this->DB_Helper->GetGenresJazz();
@@ -129,27 +125,23 @@ class JazzController
 	//GetFilterResult
 	public function GetFilterResults(){
 		$searchStringGenre = "";
+		$output = "";
 		$first = true;
 
 		if(isset($_GET['GenreCheckbox']))
 		{
-		   foreach ($_GET['GenreCheckbox'] as $genreCheckbox ) {
+		   foreach ($_GET['GenreCheckbox'] as $genreCheckbox ) 
+			{
 		   		if(!$first){
 		   			$searchStringGenre .= " OR ";
-				   }
-				   
+				}
 		   		$searchStringGenre .= "Genre LIKE '%".$genreCheckbox."%'";
-		   		$first = false;
-		   }
+				$first = false;
+			}
 		}
-
-		$artists = $this->DB_Helper->GetArtistsJazz($searchStringGenre);
-		return $artists;
+		$output = $this->MakeArtistCarousel($searchStringGenre);
+		return $output;
 	}
-
-
-
-
 
 	public function CreateTable(){
 		$searchResults = $this->DB_Helper->GetTimeTableJazz();
@@ -178,6 +170,6 @@ class JazzController
 		$hour = date("H",strtotime($date));
 		$minute = date("i",strtotime($date));
 		return $hour .":". $minute;
-}
+	}
 }
 ?>
