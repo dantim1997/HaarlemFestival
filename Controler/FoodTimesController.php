@@ -17,22 +17,68 @@ class FoodTimesController
 		return $this->Config;
 	}
 
-	public function GetTimes($query) {
+	public function GetFilterTimes($query) {
 		$foodTimes = $this->DB_Helper->GetAllFoodSessions($query);
 		$times = "";
 		foreach ($foodTimes as $foodTime) {
-			$startDateTime = $this->RemoveDate($foodTime["SessionStartDateTime"]);
+			$startDateTime = $this->RemoveDateOrTime($foodTime["SessionStartDateTime"], "time");
 			$cleanName = trim($startDateTime, ':');
-			$times .= "<label for='".$cleanName."'><input type='checkbox' class='timeCheckbox' id='".$cleanName."' name='".$cleanName."'>".$startDateTime."</label> <br />";
+			$times .= "<label for='".$cleanName."'><input type='checkbox' class='timeCheckbox' id='".$cleanName."' name='TimeCheckbox[]' value='".$startDateTime."'>".$startDateTime."</label> <br />";
 		}
 		return $times;
 	}
 
+	public function GetCuisines($start, $amount) {
+		$groupedCuisines = $this->DB_Helper->GetAllCuisines();
+		$cuisines = array();
+		$cuisinesWithDuplicates = array();
+		foreach ($groupedCuisines as $cuisine) {
+			$cuisines = explode(",", $cuisine["Cuisines"]);
+			foreach ($cuisines as $cuisine) {
+				$cuisinesWithDuplicates[] = $cuisine;
+			}
+		}
+		$cuisines = array_unique($cuisinesWithDuplicates);
+		$cuisines = array_values($cuisines);
+		return $this->MakeCuisines($cuisines, $start, $amount);
+	}
+
+	private function MakeCuisines($cuisines, $start, $amount) {
+		$allCuisines = "";
+		for ($i=$start; $i < $amount; $i++) { 
+			$allCuisines .= "<label for='".$cuisines[$i]."'><input type='checkbox' class='cuisineCheckbox' id='".$cuisines[$i]."' name='".$cuisines[$i]."'>".$cuisines[$i]."</label> <br />
+				";
+		}
+		return $allCuisines;
+	}
+
 	public function GetSections() {
-		$foodSections = $this->DB_Helper->GetAllFoodSections();
+		$queryStringTimes = "";
+		$queryStringCuisines = "";
+		$first = true;
+
+		if (isset($_GET['TimeCheckbox'])) {
+			foreach ($_GET['TimeCheckbox'] as $timeCheckbox) {
+				if (!$first) {
+					$queryStringTimes .= " OR ";
+				}
+				$queryStringTimes .= "SessionStartDateTime LIKE '%".$timeCheckbox."%'";
+				$first = false;
+			}
+		}
+		if (isset($_GET['CuisineCheckbox'])) {
+			foreach ($_GET['CuisineCheckbox'] as $cuisineCheckbox) {
+				if (!$first) {
+					$queryStringCuisines .= " OR ";
+				}
+				$queryStringCuisines .= "Cuisines LIKE '%".$cuisineCheckbox."%'";
+				$first = false;
+			}
+		}
+		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines);
 		$sections = "";
-		foreach ($foodSections as $section) {
-			$sections .= $this->GetSection($section);
+		foreach ($foodSections as $foodSection) {
+			$sections .= $this->GetSection($foodSection);
 		}
 		return $sections;
 	}
@@ -139,14 +185,14 @@ class FoodTimesController
 		$sessions = "";
 		$foodSessions = $this->DB_Helper->GetFoodSessions($name);
 		foreach ($foodSessions as $foodSession) {
-			$startDateTime = $this->RemoveDate($foodSession["SessionStartDateTime"]);
+			$startDateTime = $this->RemoveDateOrTime($foodSession["SessionStartDateTime"]);
 		 	$sessions .= "<option value='".$startDateTime."'>".$startDateTime."</option>
 		 	";
 		}
 		return $sessions;
 	}
 
-	private function RemoveDate($dateTime) {
+	private function RemoveDateOrTime($dateTime) {
 		$startDateTime = substr($dateTime, 11);
 		if (strlen($startDateTime) > 5) {
 			$startDateTime = substr($startDateTime, 0, -3);

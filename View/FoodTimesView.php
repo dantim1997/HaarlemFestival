@@ -38,10 +38,10 @@ class FoodTimesView
 			</div>
 			<div class='timeSelection'>
 				<div class='timeSelLeftSide'>
-					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5")."
+					".$this->FoodTimesController->GetFilterTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5")."
 				</div>
 				<div class='timeSelRightSide'>
-					".$this->FoodTimesController->GetTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5 OFFSET 5")."
+					".$this->FoodTimesController->GetFilterTimes("SELECT SessionStartDateTime FROM foodrestaurants LIMIT 5 OFFSET 5")."
 				</div>
 			</div>
 			<div class='cuisineHeader'>
@@ -49,17 +49,10 @@ class FoodTimesView
 			</div>
 			<div class='cuisineSelection'>
 				<div class='cuisineSelLeftSide'>
-					<label for='Dutch'><input type='checkbox' class='cuisineCheckbox' id='Dutch' name='Dutch'>Dutch</label> <br />
-					<label for='French'><input type='checkbox' class='cuisineCheckbox' id='French' name='French'>French</label> <br />
-					<label for='Steakhouse'><input type='checkbox' class='cuisineCheckbox' id='Steakhouse' name='Steakhouse'>Steakhouse</label> <br />
-					<label for='FishAndSeafood'><input type='checkbox' class='cuisineCheckbox' id='FishAndSeafood' name='FishAndSeaFood'>Fish and Seafood</label> <br />
-					<label for='Asian'><input type='checkbox' class='cuisineCheckbox' id='Asian' name='Asian'>Asian</label> <br />
+					".$this->FoodTimesController->GetCuisines(0, 5)."
 				</div>
 				<div class='cuisineSelRightSide'>
-					<label for='European'><input type='checkbox' class='cuisineCheckbox' id='European' name='European'>European</label> <br />
-					<label for='International'><input type='checkbox' class='cuisineCheckbox' id='International' name='International'>International</label> <br />
-					<label for='Modern'><input type='checkbox' class='cuisineCheckbox' id='Modern' name='Modern'>Modern</label> <br />
-					<label for='Argentinian'><input type='checkbox' class='cuisineCheckbox' id='Argentinian' name='Argentinian'>Argentinian</label> <br />
+					".$this->FoodTimesController->GetCuisines(5, 4)."
 					<div class='searchRButton'>
 						<button class='searchRBtn'>Search Restaurants</button>
 					</div>

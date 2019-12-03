@@ -271,8 +271,14 @@ class DB_Helper
 		}
 		return $User;
 	}
-	public function GetAllFoodSections() {
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants  GROUP BY Name");
+
+	public function GetFoodSections($queryStringTimes, $queryStringCuisine) {
+		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants";
+		if ($queryStringTimes != "" || $queryStringCuisine != "") {
+			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine;
+		}
+		$query .= " GROUP BY Name";
+		$stmt = $this->Conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
@@ -295,6 +301,19 @@ class DB_Helper
 			$foodSessions[] = $foodSession;
 		}
 		return $foodSessions;
+	}
+
+	public function GetAllCuisines() {
+		$stmt = $this->Conn->prepare("SELECT Cuisines FROM foodrestaurants GROUP BY Cuisines");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Cuisines);
+		$foodCuisines = array();
+		while ($stmt -> fetch()) {
+			$foodCuisine = array("Cuisines" => $Cuisines);
+			$foodCuisines[] = $foodCuisine;
+		}
+		return $foodCuisines;
 	}
 
 	public function GetFoodSessions($name) {
