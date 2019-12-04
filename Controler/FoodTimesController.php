@@ -17,8 +17,8 @@ class FoodTimesController
 		return $this->Config;
 	}
 
-	public function GetFilterTimes($query) {
-		$foodTimes = $this->DB_Helper->GetAllFoodSessions($query);
+	public function GetFilterTimes($side) {
+		$foodTimes = $this->DB_Helper->GetAllFoodSessions($side);
 		$times = "";
 		foreach ($foodTimes as $foodTime) {
 			$startDateTime = $this->RemoveDateOrTime($foodTime["SessionStartDateTime"], "time");
@@ -30,8 +30,8 @@ class FoodTimesController
 
 	public function GetCuisines($start, $amount) {
 		$groupedCuisines = $this->DB_Helper->GetAllCuisines();
-		$cuisines = array();
 		$cuisinesWithDuplicates = array();
+		$cuisines = array();
 		foreach ($groupedCuisines as $cuisine) {
 			$cuisines = explode(",", $cuisine["Cuisines"]);
 			foreach ($cuisines as $cuisine) {
@@ -45,8 +45,8 @@ class FoodTimesController
 
 	private function MakeCuisines($cuisines, $start, $amount) {
 		$allCuisines = "";
-		for ($i=$start; $i < $amount; $i++) { 
-			$allCuisines .= "<label for='".$cuisines[$i]."'><input type='checkbox' class='cuisineCheckbox' id='".$cuisines[$i]."' name='".$cuisines[$i]."'>".$cuisines[$i]."</label> <br />
+		for ($i=$start; $i < $amount; $i++) {
+			$allCuisines .= "<label for='".$cuisines[$i]."'><input type='checkbox' class='cuisineCheckbox' id='".$cuisines[$i]."' name='CuisineCheckbox[]' value='".$cuisines[$i]."'>".$cuisines[$i]."</label> <br />
 				";
 		}
 		return $allCuisines;
@@ -60,7 +60,7 @@ class FoodTimesController
 		if (isset($_GET['TimeCheckbox'])) {
 			foreach ($_GET['TimeCheckbox'] as $timeCheckbox) {
 				if (!$first) {
-					$queryStringTimes .= " OR ";
+					$queryStringTimes .= " AND ";
 				}
 				$queryStringTimes .= "SessionStartDateTime LIKE '%".$timeCheckbox."%'";
 				$first = false;
@@ -69,7 +69,7 @@ class FoodTimesController
 		if (isset($_GET['CuisineCheckbox'])) {
 			foreach ($_GET['CuisineCheckbox'] as $cuisineCheckbox) {
 				if (!$first) {
-					$queryStringCuisines .= " OR ";
+					$queryStringCuisines .= " AND ";
 				}
 				$queryStringCuisines .= "Cuisines LIKE '%".$cuisineCheckbox."%'";
 				$first = false;

@@ -315,7 +315,12 @@ class DB_Helper
 		return $User;
 	}
 
-	public function GetAllFoodSessions($query) {
+	public function GetAllFoodSessions($side) {
+		if ($side == "left") {
+			$query = "SELECT SessionStartDateTime FROM FoodRestaurants ORDER BY SessionStartDateTime LIMIT 5";
+		} else if ("right") {
+			$query = "SELECT SessionStartDateTime FROM FoodRestaurants ORDER BY SessionStartDateTime LIMIT 5 OFFSET 5";
+		}
 		$stmt = $this->Conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
