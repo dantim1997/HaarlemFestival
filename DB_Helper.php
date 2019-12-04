@@ -279,10 +279,10 @@ class DB_Helper
 	
 	}
 
-	public function GetFoodSections($queryStringTimes, $queryStringCuisine) {
+	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
 		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM FoodRestaurants";
-		if ($queryStringTimes != "" || $queryStringCuisine != "") {
-			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine;
+		if ($queryStringTimes != "" || $queryStringCuisine != "" || $queryStringRestaurants != "") {
+			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine. " ".$queryStringRestaurants;
 		}
 		$query .= " GROUP BY Name";
 		$stmt = $this->Conn->prepare($query);
