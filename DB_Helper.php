@@ -280,7 +280,7 @@ class DB_Helper
 	}
 
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine) {
-		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM foodrestaurants";
+		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM FoodRestaurants";
 		if ($queryStringTimes != "" || $queryStringCuisine != "") {
 			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine;
 		}
@@ -329,7 +329,7 @@ class DB_Helper
 	}
 
 	public function GetAllCuisines() {
-		$stmt = $this->Conn->prepare("SELECT Cuisines FROM foodrestaurants GROUP BY Cuisines");
+		$stmt = $this->Conn->prepare("SELECT Cuisines FROM FoodRestaurants GROUP BY Cuisines");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Cuisines);
@@ -342,7 +342,7 @@ class DB_Helper
 	}
 
 	public function GetFoodDateTimes($name) {
-		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
+		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM FoodRestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		$stmt->store_result();
