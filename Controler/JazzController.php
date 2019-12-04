@@ -166,6 +166,31 @@ class JazzController
 		return $tickets;
 	}
 
+	public function CreateTable2(){
+		//Get all dates
+		$date = $this->DB_Helper->GetDatesJazz();
+
+
+		//Get all times
+	}
+
+	public function GetDates(){
+		$date = $this->DB_Helper->GetDatesJazz();
+		$newdates = array();
+		foreach ($date as $date) {
+			$tempdate = date("l - d F", strtotime($date["StartDateTime"]));
+			$newdates[] = $tempdate;
+		}
+		
+		$output = "<tr>
+						<th class='tg-lh0f'></th>";
+						foreach ($newdates as $newdate) {
+							$output .= "<th class='tg-qcxk'><span style='font-weight:700'>".$newdate."</span></th>";
+						}
+					$output .= "</tr>";
+					return $output;
+	}
+
 	public function FromDateTimeToTime($date){
 		$hour = date("H",strtotime($date));
 		$minute = date("i",strtotime($date));

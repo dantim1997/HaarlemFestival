@@ -36,8 +36,8 @@ class JazzView
 				<p>Find your Jazz genre on the four different days of the Haarlem Festival and visit the Jazz event!<br>There's free access for everyone on Sundays. So look for the artist or band you like and enjoy!</p>
 				<h2>Artists</h2>
 
-					<button class='filterbutton2'>Filter genre</button>
-					<div class='filter'>
+					<button onclick='ShowHideJazzFilter()' class='filterbutton2'>Filter genre</button>
+					<div id='Toggle' class='filter'>
 						<form method='GET' action='Jazz.php'>
 					   	".$this->JazzController->MakeGenreAdvancedSearch()."
 					   	<input type='submit' class='filterbutton' value='Filter Artists'>
@@ -82,6 +82,7 @@ class JazzView
 						<th class='tg-qcxk'><span style='font-weight:700'>Saturday - 28 July</span></th>
 						<th class='tg-qcxk'><span style='font-weight:700'>Sunday - 29 July</span></th>
 					</tr>
+					".$this->JazzController->GetDates()."
 					".$this->JazzController->CreateTable()."
 					
 					</table>

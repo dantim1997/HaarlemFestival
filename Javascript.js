@@ -111,3 +111,12 @@ function GetTicketAmount(count){
 	var number = parseInt(document.getElementById(indentifier).value);
 	return	number;
 }
+
+function ShowHideJazzFilter(){
+	var x = document.getElementById('Toggle');
+  	if (x.style.display === "block") {
+    	x.style.display = 'none';
+  	} else {
+    	x.style.display = 'block';
+  	}
+}
