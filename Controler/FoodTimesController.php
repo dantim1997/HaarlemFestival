@@ -55,6 +55,7 @@ class FoodTimesController
 	public function GetSections() {
 		$queryStringTimes = "";
 		$queryStringCuisines = "";
+		$queryStringRestaurants = "";
 		$first = true;
 
 		if (isset($_GET['TimeCheckbox'])) {
@@ -74,8 +75,10 @@ class FoodTimesController
 				$queryStringCuisines .= "Cuisines LIKE '%".$cuisineCheckbox."%'";
 				$first = false;
 			}
+		} else if (isset($_GET['restaurant'])) {
+			$queryStringRestaurants = "Name LIKE '".$_GET['restaurant']."'";
 		}
-		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines);
+		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
 		$sections = "";
 		foreach ($foodSections as $foodSection) {
 			$sections .= $this->GetSection($foodSection);
