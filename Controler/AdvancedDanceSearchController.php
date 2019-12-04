@@ -83,7 +83,7 @@ class AdvancedDanceSearchController
 			
 			$tickets = "<div class='SessionFound'>
 							<p class='SessionInfo'>Haarlem Dance ".$startTime." - ".$endTime.", ".$searchResult["artist"]." ,".$searchResult["Venue"]."     € ".$searchResult["Price"].",-</p>
-							<input class='SessionAdd' type='button' value='+'>
+							<input onclick='AddToCart(".$searchResult["ID"].",2,1)' class='SessionAdd' type='button' value='+'>
 							</div>";
 			$date[$eventDate] .=$tickets;
 		}

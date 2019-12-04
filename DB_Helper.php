@@ -61,7 +61,12 @@ class DB_Helper
 	//gets all users for DB by role
 	public function Get_AllDanceEventsByDate($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist FROM DanceEvent as e join Dancevenue as v on v.Id = e.VenueId join performingact p on p.EventId = e.Id join DanceArtist a on a.Id = p.ArtistId where StartDateTime LIKE ? GROUP by e.Id");
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name as venue, v.Location as location, e.Description, e.StartDateTime, e.EndDateTime, e.Price, GROUP_CONCAT(a.Name) artist 
+		FROM DanceEvent as e 
+		join DanceVenue as v on v.Id = e.VenueId 
+		join performingact p on p.EventId = e.Id 
+		join DanceArtist a on a.Id = p.ArtistId 
+		where StartDateTime LIKE ? AND Special = 0 GROUP by e.Id ");
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
@@ -112,10 +117,10 @@ class DB_Helper
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, a.Name Artist 
 			FROM DanceEvent as e 
-			join Dancevenue as v on v.Id = e.VenueId
+			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id
 			join DanceArtist a on a.Id = p.ArtistId
-			where p.ArtistId = ?");
+			where p.ArtistId = ? AND Special = 0");
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$stmt->store_result();
@@ -123,6 +128,26 @@ class DB_Helper
 		$events = array();
 		while ($stmt -> fetch()) { 
 			$event = array("ID"=>$Id, "Venue"=>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "endDateTime"=>$endDateTime, "Price"=>$price, "artist"=>$artist);
+			$events[] = $event;
+		}
+		//return $array;
+		return $events;
+	}
+
+	//get user by Id from DB by Id
+	public function GetSearch($artistSearch, $locationSearch){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, GROUP_CONCAT(a.Name) Artist FROM DanceEvent as e 
+			join DanceVenue as v on v.Id = e.VenueId
+			JOIN performingact as p on p.EventId = e.Id 
+			join DanceArtist a on a.Id = p.ArtistId
+			WHERE ".$artistSearch." ".$locationSearch." GROUP BY e.Id");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $venue, $description, $startDateTime, $endDateTime, $price, $artist); 
+		$events = array();
+		while ($stmt -> fetch()) { 
+			$event = array("ID"=>$Id, "Venue"=>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "Price"=>$price, "artist"=>$artist);
 			$events[] = $event;
 		}
 		//return $array;
@@ -303,6 +328,19 @@ class DB_Helper
 		return $foodSessions;
 	}
 
+	public function GetAllCuisines() {
+		$stmt = $this->Conn->prepare("SELECT Cuisines FROM foodrestaurants GROUP BY Cuisines");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Cuisines);
+		$foodCuisines = array();
+		while ($stmt -> fetch()) {
+			$foodCuisine = array("Cuisines" => $Cuisines);
+			$foodCuisines[] = $foodCuisine;
+		}
+		return $foodCuisines;
+	}
+
 	public function GetFoodDateTimes($name) {
 		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM foodrestaurants WHERE Name LIKE ?");
 		$stmt->bind_param("s", $name);
@@ -436,8 +474,8 @@ class DB_Helper
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description 'About', e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM danceevent e
-			JOIN dancevenue v on v.Id = e.VenueId
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description 'About', e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM DanceEvent e
+			JOIN DanceVenue v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
 			where e.Id = ?");
@@ -453,80 +491,36 @@ class DB_Helper
 		return $User;
 	}
 
+
+	public function GetEventInfoHistoric($id){
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Id, Language, TypeTicket, Price, StartDateTime, EndDateTime FROM HistoricTours WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $Language, $TypeTicket, $Price, $StartDateTime, $EndDateTime); 
+		$Ticket = array();
+		while ($stmt -> fetch()) { 
+			$ticket = array("ID"=>$Id, "Venue"=>"Church of St. Bavo", "About"=>$Language, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$TypeTicket ." Tour", "Price"=>$Price);
+			$Ticket = $ticket;
+		}
+		return $Ticket;
+	}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//set the resetkey and the email in the database
-	public function InsertIntoDB($email, $resetKey){
-		$resetKeySQL = mysqli_real_escape_string($this->Conn, $resetKey);
-		$emailSQL = mysqli_real_escape_string($this->Conn, $email);
-
-		//does a prepared query
-		$stmt = $this->Conn->prepare("INSERT INTO resetpassword (Email, ResetKey) VALUES(?, ?)");
-		$stmt->bind_param("ss", $emailSQL, $resetKeySQL);
-		/* Commit or rollback transaction */
-		if ($stmt->execute()) {
-			$this->Conn->commit();
-	    	return "New record created successfully";
-		} else {
-			$this->Conn->rollback();
-	    	return "Error: " . $sql . "<br>" . $this->Conn->error;
-		} 
-		$this->Conn->close();
-	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//update userinfo
-	public function UpdateUser($Id, $Username, $Email, $Image = false, $Role){
-		//cleans all variables
-		$idSQL = mysqli_real_escape_string($this->Conn, $Id);
-		$emailSQL = mysqli_real_escape_string($this->Conn, $Email);
-		$usernameSQL = mysqli_real_escape_string($this->Conn, $Username);
-		$roleSQL = mysqli_real_escape_string($this->Conn, $Role);
-		//checks if image is set if not don't change the image
-		if($Image == false ){
-			$stmt = $this->Conn->prepare("UPDATE user SET Username = ?, Email = ?, Role = ? where ID = ?");
-			$stmt->bind_param("ssii", $usernameSQL, $emailSQL, $roleSQL, $idSQL);
-		}
-		else{
-			$stmt = $this->Conn->prepare("UPDATE user SET Username = ?, Email = ?, Image = ?, Role = ? where ID = ?");
-			$stmt->bind_param("ssbii", $usernameSQL, $emailSQL, $Image, $roleSQL, $idSQL);
-		}
-
-		/* Commit or rollback transaction */
-		if ($stmt->execute()) {
-			$this->Conn->commit();
-		    return "New record Updated successfully";
-		} else {
-			$this->Conn->rollback();
-		   	return "Error: " . $sql . "<br>" . $this->Conn->error;
-		} 
-	}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Delete
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//delete the user from the database
-	public function DeleteUser($Id){
-		//cleans the Id
-		$idSQL = mysqli_real_escape_string($this->Conn, $Id);
-		
-		$stmt = $this->Conn->prepare("DELETE FROM user where ID = ?");
-		$stmt->bind_param("i", $idSQL);
-
-		/* Commit or rollback transaction */
-		if ($stmt->execute()) {
-			$this->Conn->commit();
-			return true;
-		} else {
-			$this->Conn->rollback();
-				return "Error: " . $sql . "<br>" . $this->Conn->error;
-		} 
-	}
 }
 ?>

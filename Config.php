@@ -69,5 +69,15 @@ class Config
 			return "<link rel='stylesheet' type='text/css' href='MyProgram.css'>";
 		}
 	}
+
+	public function SetFooter(){
+		return "<div class='Footer'>
+		<p id='DesignedBy'>Designed by: Chris Lips, Thijs van Tol, Tim Gras, Stan Roozendaal en Stef Robbe
+		<image class='MediaIcons' src='Images/instagram-icon-black.png'>
+		<image class='MediaIcons' src='Images/facebook-icon.png'>
+		</p>
+	</div>
+	</body></html>";
+	}
 }
 ?>

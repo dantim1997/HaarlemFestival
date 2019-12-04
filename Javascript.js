@@ -9,14 +9,16 @@ function ToggleAdvanced() {
 }
 
 function AddToCart(eventId, typeEvent, amount) {
+	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
      data: {eventId: eventId,typeEvent: typeEvent, amount:amount},
      type: 'post',
      success: function(output) {
                    ShowPopup();
                    ShoppingCartPlus(amount);
-     }
-	});
+			}
+		});
+	}
 }
 
 function RemoveFromCart(self,eventId, typeEvent) {
@@ -98,7 +100,7 @@ function cartAmountPlus(count){
 function cartAmountMinus(count){
 	var indentifier = "amountNumber".concat(count);
 	var number = parseInt(document.getElementById(indentifier).value);
-	if (number > 1) {
+	if (number > 0) {
 		number = number - 1;
 		document.getElementById(indentifier).value = number;
 	}	

@@ -50,7 +50,7 @@ class HistoricOrderTicketsController
 		foreach ($tours as $tour) {
 			$normalTickets .= "<div class='ticketButtons'>	
 								<button class='removeBTN' type='button' onclick='cartAmountMinus(".$count.")'>-</button>
-								<input class='ticketTxt' type='text' value='0' id='amountNumber".$count."'>
+								<input class='ticketTxt' type='text' value='1' id='amountNumber".$count."'>
 								<button class='addBTN' type='button' onclick='cartAmountPlus(".$count.")'>+</button>
 								<button class='addToCartBTN' type='button' onclick='AddToCart(".$tour->Id.", 3, GetTicketAmount(".$count."))'></button>
 							</div>";
@@ -74,7 +74,7 @@ class HistoricOrderTicketsController
 		foreach ($tours as $tour) {
 			$familyTickets .= "<div class='ticketButtons'>	
 								<button class='removeBTN' type='button' onclick='cartAmountMinus(".$count.")'>-</button>
-								<input class='ticketTxt' type='text' value='0' id='amountNumber".$count."'>
+								<input class='ticketTxt' type='text' value='1' id='amountNumber".$count."'>
 								<button class='addBTN' type='button' onclick='cartAmountPlus(".$count.")'>+</button>
 								<button class='addToCartBTN' type='button' onclick='AddToCart(".$tour->Id.", 3, GetTicketAmount(".$count."))'></button>
 							</div>";
