@@ -39,10 +39,10 @@ class FoodTimesView
 				</div>
 				<div class='timeSelection'>
 					<div class='timeSelLeftSide'>
-						".$this->FoodTimesController->GetFilterTimes("SELECT SessionStartDateTime FROM FoodRestaurants ORDER BY SessionStartDateTime LIMIT 5")."
+						".$this->FoodTimesController->GetFilterTimes("left")."
 					</div>
 					<div class='timeSelRightSide'>
-						".$this->FoodTimesController->GetFilterTimes("SELECT SessionStartDateTime FROM FoodRestaurants ORDER BY SessionStartDateTime LIMIT 5 OFFSET 5")."
+						".$this->FoodTimesController->GetFilterTimes("right")."
 					</div>
 				</div>
 				<div class='cuisineHeader'>
