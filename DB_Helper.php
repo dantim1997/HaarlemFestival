@@ -367,10 +367,10 @@ class DB_Helper
 	public function GetArtistsJazz($genreFilter){
 		$sql = "";
 		if (empty($genreFilter)){
-			$sql = "SELECT ArtistName, ArtistImage, Genre FROM jazz GROUP BY ArtistName";
+			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz GROUP BY ArtistName";
 		}
 		else{
-			$sql = "SELECT ArtistName, ArtistImage, Genre FROM jazz WHERE ".$genreFilter." GROUP BY ArtistName";
+			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE ".$genreFilter." GROUP BY ArtistName";
 		}
 		//does a prepared query
 		$stmt = $this->Conn->prepare($sql);
@@ -390,7 +390,7 @@ class DB_Helper
 	//get Tickets for Jazz (date format yyyy-mm-dd)
 	public function GetTicketsJazz($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime, Price, Hall FROM jazz WHERE StartDateTime LIKE '".$date."%' ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE '".$date."%' ORDER BY StartDateTime ASC");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime, $Price, $Hall); 
@@ -405,7 +405,7 @@ class DB_Helper
 	//get Tickets for Jazz
 	public function GetTimeTableJazz(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM jazz");
+		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM Jazz");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime); 
@@ -419,7 +419,7 @@ class DB_Helper
 
 	public function GetGenresJazz(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Genre FROM jazz GROUP BY Genre");
+		$stmt = $this->Conn->prepare("SELECT Genre FROM Jazz GROUP BY Genre");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Genre); 
