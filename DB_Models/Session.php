@@ -14,7 +14,7 @@ class Session
 		}
 	}
 
-	function AddToCart($eventId, $typeEvent, $amount){
+	function AddToCart($eventId, $typeEvent, $amount, $special){
 		if(!isset($_SESSION['Tickets'])){
 			$_SESSION['Tickets'] = array();
 		}
@@ -24,6 +24,7 @@ class Session
 		foreach ($allCartItems as $cartItem) {
 			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
 				$cartItem['Amount'] = intval($cartItem['Amount']) + intval($amount);
+				$cartItem['Special'] = $special;
 				$newCartItems[] = $cartItem;
 				$added = true;
 			}
@@ -32,7 +33,7 @@ class Session
 			}
 		}
 		if(!$added){
-			$cartItem = array("EventId"=>$eventId,"TypeEvent"=>$typeEvent,"Amount"=>$amount);
+			$cartItem = array("EventId"=>$eventId,"TypeEvent"=>$typeEvent,"Amount"=>$amount, "Special"=>$special);
 			$newCartItems[] = $cartItem;
 		}
 

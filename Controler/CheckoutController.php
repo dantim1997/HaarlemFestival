@@ -21,7 +21,6 @@ class CheckoutController
 
 	public function GetAllItems(){
 		$this->Session = new Session;
-
 		$ticketRows = "";
 
 		if (isset($_SESSION["Tickets"])) {
