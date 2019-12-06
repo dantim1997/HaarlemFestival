@@ -57,10 +57,10 @@ function ShowDate(day) {
 	}
 }
 
-function AddToCart(eventId, typeEvent, amount) {
+function AddToCart(eventId, typeEvent, amount, special) {
 	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
-     data: {eventId: eventId,typeEvent: typeEvent, amount:amount},
+     data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special},
      type: 'post',
      success: function(output) {
                    ShowPopup();
