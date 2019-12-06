@@ -483,6 +483,20 @@ class DB_Helper
 		return $dates;
 	}
 
+	public function GetTimesJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime FROM Jazz GROUP BY TIME(StartDateTime) ASC");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($StartDateTime, $EndDateTime); 
+		$dates = array();
+		while ($stmt -> fetch()) { 
+			$date = array("StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
+			$dates[] = $date;
+		}
+		return $dates;
+	}
+
 	//get all tickets by customer
 	public function GetEventInfoDance($id){
 		//clean Id

@@ -36,8 +36,8 @@ class JazzView
 				<p>Find your Jazz genre on the four different days of the Haarlem Festival and visit the Jazz event!<br>There's free access for everyone on Sundays. So look for the artist or band you like and enjoy!</p>
 				<h2>Artists</h2>
 
-					<button onclick='ShowHideJazzFilter()' class='filterbutton2'>Filter genre</button>
-					<div id='Toggle' class='filter'>
+					<button onclick='ToggleAdvancedJazz()' class='filterbutton2'>Filter genre</button>
+					<div id='AdvancedFilter' class='filter'>
 						<form method='GET' action='Jazz.php'>
 					   	".$this->JazzController->MakeGenreAdvancedSearch()."
 					   	<input type='submit' class='filterbutton' value='Filter Artists'>
@@ -83,23 +83,24 @@ class JazzView
 						<th class='tg-qcxk'><span style='font-weight:700'>Sunday - 29 July</span></th>
 					</tr>
 					".$this->JazzController->GetDates()."
+					".$this->JazzController->GetTimes()."
 					".$this->JazzController->CreateTable()."
 					
 					</table>
 				<h2>Tickets</h2>
 				<div class='dates'>
-					<div class='selectday'><h3>Thursday</h3>26-07<br>Patronaat</div>
+					<div onclick='ShowDate(thursday)' class='selectday'><h3>Thursday</h3>26-07<br>Patronaat</div>
 					<div class='selectday'><h3>Friday</h3>27-07<br>Patronaat</div>
 					<div class='selectday'><h3>Saturday</h3>28-07<br>Patronaat</div>
 					<div class='selectday'><h3>Sunday</h3>29-07<br>Grote Markt</div>
 				</div>
 				<div>
-					<image class='arrow-up' src='Images/arrow-up.png'>
-					<image class='arrow-up' src='Images/arrow-up.png'>
-					<image class='arrow-up' src='Images/arrow-up.png'>
-					<image class='arrow-up' src='Images/arrow-up.png'>
+					<image id='Thursday' class='arrow-up' src='Images/arrow-up.png'>
+					<image id='Friday' class='arrow-up' src='Images/arrow-up.png'>
+					<image id='Saturday' class='arrow-up' src='Images/arrow-up.png'>
+					<image id='Sunday' class='arrow-up' src='Images/arrow-up.png'>
 				</div>
-				<div class='thursday'>
+				<div id='Thursday1' class='thursday'>
 				<h1>Thursday - Tickets</h1>
 				<br>
 				<div class='form'>
@@ -132,7 +133,7 @@ class JazzView
 					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
 				</div>
 				</div>
-				<div class='friday'>
+				<div id='Friday1' class='friday'>
 				<h1>Friday - Tickets</h1>
 				<br>
 				<div class='form'>
@@ -165,7 +166,7 @@ class JazzView
 					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
 				</div>
 				</div>
-				<div class='saturday'>
+				<div id='Saturday1' class='saturday'>
 					<h1>Saturday - Tickets</h1>
 					<br>
 					<div class='form'>
@@ -198,7 +199,7 @@ class JazzView
 						<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
 					</div>
 				</div>
-				<div class='sunday'>
+				<div id='Sunday1' class='sunday'>
 					<h1>Sunday - Free access for all visitors</h1>
 					<p>Sunday is the last day of the event. The event will be held in the Grote Markt. You can listen to every band for free!</p>
 					<br>

@@ -191,6 +191,26 @@ class JazzController
 					return $output;
 	}
 
+	public function GetTimes(){
+		$time = $this->DB_Helper->GetTimesJazz();
+		$newtimebegin = array();
+		$newtimeend = array();
+		foreach ($time as $time) {
+			$temptime = date("H:i", strtotime($time["StartDateTime"]));
+			$newtimebegin[] = $temptime;
+			$temptime = date("H:i", strtotime($time["EndDateTime"]));
+			$newtimeend[] = $temptime;
+		}
+		
+		$output = "<tr>";
+						foreach ($newtimebegin as $startTime) {
+							foreach ($newtimeend as $endTime)
+							$output .= "<td class='tg-6jhs'>".$startTime." - ".$endTime."</td>";
+						}
+					$output .= "</tr>";
+					return $output;
+	}
+
 	public function FromDateTimeToTime($date){
 		$hour = date("H",strtotime($date));
 		$minute = date("i",strtotime($date));
