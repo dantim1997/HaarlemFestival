@@ -291,7 +291,7 @@ class DB_Helper
 		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
 		$foodSections = array();
 		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="data:image/jpeg;base64,'.base64_encode( $Logo ).'" class="restaurantInfoImages"/>', );
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>');
 			$foodSections[] = $foodSection;
 		}
 		return $foodSections;
@@ -389,11 +389,12 @@ class DB_Helper
 	}
 
 	//get all tickets by customer
-	public function GetEventInfoFood($Id){
+	public function GetEventInfoFood($Id, $PriceType) {
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
+		$PriceTypeSQL = mysqli_real_escape_string($this->Conn, $PriceType);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, StartDateTime, EndDateTime, Description from foodrestaurants where u.ID = ? limit 1 ");
+		$stmt = $this->Conn->prepare("SELECT Id, StartDateTime, EndDateTime, Description, ".$PriceTypeSQL." from foodrestaurants where u.ID = ? limit 1 ");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();

@@ -161,7 +161,7 @@ class FoodTimesController
 						<p class='specialNeedsP'>Any special needs (wheelchair access, allergies, etc.) can be submitted on the payment page.</p>
 					</div>
 					<div class='makeReservation'>
-						<button class='makeReservationBtn'>Make Reservation</button>
+						<button class='makeReservationBtn' onclick='FoodAddToCart(".$section["Id"].", 1, ".$_POST["pplAbove12"].", ".$_POST["pplBelow12"].")'>Make Reservation</button>
 					</div>
 				</div>
 			</div>";

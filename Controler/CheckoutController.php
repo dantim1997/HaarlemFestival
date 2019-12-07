@@ -26,7 +26,7 @@ class CheckoutController
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"]);
+				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '');
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
@@ -44,11 +44,15 @@ class CheckoutController
 		return $ticketRows;
 	}
 
-	public function GetItems($eventId, $typeEvent,$amount){
+	public function GetItems($eventId, $typeEvent, $amount, $special){
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 1:
-				// $eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
+				if ($special == 0) {
+					$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
+				} else {
+					$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "NormalPrice");
+				}
 				break;
 			case 2:
 				$eventInfo = $this->DB_Helper->GetEventInfoDance($eventId);
