@@ -21,9 +21,10 @@ class FoodTimesController
 		$foodTimes = $this->DB_Helper->GetAllFoodSessions($side);
 		$times = "";
 		foreach ($foodTimes as $foodTime) {
-			$startDateTime = $this->RemoveDateOrTime($foodTime["SessionStartDateTime"], "time");
-			$cleanName = trim($startDateTime, ':');
-			$times .= "<label for='".$cleanName."'><input type='checkbox' class='timeCheckbox' id='".$cleanName."' name='TimeCheckbox[]' value='".$startDateTime."'>".$startDateTime."</label> <br />";
+			$time = new DateTime($foodTime["SessionStartDateTime"]);
+			$time = $time->format("H:i");
+			$cleanName = trim($time, ':');
+			$times .= "<label for='".$cleanName."'><input type='checkbox' class='timeCheckbox' id='".$cleanName."' name='TimeCheckbox[]' value='".$time."'>".$time."</label> <br />";
 		}
 		return $times;
 	}
@@ -147,21 +148,21 @@ class FoodTimesController
 					<div class='pickDayOption'>
 						<select class='pickDay'>
 							<option value='Pick a day'>Pick a day</option>
-            				".$this->GetDateTimes($section["Name"], "day")."
+            				".$this->GetDateTimes($section["Name"], "Date")."
             			</select>
 					</div>
             		<br />
 					<div class='pickSessionOption'>
 						<select class='pickSession'>
 							<option value='Pick a session'>Pick a session</option>
-            				".$this->GetDateTimes($section["Name"], "time")."
+            				".$this->GetDateTimes($section["Name"], "Time")."
             			</select>
 					</div>
 					<div class='specialNeeds'>
 						<p class='specialNeedsP'>Any special needs (wheelchair access, allergies, etc.) can be submitted on the payment page.</p>
 					</div>
 					<div class='makeReservation'>
-						<button class='makeReservationBtn' onclick='FoodAddToCart(".$section["Id"].", 1, ".$_POST["pplAbove12"].", ".$_POST["pplBelow12"].")'>Make Reservation</button>
+						<button class='makeReservationBtn'>Make Reservation</button>
 					</div>
 				</div>
 			</div>";
@@ -183,24 +184,25 @@ class FoodTimesController
 
 	private function GetDateTimes($name, $type) {
 		$dateTimes = "";
-		$foodDateTimes = $this->DB_Helper->GetFoodDateTimes($name);
+		$index = "Session";
+		if ($type == "Date") {
+			$foodDateTimes = $this->DB_Helper->GetFoodDates($name);
+			$index .= $type;
+		} else if ($type == "Time") {
+			$foodDateTimes = $this->DB_Helper->GetFoodTimes($name);
+			$index .= "Start".$type;
+		}
 		foreach ($foodDateTimes as $foodDateTime) {
-			$dateTime = $this->RemoveDateOrTime($foodDateTime["SessionStartDateTime"], $type);
-			$dateTimes .= "<option value='".$dateTime."'>".$dateTime."</option>";
+			if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $foodDateTime[$index])) {
+				$dateOrTime = new DateTime($foodDateTime[$index]);
+				$dateOrTime = $dateOrTime->format("d/m/Y");
+			} else {
+				$dateOrTime = new DateTime($foodDateTime[$index]);
+				$dateOrTime = $dateOrTime->format("H:i");
+			}
+			$dateTimes .= "<option value='".$dateOrTime."'>".$dateOrTime."</option>";
 		}
 		return $dateTimes;
-	}
-
-	private function RemoveDateOrTime($dateTime, $type) {
-		if ($type == "day") {
-			$dateTime = substr($dateTime, 0, 9);
-		} else {
-			$dateTime = substr($dateTime, 11);
-			if (strlen($dateTime) > 5) {
-				$dateTime = substr($dateTime, 0, -3);
-			}
-		}
-		return $dateTime;
 	}
 }
 

@@ -317,9 +317,9 @@ class DB_Helper
 
 	public function GetAllFoodSessions($side) {
 		if ($side == "left") {
-			$query = "SELECT SessionStartDateTime FROM FoodRestaurants ORDER BY SessionStartDateTime LIMIT 5";
+			$query = "SELECT SessionStartDateTime FROM FoodRestaurants GROUP BY SessionStartDateTime ORDER BY SessionStartDateTime LIMIT 5";
 		} else if ("right") {
-			$query = "SELECT SessionStartDateTime FROM FoodRestaurants ORDER BY SessionStartDateTime LIMIT 5 OFFSET 5";
+			$query = "SELECT SessionStartDateTime FROM FoodRestaurants GROUP BY SessionStartDateTime ORDER BY SessionStartDateTime LIMIT 5 OFFSET 5";
 		}
 		$stmt = $this->Conn->prepare($query);
 		$stmt->execute();
@@ -346,18 +346,32 @@ class DB_Helper
 		return $foodCuisines;
 	}
 
-	public function GetFoodDateTimes($name) {
-		$stmt = $this->Conn->prepare("SELECT SessionStartDateTime FROM FoodRestaurants WHERE Name LIKE ?");
+	public function GetFoodTimes($name) {
+		$stmt = $this->Conn->prepare("SELECT TIME(SessionStartDateTime) FROM FoodRestaurants WHERE Name LIKE ? GROUP BY TIME(SessionStartDateTime)");
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt->bind_result($SessionStartDateTime);
-		$foodSessions = array();
+		$stmt->bind_result($SessionStartTime);
+		$foodTimes = array();
 		while ($stmt -> fetch()) {
-			$foodSession = array("SessionStartDateTime" => $SessionStartDateTime);
-			$foodSessions[] = $foodSession;
+			$foodTime = array("SessionStartTime" => $SessionStartTime);
+			$foodTimes[] = $foodTime;
 		}
-		return $foodSessions;
+		return $foodTimes;
+	}
+
+	public function GetFoodDates($name) {
+		$stmt = $this->Conn->prepare("SELECT DATE(SessionStartDateTime) FROM FoodRestaurants WHERE Name LIKE ? GROUP BY DATE(SessionStartDateTime)");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($SessionDate);
+		$foodDates = array();
+		while ($stmt -> fetch()) {
+			$foodDate = array("SessionDate" => $SessionDate);
+			$foodDates[] = $foodDate;
+		}
+		return $foodDates;
 	}
 
 	public function Get_PageText($page){
