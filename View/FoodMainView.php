@@ -43,7 +43,7 @@ class FoodMainView
 			<div class='restaurantsGrid-container'>
 				<div class='restaurantsContainer'>
   					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Grand Café Brinkmann'><img src='./Images/Brinkmann.png' class='gridImage'></a>
+  						<a href='FoodTimesIndex.php?restaurant=Grand Cafe Brinkmann'><img src='./Images/Brinkmann.png' class='gridImage'></a>
   						<p>A grand café located in the center of Haarlem, and next to the Grote Kerk. <br/> <b>Food tags</b>: Dutch, European, Modern</p>
   					</div>
   					<div class='restaurant-item'>

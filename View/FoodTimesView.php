@@ -53,7 +53,7 @@ class FoodTimesView
 						".$this->FoodTimesController->GetCuisines(0, 5)."
 					</div>
 					<div class='cuisineSelRightSide'>
-						".$this->FoodTimesController->GetCuisines(5, 4)."
+						".$this->FoodTimesController->GetCuisines(5, 9)."
 						<div class='searchRButton'>
 							<button class='searchRBtn'>Search Restaurants</button>
 						</div>
