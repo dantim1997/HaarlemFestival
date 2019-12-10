@@ -8,7 +8,10 @@ function ToggleAdvanced() {
   }
 }
 
-function FoodAddToCart(eventId, typeEvent, childAmount, adultAmount) {
+function FoodAddToCart(eventId, typeEvent) {
+	var childAmount = GetChildrenTicketCount();
+	var adultAmount = GetNormalTicketCount();
+
 	AddToCart(eventId, typeEvent, childAmount, 0);
 	AddToCart(eventId, typeEvent, adultAmount, 1);
 }
@@ -115,4 +118,14 @@ function GetTicketAmount(count){
 	var indentifier = "amountNumber".concat(count);
 	var number = parseInt(document.getElementById(indentifier).value);
 	return	number;
+}
+
+function GetNormalTicketCount() {
+	var normalTickets = document.getElementById('pplAbove12')
+	return normalTickets.value;
+}
+
+function GetChildrenTicketCount() {
+	var childrenTickets = document.getElementById('pplBelow12');
+	return childrenTickets.value;
 }
