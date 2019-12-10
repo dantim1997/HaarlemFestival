@@ -408,17 +408,17 @@ class DB_Helper
 		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
 		$PriceTypeSQL = mysqli_real_escape_string($this->Conn, $PriceType);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, StartDateTime, EndDateTime, Description, ".$PriceTypeSQL." from foodrestaurants where u.ID = ? limit 1 ");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, SessionStartDateTime, SessionEndDateTime, ".$PriceTypeSQL." from FoodRestaurants where Id = ? limit 1");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $Username, $role, $email, $registration_date, $image, $RoleName); 
-		$User = array();
+		$stmt->bind_result($Id, $Name, $SessionStartDateTime, $SessionEndDateTime, $Price);
+		$Ticket = array();
 		while ($stmt -> fetch()) { 
-			$user = array("ID"=>$Id, "Username"=>$Username, "Role"=>$role, "Email"=>$email, "Registration_date"=>$registration_date, "Image"=>$image, "RoleName"=>$RoleName);
-			$User = $user;
+			$ticket = array("ID"=>$Id, "Venue"=>$Name, "StartDateTime"=>$SessionStartDateTime, "EndDateTime"=>$SessionEndDateTime, "Price"=>$Price);
+			$Ticket = $ticket;
 		}
-		return $User;
+		return $Ticket;
 	}
 
 	//get all tickets by customer
