@@ -421,6 +421,102 @@ class DB_Helper
 		return $Ticket;
 	}
 
+	//get Artists for Jazz
+	public function GetArtistsJazz($genreFilter){
+		$sql = "";
+		if (empty($genreFilter)){
+			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz GROUP BY ArtistName";
+		}
+		else{
+			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE ".$genreFilter." GROUP BY ArtistName";
+		}
+		//does a prepared query
+		$stmt = $this->Conn->prepare($sql);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $Image, $Genre); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Name"=>$Name, "Image"=>$Image, "Genre"=>$Genre);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	
+
+	//get Tickets for Jazz (date format yyyy-mm-dd)
+	public function GetTicketsJazz($date){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE '".$date."%' ORDER BY StartDateTime ASC");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime, $Price, $Hall); 
+		$tickets = array();
+		while ($stmt -> fetch()) { 
+			$ticket = array("Name"=>$Name, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Hall"=>$Hall);
+			$tickets[] = $ticket;
+		}
+		return $tickets;
+	}
+
+	//get Tickets for Jazz
+	public function GetTimeTableJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM Jazz");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Name"=>$Name, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	public function GetGenresJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Genre FROM Jazz GROUP BY Genre");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Genre); 
+		$genres = array();
+		while ($stmt -> fetch()) { 
+			$genre = array("Genre"=>$Genre);
+			$genres[] = $genre;
+		}
+		return $genres;
+	}
+
+	public function GetDatesJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime FROM Jazz GROUP BY DATE(StartDateTime) ASC");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($StartDateTime, $EndDateTime); 
+		$dates = array();
+		while ($stmt -> fetch()) { 
+			$date = array("StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
+			$dates[] = $date;
+		}
+		return $dates;
+	}
+
+	public function GetTimesJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime FROM Jazz GROUP BY TIME(StartDateTime) ASC");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($StartDateTime, $EndDateTime); 
+		$dates = array();
+		while ($stmt -> fetch()) { 
+			$date = array("StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
+			$dates[] = $date;
+		}
+		return $dates;
+	}
+
 	//get all tickets by customer
 	public function GetEventInfoDance($id){
 		//clean Id

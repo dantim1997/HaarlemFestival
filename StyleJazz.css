@@ -69,6 +69,7 @@ p {
 
 .artists {
     overflow: hidden;
+    margin-left: 20%;
 }
 
 .artist {
@@ -253,6 +254,11 @@ p {
     margin-bottom: 0px;
 }
 
+.selectday:hover {
+    background-color: rgb(30, 30, 30);
+    cursor: pointer;
+  }
+
 .arrow-up {
     width: 10%; 
     height: 27px;
@@ -338,4 +344,48 @@ input {
     color: white;
     text-align: center;
     width: 100%;
+}
+
+.carousel{
+    margin-top: 20px;
+}
+
+.carousel-item{
+    text-align: center;
+    min-height: 280px;
+}
+
+.bs-example{
+	margin: 20px;
+}
+
+.price {
+    text-align: right;
+    margin-top: -30px;
+    margin-right: 60%;
+}
+
+.filter {
+    align-content: right;
+    width: 300px;
+    background-color: darkgreen;
+    padding: 30px;
+}
+
+.filterbutton {
+    background-color: red;
+    color: white;
+    width: 200px;
+}
+
+.filterbutton2 {
+    background-color: green;
+    color: white;
+    width: 300px;
+    height: 40px;
+}
+
+.checkbox {
+    height: 30px;
+    width: 30px;
 }
