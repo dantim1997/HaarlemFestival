@@ -47,7 +47,7 @@ class FoodMainView
   						<p>A grand café located in the center of Haarlem, and next to the Grote Kerk. <br/> <b>Food tags</b>: Dutch, European, Modern</p>
   					</div>
   					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=ML'><img src='./Images/ML.png' class='gridImage'></a>
+  						<a href='FoodTimesIndex.php?restaurant=Restaurant ML'><img src='./Images/ML.png' class='gridImage'></a>
   						<p>Restaurant ML is decorated with a Michelin star and located in the centre of Haarlem. <br/> <b>Food tags</b>: Dutch, fish, seafood and European</p>
   					</div>
   					<div class='restaurant-item'>
