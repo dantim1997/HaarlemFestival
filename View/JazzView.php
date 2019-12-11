@@ -75,24 +75,16 @@ class JazzView
 				</div>
 				<h2>Programme</h2>
 					<table class='tg'>
-					<tr>
-						<th class='tg-lh0f'></th>
-						<th class='tg-qcxk'><span style='font-weight:700'>Thursday - 26 July</span></th>
-						<th class='tg-qcxk'><span style='font-weight:700'>Friday - 27 July</span></th>
-						<th class='tg-qcxk'><span style='font-weight:700'>Saturday - 28 July</span></th>
-						<th class='tg-qcxk'><span style='font-weight:700'>Sunday - 29 July</span></th>
-					</tr>
 					".$this->JazzController->GetDates()."
 					".$this->JazzController->GetTimes()."
-					".$this->JazzController->CreateTable()."
 					
 					</table>
 				<h2>Tickets</h2>
 				<div class='dates'>
-					<div onclick='ShowDate(thursday)' class='selectday'><h3>Thursday</h3>26-07<br>Patronaat</div>
-					<div class='selectday'><h3>Friday</h3>27-07<br>Patronaat</div>
-					<div class='selectday'><h3>Saturday</h3>28-07<br>Patronaat</div>
-					<div class='selectday'><h3>Sunday</h3>29-07<br>Grote Markt</div>
+					<div onclick='ShowDate(1)' class='selectday'><h3>Thursday</h3>26-07<br>Patronaat</div>
+					<div onclick='ShowDate(2)' class='selectday'><h3>Friday</h3>27-07<br>Patronaat</div>
+					<div onclick='ShowDate(3)' class='selectday'><h3>Saturday</h3>28-07<br>Patronaat</div>
+					<div onclick='ShowDate(4)' class='selectday'><h3>Sunday</h3>29-07<br>Grote Markt</div>
 				</div>
 				<div>
 					<image id='Thursday' class='arrow-up' src='Images/arrow-up.png'>

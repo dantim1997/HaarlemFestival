@@ -1,5 +1,5 @@
 <?php
-	require_once( "Autoloader.php");
+require_once( "Autoloader.php");
 class JazzController 
 {
 	private $JazzModel;
@@ -166,14 +166,6 @@ class JazzController
 		return $tickets;
 	}
 
-	public function CreateTable2(){
-		//Get all dates
-		$date = $this->DB_Helper->GetDatesJazz();
-
-
-		//Get all times
-	}
-
 	public function GetDates(){
 		$date = $this->DB_Helper->GetDatesJazz();
 		$newdates = array();
@@ -202,13 +194,14 @@ class JazzController
 			$newtimeend[] = $temptime;
 		}
 		
-		$output = "<tr>";
-						foreach ($newtimebegin as $startTime) {
-							foreach ($newtimeend as $endTime)
-							$output .= "<td class='tg-6jhs'>".$startTime." - ".$endTime."</td>";
-						}
-					$output .= "</tr>";
-					return $output;
+		$output = "";
+		for($i=0; $i<count($newtimebegin)-1; $i++) {
+			$output .= "
+			<tr>
+			<td class='tg-6jhs'>".$newtimebegin[$i]." - ".$newtimeend[$i]."</td>
+			<tr>";
+		}
+		return $output;
 	}
 
 	public function FromDateTimeToTime($date){

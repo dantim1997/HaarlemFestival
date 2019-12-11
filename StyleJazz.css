@@ -254,6 +254,11 @@ p {
     margin-bottom: 0px;
 }
 
+.selectday:hover {
+    background-color: rgb(30, 30, 30);
+    cursor: pointer;
+  }
+
 .arrow-up {
     width: 10%; 
     height: 27px;
