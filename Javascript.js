@@ -71,6 +71,11 @@ function ShowDate(day) {
 	}
 }
 
+function FoodAddToCart(eventId, typeEvent, childAmount, adultAmount) {
+	AddToCart(eventId, typeEvent, childAmount, 0);
+	AddToCart(eventId, typeEvent, adultAmount, 1);
+}
+
 function AddToCart(eventId, typeEvent, amount, special) {
 	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
