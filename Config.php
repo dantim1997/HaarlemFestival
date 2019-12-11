@@ -54,7 +54,10 @@ class Config
 			return "<link rel='stylesheet' type='text/css' href='historic.css'>";
 		}
 		if($event == "Jazz"){
-			return "<link rel='stylesheet' type='text/css' href='StyleJazz.css'>";
+			return "<link rel='stylesheet' type='text/css' href='StyleJazz.css'>
+			<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
+			<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>";
 		}
 		if($event == "FoodMain"){
 			return "<link rel='stylesheet' type='text/css' href='FoodMainStyle.css'>";

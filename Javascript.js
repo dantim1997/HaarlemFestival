@@ -1,11 +1,74 @@
-
 function ToggleAdvanced() {
-  var x = document.getElementById('AdvancedSearch');
-  if (x.style.display === "block") {
-    x.style.display = 'none';
-  } else {
-    x.style.display = 'block';
-  }
+	var x = document.getElementById('AdvancedSearch');
+	if (x.style.display === "block") {
+	  x.style.display = 'none';
+	} else {
+	  x.style.display = 'block';
+	}
+}
+  
+function ToggleAdvancedJazz() {
+	var x = document.getElementById('AdvancedFilter');
+	if (x.style.display === "block") {
+		x.style.display = 'none';
+	} else {
+		x.style.display = 'block';
+	}
+}
+  
+window.onload = function(){
+	document.getElementById('AdvancedFilter').style.display = 'none';
+	document.getElementById('Thursday').style.visibility = 'hidden';
+	document.getElementById('Friday').style.visibility = 'hidden';
+	document.getElementById('Saturday').style.visibility = 'hidden';
+	document.getElementById('Sunday').style.visibility = 'hidden';
+	document.getElementById('Thursday1').style.display = 'none';
+	document.getElementById('Friday1').style.display = 'none';
+	document.getElementById('Saturday1').style.display = 'none';
+	document.getElementById('Sunday1').style.display = 'none';
+}
+  
+function ShowDate(day) {
+	if(day == 1){
+		document.getElementById('Thursday').style.visibility = 'unset';
+		document.getElementById('Thursday1').style.display = 'block';
+		document.getElementById('Friday').style.visibility = 'hidden';
+		document.getElementById('Friday1').style.display = 'none';
+		document.getElementById('Saturday').style.visibility = 'hidden';
+		document.getElementById('Saturday1').style.display = 'none';
+		document.getElementById('Sunday').style.visibility = 'hidden';
+		document.getElementById('Sunday1').style.display = 'none';
+	}
+	else if(day == 2){
+		document.getElementById('Friday').style.visibility = 'unset';
+		document.getElementById('Friday1').style.display = 'block';
+		document.getElementById('Thursday').style.visibility = 'hidden';
+		document.getElementById('Thursday1').style.display = 'none';
+		document.getElementById('Saturday').style.visibility = 'hidden';
+		document.getElementById('Saturday1').style.display = 'none';
+		document.getElementById('Sunday').style.visibility = 'hidden';
+		document.getElementById('Sunday1').style.display = 'none';
+	}
+	else if(day == 3){
+		document.getElementById('Saturday').style.visibility = 'unset';
+		document.getElementById('Saturday1').style.display = 'block';
+		document.getElementById('Friday').style.visibility = 'hidden';
+		document.getElementById('Friday1').style.display = 'none';
+		document.getElementById('Thursday').style.visibility = 'hidden';
+		document.getElementById('Thursday1').style.display = 'none';
+		document.getElementById('Sunday').style.visibility = 'hidden';
+		document.getElementById('Sunday1').style.display = 'none';
+	}
+	else if(day == 4){
+		document.getElementById('Sunday').style.visibility = 'unset';
+		document.getElementById('Sunday1').style.display = 'block';
+		document.getElementById('Friday').style.visibility = 'hidden';
+		document.getElementById('Friday1').style.display = 'none';
+		document.getElementById('Saturday').style.visibility = 'hidden';
+		document.getElementById('Saturday1').style.display = 'none';
+		document.getElementById('Thursday').style.visibility = 'hidden';
+		document.getElementById('Thursday1').style.display = 'none';
+	}
 }
 
 function FoodAddToCart(eventId, typeEvent, childAmount, adultAmount) {
@@ -115,4 +178,13 @@ function GetTicketAmount(count){
 	var indentifier = "amountNumber".concat(count);
 	var number = parseInt(document.getElementById(indentifier).value);
 	return	number;
+}
+
+function ShowHideJazzFilter(){
+	var x = document.getElementById('Toggle');
+  	if (x.style.display === "block") {
+    	x.style.display = 'none';
+  	} else {
+    	x.style.display = 'block';
+  	}
 }
