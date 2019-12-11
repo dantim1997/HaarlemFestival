@@ -172,14 +172,14 @@ class DB_Helper
 	//get tickets
 	public function GetOrderTicketsDance($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description FROM `order` as o
-			join orderline ol on ol.OrderId = o.Id 
-			join tickets t on t.Id = ol.TicketId
-			join danceevent e on e.id = t.eventid
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description FROM `Order` as o
+			join OrderLine ol on ol.OrderId = o.Id 
+			join Tickets t on t.Id = ol.TicketId
+			join DanceEvent e on e.id = t.eventid
 			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
-			WHERE o.id = ? && t.TypeTicket = 2
+			WHERE o.id = ? && t.TypeEvent = 2
 			GROUP by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
@@ -198,11 +198,11 @@ class DB_Helper
 	public function GetOrderTicketsTour($orderId){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description 
-			FROM `order` o
-			join orderline ol on ol.OrderId = o.id
-			join tickets t on t.Id = ol.TicketId
-			join historictours ht on ht.Id = t.EventId
-			WHERE o.id = ? && t.TypeTicket = 2
+			FROM `Order` o
+			join OrderLine ol on ol.OrderId = o.id
+			join Tickets t on t.Id = ol.TicketId
+			join HistoricTours ht on ht.Id = t.EventId
+			WHERE o.id = ? && t.TypeEvent = 3
 			group by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
@@ -221,11 +221,11 @@ class DB_Helper
 	public function GetOrderTicketsJazz($orderId){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName
-			FROM `order` o
-			join orderline ol on ol.OrderId = o.id
-			join tickets t on t.Id = ol.TicketId
+			FROM `Order` o
+			join OrderLine ol on ol.OrderId = o.id
+			join Tickets t on t.Id = ol.TicketId
 			join Jazz j on j.Id = t.EventId
-			WHERE o.id = ? && t.TypeTicket = 3");
+			WHERE o.id = ? && t.TypeEvent = 4");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
@@ -242,11 +242,11 @@ class DB_Helper
 	public function GetOrderTicketsFood($orderId){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT f.id, f.Location, f.SessionStartDateTime, f.SessionEndDateTime, f.Description
-			FROM `order` o
-			join orderline ol on ol.OrderId = o.id
-			join tickets t on t.Id = ol.TicketId
-			join foodrestaurants f on f.Id = t.EventId
-			WHERE o.id = ? && t.TypeTicket = 1");
+			FROM `Order` o
+			join OrderLine ol on ol.OrderId = o.id
+			join Tickets t on t.Id = ol.TicketId
+			join FoodRestaurants f on f.Id = t.EventId
+			WHERE o.id = ? && t.TypeEvent = 1");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
