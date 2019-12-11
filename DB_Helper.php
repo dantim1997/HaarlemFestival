@@ -415,7 +415,7 @@ class DB_Helper
 		$stmt->bind_result($Id, $Name, $SessionStartDateTime, $SessionEndDateTime, $Price);
 		$Ticket = array();
 		while ($stmt -> fetch()) { 
-			$ticket = array("ID"=>$Id, "Venue"=>$Name, "StartDateTime"=>$SessionStartDateTime, "EndDateTime"=>$SessionEndDateTime, "Price"=>$Price);
+			$ticket = array("ID"=>$Id, "Venue"=>$Name, "StartDateTime"=>$SessionStartDateTime, "EndDateTime"=>$SessionEndDateTime, "Price"=>$Price, "About"=>"", "Description" =>"");
 			$Ticket = $ticket;
 		}
 		return $Ticket;
