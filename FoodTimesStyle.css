@@ -8,6 +8,10 @@
     vertical-align: baseline;
 }
 
+body {
+  max-height: 100%;
+}
+
 /*RESTAURANT FILTER*/
 .restaurantFilter {
   position: sticky;
@@ -128,7 +132,7 @@ h2.searchRestaurants {
   position: relative;
   left: 330px;
   top: -400px;
-  width: 100%;
+  width: 79%;
   height: auto;
 }
 
@@ -152,16 +156,22 @@ h2.searchRestaurants {
   position: relative;
   top: -150px;
   left: 260px;
+  width: 50%;
 }
 
 p.restaurantInfoP {
   font-size: 20px;
 }
 
+h2 {
+  width: 50%;
+}
+
 .rating {
   position: relative;
   top: -160px;
   left: 260px;
+  width: 50%;
 }
 
 .locationWidget {
