@@ -12,7 +12,7 @@ class Config
 		{
 		self::$instance = new Config();
 		}*/
-		   return Config();
+		   return new Config();
 		//return self::$instance;
 	}
 	public function GetAPIKey(){
