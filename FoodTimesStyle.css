@@ -2,14 +2,10 @@
 * {
     margin: 0;
     padding: 0;
-    border: 0;
+    /*border: 0;
     outline: 0;
     font-size: 100%;
-    vertical-align: baseline;
-}
-
-body {
-  max-height: 100%;
+    vertical-align: baseline;*/
 }
 
 /*RESTAURANT FILTER*/
@@ -164,7 +160,7 @@ p.restaurantInfoP {
 }
 
 h2 {
-  width: 50%;
+  width: 70%;
 }
 
 .rating {
@@ -192,8 +188,13 @@ h2 {
   background-color: #FFFFFF;
 }
 
-.pricesH2, .pricesH4 {
-  padding: 5px;
+.pricesH2, .pricesH4, .pricesP {
+  padding-left: 2px;
+  margin-bottom: 0px;
+}
+
+.pricesP {
+  font-style: italic;
 }
 
 .createReservation {

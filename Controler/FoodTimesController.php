@@ -106,7 +106,11 @@ class FoodTimesController
 				</div>
 				<div class='prices'>
 					<h2 class='pricesH2'>PRICES</h2>
-					<h4 class='pricesH4'>Reservation fee: €10,- <br /> Normal price: €".$this->CheckPrice($section["NormalPrice"])." <br /> Price for children (below the age of 12): €".$this->CheckPrice($section["ChildPrice"])."</h4>
+					<h4 class='pricesH4'>Reservation fee: €10,- <br /> Normal price: €".$this->CheckPrice($section["NormalPrice"])." <br /> Price for children (below the age of 12): €".$this->CheckPrice($section["ChildPrice"])."
+					</h4>
+					<p class='pricesP'>
+						All prices include 21% VAT.
+					</p>
 				</div>
 				<div class='createReservation'>
 					<div class='createReservationH2'>
