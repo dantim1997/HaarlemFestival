@@ -238,6 +238,10 @@ h2 {
   font-weight: bold;
 }
 
+p.specialNeedsP {
+  margin-bottom: 0;
+}
+
 .makeReservation {
   position: relative;
   top: 40px;

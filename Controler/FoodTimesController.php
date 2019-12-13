@@ -109,7 +109,7 @@ class FoodTimesController
 					<h4 class='pricesH4'>Reservation fee: €10,- <br /> Normal price: €".$this->CheckPrice($section["NormalPrice"])." <br /> Price for children (below the age of 12): €".$this->CheckPrice($section["ChildPrice"])."
 					</h4>
 					<p class='pricesP'>
-						All prices include 21% VAT.
+						All prices include 9% VAT.
 					</p>
 				</div>
 				<div class='createReservation'>
@@ -162,13 +162,15 @@ class FoodTimesController
             			</select>
 					</div>
 					<div class='specialNeeds'>
-						<p class='specialNeedsP'>Any special needs (wheelchair access, allergies, etc.) can be submitted on the payment page.</p>
+						<p class='specialNeedsP'>Allergies or other special needs? Let us know:</p>
+						<textarea id='specialneedsTxt' rows='2' cols='50'></textarea>
 					</div>
 					<div class='makeReservation'>
 						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCart(".$section["Id"].", 1)' />
 					</div>
 				</div>
-			</div>";
+			</div>
+			";
 	}
 
 	private function GetRating($fullStars) {
