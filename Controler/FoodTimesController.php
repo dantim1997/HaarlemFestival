@@ -106,7 +106,11 @@ class FoodTimesController
 				</div>
 				<div class='prices'>
 					<h2 class='pricesH2'>PRICES</h2>
-					<h4 class='pricesH4'>Reservation fee: €10,- <br /> Normal price: €".$section["NormalPrice"].",- <br /> Price for children (below the age of 12): €".$section["ChildPrice"]."</h4>
+					<h4 class='pricesH4'>Reservation fee: €10,- <br /> Normal price: €".$this->CheckPrice($section["NormalPrice"])." <br /> Price for children (below the age of 12): €".$this->CheckPrice($section["ChildPrice"])."
+					</h4>
+					<p class='pricesP'>
+						All prices include 9% VAT.
+					</p>
 				</div>
 				<div class='createReservation'>
 					<div class='createReservationH2'>
@@ -115,7 +119,6 @@ class FoodTimesController
 					<div class='peopleAboveOption'>
 						<select class='pplAbove12' id='pplAbove12'>
 							<option value='People &gt;12'>People</option>
-            				<option value='0'>0</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
             				<option value='3'>3</option>
@@ -159,13 +162,15 @@ class FoodTimesController
             			</select>
 					</div>
 					<div class='specialNeeds'>
-						<p class='specialNeedsP'>Any special needs (wheelchair access, allergies, etc.) can be submitted on the payment page.</p>
+						<p class='specialNeedsP'>Allergies or other special needs? Let us know:</p>
+						<textarea id='extraInfo' rows='2' cols='50'></textarea>
 					</div>
 					<div class='makeReservation'>
 						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCart(".$section["Id"].", 1)' />
 					</div>
 				</div>
-			</div>";
+			</div>
+			";
 	}
 
 	private function GetRating($fullStars) {
@@ -182,6 +187,20 @@ class FoodTimesController
 		return $stars;
 	}
 
+	// 'cleans' up prices (turns . into ,'s and adds ,-'s to whole numbers)
+	private function CheckPrice($givenPrice) {
+		$haystack = (string)$givenPrice;
+		$needle = '.';
+		if (strpos($haystack, $needle)) {
+			// it's not a whole number
+			$givenPrice = str_replace('.', ',', (string)$givenPrice);
+		} else {
+			// it's a whole number
+			$givenPrice .= ',-';
+		}
+		return $givenPrice;
+	}
+
 	private function GetDateTimes($name, $type) {
 		$dateTimes = "";
 		$index = "Session";
@@ -195,7 +214,7 @@ class FoodTimesController
 		foreach ($foodDateTimes as $foodDateTime) {
 			if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $foodDateTime[$index])) {
 				$dateOrTime = new DateTime($foodDateTime[$index]);
-				$dateOrTime = $dateOrTime->format("d/m/Y");
+				$dateOrTime = $dateOrTime->format("d-F-Y");
 			} else {
 				$dateOrTime = new DateTime($foodDateTime[$index]);
 				$dateOrTime = $dateOrTime->format("H:i");

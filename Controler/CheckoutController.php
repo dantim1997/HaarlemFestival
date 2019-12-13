@@ -26,7 +26,7 @@ class CheckoutController
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '');
+				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '', $item["ExtraInfo"]);
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
@@ -39,6 +39,9 @@ class CheckoutController
 					<div class='tickets'>". $day."</div>
 				</div>";
 			}
+		}
+		if($ticketRows == ""){
+			$ticketRows = "<div class='Empty'><h3>You dont have any items in your shopping cart</h3></div>";
 		}
 
 		return $ticketRows;
@@ -72,10 +75,12 @@ class CheckoutController
 			$sortedDays[$eventDate] = "";
 		}
 
+		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval( $amount));
+
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
-			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".$eventInfo["Price"].",-</p>
-					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.")' type='submit' value='&#10006' name='??????'>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p>
+					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.",".$eventInfo["Price"].")' type='submit' value='&#10006' name='??????'>
 		</div>";	
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}

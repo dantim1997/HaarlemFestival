@@ -83,14 +83,14 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor from DanceArtist where Id != 0");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor, ImageName from DanceArtist where Id != 0");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor); 
+		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor, $ImageName); 
 		$artists = array();
 		while ($stmt -> fetch()) { 
-			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor);
+			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>$ImageName);
 			$artists[] = $artist;
 		}
 		return $artists;
