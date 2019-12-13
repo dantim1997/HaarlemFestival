@@ -198,13 +198,13 @@ function GetTicketAmount(count){
 }
 
 function GetNormalTicketCount() {
-	var normalTickets = document.getElementById('pplAbove12')
-	return normalTickets.value;
+	var normalTickets = document.getElementById('pplAbove12');
+	return parseInt(normalTickets.value);
 }
 
 function GetChildrenTicketCount() {
 	var childrenTickets = document.getElementById('pplBelow12');
-	return childrenTickets.value;
+	return parseInt(childrenTickets.value);
 }
 
 function ShowHideJazzFilter(){
