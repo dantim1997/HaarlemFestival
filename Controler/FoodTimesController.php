@@ -113,7 +113,7 @@ class FoodTimesController
 						<h2>Create your reservation:</h2>
 					</div>
 					<div class='peopleAboveOption'>
-						<select class='pplAbove12'>
+						<select class='pplAbove12' id='pplAbove12'>
 							<option value='People &gt;12'>People</option>
             				<option value='0'>0</option>
             				<option value='1'>1</option>
@@ -130,7 +130,7 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='peopleBelowOption'>
-						<select class='pplBelow12'>
+						<select class='pplBelow12' id='pplBelow12'>
 							<option value='Children (&lt;12)'>Children (&lt;12)</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
@@ -162,7 +162,7 @@ class FoodTimesController
 						<p class='specialNeedsP'>Any special needs (wheelchair access, allergies, etc.) can be submitted on the payment page.</p>
 					</div>
 					<div class='makeReservation'>
-						<button class='makeReservationBtn'>Make Reservation</button>
+						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCart(".$section["Id"].", 1)' />
 					</div>
 				</div>
 			</div>";
