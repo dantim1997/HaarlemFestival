@@ -4,11 +4,13 @@ class AdvancedDanceSearchView
 {
 	private $AdvancedDanceSearchController;
 	private $AdvancedDanceSearchModel;
+	private $PageContentHelper;
 
 	public function __construct($advancedDanceSearchController, $advancedDanceSearchModel)
 	{
 		$this->AdvancedDanceSearchController = $advancedDanceSearchController;
 		$this->AdvancedDanceSearchModel = $advancedDanceSearchModel;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//output to html
@@ -28,6 +30,7 @@ class AdvancedDanceSearchView
 	}
 
 	private function Body(){
+		$pageTexts = $this->PageContentHelper->GetPageText("DanceAdvancedSearch2");
 		$nav = new Nav();
 		return $nav->SetNavBar("Dance"). "
 		<div id='main'>
@@ -50,7 +53,7 @@ class AdvancedDanceSearchView
 						  </div>
 						</div>
 						</div>
-						<div><a href='checkout.php'><div class='ProceeToCheckout'>Proceed to checkout</div>
+						<div><a href='checkout.php'><div class='ProceeToCheckout'>".current($pageTexts)."</div>
 							</a></div>
 					</div>
 			    <div class='col-sm-1'></div>
