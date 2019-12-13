@@ -75,14 +75,28 @@ function FoodAddToCart(eventId, typeEvent) {
 	var childAmount = GetChildrenTicketCount();
 	var adultAmount = GetNormalTicketCount();
 
-	AddToCart(eventId, typeEvent, childAmount, 0);
-	AddToCart(eventId, typeEvent, adultAmount, 1);
+	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0);
+	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1);
 }
 
 function AddToCart(eventId, typeEvent, amount, special) {
 	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
      data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special},
+     type: 'post',
+     success: function(output) {
+                   ShowPopup();
+                   ShoppingCartPlus(amount);
+			}
+		});
+	}
+}
+
+function AddToCartExtraInfo(eventId, typeEvent, amount, special) {
+	var extraInfo = document.getElementById('extraInfo').value;
+	if (amount > 0) {
+     $.ajax({ url: 'AddToCart.php',
+     data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special, extraInfo:extraInfo},
      type: 'post',
      success: function(output) {
                    ShowPopup();
