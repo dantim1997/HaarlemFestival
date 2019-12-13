@@ -8,12 +8,12 @@ class Config
   
 	public static function getInstance()
 	{
-		if(!self::$instance)
+		/*if(!self::$instance)
 		{
 		self::$instance = new Config();
-		}
-		   
-		return self::$instance;
+		}*/
+		   return Config();
+		//return self::$instance;
 	}
 	public function GetAPIKey(){
 		//return APIKey
