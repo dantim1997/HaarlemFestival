@@ -10,7 +10,8 @@
 
 /*RESTAURANT FILTER*/
 .restaurantFilter {
-  position: sticky;
+  float: left;
+  position: fixed;
   left: 10px;
   top: 170px;
   width: 270px;
@@ -20,7 +21,6 @@
 }
 
 .searchHeader {
-  position: sticky;
   width: 269px;
   height: 35px;
   background-color: #B2B2B2;
@@ -31,6 +31,7 @@
 
 h2.searchRestaurants {
   font-size: 25px;
+  width: 100%;
   font-family: 'Arial Bold', 'Arial';
 }
 
@@ -125,10 +126,9 @@ h2.searchRestaurants {
 
 /*RESTAURANTS SECTION*/
 .restaurants {
-  position: relative;
-  left: 330px;
-  top: -400px;
-  width: 79%;
+  float: right;
+  margin-left: -100px;
+  width: 80%;
   height: auto;
 }
 
