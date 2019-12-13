@@ -13,6 +13,11 @@
 	float: left;
 }
 
+.Empty{
+	float: left;
+	margin-top: 100px;;
+}
+
 #checkoutlbl{
 	margin-top: 2%;
 	font-size: 25pt;

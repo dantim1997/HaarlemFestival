@@ -2,7 +2,9 @@
 require_once( "Autoloader.php");
 class CheckoutModel
 {
-	public $SortedDays =array();
+	private $SortedDays =array();
+
+	public $Total = 0;
 	function __construct(){
 	}
 
@@ -13,6 +15,20 @@ class CheckoutModel
 	public function SetSortedDays($value)
 	{
 		$this->SortedDays = $value;
+	}
+
+	public function GetTotal(){
+		return $this->Total;
+	}
+
+	public function SetTotal($value)
+	{
+		$this->Total = $value;
+	}
+
+	public function AddTotal($value)
+	{
+		$this->Total = $this->Total + $value;
 	}
 
 }
