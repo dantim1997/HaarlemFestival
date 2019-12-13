@@ -30,31 +30,31 @@ class JazzController
 				<div class='carousel-item active'>
 				<div class='artists'>";
 			}
-			else if ($counter > 3){
+			else if ($counter == 1 && !$first){
 				$artists .= "
 				<div class='carousel-item'>
 				<div class='artists'>";
 			}
+			$first = false;
 			$artists .= "
 			<div class='artist'>
 				<div class='artistname'>".$artist["Name"]."</div>
-					<div class='artistcontainer'>
-						<image class='artistimage' src='".$this->CheckImageIsSet($artist["Image"])."'>
-						<div class='".$this->BepaalGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
-						<div class='genre0'>0</div> 
-					</div>
+				<div class='artistcontainer'>
+					<image class='artistimage' src='".$this->CheckImageIsSet($artist["Image"])."'>
+					<div class='".$this->BepaalGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
+					<div class='genre0'>0</div> 
+				</div>
 			</div>
 			";
-			if ($counter > 3 || $first){
-				$first = false;
-				$artists .= "
-				</div>";
-			}
-			else if ($counter > 3){
+			if ($counter == 4){
 				$counter = 0;
 				$artists .= "
 				</div></div>";
 			}
+		}
+		$check = $counter % 4;
+		if ($check != 0){
+			$artists .= "</div></div>";
 		}
 		return $artists;
 	}
@@ -67,7 +67,7 @@ class JazzController
 		elseif ($genre == "Ragtime"){
 			return "genre2";
 		}
-		elseif ($genre == "Classic Soul"){
+		elseif ($genre == "Classic"){
 			return "genre3";
 		}
 		elseif ($genre == "Classic"){
