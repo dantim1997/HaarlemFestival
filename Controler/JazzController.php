@@ -22,10 +22,18 @@ class JazzController
 		$artist = $this->DB_Helper->GetArtistsJazz($filter);
 		$artists = "";
 		$counter = 0;
+		$first = true;
 		foreach ($artist as $artist) {
 			$counter++;
-			if ($counter > 3){
-				//new section
+			if ($first){
+				$artists .= "
+				<div class='carousel-item active'>
+				<div class='artists'>";
+			}
+			else if ($counter > 3){
+				$artists .= "
+				<div class='carousel-item'>
+				<div class='artists'>";
 			}
 			$artists .= "
 			<div class='artist'>
@@ -37,6 +45,16 @@ class JazzController
 					</div>
 			</div>
 			";
+			if ($counter > 3 || $first){
+				$first = false;
+				$artists .= "
+				</div>";
+			}
+			else if ($counter > 3){
+				$counter = 0;
+				$artists .= "
+				</div></div>";
+			}
 		}
 		return $artists;
 	}

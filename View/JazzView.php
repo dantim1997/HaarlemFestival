@@ -47,22 +47,8 @@ class JazzView
 
 
 				<div id='carouselExampleControls' class='carousel slide' data-ride='carousel'>
-  					<div class='carousel-inner'>
-						<div class='carousel-item active'>
-							<div class='artists'>
-							".$this->JazzController->GetFilterResults()."
-							</div>
-    					</div>
-    					<div class='carousel-item'>
-						<div class='artists'>
-							".$this->JazzController->MakeArtistCarousel()."
-						</div>
-    					</div>
-    					<div class='carousel-item'>
-							<div class='artists'>
-							".$this->JazzController->MakeArtistCarousel()."
-							</div>
-    					</div>
+					<div class='carousel-inner'>
+					  ".$this->JazzController->GetFilterResults()."
   					</div>
   						<a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
     					<span class='carousel-control-prev-icon' aria-hidden='true'></span>
