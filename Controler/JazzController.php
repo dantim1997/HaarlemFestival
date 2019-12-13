@@ -21,7 +21,12 @@ class JazzController
 	public function MakeArtistCarousel($filter = null){
 		$artist = $this->DB_Helper->GetArtistsJazz($filter);
 		$artists = "";
+		$counter = 0;
 		foreach ($artist as $artist) {
+			$counter++;
+			if ($counter > 3){
+				//new section
+			}
 			$artists .= "
 			<div class='artist'>
 				<div class='artistname'>".$artist["Name"]."</div>
@@ -90,27 +95,6 @@ class JazzController
 		}
 		return $tickets;
 	}
-
-	//Fill Time Table
-	public function FillTable(){
-		$artist = $this->DB_Helper->GetTimeTableJazz();
-		$artists = "";
-		$array = array();
-		foreach($artist as $artist){
-			if(!empty($array)){
-					$array2 .= $artist["StartDateTime"];
-			}
-			$artist .= $artist["Name"];
-			$output = "<tr>
-						<td class='tg-6jhs'>".$artist["Name"]."</td>
-						<td class='tg-m4n1'>".$artist["Name"]."</td>
-						<td class='tg-m4n1'>".$artist["Name"]."</td>
-						<td class='tg-m4n1'>".$artist["Name"]."</td>
-						<td class='tg-m4n1'>".$artist["Name"]."</td>
-						</tr>";
-		}
-		return $output;
-	}
 	
 	//get genre for filter
 	public function MakeGenreAdvancedSearch(){
@@ -143,27 +127,40 @@ class JazzController
 		return $output;
 	}
 
-	public function CreateTable(){
-		$searchResults = $this->DB_Helper->GetTimeTableJazz();
-		$date = array();
-		foreach ($searchResults as $searchResult) {
-			$eventDate = date('Y-m-d', strtotime($searchResult["StartDateTime"]));
-			if(!array_key_exists($eventDate ,$date)){
-				$date[$eventDate] = "";
-			}
-			$startTime = $this->FromDateTimeToTime($searchResult["StartDateTime"]);
-			$endTime = $this->FromDateTimeToTime($searchResult["EndDateTime"]);
-			
-			$tickets = "<tr>
-			<td class='tg-6jhs'>".$startTime." - ".$endTime."</td>
-			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
-			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
-			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
-			<td class='tg-m4n1'>".$searchResult["Name"]."</td>
-			</tr>";
-			$date[$eventDate] .=$tickets;
+	public function GetTable(){
+		//Get header (dates) of table
+		$output = $this->GetDates();
+
+		//get times
+		$time = $this->DB_Helper->GetTimesJazz();
+
+
+		//convert time
+		foreach ($time as $time) {
+			$timebegin = date("H:i", strtotime($time["StartDateTime"]));
+			$newtimebegin[] = $timebegin;
+			$timeend = date("H:i", strtotime($time["EndDateTime"]));
+			$newtimeend[] = $timeend;
 		}
-		return $tickets;
+		
+		//create rows
+		for($i=0; $i<count($newtimebegin); $i++) {
+			$time = $newtimebegin[$i];
+			$date1 = "2020-07-26"; $date1 = date('Y-m-d H:i:s', strtotime("$date1 $time"));
+			$date2 = "2020-07-27"; $date2 = date('Y-m-d H:i:s', strtotime("$date2 $time"));
+			$date3 = "2020-07-28"; $date3 = date('Y-m-d H:i:s', strtotime("$date3 $time"));
+			$date4 = "2020-07-29"; $date4 = date('Y-m-d H:i:s', strtotime("$date4 $time"));
+
+			$output .= "
+			<tr>
+			<td class='tg-6jhs'>".$newtimebegin[$i]." - ".$newtimeend[$i]."</td>
+			<td class='tg-m4n1'>".$this->GetArtistTable($date1)."</td>
+			<td class='tg-m4n1'>".$this->GetArtistTable($date2)."</td>
+			<td class='tg-m4n1'>".$this->GetArtistTable($date3)."</td>
+			<td class='tg-m4n1'>".$this->GetArtistTable($date4)."</td>
+			<tr>";
+		}
+		return $output;
 	}
 
 	public function GetDates(){
@@ -174,37 +171,31 @@ class JazzController
 			$newdates[] = $tempdate;
 		}
 		
-		$output = "<tr>
-						<th class='tg-lh0f'></th>";
-						foreach ($newdates as $newdate) {
-							$output .= "<th class='tg-qcxk'><span style='font-weight:700'>".$newdate."</span></th>";
-						}
-					$output .= "</tr>";
-					return $output;
-	}
+		$output = "
+		<tr>
+		<th class='tg-lh0f'></th>";
 
-	public function GetTimes(){
-		$time = $this->DB_Helper->GetTimesJazz();
-		$newtimebegin = array();
-		$newtimeend = array();
-		foreach ($time as $time) {
-			$temptime = date("H:i", strtotime($time["StartDateTime"]));
-			$newtimebegin[] = $temptime;
-			$temptime = date("H:i", strtotime($time["EndDateTime"]));
-			$newtimeend[] = $temptime;
+		foreach ($newdates as $newdate) {
+			$output .= "<th class='tg-qcxk'><span style='font-weight:700'>".$newdate."</span></th>";
 		}
-		
-		$output = "";
-		for($i=0; $i<count($newtimebegin)-1; $i++) {
-			$output .= "
-			<tr>
-			<td class='tg-6jhs'>".$newtimebegin[$i]." - ".$newtimeend[$i]."</td>
-			<tr>";
-		}
+
+		$output .= "</tr>";
 		return $output;
 	}
 
+	public function GetArtistTable($datetime){
+		$result = $this->DB_Helper->GetArtistTableJazz($datetime);
+		if (!empty($result)){
+			$result = implode(",", $result);
+			return $result;
+		}
+		else{
+			return null;
+		}
+	}
+
 	public function FromDateTimeToTime($date){
+		//convert datetime to time
 		$hour = date("H",strtotime($date));
 		$minute = date("i",strtotime($date));
 		return $hour .":". $minute;

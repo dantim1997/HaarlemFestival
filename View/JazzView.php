@@ -75,9 +75,7 @@ class JazzView
 				</div>
 				<h2>Programme</h2>
 					<table class='tg'>
-					".$this->JazzController->GetDates()."
-					".$this->JazzController->GetTimes()."
-					
+					".$this->JazzController->GetTable()."
 					</table>
 				<h2>Tickets</h2>
 				<div class='dates'>
