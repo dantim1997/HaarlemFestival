@@ -90,6 +90,10 @@ class CheckoutController
 				".$extraInfoParagraph."
 		</div>";
 
+		// show allergies/special needs when given
+		if (!empty($extraInfo)) {
+			$sortedDays[$eventDate] .= "<p>Given allergies and/or special needs: ".$extraInfo."</p>";
+		}
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 
