@@ -65,6 +65,4 @@ class Session
 		return $removedAmount;
 	}
 }
-
-
 ?>

@@ -114,7 +114,8 @@ function RemoveFromCart(self,eventId, typeEvent, price) {
 		 var parent = self.parentNode;
 		 var parenttickets = parent.parentNode;
      	ShoppingCartmin(output);
-		 self.parentNode.remove(); 
+		 self.parentNode.remove();
+		 // remove extraInfo ??? geen idee wat hier gebeurt
 		 if(parenttickets.children.length == 0){
 			var eventday = parenttickets.parentNode;
 			eventday.remove();

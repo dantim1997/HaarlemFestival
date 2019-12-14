@@ -163,7 +163,7 @@ class FoodTimesController
 					</div>
 					<div class='specialNeeds'>
 						<p class='specialNeedsP'>Allergies or other special needs? Let us know:</p>
-						<textarea id='extraInfo' rows='2' cols='50'></textarea>
+						<textarea id='extraInfo' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
 					<div class='makeReservation'>
 						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCart(".$section["Id"].", 1)' />
