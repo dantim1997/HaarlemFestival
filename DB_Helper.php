@@ -260,7 +260,6 @@ class DB_Helper
 		return $events;
 	}
 
-
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
@@ -421,7 +420,22 @@ class DB_Helper
 		return $Ticket;
 	}
 
-	//get Artists for Jazz
+	//get Tickets for Jazz
+	public function GetTimeTableJazz(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM Jazz");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Name"=>$Name, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	//get Artists for Jazz carousel filter
 	public function GetArtistsJazz($genreFilter){
 		$sql = "";
 		if (empty($genreFilter)){
@@ -443,9 +457,7 @@ class DB_Helper
 		return $artists;
 	}
 
-	
-
-	//get Tickets for Jazz (date format yyyy-mm-dd)
+	//get Tickets for Jazz
 	public function GetTicketsJazz($date){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE '".$date."%' ORDER BY StartDateTime ASC");
@@ -460,21 +472,16 @@ class DB_Helper
 		return $tickets;
 	}
 
-	//get Tickets for Jazz
-	public function GetTimeTableJazz(){
+	//get Programme for Jazz
+	public function GetArtistTableJazz($datetime){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM Jazz");
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime); 
-		$artists = array();
-		while ($stmt -> fetch()) { 
-			$artist = array("Name"=>$Name, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
-			$artists[] = $artist;
-		}
-		return $artists;
+		$query = "SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE '$datetime'";
+		$result = mysqli_query($this->Conn, $query);
+		$row = mysqli_fetch_assoc($result);
+		return $row;
 	}
 
+	//get Genres for Jazz carousel
 	public function GetGenresJazz(){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT Genre FROM Jazz GROUP BY Genre");
@@ -489,6 +496,7 @@ class DB_Helper
 		return $genres;
 	}
 
+	//Get dates for jazz
 	public function GetDatesJazz(){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime FROM Jazz GROUP BY DATE(StartDateTime) ASC");
@@ -503,6 +511,7 @@ class DB_Helper
 		return $dates;
 	}
 
+	//Get times for jazz programme
 	public function GetTimesJazz(){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime FROM Jazz GROUP BY TIME(StartDateTime) ASC");
