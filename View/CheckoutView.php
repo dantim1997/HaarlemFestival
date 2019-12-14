@@ -41,43 +41,49 @@ class CheckoutView
 					</div>
 				<div class='bottomHalfCheckout'>
 					<div class='bottomBar'></div>
-
 						<div class='checkoutControls'>
-							<div class='input'>
-								<select class='dropDown2'>
-									<option value='-'>-</option>
-									<option value='IDEAL'>IDEAL</option>
-									<option value='VISA'>VISA</option>
-									<option value='Paypal'>Paypal</option>
-								</select>					
-
-								<input class='lbltxt' type='text' placeholder='Firstname' name='??????'>
-								<input class='lbltxt' type='text' placeholder='Lastname' name='??????'>
-								<input class='lbltxt' type='text' placeholder='Email' name='??????'>
-								<input class='lbltxt' type='text' placeholder='Address' name='??????'>
-								<input class='lbltxt' type='text' placeholder='Phone number' name='??????'>
+							<div class='input'>				
+								<table>
+									<tr>
+										<td><h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3></td>
+										<td><select class='dropDown2'>
+											<option value='-'>-</option>
+											<option value='IDEAL'>IDEAL</option>
+											<option value='VISA'>VISA</option>
+											<option value='Paypal'>Paypal</option>
+											</select>		
+										</td>
+									</tr>
+									<tr>
+										<td><h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3></td>
+										<td><input class='lbltxt' type='text' placeholder='Firstname' name='Firstname'></td>
+									</tr>
+									<tr>
+										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
+										<td><input class='lbltxt' type='text' placeholder='Lastname' name='LastName'></td>
+									</tr>
+									<tr>
+										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
+										<td><input class='lbltxt' type='text' placeholder='Email' name'Email'></td>
+									</tr>
+									<tr>
+										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
+										<td><input class='lbltxt' type='text' placeholder='Address' name='Address'></td>
+									</tr>
+									<tr>
+										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
+										<td><input class='lbltxt' type='text' placeholder='Phone number' name='Phone'></td>
+									</tr>
+								</table>
+								<p>* This is required</p>
 							</div>
-
-							<div class='labels'>
-								<h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3>
-								<h3 class='selectlbl'>".next($pageTexts)."</h3>
-								<h3 class='selectlbl'>".next($pageTexts)."</h3>
-								<h3 class='selectlbl'>".next($pageTexts)."</h3>
-								<h3 class='selectlbl'>".next($pageTexts)."</h3>
-								<h3 class='selectlbl'>".next($pageTexts)."</h3>
-								<h3 class='selectlbl selectlblextra2'>".next($pageTexts)."</h3>
-							</div>
-
-							<input class='extraNotestxt' type='text' placeholder='Special needs (allergies, wheelchair access, etc.):' name='??????'>
 							
 							<!-- proceed to payment button -->
 							<form method='post' action=''>	
 								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='".next($pageTexts)."' name='proceedToPaymentBTN'>
 							</form>
-
 						</div>
-					
-					<h2 id='totallbl'>".next($pageTexts)." ".Number_format($this->CheckoutModel->GetTotal(), 2, ',', ' ')."</h2>	<!--Hier de totale prijs als var !-->
+					<h2 id='totallbl'>".next($pageTexts)." </h2><h2 id='TotalAmount'>".Number_format($this->CheckoutModel->GetTotal(), 2, ',', '')."</h2>	<!--Hier de totale prijs als var !-->
 				</div>
 			</div>
 		</div>";

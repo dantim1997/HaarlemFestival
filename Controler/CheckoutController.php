@@ -12,6 +12,19 @@ class CheckoutController
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
+		$this->ProceedToPayment();
+	}
+
+	public function ProceedToPayment()
+	{
+		if(isset($_POST['proceedToPaymentBTN'])){
+			$Firstname = $_POST['Firstname'];
+			$Lastname = $_POST['Lastname'];
+			$Email = $_POST['Email'];
+			$Address = $_POST['Address'];
+			$Date = $_POST['Date'];
+			$PhoneNumber = $_POST['PhoneNumber'];
+		}
 	}
 	
 	//get config
