@@ -120,12 +120,6 @@
 	float: left;
 }
 
-.extraNotestxt{
-	width: 90%;
-	height: 25%;
-	margin-left: 5%;
-}
-
 .ticket{
 	margin-top: 1%;
 	max-width: 100%;
@@ -188,11 +182,9 @@ h4{
 	box-shadow: 2px 2px 2px 2px #333333;
 }
 
-
 .proceedToCheckoutBTN:hover{
 	background-color: #990000;
 }
-
 
 .checkoutBTN{
 	margin-left: 5%;
@@ -214,6 +206,16 @@ h4{
 	border-color: #000000;
 	background-color: #FFFFFF;
 }
+
 .removeCheckoutItem:hover{
 	background-color: #bfbfbf;
+}
+
+.extraInfo {
+	max-width: 100%;
+}
+
+.extraInfoP {
+	font-style: italic;
+	float: left ;
 }

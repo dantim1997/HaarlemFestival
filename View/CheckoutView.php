@@ -38,7 +38,7 @@ class CheckoutView
 				<div>
 							".$this->CheckoutController->GetAllItems()."
 
-					</div>
+				</div>
 				<div class='bottomHalfCheckout'>
 					<div class='bottomBar'></div>
 
@@ -65,18 +65,12 @@ class CheckoutView
 								<h3 class='selectlbl'>".next($pageTexts)."</h3>
 								<h3 class='selectlbl'>".next($pageTexts)."</h3>
 								<h3 class='selectlbl'>".next($pageTexts)."</h3>
-								<h3 class='selectlbl selectlblextra2'>".next($pageTexts)."</h3>
 							</div>
-
-							<input class='extraNotestxt' type='text' placeholder='Special needs (allergies, wheelchair access, etc.):' name='??????'>
-							
 							<!-- proceed to payment button -->
 							<form method='post' action=''>	
 								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='".next($pageTexts)."' name='proceedToPaymentBTN'>
 							</form>
-
 						</div>
-					
 					<h2 id='totallbl'>".next($pageTexts)." ".Number_format($this->CheckoutModel->GetTotal(), 2, ',', ' ')."</h2>	<!--Hier de totale prijs als var !-->
 				</div>
 			</div>

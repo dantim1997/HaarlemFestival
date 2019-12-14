@@ -48,6 +48,7 @@ class CheckoutController
 	}
 
 	public function GetItems($eventId, $typeEvent, $amount, $special, $extraInfo){
+		$extraInfoParagraph = "";
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 1:
@@ -77,16 +78,18 @@ class CheckoutController
 
 		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval( $amount));
 
+		// show allergies/special needs when given
+		if (!empty($extraInfo)) {
+			$extraInfoParagraph = "<br /> <br /><div class='extraInfo'><p class='extraInfoP'>Given allergies and/or special needs: ".$extraInfo."</p></div>";
+		}
+
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p>
 					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.",".$eventInfo["Price"].")' type='submit' value='&#10006' name='??????'>
+				".$extraInfoParagraph."
 		</div>";
 
-		// show allergies/special needs when given
-		if (!empty($extraInfo)) {
-			$sortedDays[$eventDate] .= "<p>Given allergies and/or special needs: ".$extraInfo."</p>";
-		}
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 
