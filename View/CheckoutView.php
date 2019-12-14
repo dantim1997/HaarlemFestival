@@ -38,15 +38,6 @@ class CheckoutView
 				<div>
 							".$this->CheckoutController->GetAllItems()."
 
-						<!-- Dit is een ticket template, op de plekken VAR kan een aantal en de tekst van de ticket 
-						<div class=ticket>
-							<p class=amountTickets>VAR x</p>
-							<p class='ticketText'>VAR</p>
-								<form method='post' action=''>	
-									<input class='removeCheckoutItem' type='submit' value='&#10006' name='??????'>
-								</form>
-						</div
-						-->
 					</div>
 				<div class='bottomHalfCheckout'>
 					<div class='bottomBar'></div>
@@ -86,7 +77,7 @@ class CheckoutView
 
 						</div>
 					
-					<h2 id='totallbl'>".next($pageTexts)."</h2>	<!--Hier de totale prijs als var !-->
+					<h2 id='totallbl'>".next($pageTexts)." ".Number_format($this->CheckoutModel->GetTotal(), 2, ',', ' ')."</h2>	<!--Hier de totale prijs als var !-->
 				</div>
 			</div>
 		</div>";

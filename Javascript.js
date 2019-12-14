@@ -106,7 +106,7 @@ function AddToCartExtraInfo(eventId, typeEvent, amount, special) {
 	}
 }
 
-function RemoveFromCart(self,eventId, typeEvent) {
+function RemoveFromCart(self,eventId, typeEvent, price) {
      $.ajax({ url: 'RemoveFromCart.php',
      data: {eventId: eventId,typeEvent: typeEvent},
      type: 'post',

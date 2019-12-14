@@ -10,7 +10,7 @@ class Nav
 	function SetNavBar($event){
 		return"
 		<div id='NavBarBorder'>
-				<div><img class='NavBarImg' src='Images/HaarlemImage.png'></div>
+				<div><a href='index.php'><img class='NavBarImg' src='Images/HaarlemImage.png'></a></div>
 				".$this->SetEvent("Home", $event)."
 				".$this->SetEvent("Food", $event)."
 				".$this->SetEvent("Dance", $event)."
@@ -43,7 +43,7 @@ class Nav
 	public function SetEvent($event, $active){
 		if($active == $event){
 			if($event == "Home"){
-				$event = "Index";
+				$event = "index";
 			}
 			return "<div class='ActiveWrapper'>
 					<div class='Active'><a class='Link' href='".$event.".php'><div class='NavActive'>".$event."</div></a></div>
@@ -51,7 +51,7 @@ class Nav
 		}
 		else{
 			if($event == "Home"){
-				$event = "Index";
+				$event = "index";
 			}
 			return "<div class='NavLinks'><a class='Link' href='".$event.".php'><div class='NavText'>".$event."</div></a></div>";
 		}
