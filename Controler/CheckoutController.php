@@ -17,14 +17,37 @@ class CheckoutController
 
 	public function ProceedToPayment()
 	{
+		$errorList = array(
+			"FirstName" => "",
+			"LastName" => "",
+			"Email" => "",
+			"Adress" => "",
+			"Date" => "",
+		);
 		if(isset($_POST['proceedToPaymentBTN'])){
-			$Firstname = $_POST['Firstname'];
-			$Lastname = $_POST['Lastname'];
-			$Email = $_POST['Email'];
-			$Address = $_POST['Address'];
-			$Date = $_POST['Date'];
-			$PhoneNumber = $_POST['PhoneNumber'];
+			
+			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
+			$errorList["LastName"] = $this->IsRequired("LastName", "text");
+			$errorList["Email"] = $this->IsRequired("Email", "text");
+			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
+			$errorList["Number"] = $this->IsRequired("Number", "number");
+			$errorList["Street"] = $this->IsRequired("Street", "text");
+			var_dump($errorList);
 		}
+	}
+
+	public function IsRequired($name, $Type)
+	{
+		if( $_POST[$name] == Null || $_POST[$name] == ""){
+			return "Field is required";
+		}
+		if($Type == "Email"){
+
+		}
+		if($Type == "postalCode"){
+			
+		}
+		return "";
 	}
 	
 	//get config
