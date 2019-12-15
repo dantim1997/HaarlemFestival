@@ -80,20 +80,16 @@ class CheckoutController
 
 		// show allergies/special needs when given
 		if (!empty($extraInfo)) {
-			$extraInfoParagraph = "<br /> <br /><div class='extraInfo'><p class='extraInfoP'>Given allergies and/or special needs: ".$extraInfo."</p></div>";
+			$extraInfoParagraph = "<p class='extraInfoP'> Given allergies and/or special needs: ".$extraInfo."</p>";
 		}
 
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p>
+					".$extraInfoParagraph."
 					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.",".$eventInfo["Price"].")' type='submit' value='&#10006' name='??????'>
-				".$extraInfoParagraph."
 		</div>";
 
-		// show allergies/special needs when given
-		if (!empty($extraInfo)) {
-			$sortedDays[$eventDate] .= "<p>Given allergies and/or special needs: ".$extraInfo."</p>";
-		}
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 

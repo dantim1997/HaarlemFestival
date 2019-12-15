@@ -211,11 +211,9 @@ h4{
 	background-color: #bfbfbf;
 }
 
-.extraInfo {
-	max-width: 100%;
-}
-
 .extraInfoP {
 	font-style: italic;
-	float: left ;
+	float: left;
+	padding-top: 7px;
+	padding-left: 10px;
 }
