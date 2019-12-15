@@ -74,9 +74,10 @@ function ShowDate(day) {
 function FoodAddToCart(eventId, typeEvent) {
 	var childAmount = GetChildrenTicketCount();
 	var adultAmount = GetNormalTicketCount();
+	var extraInfo = document.getElementById('extraInfo').value;
 
-	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0);
-	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1);
+	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0, extraInfo);
+	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1, extraInfo);
 }
 
 function AddToCart(eventId, typeEvent, amount, special) {
@@ -92,8 +93,7 @@ function AddToCart(eventId, typeEvent, amount, special) {
 	}
 }
 
-function AddToCartExtraInfo(eventId, typeEvent, amount, special) {
-	var extraInfo = document.getElementById('extraInfo').value;
+function AddToCartExtraInfo(eventId, typeEvent, amount, special, extraInfo) {
 	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
      data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special, extraInfo:extraInfo},

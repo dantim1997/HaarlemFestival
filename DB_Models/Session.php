@@ -14,13 +14,14 @@ class Session
 		}
 	}
 
-	function AddToCart($eventId, $typeEvent, $amount, $special, $extraInfo){
-		if(!isset($_SESSION['Tickets'])){
+	function AddToCart($eventId, $typeEvent, $amount, $special, $extraInfo) {
+		if(!isset($_SESSION['Tickets'])) {
 			$_SESSION['Tickets'] = array();
 		}
 		$allCartItems = $_SESSION['Tickets'];
 		$newCartItems = array();
 		$added = false;
+		var_dump($allCartItems);
 		foreach ($allCartItems as $cartItem) {
 			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
 				$cartItem['Amount'] = intval($cartItem['Amount']) + intval($amount);
