@@ -22,6 +22,7 @@ class Session
 		$newCartItems = array();
 		$added = false;
 		foreach ($allCartItems as $cartItem) {
+			// check if ticket already exists in cart
 			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
 				$cartItem['Amount'] = intval($cartItem['Amount']) + intval($amount);
 				$cartItem['Special'] = $special;

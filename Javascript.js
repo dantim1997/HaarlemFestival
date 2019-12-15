@@ -71,14 +71,6 @@ function ShowDate(day) {
 	}
 }
 
-function FoodAddToCart(eventId, typeEvent) {
-	var childAmount = GetChildrenTicketCount();
-	var adultAmount = GetNormalTicketCount();
-
-	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0);
-	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1);
-}
-
 function AddToCart(eventId, typeEvent, amount, special) {
 	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
@@ -92,7 +84,16 @@ function AddToCart(eventId, typeEvent, amount, special) {
 	}
 }
 
-function AddToCartExtraInfo(eventId, typeEvent, amount, special) {
+function FoodAddToCart(eventId, typeEvent) {
+	var childAmount = GetChildrenTicketCount();
+	var adultAmount = GetNormalTicketCount();
+	var startDateTime = GetStartDateTime();
+
+	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0, startDateTime, endDateTime);
+	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1, startDateTime, endDateTime);
+}
+
+function AddToCartExtraInfo(eventId, typeEvent, amount, special, startDateTime, endDateTime) {
 	var extraInfo = document.getElementById('extraInfo').value;
 	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',
@@ -208,6 +209,15 @@ function GetNormalTicketCount() {
 function GetChildrenTicketCount() {
 	var childrenTickets = document.getElementById('pplBelow12');
 	return parseInt(childrenTickets.value);
+}
+
+function GetStartDateTime() {
+	var startDateTime = document.getElementById('pickDay');
+	return 
+}
+
+function GetEndDateTime() {
+// DATE EN TIME VERGELIJKEN MET WAT IN SESSIE STAAT JOEJOE
 }
 
 function ShowHideJazzFilter(){

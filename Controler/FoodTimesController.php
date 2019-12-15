@@ -149,14 +149,14 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='pickDayOption'>
-						<select class='pickDay'>
+						<select class='pickDay' id='pickDay'>
 							<option value='Pick a day'>Pick a day</option>
             				".$this->GetDateTimes($section["Name"], "Date")."
             			</select>
 					</div>
             		<br />
 					<div class='pickSessionOption'>
-						<select class='pickSession'>
+						<select class='pickSession' id='pickSession'>
 							<option value='Pick a session'>Pick a session</option>
             				".$this->GetDateTimes($section["Name"], "Time")."
             			</select>

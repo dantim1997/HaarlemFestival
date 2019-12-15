@@ -214,3 +214,10 @@ h4{
 .removeCheckoutItem:hover{
 	background-color: #bfbfbf;
 }
+
+.extraInfoP {
+	padding-top: 7px;
+	padding-left: 2px;
+	float: left;
+	font-style: italic;
+}
