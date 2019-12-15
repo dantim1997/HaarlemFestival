@@ -12,6 +12,42 @@ class CheckoutController
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
+		$this->ProceedToPayment();
+	}
+
+	public function ProceedToPayment()
+	{
+		$errorList = array(
+			"FirstName" => "",
+			"LastName" => "",
+			"Email" => "",
+			"Adress" => "",
+			"Date" => "",
+		);
+		if(isset($_POST['proceedToPaymentBTN'])){
+			
+			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
+			$errorList["LastName"] = $this->IsRequired("LastName", "text");
+			$errorList["Email"] = $this->IsRequired("Email", "text");
+			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
+			$errorList["Number"] = $this->IsRequired("Number", "number");
+			$errorList["Street"] = $this->IsRequired("Street", "text");
+			var_dump($errorList);
+		}
+	}
+
+	public function IsRequired($name, $Type)
+	{
+		if( $_POST[$name] == Null || $_POST[$name] == ""){
+			return "Field is required";
+		}
+		if($Type == "Email"){
+
+		}
+		if($Type == "postalCode"){
+			
+		}
+		return "";
 	}
 	
 	//get config

@@ -43,6 +43,11 @@
 	background-color: #000000;
 }
 
+#TotalAmount{
+	font-size: 18pt;
+	margin-top: 1%;
+}
+
 .bottomBar{
 	width: 92%;
 	float: left;
@@ -109,7 +114,6 @@
 .input{
 	margin-top: 2%;
 	margin-right: 5%;
-	width: 45%;
 	float: right;
 }
 
@@ -118,6 +122,12 @@
 	margin-left: 5%;
 	width: 40%;
 	float: left;
+}
+
+.extraNotestxt{
+	width: 90%;
+	height: 25%;
+	margin-left: 5%;
 }
 
 .ticket{

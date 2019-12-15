@@ -108,18 +108,21 @@ function AddToCartExtraInfo(eventId, typeEvent, amount, special, extraInfo) {
 
 function RemoveFromCart(self,eventId, typeEvent, price) {
      $.ajax({ url: 'RemoveFromCart.php',
-     data: {eventId: eventId,typeEvent: typeEvent},
-     type: 'post',
-     success: function(output) {
-		 var parent = self.parentNode;
-		 var parenttickets = parent.parentNode;
-     	ShoppingCartmin(output);
-		 self.parentNode.remove();
-		 if(parenttickets.children.length == 0){
-			var eventday = parenttickets.parentNode;
-			eventday.remove();
+		data: {eventId: eventId,typeEvent: typeEvent},
+		type: 'post',
+		success: function(output) {
+			var parent = self.parentNode;
+			var parenttickets = parent.parentNode;
+			ShoppingCartmin(output);
+			self.parentNode.remove(); 
+				if(parenttickets.children.length == 0){
+					var eventday = parenttickets.parentNode;
+					eventday.remove();
+				}
+			var totalamount =parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
+			var remove = totalamount - (price * output);
+			document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
 		}
-     }
 	});
 }
 
