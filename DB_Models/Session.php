@@ -84,10 +84,10 @@ class Session
 		foreach ($allCartItems as $cartItem) {
 			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
 				// check if we're dealing with restaurant reservations or normal tickets ...
-				if (array_key_exists($cartItem['ChildAmount'])) {
+				if (array_key_exists("ChildAmount", $cartItem)) {
 					// it's a childPrice reservation
 					$removedAmount = $removedAmount + intval($cartItem['ChildAmount']);
-				} else if (array_key_exists($cartItem['AdultAmount'])) {
+				} else if (array_key_exists("AdultAmount", $cartItem)) {
 					// it's a adultPrice reservation
 					$removedAmount = $removedAmount + intval($cartItem['AdultAmount']);
 				} else {

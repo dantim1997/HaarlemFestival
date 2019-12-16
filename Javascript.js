@@ -122,7 +122,7 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 					var eventday = parenttickets.parentNode;
 					eventday.remove();
 				}
-			var totalamount =parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
+			var totalamount = parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
 			var remove = totalamount - (price * output);
 			document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
 		}
