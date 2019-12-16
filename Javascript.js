@@ -84,30 +84,32 @@ function AddToCart(eventId, typeEvent, amount, special) {
 	}
 }
 
-function FoodAddToCart(eventId, typeEvent) {
-	var childAmount = GetChildrenTicketCount();
-	var adultAmount = GetNormalTicketCount();
-	var startDateTime = GetStartDateTime();
+function FoodAddToCartHelper(eventId) {
+	var childAmount = parseInt(document.getElementById('pplBelow12').value);
+	var adultAmount = parseInt(document.getElementById('pplAbove12').value);
+	var extraInfo = document.getElementById('extraInfo').value;
+	// niet goede formats?:
+	var startTime = document.getElementById('pickSession').value;
+	var date = document.getElementById('pickDay').value;	
 
-	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0, startDateTime, endDateTime);
-	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1, startDateTime, endDateTime);
+	FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo);
 }
 
-function AddToCartExtraInfo(eventId, typeEvent, amount, special, startDateTime, endDateTime) {
-	var extraInfo = document.getElementById('extraInfo').value;
+function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
+	var amount = childAmount + adultAmount;
 	if (amount > 0) {
-     $.ajax({ url: 'AddToCart.php',
-     data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special, extraInfo:extraInfo},
+     $.ajax({ url: 'AddToCartFood.php',
+     data: {eventId: eventId, childAmount: childAmount, adultAmount: adultAmount,  startTime: startTime, date: date, extraInfo: extraInfo},
      type: 'post',
      success: function(output) {
-                   ShowPopup();
+				   ShowPopup();
                    ShoppingCartPlus(amount);
 			}
 		});
 	}
 }
 
-function RemoveFromCart(self,eventId, typeEvent, price) {
+function RemoveFromCart(self, eventId, typeEvent, price) {
      $.ajax({ url: 'RemoveFromCart.php',
 		data: {eventId: eventId,typeEvent: typeEvent},
 		type: 'post',
@@ -178,7 +180,6 @@ function ShoppingCartmin(amount){
 
 }
 
-
 function cartAmountPlus(count){
 	var indentifier = "amountNumber".concat(count);
 	var number = parseInt(document.getElementById(indentifier).value);
@@ -199,25 +200,6 @@ function GetTicketAmount(count){
 	var indentifier = "amountNumber".concat(count);
 	var number = parseInt(document.getElementById(indentifier).value);
 	return	number;
-}
-
-function GetNormalTicketCount() {
-	var normalTickets = document.getElementById('pplAbove12');
-	return parseInt(normalTickets.value);
-}
-
-function GetChildrenTicketCount() {
-	var childrenTickets = document.getElementById('pplBelow12');
-	return parseInt(childrenTickets.value);
-}
-
-function GetStartDateTime() {
-	var startDateTime = document.getElementById('pickDay');
-	return 
-}
-
-function GetEndDateTime() {
-// DATE EN TIME VERGELIJKEN MET WAT IN SESSIE STAAT JOEJOE
 }
 
 function ShowHideJazzFilter(){

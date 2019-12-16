@@ -402,19 +402,18 @@ class DB_Helper
 	}
 
 	//get all tickets by customer
-	public function GetEventInfoFood($Id, $PriceType) {
+	public function GetEventInfoFood($Id) {
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
-		$PriceTypeSQL = mysqli_real_escape_string($this->Conn, $PriceType);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, SessionStartDateTime, SessionEndDateTime, ".$PriceTypeSQL." from FoodRestaurants where Id = ? limit 1");
+		$stmt = $this->Conn->prepare("SELECT Id, Name, SessionStartDateTime, SessionEndDateTime, ChildPrice, NormalPrice from FoodRestaurants where Id = ? limit 1");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $SessionStartDateTime, $SessionEndDateTime, $Price);
+		$stmt->bind_result($Id, $Name, $SessionStartDateTime, $SessionEndDateTime, $ChildPrice, $AdultPrice);
 		$Ticket = array();
 		while ($stmt -> fetch()) { 
-			$ticket = array("ID"=>$Id, "Venue"=>$Name, "StartDateTime"=>$SessionStartDateTime, "EndDateTime"=>$SessionEndDateTime, "Price"=>$Price, "About"=>"", "Description" =>"");
+			$ticket = array("ID"=>$Id, "Venue"=>$Name, "StartDateTime"=>$SessionStartDateTime, "EndDateTime"=>$SessionEndDateTime, "ChildPrice"=>$ChildPrice, "AdultPrice"=>$AdultPrice, "About"=>"", "Description" =>"");
 			$Ticket = $ticket;
 		}
 		return $Ticket;

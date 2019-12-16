@@ -55,14 +55,21 @@ class CheckoutController
 		return $this->Config;
 	}
 
-	public function GetAllItems(){
+	public function GetAllItems() {
 		$this->Session = new Session;
 		$ticketRows = "";
 
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '', $item["ExtraInfo"]);
+				// check if session ticket is 'normal' ticket (not a restaurant reservation)
+				if (array_key_exists("Amount", $item)) {
+					// 'normal' ticket
+					$this->GetItems($item["EventId"], $item["TypeEvent"], $item["Amount"]);
+				} else {
+					// it's a reservation, different method has to be called...
+					$this->GetFoodItems($item["EventId"], $item["ChildAmount"], $item["AdultAmount"]);
+				}
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
@@ -76,23 +83,19 @@ class CheckoutController
 				</div>";
 			}
 		}
-		if($ticketRows == ""){
+		if ($ticketRows == "") {
 			$ticketRows = "<div class='Empty'><h3>You dont have any items in your shopping cart</h3></div>";
 		}
 
 		return $ticketRows;
 	}
 
-	public function GetItems($eventId, $typeEvent, $amount, $special, $extraInfo) {
+	public function GetItems($eventId, $typeEvent, $amount) {
 		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 1:
-				if ($special == 0) {
-					$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
-				} else {
-					$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "NormalPrice");
-				}
+				$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
 				break;
 			case 2:
 				$eventInfo = $this->DB_Helper->GetEventInfoDance($eventId);
@@ -112,7 +115,7 @@ class CheckoutController
 			$sortedDays[$eventDate] = "";
 		}
 
-		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval( $amount));
+		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval($amount));
 
 		// show allergies/special needs when given
 		if (!empty($extraInfo)) {
@@ -126,6 +129,46 @@ class CheckoutController
 		</div>";
 
 		
+		$this->CheckoutModel->SetSortedDays($sortedDays);
+	}
+
+	public function GetFoodItems($eventId, $childAmount, $adultAmount) {
+		$extraInfoText = '';
+		$sortedDays = $this->CheckoutModel->GetSortedDays();
+		
+		$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
+		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
+		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));
+
+		$eventDate = date('Y-m-d', strtotime($eventInfo["StartDateTime"]));
+		if(!array_key_exists($eventDate ,$sortedDays)){
+			$sortedDays[$eventDate] = "";
+		}
+
+		// different two different prices and amounts (adult and child) ...
+		$kaas = intval($eventInfo["ChildPrice"]) * intval($childAmount) + $eventInfo["AdultPrice"] * intval($adultAmount);
+		$this->CheckoutModel->AddTotal($kaas);
+
+		// show allergies/special needs when given
+		if (!empty($extraInfo)) {
+			$extraInfoText .= "<p class='extraInfoP'>Given allergies and/or special needs: ".$extraInfo."</p>";
+		}
+
+		if (!empty($childAmount)) {
+			$sortedDays[$eventDate] .= "<div class=ticket>
+			<p class=amountTickets>".$childAmount." x</p>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["ChildPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
+					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.", 1,".$eventInfo["ChildPrice"].")' type='submit' value='&#10006' name='??????'>
+			</div>";
+		}
+		if (!empty($adultAmount)) {
+			$sortedDays[$eventDate] .= "<div class=ticket>
+			<p class=amountTickets>".$adultAmount." x</p>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["AdultPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
+					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.", 1,".$eventInfo["AdultPrice"].")' type='submit' value='&#10006' name='??????'>
+			</div>";
+		}
+
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 
