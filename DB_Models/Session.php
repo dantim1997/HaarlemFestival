@@ -83,13 +83,23 @@ class Session
 
 		foreach ($allCartItems as $cartItem) {
 			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
-				$removedAmount = $removedAmount + intval($cartItem['Amount']);
+				// check if we're dealing with restaurant reservations or normal tickets ...
+				if (array_key_exists($cartItem['ChildAmount'])) {
+					// it's a childPrice reservation
+					$removedAmount = $removedAmount + intval($cartItem['ChildAmount']);
+				} else if (array_key_exists($cartItem['AdultAmount'])) {
+					// it's a adultPrice reservation
+					$removedAmount = $removedAmount + intval($cartItem['AdultAmount']);
+				} else {
+					// it's a normal ticket
+					$removedAmount = $removedAmount + intval($cartItem['Amount']);
+				}
 			}
 			else{
 				$newCartItems[] = $cartItem;
-
 			}
 		}
+
 		$_SESSION['Tickets'] = null;
 		$_SESSION['Tickets'] = $newCartItems;
 

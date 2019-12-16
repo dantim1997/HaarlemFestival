@@ -146,8 +146,8 @@ class CheckoutController
 		}
 
 		// different two different prices and amounts (adult and child) ...
-		$kaas = intval($eventInfo["ChildPrice"]) * intval($childAmount) + $eventInfo["AdultPrice"] * intval($adultAmount);
-		$this->CheckoutModel->AddTotal($kaas);
+		$value = intval($eventInfo["ChildPrice"]) * intval($childAmount) + $eventInfo["AdultPrice"] * intval($adultAmount);
+		$this->CheckoutModel->AddTotal($value);
 
 		// show allergies/special needs when given
 		if (!empty($extraInfo)) {

@@ -111,7 +111,7 @@ function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extra
 
 function RemoveFromCart(self, eventId, typeEvent, price) {
      $.ajax({ url: 'RemoveFromCart.php',
-		data: {eventId: eventId,typeEvent: typeEvent},
+		data: {eventId: eventId, typeEvent: typeEvent},
 		type: 'post',
 		success: function(output) {
 			var parent = self.parentNode;

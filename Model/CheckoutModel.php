@@ -2,7 +2,7 @@
 require_once( "Autoloader.php");
 class CheckoutModel
 {
-	private $SortedDays =array();
+	private $SortedDays = array();
 
 	public $Total = 0;
 	function __construct(){
