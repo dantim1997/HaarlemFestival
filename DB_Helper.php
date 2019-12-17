@@ -559,11 +559,9 @@ class DB_Helper
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Language, $TypeTicket, $Price, $StartDateTime, $EndDateTime); 
 		$Ticket = array();
-		while ($stmt -> fetch()) { 
+		$stmt -> fetch();
 			$ticket = array("ID"=>$Id, "Venue"=>"Church of St. Bavo", "About"=>$Language, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$TypeTicket ." Tour", "Price"=>$Price);
-			$Ticket = $ticket;
-		}
-		return $Ticket;
+		return $ticket;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
