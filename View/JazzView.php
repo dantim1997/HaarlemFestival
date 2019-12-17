@@ -80,19 +80,10 @@ class JazzView
 				<h1>Thursday - Tickets</h1>
 				<br>
 				<div class='form'>
-					<form action='addTicket.php' method='post'>
-						<button>-</button><input type='text' value='0' name='ticket1'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket2'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket3'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket4'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket5'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket6'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket7'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket8'><button>+</button><br>
+						".$this->JazzController->GetTickets('2020-07-26')."
 						<br>
-						<input class='addCart' type='submit' value='Add Tickets'>
-					</form>
-					</div>
+						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
+				</div>
 				<div class='tickets'>
 					<hr>
 					".$this->JazzController->FillTickets("2020-07-26")."
@@ -113,19 +104,10 @@ class JazzView
 				<h1>Friday - Tickets</h1>
 				<br>
 				<div class='form'>
-					<form action='addTicket.php' method='post'>
-						<button>-</button><input type='text' value='0' name='ticket9'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket10'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket11'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket12'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket13'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket14'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket15'><button>+</button><br>
-						<button>-</button><input type='text' value='0' name='ticket16'><button>+</button><br>
+						".$this->JazzController->GetTickets('2020-07-27')."
 						<br>
-						<input class='addCart' type='submit' value='Add Tickets'>
-					</form>
-					</div>
+						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
+				</div>
 				<div class='tickets'>
 					<hr>
 					".$this->JazzController->FillTickets("2020-07-27")."
@@ -146,19 +128,10 @@ class JazzView
 					<h1>Saturday - Tickets</h1>
 					<br>
 					<div class='form'>
-						<form action='addTicket.php' method='post'>
-							<button>-</button><input type='text' value='0' name='ticket17'><button>+</button><br>
-							<button>-</button><input type='text' value='0' name='ticket18'><button>+</button><br>
-							<button>-</button><input type='text' value='0' name='ticket19'><button>+</button><br>
-							<button>-</button><input type='text' value='0' name='ticket20'><button>+</button><br>
-							<button>-</button><input type='text' value='0' name='ticket21'><button>+</button><br>
-							<button>-</button><input type='text' value='0' name='ticket22'><button>+</button><br>
-							<button>-</button><input type='text' value='0' name='ticket23'><button>+</button><br>
-							<button>-</button><input type='text' value='0' name='ticket24'><button>+</button><br>
-							<br>
-							<input class='addCart' type='submit' value='Add Tickets'>
-						</form>
-						</div>
+						".$this->JazzController->GetTickets('2020-07-28')."
+						<br>
+						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
+					</div>
 					<div class='tickets'>
 						<hr>
 						".$this->JazzController->FillTickets("2020-07-28")."
@@ -190,7 +163,10 @@ class JazzView
 					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.3981932556803!2d4.634128115354485!3d52.38133147978822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5ef6b924ce7ed%3A0xd9721c5337b4704!2sGrote%20Markt%2C%202011%20RD%20Haarlem!5e0!3m2!1snl!2snl!4v1573677475830!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
 				</div>
 			</div>
-		</div>";
+		</div>
+		<script>
+		Hide();
+		</script>";
 	}
 
 	private function Footer(){

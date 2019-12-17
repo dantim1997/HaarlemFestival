@@ -218,5 +218,24 @@ class JazzController
 		$minute = date("i",strtotime($date));
 		return $hour .":". $minute;
 	}
+
+	public function GetTickets($date){
+		$tickets = $this->DB_Helper->GetTicketsJazz($date);
+		
+		$addtocart = "";
+		$count = 1;
+		$id = "ID";
+
+		foreach ($tickets as $ticket => $info) {
+			$addtocart .= "
+			<button onclick='ShoppingCartMinJazz(".$info["ID"].")'>-</button>
+			<input type='text' value='0' id='".$info["ID"]."'>
+			<button onclick='ShoppingCartPlusJazz(".$info["ID"].")'>+</button>
+			<br>
+			";
+			$count++;
+		}
+		return $addtocart;
+	}
 }
 ?>

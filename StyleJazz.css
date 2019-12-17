@@ -326,14 +326,14 @@ hr {
 
 button {
     background-color: rgba(0, 153, 102, 1);
-    width: 33%;
+    width: 30%;
     height: 63px;
     color: white;
     font-weight: bold;
 }
 
 input {
-    width: 33%;
+    width: 30%;
     height: 63px;
     text-align: center;
     font-weight: bold;
@@ -362,7 +362,7 @@ input {
 .price {
     text-align: right;
     margin-top: -30px;
-    margin-right: 60%;
+    margin-right: 40%;
 }
 
 .filter {
