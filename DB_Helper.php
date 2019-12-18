@@ -578,10 +578,10 @@ public function CreateOrder($orderInfo){
 	$HouseNumber = mysqli_real_escape_string($this->Conn, $orderInfo['HouseNumber']);
 
 	$adress = $PostCode . " ". $Street . " ". $HouseNumber;
-	$Date = date("Y/m/d");
+	$Date = date("Y-m-d H:i:s");
 	//does prepared query
 	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date) VALUES(?, ?, ?, ?, ?)");
-	$stmt->bind_param("ssssd", $FirstName, $LastName, $Email,$adress, $Date);
+	$stmt->bind_param("sssss", $FirstName, $LastName, $Email,$adress, $Date);
 	/* Commit or rollback transaction */
 	if ($stmt->execute()) {
 		$this->Conn->commit();
