@@ -11,22 +11,22 @@ class Nav
 		return"
 		<div id='NavBarBorder'>
 				<div><a href='index.php'><img class='NavBarImg' src='Images/HaarlemImage.png'></a></div>
-				".$this->SetEvent("Home", $event)."
 				".$this->SetEvent("Food", $event)."
 				".$this->SetEvent("Dance", $event)."
 				".$this->SetEvent("Historic", $event)."
 				".$this->SetEvent("Jazz", $event)."
 				".$this->SetEvent("MyProgram", $event)."
-				
-				<div class='Languages'>
-					<img class='LanguagesImages ActiveLanguage' src='Images/EnglishFlag.png'>
-					<img class='LanguagesImages' src='Images/NederlandFlag.jpg'>
-				</div>
-				<a href='checkout.php'>
-					<div class='ShoppingCart'>
-						<div class='shopcartItems' id='shoppingcartCount'>".$this->GetCartItems()."</div>
+				<div class='right'>
+					<div class='Languages'>
+						<img class='LanguagesImages ActiveLanguage' src='Images/EnglishFlag.png'>
+						<img class='LanguagesImages' src='Images/NederlandFlag.jpg'>
 					</div>
-				</a>
+					<a href='checkout.php'>
+						<div class='ShoppingCart'>
+							<div class='shopcartItems' id='shoppingcartCount'>".$this->GetCartItems()."</div>
+						</div>
+					</a>
+				</div>
 		</div>
 
 		<div id='myPopup' class='popup'>
@@ -42,17 +42,11 @@ class Nav
 
 	public function SetEvent($event, $active){
 		if($active == $event){
-			if($event == "Home"){
-				$event = "index";
-			}
 			return "<div class='ActiveWrapper'>
 					<div class='Active'><a class='Link' href='".$event.".php'><div class='NavActive'>".$event."</div></a></div>
 				</div>";
 		}
 		else{
-			if($event == "Home"){
-				$event = "index";
-			}
 			return "<div class='NavLinks'><a class='Link' href='".$event.".php'><div class='NavText'>".$event."</div></a></div>";
 		}
 	}
