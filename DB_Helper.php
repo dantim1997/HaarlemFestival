@@ -172,7 +172,7 @@ class DB_Helper
 	//get tickets
 	public function GetOrderTicketsDance($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description FROM `Order` as o
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description, Description info FROM `Order` as o
 			join OrderLine ol on ol.OrderId = o.Id 
 			join Tickets t on t.Id = ol.TicketId
 			join DanceEvent e on e.id = t.eventid
@@ -184,10 +184,10 @@ class DB_Helper
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array;
@@ -197,7 +197,7 @@ class DB_Helper
 	//get tickets
 	public function GetOrderTicketsTour($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description 
+		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
@@ -207,10 +207,10 @@ class DB_Helper
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $Name, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$Name, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
@@ -220,7 +220,7 @@ class DB_Helper
 	//get tickets
 	public function GetOrderTicketsJazz($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName
+		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
@@ -229,10 +229,10 @@ class DB_Helper
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $Name, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$Name, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
@@ -241,7 +241,7 @@ class DB_Helper
 
 	public function GetOrderTicketsFood($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT f.id, f.Location, f.SessionStartDateTime, f.SessionEndDateTime, f.Description
+		$stmt = $this->Conn->prepare("SELECT f.id, f.Location, f.SessionStartDateTime, f.SessionEndDateTime, f.Description, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
@@ -250,10 +250,10 @@ class DB_Helper
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $Name, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$Name, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
