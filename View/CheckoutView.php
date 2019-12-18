@@ -23,7 +23,7 @@ class CheckoutView
 	}
 
 	private function Header(){
-		return $this->CheckoutController->GetConfig()->GetHeader("Checkout"). "<link rel='stylesheet' type='text/css' href='checkout.css'>";
+		return $this->CheckoutController->GetConfig()->GetHeader("Checkout"). "<link rel='stylesheet' type='text/css' href='css/checkout.css'>";
 	}
 
 	private function Body(){
