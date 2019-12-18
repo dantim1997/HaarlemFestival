@@ -44,7 +44,7 @@ class DB_Helper
 	//gets all users for DB by role
 	public function Get_AllSpecialEvents(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, e.Description, e.Price FROM DanceEvent as e WHERE Special = 1");
+		$stmt = $this->Conn->prepare("SELECT e.Id, e.Description, e.Price FROM DanceEvent as e WHERE Special = 1 && Amount > 0");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
@@ -66,7 +66,7 @@ class DB_Helper
 		join DanceVenue as v on v.Id = e.VenueId 
 		join performingact p on p.EventId = e.Id 
 		join DanceArtist a on a.Id = p.ArtistId 
-		where StartDateTime LIKE ? AND Special = 0 GROUP by e.Id ");
+		where StartDateTime LIKE ? AND Special = 0 AND e.Amount > 0 GROUP by e.Id");
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
@@ -120,7 +120,7 @@ class DB_Helper
 			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id
 			join DanceArtist a on a.Id = p.ArtistId
-			where p.ArtistId = ? AND Special = 0");
+			where p.ArtistId = ? AND Special = 0 AND e.Amount > 0");
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$stmt->store_result();
@@ -141,7 +141,7 @@ class DB_Helper
 			join DanceVenue as v on v.Id = e.VenueId
 			JOIN performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
-			WHERE ".$artistSearch." ".$locationSearch." GROUP BY e.Id");
+			WHERE ".$artistSearch." ".$locationSearch." AND e.Amount > 0 GROUP BY e.Id");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $venue, $description, $startDateTime, $endDateTime, $price, $artist); 
@@ -578,7 +578,6 @@ public function CreateOrder($orderInfo){
 	$HouseNumber = mysqli_real_escape_string($this->Conn, $orderInfo['HouseNumber']);
 
 	$adress = $PostCode . " ". $Street . " ". $HouseNumber;
-	var_dump($adress);
 	$Date = date("Y/m/d");
 	//does prepared query
 	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date) VALUES(?, ?, ?, ?, ?)");
@@ -632,7 +631,22 @@ public function CreateOrderLine($orderId, $ticketId){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//reset the password with the new password and send a mail
+public function RemoveavAilableTicketDance($eventId){
+	//cleans email and password
+	$emailSQL = mysqli_real_escape_string($this->Conn, $eventId);
 
+	//does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE DanceEvent set Amount = Amount - 1 where Id = ?");
+	$stmt->bind_param("i", $eventId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Delete
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

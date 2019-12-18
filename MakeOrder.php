@@ -27,7 +27,11 @@ class MakeOrder{
 
     public function ticket($eventId, $typeEvent)
     {
-        return $this->DB_Helper->CreateTicket($eventId, $typeEvent,"test");
+        $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent,"test");
+        if($typeEvent == 2){
+            $this->DB_Helper->RemoveavAilableTicketDance($eventId);
+        }
+        return $ticketId;
     }
 }
 ?>
