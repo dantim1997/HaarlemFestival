@@ -179,7 +179,7 @@ class DB_Helper
 			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
-			WHERE o.id = ? && t.TypeEvent = 2
+			WHERE o.OrderNumber = ? && t.TypeEvent = 2
 			GROUP by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
@@ -202,7 +202,7 @@ class DB_Helper
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
 			join HistoricTours ht on ht.Id = t.EventId
-			WHERE o.id = ? && t.TypeEvent = 3
+			WHERE o.OrderNumber = ? && t.TypeEvent = 3
 			group by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
@@ -225,7 +225,7 @@ class DB_Helper
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
 			join Jazz j on j.Id = t.EventId
-			WHERE o.id = ? && t.TypeEvent = 4");
+			WHERE o.OrderNumber = ? && t.TypeEvent = 4");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
@@ -246,7 +246,7 @@ class DB_Helper
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
 			join FoodRestaurants f on f.Id = t.EventId
-			WHERE o.id = ? && t.TypeEvent = 1");
+			WHERE o.OrderNumber = ? && t.TypeEvent = 1");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
@@ -568,7 +568,67 @@ class DB_Helper
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+public function CreateOrder($orderInfo){
+	//clean username, password and email
+	$FirstName = mysqli_real_escape_string($this->Conn, $orderInfo['FirstName']);
+	$LastName = mysqli_real_escape_string($this->Conn, $orderInfo['LastName']);
+	$Email = mysqli_real_escape_string($this->Conn, $orderInfo['Email']);
+	$Street = mysqli_real_escape_string($this->Conn, $orderInfo['Street']);
+	$PostCode = mysqli_real_escape_string($this->Conn, $orderInfo['PostCode']);
+	$HouseNumber = mysqli_real_escape_string($this->Conn, $orderInfo['HouseNumber']);
 
+	$adress = $PostCode . " ". $Street . " ". $HouseNumber;
+	var_dump($adress);
+	$Date = date("Y/m/d");
+	//does prepared query
+	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date) VALUES(?, ?, ?, ?, ?)");
+	$stmt->bind_param("ssssd", $FirstName, $LastName, $Email,$adress, $Date);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return $stmt->insert_id;
+	} else {
+		$this->Conn->rollback();
+		return 0;
+	}   
+}
+
+public function CreateTicket($eventId, $TypeEvent, $QRCode){
+	//clean username, password and email
+	$eventId = mysqli_real_escape_string($this->Conn, $eventId);
+	$typeEvent = mysqli_real_escape_string($this->Conn, $TypeEvent);
+	$QRCode = mysqli_real_escape_string($this->Conn, $QRCode);
+
+	//does prepared query
+	$stmt = $this->Conn->prepare("INSERT INTO `Tickets` (EventId, TypeEvent, QRCode) VALUES(?, ?, ?)");
+	$stmt->bind_param("iis", $eventId, $typeEvent, $QRCode);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return $stmt->insert_id;
+	} else {
+		$this->Conn->rollback();
+		return 0;
+	}   
+}
+
+public function CreateOrderLine($orderId, $ticketId){
+	//clean username, password and email
+	$orderId = mysqli_real_escape_string($this->Conn, $orderId);
+	$ticketId = mysqli_real_escape_string($this->Conn, $ticketId);
+
+	//does prepared query
+	$stmt = $this->Conn->prepare("INSERT INTO `OrderLine` (OrderId, TicketId) VALUES(?, ?)");
+	$stmt->bind_param("ii", $orderId, $ticketId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return $stmt->insert_id;
+	} else {
+		$this->Conn->rollback();
+		return 0;
+	}   
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
