@@ -25,7 +25,7 @@ class AdvancedDanceSearchView
 
 	private function Header(){
 		return $this->AdvancedDanceSearchController->GetConfig()->GetHeader("Dance"). "
-		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
+		<link rel='stylesheet' type='text/css' href='../DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
