@@ -44,7 +44,7 @@ class DB_Helper
 	//gets all users for DB by role
 	public function Get_AllSpecialEvents(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, e.Description, e.Price FROM DanceEvent as e WHERE Special = 1");
+		$stmt = $this->Conn->prepare("SELECT e.Id, e.Description, e.Price FROM DanceEvent as e WHERE Special = 1 && Amount > 0");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
@@ -66,7 +66,7 @@ class DB_Helper
 		join DanceVenue as v on v.Id = e.VenueId 
 		join performingact p on p.EventId = e.Id 
 		join DanceArtist a on a.Id = p.ArtistId 
-		where StartDateTime LIKE ? AND Special = 0 GROUP by e.Id ");
+		where StartDateTime LIKE ? AND Special = 0 AND e.Amount > 0 GROUP by e.Id");
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
@@ -120,7 +120,7 @@ class DB_Helper
 			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id
 			join DanceArtist a on a.Id = p.ArtistId
-			where p.ArtistId = ? AND Special = 0");
+			where p.ArtistId = ? AND Special = 0 AND e.Amount > 0");
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$stmt->store_result();
@@ -141,7 +141,7 @@ class DB_Helper
 			join DanceVenue as v on v.Id = e.VenueId
 			JOIN performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
-			WHERE ".$artistSearch." ".$locationSearch." GROUP BY e.Id");
+			WHERE ".$artistSearch." ".$locationSearch." AND e.Amount > 0 GROUP BY e.Id");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $venue, $description, $startDateTime, $endDateTime, $price, $artist); 
@@ -172,22 +172,22 @@ class DB_Helper
 	//get tickets
 	public function GetOrderTicketsDance($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description FROM `Order` as o
+		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description, Description info FROM `Order` as o
 			join OrderLine ol on ol.OrderId = o.Id 
 			join Tickets t on t.Id = ol.TicketId
 			join DanceEvent e on e.id = t.eventid
 			join DanceVenue as v on v.Id = e.VenueId
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
-			WHERE o.id = ? && t.TypeEvent = 2
+			WHERE o.OrderNumber = ? && t.TypeEvent = 2
 			GROUP by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array;
@@ -197,20 +197,20 @@ class DB_Helper
 	//get tickets
 	public function GetOrderTicketsTour($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description 
+		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
 			join HistoricTours ht on ht.Id = t.EventId
-			WHERE o.id = ? && t.TypeEvent = 3
+			WHERE o.OrderNumber = ? && t.TypeEvent = 3
 			group by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $Name, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$Name, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
@@ -220,19 +220,19 @@ class DB_Helper
 	//get tickets
 	public function GetOrderTicketsJazz($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName
+		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
 			join Jazz j on j.Id = t.EventId
-			WHERE o.id = ? && t.TypeEvent = 4");
+			WHERE o.OrderNumber = ? && t.TypeEvent = 4");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $Name, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$Name, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
@@ -241,19 +241,19 @@ class DB_Helper
 
 	public function GetOrderTicketsFood($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT f.id, f.Location, f.SessionStartDateTime, f.SessionEndDateTime, f.Description
+		$stmt = $this->Conn->prepare("SELECT f.id, f.Location, f.SessionStartDateTime, f.SessionEndDateTime, f.Description, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
 			join FoodRestaurants f on f.Id = t.EventId
-			WHERE o.id = ? && t.TypeEvent = 1");
+			WHERE o.OrderNumber = ? && t.TypeEvent = 1");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $Name, $startDateTime, $endDateTime, $description); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$Name, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
@@ -568,11 +568,85 @@ class DB_Helper
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+public function CreateOrder($orderInfo){
+	//clean username, password and email
+	$FirstName = mysqli_real_escape_string($this->Conn, $orderInfo['FirstName']);
+	$LastName = mysqli_real_escape_string($this->Conn, $orderInfo['LastName']);
+	$Email = mysqli_real_escape_string($this->Conn, $orderInfo['Email']);
+	$Street = mysqli_real_escape_string($this->Conn, $orderInfo['Street']);
+	$PostCode = mysqli_real_escape_string($this->Conn, $orderInfo['PostCode']);
+	$HouseNumber = mysqli_real_escape_string($this->Conn, $orderInfo['HouseNumber']);
 
+	$adress = $PostCode . " ". $Street . " ". $HouseNumber;
+	$Date = date("Y/m/d");
+	//does prepared query
+	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date) VALUES(?, ?, ?, ?, ?)");
+	$stmt->bind_param("ssssd", $FirstName, $LastName, $Email,$adress, $Date);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return $stmt->insert_id;
+	} else {
+		$this->Conn->rollback();
+		return 0;
+	}   
+}
+
+public function CreateTicket($eventId, $TypeEvent, $QRCode){
+	//clean username, password and email
+	$eventId = mysqli_real_escape_string($this->Conn, $eventId);
+	$typeEvent = mysqli_real_escape_string($this->Conn, $TypeEvent);
+	$QRCode = mysqli_real_escape_string($this->Conn, $QRCode);
+
+	//does prepared query
+	$stmt = $this->Conn->prepare("INSERT INTO `Tickets` (EventId, TypeEvent, QRCode) VALUES(?, ?, ?)");
+	$stmt->bind_param("iis", $eventId, $typeEvent, $QRCode);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return $stmt->insert_id;
+	} else {
+		$this->Conn->rollback();
+		return 0;
+	}   
+}
+
+public function CreateOrderLine($orderId, $ticketId){
+	//clean username, password and email
+	$orderId = mysqli_real_escape_string($this->Conn, $orderId);
+	$ticketId = mysqli_real_escape_string($this->Conn, $ticketId);
+
+	//does prepared query
+	$stmt = $this->Conn->prepare("INSERT INTO `OrderLine` (OrderId, TicketId) VALUES(?, ?)");
+	$stmt->bind_param("ii", $orderId, $ticketId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return $stmt->insert_id;
+	} else {
+		$this->Conn->rollback();
+		return 0;
+	}   
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//reset the password with the new password and send a mail
+public function RemoveavAilableTicketDance($eventId){
+	//cleans email and password
+	$emailSQL = mysqli_real_escape_string($this->Conn, $eventId);
 
+	//does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE DanceEvent set Amount = Amount - 1 where Id = ?");
+	$stmt->bind_param("i", $eventId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Delete
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
