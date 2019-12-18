@@ -79,6 +79,11 @@ function FoodAddToCart(eventId, typeEvent) {
 	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1);
 }
 
+function TimeTablePDF(id){
+	var win = window.open("CreateTimeTablePDF.php?id="+id, '_blank');
+  win.focus();
+}
+
 function AddToCart(eventId, typeEvent, amount, special) {
 	if (amount > 0) {
      $.ajax({ url: 'AddToCart.php',

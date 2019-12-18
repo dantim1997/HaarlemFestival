@@ -34,7 +34,7 @@ class MyProgramController
 				    	<div class='Event JazzBackground'>Jazz</div>
 				    </div>";
 		$timeTable .= $this->GetTickets($orderNumber);
-		$timeTable .= "<div><button class='ProceeToCheckout'>Download</button></div>
+		$timeTable .= "<div><button onclick='TimeTablePDF(".$orderNumber.")' class='ProceeToCheckout'>Download</button></div>
 						    </div>";
 		return $timeTable;
 	}
