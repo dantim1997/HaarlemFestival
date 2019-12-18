@@ -24,7 +24,7 @@ class DanceTimeTableView
 
 	private function Header(){
 		return $this->DanceTimeTableController->GetConfig()->GetHeader("Dance"). "
-		<link rel='stylesheet' type='text/css' href='DanceTimeTableStyle.css'>
+		<link rel='stylesheet' type='text/css' href='css/DanceTimeTableStyle.css'>
 		<script src='Javascript.js'></script> ";
 	}
 
