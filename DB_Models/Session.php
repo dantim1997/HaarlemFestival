@@ -42,7 +42,7 @@ class Session
 
 	function AddToCartFood($eventId, $childAmount, $adultAmount, $startTime, $date, $extraInfo) {
 		$typeEvent = 1;
-		if(!isset($_SESSION['Tickets'])){
+		if (!isset($_SESSION['Tickets'])){
 			$_SESSION['Tickets'] = array();
 		}
 		$allCartItems = $_SESSION['Tickets'];
@@ -54,9 +54,7 @@ class Session
 				// reservation already exists in session
 				$cartItem['ChildAmount'] = intval($cartItem['ChildAmount']) + intval($childAmount);
 				$cartItem['AdultAmount'] = intval($cartItem['AdultAmount']) + intval($adultAmount);
-				$cartItem['StartTime'] = $startTime;
-				$cartItem['Date'] = $date;
-				$cartItem['ExtraInfo'] = $extraInfo;
+				// $cartItem['ExtraInfo'] = $extraInfo;
 				$newCartItems[] = $cartItem;
 				$added = true;
 			}
@@ -64,8 +62,8 @@ class Session
 				$newCartItems[] = $cartItem;
 			}
 		}
-		if(!$added){
-			$cartItem = array("EventId"=>$eventId, "TypeEvent"=>$typeEvent, "ChildAmount"=>$childAmount, "AdultAmount"=>$adultAmount, "Special"=>$special, "StartTime"=>$startTime, "Date"=>$date, "ExtraInfo"=>$extraInfo);
+		if (!$added) {
+			$cartItem = array("EventId"=>$eventId, "TypeEvent"=>$typeEvent, "ChildAmount"=>$childAmount, "AdultAmount"=>$adultAmount, "StartTime"=>$startTime, "Date"=>$date, "ExtraInfo"=>$extraInfo);
 			$newCartItems[] = $cartItem;
 		}
 
@@ -82,20 +80,46 @@ class Session
 		$removedAmount = 0;
 
 		foreach ($allCartItems as $cartItem) {
-			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
-				// check if we're dealing with restaurant reservations or normal tickets ...
+			if ($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
+				$removedAmount = $removedAmount + intval($cartItem['Amount']);
+			}
+			else {
+				$newCartItems[] = $cartItem;
+			}
+		}
+
+		$_SESSION['Tickets'] = null;
+		$_SESSION['Tickets'] = $newCartItems;
+
+		return $removedAmount;
+	}
+
+	function RemoveFromCartFood($eventId, $typeEvent, $amount){
+		if(!isset($_SESSION['Tickets'])){
+			$_SESSION['Tickets'] = array();
+		}
+		$allCartItems = $_SESSION['Tickets'];
+		$newCartItems = array();
+		$removedAmount = 0;
+
+		foreach ($allCartItems as $cartItem) {
+			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']) {
+				// check what reservation type we're dealing with (child or normal) ...
 				if (array_key_exists("ChildAmount", $cartItem)) {
 					// it's a childPrice reservation
 					$removedAmount = $removedAmount + intval($cartItem['ChildAmount']);
+					$cartItem["ChildAmount"] = NULL;
+					$cartItem["ChildPrice"] = NULL;
+					$newCartItems[] = $cartItem;
 				} else if (array_key_exists("AdultAmount", $cartItem)) {
 					// it's a adultPrice reservation
 					$removedAmount = $removedAmount + intval($cartItem['AdultAmount']);
-				} else {
-					// it's a normal ticket
-					$removedAmount = $removedAmount + intval($cartItem['Amount']);
+					$cartItem["AdultAmount"] = NULL;
+					$cartItem["AdultPrice"] = NULL;
+					$newCartItems[] = $cartItem;
 				}
 			}
-			else{
+			else {
 				$newCartItems[] = $cartItem;
 			}
 		}

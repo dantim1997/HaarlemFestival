@@ -5,10 +5,10 @@ class CheckoutModel
 	private $SortedDays = array();
 
 	public $Total = 0;
-	function __construct(){
-	}
+	function __construct()	{}
 
-	public function GetSortedDays(){
+	public function GetSortedDays()
+	{
 		return $this->SortedDays;
 	}
 
@@ -17,10 +17,11 @@ class CheckoutModel
 		$this->SortedDays = $value;
 	}
 
-	public function GetTotal(){
+	public function GetTotal()
+	{
 		return $this->Total;
 	}
-
+	
 	public function SetTotal($value)
 	{
 		$this->Total = $value;

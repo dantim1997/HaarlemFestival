@@ -115,7 +115,7 @@ class CheckoutController
 			$sortedDays[$eventDate] = "";
 		}
 
-		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval($amount));
+		$this->CheckoutModel->AddTotal(doubleval($eventInfo["Price"]) * doubleval($amount));
 
 		// show allergies/special needs when given
 		if (!empty($extraInfo)) {
@@ -146,7 +146,7 @@ class CheckoutController
 		}
 
 		// different two different prices and amounts (adult and child) ...
-		$value = intval($eventInfo["ChildPrice"]) * intval($childAmount) + $eventInfo["AdultPrice"] * intval($adultAmount);
+		$value = doubleval($eventInfo["ChildPrice"]) * doubleval($childAmount) + $eventInfo["AdultPrice"] * doubleval($adultAmount);
 		$this->CheckoutModel->AddTotal($value);
 
 		// show allergies/special needs when given
@@ -158,14 +158,15 @@ class CheckoutController
 			$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$childAmount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["ChildPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
-					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.", 1,".$eventInfo["ChildPrice"].")' type='submit' value='&#10006' name='??????'>
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1,".$eventInfo["ChildPrice"].")' type='submit' value='&#10006' name='??????'>
 			</div>";
 		}
+		
 		if (!empty($adultAmount)) {
 			$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$adultAmount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["AdultPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
-					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.", 1,".$eventInfo["AdultPrice"].")' type='submit' value='&#10006' name='??????'>
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1,".$eventInfo["AdultPrice"].")' type='submit' value='&#10006' name='??????'>
 			</div>";
 		}
 

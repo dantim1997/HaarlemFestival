@@ -1,6 +1,6 @@
 <?php
 require_once("Autoloader.php");
-if(isset($_POST['eventId']) && isset($_POST['childAmount']) || isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['adultAmount'])) {
+if(isset($_POST['eventId']) && isset($_POST['childAmount']) || isset($_POST['eventId']) && isset($_POST['adultAmount'])) {
     $eventId = $_POST['eventId'];
     $childAmount = $_POST['childAmount'];
     $adultAmount = $_POST['adultAmount'];

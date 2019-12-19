@@ -90,7 +90,7 @@ function FoodAddToCartHelper(eventId) {
 	var extraInfo = document.getElementById('extraInfo').value;
 	// niet goede formats?:
 	var startTime = document.getElementById('pickSession').value;
-	var date = document.getElementById('pickDay').value;	
+	var date = document.getElementById('pickDay').value;
 
 	FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo);
 }
@@ -129,6 +129,26 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 	});
 }
 
+function FoodRemoveFromCart(self, eventId, typeEvent, amount) {
+	$.ajax({ url: 'RemoveFromCartFood.php',
+	data: {eventId: eventId, typeEvent: typeEvent},
+	type: 'post',
+	success: function(output) {
+		var parent = self.parentNode;
+		var parenttickets = parent.parentNode;
+		ShoppingCartmin(output);
+		self.parentNode.remove(); 
+			if (parenttickets.children.length == 0) {
+				var eventday = parenttickets.parentNode;
+				eventday.remove();
+			}
+		var totalamount = parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
+		var remove = totalamount - (price * output);
+		document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
+	}
+});	
+}
+
 function ShowPopup() {
   	var popup = document.getElementById("myPopup");
   	setTimeout( popup.style.display = 'block', 10000);
@@ -137,6 +157,7 @@ function ShowPopup() {
     }, 2000);
   	
 }
+
 function ToEvent(src){
 	if (src == "Historic") {
 		location.href = "Historic.php";
