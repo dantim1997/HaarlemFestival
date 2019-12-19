@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:900');
 
 body {
- background-image: url("Images/backgroundHistoric.png");
+ background-image: url("../Images/backgroundHistoric.png");
  background-color: #cccccc;
  background-repeat: no-repeat;
  background-size: cover;
@@ -32,7 +32,7 @@ body {
 	padding-left: 45px;
 	font-family: 'Heebo', black;
 	color: #FFFFFF;
-	background-image: url("Images/routeIcon.png");
+	background-image: url("../Images/routeIcon.png");
 	background-repeat: no-repeat;
 	background-position: 92% 40%;
 	background-size: 40px;
@@ -528,7 +528,7 @@ h5{
 	text-decoration: none;
 	display: inline-block;
 	background-color: #ffcc00;
-	background-image: url("Images/add-to-cart-icon-.jpg");
+	background-image: url("../Images/add-to-cart-icon-.jpg");
 	background-repeat: no-repeat;
 	background-position: 50% 40%;
 	background-size: 28px;

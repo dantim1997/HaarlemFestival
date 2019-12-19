@@ -34,7 +34,7 @@ class MyProgramController
 				    	<div class='Event JazzBackground'>Jazz</div>
 				    </div>";
 		$timeTable .= $this->GetTickets($orderNumber);
-		$timeTable .= "<div><button class='ProceeToCheckout'>Download</button></div>
+		$timeTable .= "<div><button onclick='TimeTablePDF(".$orderNumber.")' class='ProceeToCheckout'>Download</button></div>
 						    </div>";
 		return $timeTable;
 	}
@@ -101,15 +101,20 @@ class MyProgramController
 			date('Y-m-d', strtotime('2020-07-28')), 
 			date('Y-m-d', strtotime('2020-07-29')), 
 			date('Y-m-d', strtotime('2020-07-30')));
-		$startDate = date('Y-m-d', strtotime($ticket["StartDateTime"]));
-		$startTime = date("H:i",strtotime($ticket["StartDateTime"]));
-		$endTime = date("H:i",strtotime($ticket["EndDateTime"]));
-		$row = "<tr><td>".$ticket["Name"]."</td>";
+			$startDate = date('Y-m-d', strtotime($ticket["StartDateTime"]));
+			$startTime = date("H:i",strtotime($ticket["StartDateTime"]));
+			$endTime = date("H:i",strtotime($ticket["EndDateTime"]));
+			$row = "<tr><td>".$ticket["Name"]."</td>";
+			$time = "";
+			if($startTime != "00:00"){
+				$time = $startTime. " - " .$endTime;
+				$endTime = "";
+			}
 
 		foreach ($TijdelijkDate as $date) {
 			if($date == $startDate){
-				$row .="<td class='".$typeEvent."'>".$ticket["description"]."<br>
-						".$startTime." - ".$endTime."
+				$row .="<td class='".$typeEvent."'>".$ticket["description"]." ".$ticket["info"]."<br>
+						".$time."
 						</td>";
 			}
 			else{

@@ -12,6 +12,7 @@ class CheckoutController
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
+		$this->Session = new Session;
 		$this->ProceedToPayment();
 	}
 
@@ -30,9 +31,10 @@ class CheckoutController
 			$errorList["LastName"] = $this->IsRequired("LastName", "text");
 			$errorList["Email"] = $this->IsRequired("Email", "text");
 			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
-			$errorList["Number"] = $this->IsRequired("Number", "number");
+			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 			$errorList["Street"] = $this->IsRequired("Street", "text");
-			var_dump($errorList);
+			$makeOrder = new MakeOrder();
+			$makeOrder->Order($_POST, $_SESSION["Tickets"]);
 		}
 	}
 
@@ -55,8 +57,8 @@ class CheckoutController
 		return $this->Config;
 	}
 
-	public function GetAllItems() {
-		$this->Session = new Session;
+
+	public function GetAllItems(){
 		$ticketRows = "";
 
 		if (isset($_SESSION["Tickets"])) {

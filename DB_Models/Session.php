@@ -129,5 +129,9 @@ class Session
 
 		return $removedAmount;
 	}
+
+	function CleanCart(){
+			$_SESSION['Tickets'] = array();
+	}
 }
 ?>
