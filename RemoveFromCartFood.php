@@ -1,15 +1,10 @@
 <?php
 require_once("Autoloader.php");
-if(isset($_POST['eventId']) && isset($_POST['ChildAmount'])) {
-    $amount = $_POST['ChildAmount'];
-} else if (isset($_POST['eventId']) && isset($_POST['AdultAmount'])) {
-    $amount = $_POST['AdultAmount'];
+if(isset($_POST['eventId']) && isset($_POST['typeEvent'])) {
+    $eventId = $_POST['eventId'];
+    $typeEvent = $_POST['typeEvent'];
+    $session = new Session;
+    $amount = $session->RemoveFromCartFood($eventId, $typeEvent);
+    print $amount;
 }
-
-$eventId = $_POST['eventId'];
-$typeEvent = 1;
-$session = new Session;
-$amount = $session->RemoveFromCartFood($eventId, $typeEvent, $amount);
-print $amount;
-
 ?>

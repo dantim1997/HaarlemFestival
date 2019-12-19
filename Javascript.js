@@ -142,11 +142,12 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 	});
 }
 
-function FoodRemoveFromCart(self, eventId, typeEvent, amount) {
+function FoodRemoveFromCart(self, eventId, typeEvent, price) {
 	$.ajax({ url: 'RemoveFromCartFood.php',
 	data: {eventId: eventId, typeEvent: typeEvent},
 	type: 'post',
 	success: function(output) {
+		console.log(output);
 		var parent = self.parentNode;
 		var parenttickets = parent.parentNode;
 		ShoppingCartmin(output);
