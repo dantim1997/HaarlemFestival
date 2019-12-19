@@ -147,7 +147,6 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price) {
 	data: {eventId: eventId, typeEvent: typeEvent},
 	type: 'post',
 	success: function(output) {
-		console.log(output);
 		var parent = self.parentNode;
 		var parenttickets = parent.parentNode;
 		ShoppingCartmin(output);
@@ -158,6 +157,7 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price) {
 			}
 		var totalamount = parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
 		var remove = totalamount - (price * output);
+		console.log(price, totalamount, output, remove);
 		document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
 	}
 });	
