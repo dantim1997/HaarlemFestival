@@ -12,6 +12,44 @@ class CheckoutController
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
+		$this->Session = new Session;
+		$this->ProceedToPayment();
+	}
+
+	public function ProceedToPayment()
+	{
+		$errorList = array(
+			"FirstName" => "",
+			"LastName" => "",
+			"Email" => "",
+			"Adress" => "",
+			"Date" => "",
+		);
+		if(isset($_POST['proceedToPaymentBTN'])){
+			
+			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
+			$errorList["LastName"] = $this->IsRequired("LastName", "text");
+			$errorList["Email"] = $this->IsRequired("Email", "text");
+			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
+			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
+			$errorList["Street"] = $this->IsRequired("Street", "text");
+			$makeOrder = new MakeOrder();
+			$makeOrder->Order($_POST, $_SESSION["Tickets"]);
+		}
+	}
+
+	public function IsRequired($name, $Type)
+	{
+		if( $_POST[$name] == Null || $_POST[$name] == ""){
+			return "Field is required";
+		}
+		if($Type == "Email"){
+
+		}
+		if($Type == "postalCode"){
+			
+		}
+		return "";
 	}
 	
 	//get config
@@ -20,13 +58,13 @@ class CheckoutController
 	}
 
 	public function GetAllItems(){
-		$this->Session = new Session;
+		
 		$ticketRows = "";
 
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '');
+				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '', $item["ExtraInfo"]);
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
@@ -40,11 +78,14 @@ class CheckoutController
 				</div>";
 			}
 		}
+		if($ticketRows == ""){
+			$ticketRows = "<div class='Empty'><h3>You dont have any items in your shopping cart</h3></div>";
+		}
 
 		return $ticketRows;
 	}
 
-	public function GetItems($eventId, $typeEvent, $amount, $special){
+	public function GetItems($eventId, $typeEvent, $amount, $special, $extraInfo){
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 1:
@@ -72,11 +113,18 @@ class CheckoutController
 			$sortedDays[$eventDate] = "";
 		}
 
+		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval( $amount));
+
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
-			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".$eventInfo["Price"].",-</p>
-					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.")' type='submit' value='&#10006' name='??????'>
-		</div>";	
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p>
+					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.",".$eventInfo["Price"].")' type='submit' value='&#10006' name='??????'>
+		</div>";
+
+		// show allergies/special needs when given
+		if (!empty($extraInfo)) {
+			$sortedDays[$eventDate] .= "<p>Given allergies and/or special needs: ".$extraInfo."</p>";
+		}
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 

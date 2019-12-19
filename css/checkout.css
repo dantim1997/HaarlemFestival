@@ -13,6 +13,11 @@
 	float: left;
 }
 
+.Empty{
+	float: left;
+	margin-top: 100px;;
+}
+
 #checkoutlbl{
 	margin-top: 2%;
 	font-size: 25pt;
@@ -36,6 +41,11 @@
 	padding-left: 2%;
 	margin-left: 4%;
 	background-color: #000000;
+}
+
+#TotalAmount{
+	font-size: 18pt;
+	margin-top: 1%;
 }
 
 .bottomBar{
@@ -104,15 +114,7 @@
 .input{
 	margin-top: 2%;
 	margin-right: 5%;
-	width: 45%;
 	float: right;
-}
-
-.labels{
-	margin-top: 2%;
-	margin-left: 5%;
-	width: 40%;
-	float: left;
 }
 
 .extraNotestxt{

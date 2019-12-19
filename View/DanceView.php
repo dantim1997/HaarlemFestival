@@ -4,11 +4,13 @@ class DanceView
 {
 	private $DanceController;
 	private $DanceModel;
+	private $PageContentHelper;
 
 	public function __construct($danceController, $danceModel)
 	{
 		$this->DanceController = $danceController;
 		$this->DanceModel = $danceModel;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//output to html
@@ -25,6 +27,7 @@ class DanceView
 	}
 
 	private function Body(){
+		$pageTexts = $this->PageContentHelper->GetPageText("Dance");
 		$nav = new Nav();
 		return $nav->SetNavBar("Dance"). "
 		<div id='main'>
@@ -32,26 +35,27 @@ class DanceView
 			  <div class='row'>
 			    <div class='col-sm-2' ></div>
 			    <div class='col-sm-9'>
-			    	<div class='Info'><h2>Haarlem Dance</h2>
-						When you hear Dance you will think of your favorite DJ's. This year we will present the top DJ's of the world, who will play on the Haarlem festival.
-						</div>
-						<div class='Locations'>
-						<h2>Locations</h2>
-							<table>
-							".$this->DanceController->GetLocation()."
-							</table>
-						</div>
-						<div class='Artists'><h2>Artists</h2>
-							".$this->DanceController->SetArtists()."
-						</div>
-						<div class='Special'>
-							<h2>Special Tickets</h2>
-							<table>
-								".$this->DanceController->GetSpecialTickets()."
-							</table>
-							<p>* The capacity of the Club sessions is very limited. Availability for All-Access pas holders can not be garanteed due to safety regulations.</p>
-						</div>
-						<a href='DanceTimeTable.php'><div class='LocationsAndTickets'>Locations, Times & Tickets</div></a>
+					<div class='Info'>
+						".current($pageTexts)."
+						".next($pageTexts)."
+					</div>
+					<div class='Locations'>
+					".next($pageTexts)."
+						<table>
+						".$this->DanceController->GetLocation()."
+						</table>
+					</div>
+					<div class='Artists'>".next($pageTexts)."
+						".$this->DanceController->SetArtists()."
+					</div>
+					<div class='Special'>
+					".next($pageTexts)."
+						<table>
+							".$this->DanceController->GetSpecialTickets()."
+						</table>
+						".next($pageTexts)."
+					</div>
+					<a href='DanceTimeTable.php'><div class='LocationsAndTickets'>".next($pageTexts)."</div></a>
 			    </div>
 			    <div class='col-sm-2'></div>
 			  </div>

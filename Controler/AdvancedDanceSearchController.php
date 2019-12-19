@@ -5,11 +5,13 @@ class AdvancedDanceSearchController
 	private $AdvancedDanceSearchModel;
 	private $Session;
 	private $Config;
+	private $PageContentHelper;
 
 	public function __construct($advancedDanceSearchModel){
 		$this->AdvancedDanceSearchModel = $advancedDanceSearchModel;
 		$this->DB_Helper = new DB_Helper;
 		$this->Config = Config::getInstance();
+		$this->PageContentHelper = new PageContentHelper();
 	}
 	
 	//get config
@@ -39,7 +41,7 @@ class AdvancedDanceSearchController
 		$searchStringArtist = "";
 		$searchStringLocation = "";
 
-		   $first = true;
+		$first = true;
 		if(isset($_GET['ArtistCheckbox']))
 		{
 		   foreach ($_GET['ArtistCheckbox'] as $artistCheckbox ) {
@@ -55,7 +57,7 @@ class AdvancedDanceSearchController
 
 		if(isset($_GET['LocationCheckbox']))
 		{
-		   //$first = true;
+		   $first = true;
 		   foreach ($_GET['LocationCheckbox'] as $venueCheckbox ) {
 		   		if(!$first){
 		   			$searchStringLocation .= " OR ";
@@ -66,9 +68,11 @@ class AdvancedDanceSearchController
 		   		$first = false;
 		   }
 		}
-
-		$tickets = $this->CreateTickets($this->DB_Helper->GetSearch($searchStringArtist,$searchStringLocation));
-		return $tickets;
+		if(isset($_GET['ArtistCheckbox']) || isset($_GET['LocationCheckbox'])){
+			$tickets = $this->CreateTickets($this->DB_Helper->GetSearch($searchStringArtist,$searchStringLocation));
+			return $tickets;
+		}
+		return null;
 	}
 
 	public function CreateTickets($searchResults){
@@ -97,19 +101,25 @@ class AdvancedDanceSearchController
 	}
 
 	public function CreateDays($dates){
-		$days = "<div class='Tickets'><h2>Tickets found with the critiria:</h2>";
-		foreach($dates as $key=>$date){
-            $eventdate = new DateTime($key);
-            $SetDate = $eventdate->format('Y-m-d');
-            $Day = date('l', strtotime($SetDate));
-			$days .="<div class='Days'><h3>".$Day."</h3>
-			<hr>
-			<div class='SessionFound'>";
-				$days .= $date;
-			$days .="</div></div>";
+		if($dates != null){
+			$pageTexts = $this->PageContentHelper->GetPageText("DanceAdvancedSearch");
+			$days = "<div class='Tickets'>".current($pageTexts)."</h2>";
+			foreach($dates as $key=>$date){
+				$eventdate = new DateTime($key);
+				$SetDate = $eventdate->format('Y-m-d');
+				$Day = date('l', strtotime($SetDate));
+				$days .="<div class='Days'><h3>".$Day."</h3>
+				<hr>
+				<div class='SessionFound'>";
+					$days .= $date;
+				$days .="</div></div>";
+			}
+			$days .= "</div>";
+			return $days;			
 		}
-		$days .= "</div>";
-		return $days;			
+		else{
+			return "<h2>Could not found tickets with the critiria:</h2>";
+		}
 	}
 }
 ?>

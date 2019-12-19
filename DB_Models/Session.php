@@ -14,7 +14,7 @@ class Session
 		}
 	}
 
-	function AddToCart($eventId, $typeEvent, $amount, $special){
+	function AddToCart($eventId, $typeEvent, $amount, $special, $extraInfo){
 		if(!isset($_SESSION['Tickets'])){
 			$_SESSION['Tickets'] = array();
 		}
@@ -25,6 +25,7 @@ class Session
 			if($eventId == $cartItem['EventId'] && $typeEvent == $cartItem['TypeEvent']){
 				$cartItem['Amount'] = intval($cartItem['Amount']) + intval($amount);
 				$cartItem['Special'] = $special;
+				$cartItem['ExtraInfo'] = $extraInfo;
 				$newCartItems[] = $cartItem;
 				$added = true;
 			}
@@ -33,7 +34,7 @@ class Session
 			}
 		}
 		if(!$added){
-			$cartItem = array("EventId"=>$eventId,"TypeEvent"=>$typeEvent,"Amount"=>$amount, "Special"=>$special);
+			$cartItem = array("EventId"=>$eventId,"TypeEvent"=>$typeEvent,"Amount"=>$amount, "Special"=>$special, "ExtraInfo"=>$extraInfo);
 			$newCartItems[] = $cartItem;
 		}
 
@@ -63,7 +64,9 @@ class Session
 
 		return $removedAmount;
 	}
+
+	function CleanCart(){
+			$_SESSION['Tickets'] = array();
+	}
 }
-
-
 ?>

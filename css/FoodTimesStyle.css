@@ -2,15 +2,16 @@
 * {
     margin: 0;
     padding: 0;
-    border: 0;
+    /*border: 0;
     outline: 0;
     font-size: 100%;
-    vertical-align: baseline;
+    vertical-align: baseline;*/
 }
 
 /*RESTAURANT FILTER*/
 .restaurantFilter {
-  position: sticky;
+  float: left;
+  position: fixed;
   left: 10px;
   top: 170px;
   width: 270px;
@@ -20,7 +21,6 @@
 }
 
 .searchHeader {
-  position: sticky;
   width: 269px;
   height: 35px;
   background-color: #B2B2B2;
@@ -31,6 +31,7 @@
 
 h2.searchRestaurants {
   font-size: 25px;
+  width: 100%;
   font-family: 'Arial Bold', 'Arial';
 }
 
@@ -125,10 +126,9 @@ h2.searchRestaurants {
 
 /*RESTAURANTS SECTION*/
 .restaurants {
-  position: relative;
-  left: 330px;
-  top: -400px;
-  width: 100%;
+  float: right;
+  margin-left: -100px;
+  width: 80%;
   height: auto;
 }
 
@@ -152,16 +152,22 @@ h2.searchRestaurants {
   position: relative;
   top: -150px;
   left: 260px;
+  width: 50%;
 }
 
 p.restaurantInfoP {
   font-size: 20px;
 }
 
+h2 {
+  width: 70%;
+}
+
 .rating {
   position: relative;
   top: -160px;
   left: 260px;
+  width: 50%;
 }
 
 .locationWidget {
@@ -182,8 +188,13 @@ p.restaurantInfoP {
   background-color: #FFFFFF;
 }
 
-.pricesH2, .pricesH4 {
-  padding: 5px;
+.pricesH2, .pricesH4, .pricesP {
+  padding-left: 2px;
+  margin-bottom: 0px;
+}
+
+.pricesP {
+  font-style: italic;
 }
 
 .createReservation {
@@ -225,6 +236,10 @@ p.restaurantInfoP {
   top: 30px;
   left: 10px;
   font-weight: bold;
+}
+
+p.specialNeedsP {
+  margin-bottom: 0;
 }
 
 .makeReservation {
