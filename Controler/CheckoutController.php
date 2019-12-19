@@ -175,6 +175,30 @@ class CheckoutController
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 
+	public function GetReservationFee() {
+		if (isset($_SESSION["Tickets"])) {
+			$items = $_SESSION["Tickets"];
+			$found = false;
+			foreach ($items as $item) {
+				// check if reservation is present in session
+				if ($item["TypeEvent"] == 1) {
+					// ladies and gentlemen, we got em
+					$found = true;
+				}
+				if ($found == true) {
+					break;
+				}
+			}
+
+			if ($found == true) {
+				$this->CheckoutModel->AddTotal(10);
+				return "<p id='reservationFee'>Reservation Fee (included in final price): €10,-</p>";
+			} else {
+				return "";
+			}
+		}
+	}
+
 	public function IsTimeEmtpy($startTime,$endTime){
 		if($startTime == "00:00"){
 			return "";
