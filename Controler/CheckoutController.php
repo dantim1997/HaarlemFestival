@@ -12,6 +12,7 @@ class CheckoutController
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
+		$this->Session = new Session;
 		$this->ProceedToPayment();
 	}
 
@@ -30,9 +31,10 @@ class CheckoutController
 			$errorList["LastName"] = $this->IsRequired("LastName", "text");
 			$errorList["Email"] = $this->IsRequired("Email", "text");
 			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
-			$errorList["Number"] = $this->IsRequired("Number", "number");
+			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 			$errorList["Street"] = $this->IsRequired("Street", "text");
-			var_dump($errorList);
+			$makeOrder = new MakeOrder();
+			$makeOrder->Order($_POST, $_SESSION["Tickets"]);
 		}
 	}
 
@@ -56,13 +58,13 @@ class CheckoutController
 	}
 
 	public function GetAllItems(){
-		$this->Session = new Session;
+		
 		$ticketRows = "";
 
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '', $item["ExtraInfo"]);
+				$this->GetItems($item["EventId"], $item["TypeEvent"], $item["Amount"], '', $item["ExtraInfo"] = "");
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
