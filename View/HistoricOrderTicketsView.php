@@ -53,7 +53,7 @@ class HistoricOrderTicketsView
 										<option value='-'>-</option>
 										<option value='English'>English</option>
 										<option value='Dutch'>Dutch</option>
-										<option value='Chinese'>Chinese</option>
+										<option value='Chinese'>Mandarin</option>
 									</select><br>
 									<select name='day' class='dropDown' onchange='this.form.submit()'>
 										<option value='-'>-</option>
