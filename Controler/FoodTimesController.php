@@ -81,13 +81,15 @@ class FoodTimesController
 		}
 		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
 		$sections = "";
+		$count = 1;
 		foreach ($foodSections as $foodSection) {
-			$sections .= $this->GetSection($foodSection);
+			$sections .= $this->GetSection($foodSection, $count);
+			$count++;
 		}
 		return $sections;
 	}
 
-	private function GetSection($section) {
+	private function GetSection($section, $count) {
 		return "
 			<div class='restaurantSection'>
 				<div class='logo'>
@@ -117,7 +119,7 @@ class FoodTimesController
 						<h2>Create your reservation:</h2>
 					</div>
 					<div class='peopleAboveOption'>
-						<select class='pplAbove12' id='pplAbove12'>
+						<select class='pplAbove12' id='pplAbove12".$count."'>
 							<option value='People &gt;12'>People</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
@@ -133,7 +135,7 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='peopleBelowOption'>
-						<select class='pplBelow12' id='pplBelow12'>
+						<select class='pplBelow12' id='pplBelow12".$count."'>
 							<option value='Children (&lt;12)'>Children (&lt;12)</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
@@ -149,24 +151,24 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='pickDayOption'>
-						<select class='pickDay' id='pickDay'>
+						<select class='pickDay' id='pickDay".$count."'>
 							<option value='Pick a day'>Pick a day</option>
             				".$this->GetDateTimes($section["Name"], "Date")."
             			</select>
 					</div>
             		<br />
 					<div class='pickSessionOption'>
-						<select class='pickSession' id='pickSession'>
+						<select class='pickSession' id='pickSession".$count."'>
 							<option value='Pick a session'>Pick a session</option>
             				".$this->GetDateTimes($section["Name"], "Time")."
             			</select>
 					</div>
 					<div class='specialNeeds'>
 						<p class='specialNeedsP'>Allergies or other special needs? Let us know:</p>
-						<textarea id='extraInfo' rows='2' cols='50' maxlength='40'></textarea>
+						<textarea id='extraInfo".$count."' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
 					<div class='makeReservation'>
-						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$section["Id"].")' />
+						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$section["Id"].", ".$count.")' />
 					</div>
 				</div>
 			</div>

@@ -97,13 +97,13 @@ function AddToCart(eventId, typeEvent, amount, special) {
 	}
 }
 
-function FoodAddToCartHelper(eventId) {
-	// HIJ PAKT DE EERSTE SHIT ALLEEN OMDAT IE IN LOOP ZIT:
-	var childAmount = parseInt(document.getElementById('pplBelow12').value);
-	var adultAmount = parseInt(document.getElementById('pplAbove12').value);
-	var extraInfo = document.getElementById('extraInfo').value;
-	var startTime = document.getElementById('pickSession').value;
-	var date = document.getElementById('pickDay').value;
+function FoodAddToCartHelper(eventId, count) {
+	var childAmount = parseInt(document.getElementById('pplBelow12' + count).value);
+	var adultAmount = parseInt(document.getElementById('pplAbove12' + count).value);
+	var extraInfo = document.getElementById('extraInfo' + count).value;
+	var startTime = document.getElementById('pickSession' + count).value;
+	var date = document.getElementById('pickDay' + count).value;
+	console.log(childAmount, adultAmount, extraInfo, startTime, date);
 
 	FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo);
 }
