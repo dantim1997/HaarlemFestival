@@ -166,7 +166,7 @@ class FoodTimesController
 						<textarea id='extraInfo' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
 					<div class='makeReservation'>
-						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$section["Id"].", 1)' />
+						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$section["Id"].")' />
 					</div>
 				</div>
 			</div>

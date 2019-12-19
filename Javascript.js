@@ -98,10 +98,10 @@ function AddToCart(eventId, typeEvent, amount, special) {
 }
 
 function FoodAddToCartHelper(eventId) {
+	// HIJ PAKT DE EERSTE SHIT ALLEEN OMDAT IE IN LOOP ZIT:
 	var childAmount = parseInt(document.getElementById('pplBelow12').value);
 	var adultAmount = parseInt(document.getElementById('pplAbove12').value);
 	var extraInfo = document.getElementById('extraInfo').value;
-	// niet goede formats?:
 	var startTime = document.getElementById('pickSession').value;
 	var date = document.getElementById('pickDay').value;
 
