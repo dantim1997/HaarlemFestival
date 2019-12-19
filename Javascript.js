@@ -18,11 +18,9 @@ function ToggleAdvancedJazz() {
   
 function Hide(){
 	document.getElementById('AdvancedFilter').style.display = 'none';
-	document.getElementById('Thursday').style.visibility = 'hidden';
 	document.getElementById('Friday').style.visibility = 'hidden';
 	document.getElementById('Saturday').style.visibility = 'hidden';
 	document.getElementById('Sunday').style.visibility = 'hidden';
-	document.getElementById('Thursday1').style.display = 'none';
 	document.getElementById('Friday1').style.display = 'none';
 	document.getElementById('Saturday1').style.display = 'none';
 	document.getElementById('Sunday1').style.display = 'none';

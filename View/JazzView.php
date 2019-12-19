@@ -87,8 +87,6 @@ class JazzView
 				<div class='tickets'>
 					<hr>
 					".$this->JazzController->FillTickets("2020-07-26")."
-					All Access pass for Saturday for the event 'Jazz'<hr>
-					All Acces pass for the whole event 'Jazz'<hr>
 					<br>
 					<br>
 					<br>
@@ -111,8 +109,6 @@ class JazzView
 				<div class='tickets'>
 					<hr>
 					".$this->JazzController->FillTickets("2020-07-27")."
-					All Access pass for Saturday for the event 'Jazz'<hr>
-					All Acces pass for the whole event 'Jazz'<hr>
 					<br>
 					<br>
 					<br>
@@ -135,8 +131,6 @@ class JazzView
 					<div class='tickets'>
 						<hr>
 						".$this->JazzController->FillTickets("2020-07-28")."
-						All Access pass for Saturday for the event 'Jazz'<hr>
-						All Acces pass for the whole event 'Jazz'<hr>
 						<br>
 						<br>
 						<br>

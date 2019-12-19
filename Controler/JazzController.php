@@ -105,9 +105,14 @@ class JazzController
 				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Name"]."<hr>
 				";
 			}
+			elseif (strpos($ticket["Name"], 'All Access') !== false){
+				$tickets .= "
+				".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price' id='pricespec'>€".$ticket["Price"]."</aside><hr>
+				";
+			}
 			else{
 				$tickets .= "
-				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; ".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price'>€".$ticket["Price"]."</aside><hr>
+				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; <aside id='artistTicket'>".$ticket["Name"]."</aside><aside class='price'>€".$ticket["Price"]."</aside><hr>
 				";
 			}
 		}

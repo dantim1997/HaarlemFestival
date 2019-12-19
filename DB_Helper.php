@@ -460,7 +460,7 @@ class DB_Helper
 	//get Tickets for Jazz
 	public function GetTicketsJazz($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE '".$date."%' ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE '".$date."%' OR (ArtistName LIKE '%whole%' AND EndDateTime > '".$date."%') ORDER BY EndDateTime, Hall ASC");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Name, $StartDateTime, $EndDateTime, $Price, $Hall); 
@@ -578,8 +578,8 @@ class DB_Helper
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $ArtistName, $Hall, $Location, $Price, $StartDateTime, $EndDateTime);
 		$stmt->fetch();
-			$ticket = array("ID"=>$Id, "About"=>$ArtistName, "Description"=>$Hall, "Venue"=>$Location, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price);
-			return $ticket;
+		$ticket = array("ID"=>$Id, "About"=>"<br><strong>".$ArtistName."</strong>", "Description"=>null, "Venue"=>$Location.", ".$Hall, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price);
+		return $ticket;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

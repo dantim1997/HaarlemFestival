@@ -1,5 +1,5 @@
 body {
-    background-image: url("Images/jazzbanner.png");
+    background-image: url("../Images/jazzbanner.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -343,7 +343,7 @@ input {
     background-color: rgba(0, 153, 102, 1);
     color: white;
     text-align: center;
-    width: 100%;
+    width: 95%;
 }
 
 .carousel{
@@ -362,7 +362,8 @@ input {
 .price {
     text-align: right;
     margin-top: -30px;
-    margin-right: 40%;
+    margin-right: 400px;
+    float: right;
 }
 
 .filter {
@@ -388,4 +389,14 @@ input {
 .checkbox {
     height: 30px;
     width: 30px;
+}
+
+#artistTicket {
+    text-align: left;
+    margin-top: -30px;
+    margin-left: 300px;
+}
+
+#pricespec {
+    margin-top: 0px;
 }
