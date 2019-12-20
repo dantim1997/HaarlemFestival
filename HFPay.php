@@ -29,7 +29,7 @@ $payment = $mollie->payments->create([
     "description" => "Kaartjes Haarlem Fest",
     "redirectUrl" => $Config->GetWebURL()."/ThankYou.php",
     "webhookUrl"  => $Config->GetWebURL()."/HFWebHook.php",
-    "metadata" => $_SESSION["Tickets"];
+    "metadata" => $_SESSION["Tickets"]
 ]);
 
 header("Location: " . $payment->getCheckoutUrl(), true, 303);
