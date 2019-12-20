@@ -19,11 +19,9 @@ $mollie->setApiKey($Config->GetMollieKey());
         * The payment is paid and isn't refunded or charged back.
         * At this point you'd probably want to start the process of delivering the product to the customer.
         */
-        
 		$Session = new Session;
         $DB_Helper = new DB_Helper;
         $tickets = $DB_Helper->GetAllByOrderLine($orderId);
-        error_log("TESTLOLOLOLOLOLO.....".count($tickets) ."      ".$orderId);
         foreach($tickets as $ticket){
             $DB_Helper->UpdateTickets($ticket['Id']);
         }
