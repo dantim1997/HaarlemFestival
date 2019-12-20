@@ -20,12 +20,14 @@ $mollie->setApiKey($Config->GetMollieKey());
         * At this point you'd probably want to start the process of delivering the product to the customer.
         */
         
+		$Session = new Session;
         $DB_Helper = new DB_Helper;
         $tickets = $DB_Helper->GetAllByOrderLine($orderId);
         error_log("TESTLOLOLOLOLOLO.....".count($tickets) ."      ".$orderId);
         foreach($tickets as $ticket){
             $DB_Helper->UpdateTickets($ticket['Id']);
         }
+        $Session->CleanCart();
     } elseif ($payment->isOpen()) {
         /*
          * The payment is open.
