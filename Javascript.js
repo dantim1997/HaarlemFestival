@@ -123,7 +123,6 @@ function FoodAddToCartHelper(eventId, count) {
 	var extraInfo = document.getElementById('extraInfo' + count).value;
 	var startTime = document.getElementById('pickSession' + count).value;
 	var date = document.getElementById('pickDay' + count).value;
-	console.log(childAmount, adultAmount, extraInfo, startTime, date);
 
 	FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo);
 }
@@ -175,10 +174,18 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price) {
 				var eventday = parenttickets.parentNode;
 				eventday.remove();
 			}
-		var totalamount = parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
+		// get current totalAmount
+		var totalamount = document.getElementById("TotalAmount").innerHTML;
+		// replace comma's with periods so parseFloat can parse string into float
+		totalamount = parseFloat(totalamount.replace(/\,/g,'.')).toFixed(2);
+		// calculate new totalAmount
 		var remove = totalamount - (price * output);
-		console.log(price, totalamount, output, remove);
-		document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
+		// round down to 2 numbers behind comma
+		remove = remove.toFixed(2);
+		// replace period with comma again
+		remove = String(remove).replace(/\./g,',');
+		// replace html element with new totalAmount
+		document.getElementById("TotalAmount").innerHTML = remove;
 	}
 });	
 }
