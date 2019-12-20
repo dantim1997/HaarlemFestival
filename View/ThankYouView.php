@@ -25,7 +25,6 @@ class ThankYouView
 	}
 
 	private function Body(){
-		$order = new MakeOrder;
 		$nav = new Nav();
 		return $nav->SetNavBar("Home"). "
 		<div id='main'>
@@ -35,7 +34,7 @@ class ThankYouView
 			</div>
 			<div class='RedBar'></div>
 
-		</div>".$order->GetPrice();
+		</div>"
 	}
 
 	private function Footer(){

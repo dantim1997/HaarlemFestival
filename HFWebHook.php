@@ -6,6 +6,7 @@ require_once ("mollie/examples/functions.php");
 
 $Config = Config::getInstance();
 $MakeOrder = new MakeOrder;
+$this->Session = new Session;
 $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey($Config->GetMollieKey());
 
@@ -15,13 +16,11 @@ $mollie->setApiKey($Config->GetMollieKey());
      * Update the order in the database.
      */
     database_write($orderId, $payment->status);
-	var_dump("no");
     if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
         /*
          * The payment is paid and isn't refunded or charged back.
          * At this point you'd probably want to start the process of delivering the product to the customer.
          */
-        var_dump("yes");
         $makeOrder = new MakeOrder();
 		$makeOrder->Order($_POST, $_SESSION["Tickets"]);
     } elseif ($payment->isOpen()) {

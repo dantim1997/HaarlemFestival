@@ -15,6 +15,7 @@ class MakeOrder{
     public function Order($orderInfo, $items)
     {
         $orderId = $this->DB_Helper->CreateOrder($orderInfo);
+        error_log($items);
         foreach($items as $item)
         {
             for($i = 0; $i < $item['Amount']; $i++){
