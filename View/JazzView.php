@@ -94,9 +94,7 @@ class JazzView
 					<br>
 					<br>
 					<br>
-					<h2>Location<h2>
-					<p class='location'>Patronaat<br>Zijlsingel 2, 2013 DN Haarlem</p>
-					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+					".$this->JazzController->GetLocation("2020-07-26")."
 				</div>
 				</div>
 				<div id='Friday1' class='friday'>
@@ -116,9 +114,7 @@ class JazzView
 					<br>
 					<br>
 					<br>
-					<h2>Location<h2>
-					<p class='location'>Patronaat<br>Zijlsingel 2, 2013 DN Haarlem</p>
-					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+					".$this->JazzController->GetLocation("2020-07-27")."
 				</div>
 				</div>
 				<div id='Saturday1' class='saturday'>
@@ -138,24 +134,20 @@ class JazzView
 						<br>
 						<br>
 						<br>
-						<h2>Location<h2>
-						<p class='location'>Patronaat<br>Zijlsingel 2, 2013 DN Haarlem</p>
-						<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2435.303300925829!2d4.62801880212946!3d52.38305184490867!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x74fe2502604b46ae!2sPatronaat!5e0!3m2!1snl!2snl!4v1573735570305!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+						".$this->JazzController->GetLocation("2020-07-28")."
 					</div>
 				</div>
 				<div id='Sunday1' class='sunday'>
 					<h1>".next($pageTexts)."</h1>
 					<p>".next($pageTexts)."</p>
 					<br>
-					<h2>Programme</h2>
+					<h2>".next($pageTexts)."</h2>
 					<br>
 					<hr>
 					".$this->JazzController->FillTickets("2020-07-29")."
 					<br>
 					<br>
-					<h2>Location<h2>
-					<p class='location'>Grote Markt<br>2011 RD, Haarlem</p>
-					<iframe class='googlemaps' src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.3981932556803!2d4.634128115354485!3d52.38133147978822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5ef6b924ce7ed%3A0xd9721c5337b4704!2sGrote%20Markt%2C%202011%20RD%20Haarlem!5e0!3m2!1snl!2snl!4v1573677475830!5m2!1snl!2snl' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+					".$this->JazzController->GetLocation("2020-07-29")."
 				</div>
 			</div>
 		</div>

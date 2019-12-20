@@ -242,5 +242,14 @@ class JazzController
 		}
 		return $addtocart;
 	}
+
+	public function GetLocation($date){
+		$location = $this->DB_Helper->GetLocationsJazz($date);
+		$output = "<h2>Location<h2>
+		<p class='location'>".$location["Name"]."<br>".$location["Adress"]."<br>".$location["Zipcode"]." ".$location["City"]."<br>".$location["Info"]."</p>
+		<iframe class='googlemaps' src='".$location["GoogleMaps"]."' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+		";
+		return $output;
+	}
 }
 ?>

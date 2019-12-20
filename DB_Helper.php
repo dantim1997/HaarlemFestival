@@ -526,6 +526,23 @@ class DB_Helper
 		return $dates;
 	}
 
+	//Get jazz location
+	public function GetLocationsJazz($date){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT v.Name, v.Adress, v.Zipcode, v.City, v.ExtraInfo, v.GoogleMaps
+		FROM Jazz j
+		INNER JOIN JazzVenues v
+		ON v.Name = j.Location
+		WHERE j.StartDateTime LIKE '".$date."%'
+		GROUP BY DATE_FORMAT(j.StartDateTime, '%Y-%m')");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfo, $GoogleMaps);
+		$stmt->fetch();
+		$location = array("Name"=>$Name, "Adress"=>$Adress, "Zipcode"=>$Zipcode, "City"=>$City, "Info"=>$ExtraInfo, "GoogleMaps"=>$GoogleMaps);
+		return $location;
+	}
+
 	//get all tickets by customer
 	public function GetEventInfoDance($id){
 		//clean Id
