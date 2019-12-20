@@ -105,9 +105,14 @@ class JazzController
 				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Name"]."<hr>
 				";
 			}
+			elseif (strpos($ticket["Name"], 'All Access') !== false){
+				$tickets .= "
+				".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price' id='pricespec'>€".$ticket["Price"]."</aside><hr>
+				";
+			}
 			else{
 				$tickets .= "
-				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; ".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price'>€".$ticket["Price"]."</aside><hr>
+				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; <aside id='artistTicket'>".$ticket["Name"]."</aside><aside class='price'>€".$ticket["Price"]."</aside><hr>
 				";
 			}
 		}
@@ -217,6 +222,25 @@ class JazzController
 		$hour = date("H",strtotime($date));
 		$minute = date("i",strtotime($date));
 		return $hour .":". $minute;
+	}
+
+	public function GetTickets($date){
+		$tickets = $this->DB_Helper->GetTicketsJazz($date);
+		
+		$addtocart = "";
+		$count = 1;
+		$id = "ID";
+
+		foreach ($tickets as $ticket => $info) {
+			$addtocart .= "
+			<button onclick='ShoppingCartMinJazz(".$info["ID"].")'>-</button>
+			<input type='text' value='0' id='".$info["ID"]."'>
+			<button onclick='ShoppingCartPlusJazz(".$info["ID"].")'>+</button>
+			<br>
+			";
+			$count++;
+		}
+		return $addtocart;
 	}
 }
 ?>
