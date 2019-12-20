@@ -17,6 +17,7 @@ require_once ("mollie/examples/functions.php");
 $Config = Config::getInstance();
 
 $MakeOrder = new MakeOrder;
+$Session = new Session;
 $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey($Config->GetMollieKey());
 $PayAmount = $MakeOrder->GetPrice();
@@ -28,6 +29,7 @@ $payment = $mollie->payments->create([
     "description" => "Kaartjes Haarlem Fest",
     "redirectUrl" => $Config->GetWebURL()."/ThankYou.php",
     "webhookUrl"  => $Config->GetWebURL()."/HFWebHook.php",
+    "metadata" => $_SESSION["Tickets"];
 ]);
 
 header("Location: " . $payment->getCheckoutUrl(), true, 303);

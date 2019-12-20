@@ -12,6 +12,7 @@ $mollie->setApiKey($Config->GetMollieKey());
 
 	$payment = $mollie->payments->get($_POST["id"]);
     $orderId = $payment->metadata->order_id;
+    error_log($payment);
     /*
      * Update the order in the database.
      */
