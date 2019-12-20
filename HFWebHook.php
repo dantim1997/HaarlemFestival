@@ -21,6 +21,7 @@ $mollie->setApiKey($Config->GetMollieKey());
          * The payment is paid and isn't refunded or charged back.
          * At this point you'd probably want to start the process of delivering the product to the customer.
          */
+        var_dump("yes");
         $makeOrder = new MakeOrder();
 		$makeOrder->Order($_POST, $_SESSION["Tickets"]);
     } elseif ($payment->isOpen()) {
