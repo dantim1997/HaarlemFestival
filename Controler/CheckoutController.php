@@ -70,7 +70,7 @@ class CheckoutController
 					$this->GetItems($item["EventId"], $item["TypeEvent"], $item["Amount"]);
 				} else {
 					// it's a reservation, different method has to be called...
-					$this->GetFoodItems($item["EventId"], $item["ChildAmount"], $item["AdultAmount"]);
+					$this->GetFoodItems($item["EventId"], $item["ChildAmount"], $item["AdultAmount"], $item["ExtraInfo"]);
 				}
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
@@ -134,7 +134,7 @@ class CheckoutController
 		$this->CheckoutModel->SetSortedDays($sortedDays);
 	}
 
-	public function GetFoodItems($eventId, $childAmount, $adultAmount) {
+	public function GetFoodItems($eventId, $childAmount, $adultAmount, $extraInfo) {
 		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		
@@ -147,7 +147,7 @@ class CheckoutController
 			$sortedDays[$eventDate] = "";
 		}
 
-		// different two different prices and amounts (adult and child) ...
+		// two different prices and amounts (adult and child) ...
 		$value = doubleval($eventInfo["ChildPrice"]) * doubleval($childAmount) + $eventInfo["AdultPrice"] * doubleval($adultAmount);
 		$this->CheckoutModel->AddTotal($value);
 

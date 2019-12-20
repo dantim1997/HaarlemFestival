@@ -373,6 +373,20 @@ class DB_Helper
 		return $foodDates;
 	}
 
+	public function GetEventIdFood($dateTime, $name) {
+		$stmt = $this->Conn->prepare("SELECT Id FROM FoodRestaurants WHERE SessionStartDateTime LIKE ? AND Name LIKE ? LIMIT 1");
+		$stmt->bind_param("ss", $dateTime, $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Id);
+		$tests = array();
+		while ($stmt -> fetch()) {
+			$test = $Id;
+			$tests[] = $test;
+		}
+		return $tests;
+	}
+
 	public function Get_PageText($page){
 		$stmt = $this->Conn->prepare("SELECT ParagraphText FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
 		$stmt->bind_param("s", $page);

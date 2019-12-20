@@ -96,7 +96,7 @@ class FoodTimesController
 					".$section["Logo"]."
 				</div>
 				<div class='information'>
-					<h2>".$section["Name"]."</h2>
+					<h2 id='restaurantName".$count."'>".$section["Name"]."</h2>
 					<p class='restaurantInfoP'>".$section["Location"]." <br /> <b>Cuisines: </b>".$section["Cuisines"]."</p>
 				</div>
 				<div class='rating'>
@@ -119,8 +119,9 @@ class FoodTimesController
 						<h2>Create your reservation:</h2>
 					</div>
 					<div class='peopleAboveOption'>
+						<p id='normalP'>Normal:</p>
 						<select class='pplAbove12' id='pplAbove12".$count."'>
-							<option value='People &gt;12'>People</option>
+							<option value='0'>0</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
             				<option value='3'>3</option>
@@ -135,8 +136,9 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='peopleBelowOption'>
+						<p id='childrenP'>Children:</p>
 						<select class='pplBelow12' id='pplBelow12".$count."'>
-							<option value='Children (&lt;12)'>Children (&lt;12)</option>
+							<option value='0'>0</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
             				<option value='3'>3</option>
@@ -168,7 +170,7 @@ class FoodTimesController
 						<textarea id='extraInfo".$count."' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
 					<div class='makeReservation'>
-						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$section["Id"].", ".$count.")' />
+						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$count.")' />
 					</div>
 				</div>
 			</div>

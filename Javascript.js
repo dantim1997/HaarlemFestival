@@ -117,28 +117,36 @@ function AddToCart(eventId, typeEvent, amount, special) {
 	}
 }
 
-function FoodAddToCartHelper(eventId, count) {
+function FoodAddToCartHelper(count) {
 	var childAmount = parseInt(document.getElementById('pplBelow12' + count).value);
 	var adultAmount = parseInt(document.getElementById('pplAbove12' + count).value);
+	var amount = childAmount + adultAmount;
 	var extraInfo = document.getElementById('extraInfo' + count).value;
 	var startTime = document.getElementById('pickSession' + count).value;
 	var date = document.getElementById('pickDay' + count).value;
+	var name = document.getElementById('restaurantName' + count).innerHTML;
 
-	FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo);
+	if (amount > 0) {
+		$.ajax({ url: 'GetFoodEventId.php',
+		data: {startTime: startTime, date: date, name: name},
+		type: 'post',
+		success: function(output) {
+			FoodAddToCart(output, childAmount, adultAmount, startTime, date, extraInfo);
+		}
+		});
+	}
 }
 
 function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
 	var amount = childAmount + adultAmount;
-	if (amount > 0) {
-     $.ajax({ url: 'AddToCartFood.php',
-     data: {eventId: eventId, childAmount: childAmount, adultAmount: adultAmount,  startTime: startTime, date: date, extraInfo: extraInfo},
-     type: 'post',
-     success: function(output) {
-				   ShowPopup();
-                   ShoppingCartPlus(amount);
-			}
-		});
-	}
+    $.ajax({ url: 'AddToCartFood.php',
+    data: {eventId: eventId, childAmount: childAmount, adultAmount: adultAmount,  startTime: startTime, date: date, extraInfo: extraInfo},
+    type: 'post',
+    success: function(output) {
+			   ShowPopup();
+               ShoppingCartPlus(amount);
+		}
+	});
 }
 
 function RemoveFromCart(self, eventId, typeEvent, price) {

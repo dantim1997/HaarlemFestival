@@ -103,8 +103,8 @@ class Session
 		$removedAmount = 0;
 
 		foreach ($allCartItems as $cartItem) {
-			$kaas = intval($cartItem['EventId']);
-			if($eventId == $kaas && $typeEvent == $cartItem['TypeEvent']) {
+			$eventIdSession = intval($cartItem['EventId']);
+			if($eventId == $eventIdSession && $typeEvent == $cartItem['TypeEvent']) {
 				// check what reservation type we're dealing with (child or normal) ...
 				if (array_key_exists("ChildAmount", $cartItem) && $cartItem["ChildAmount"] != NULL) {
 					// it's a childPrice reservation
