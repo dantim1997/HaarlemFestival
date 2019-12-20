@@ -64,7 +64,7 @@ class CheckoutController
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$this->GetItems($item["EventId"],$item["TypeEvent"],$item["Amount"], '', $item["ExtraInfo"]);
+				$this->GetItems($item["EventId"], $item["TypeEvent"], $item["Amount"], '', $item["ExtraInfo"] = "");
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
@@ -102,7 +102,7 @@ class CheckoutController
 				$eventInfo = $this->DB_Helper->GetEventInfoHistoric($eventId);
 				break;
 			case 4:
-				// $eventInfo = $this->DB_Helper->GetEventInfoJazz($eventId);
+				$eventInfo = $this->DB_Helper->GetEventInfoJazz($eventId);
 				break;
 		}
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
@@ -114,7 +114,6 @@ class CheckoutController
 		}
 
 		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval( $amount));
-
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p>

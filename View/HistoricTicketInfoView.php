@@ -31,7 +31,7 @@ class HistoricTicketInfoView
 		$nav = new Nav();
 		//Getting all page content of Historic ticket info in an array
 		$pageTexts = $this->PageContentHelper->GetPageText("HistoricTicketInfo");
-		$pageImages = $this->PageContentHelper->GetPageImage("HistoricTicketInfo");
+		$pageImages = $this->PageContentHelper->GetPageImage("HistoricHome");
 		return $nav->SetNavBar("Historic").
 		"<div id='main'>
 		<div class='pageCenter'>
