@@ -15,7 +15,7 @@ $mollie->setApiKey($Config->GetMollieKey());
      * Update the order in the database.
      */
     database_write($orderId, $payment->status);
-	
+	var_dump("no");
     if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
         /*
          * The payment is paid and isn't refunded or charged back.
