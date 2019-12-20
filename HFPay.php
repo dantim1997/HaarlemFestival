@@ -19,14 +19,14 @@ $Config = Config::getInstance();
 $MakeOrder = new MakeOrder;
 $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey($Config->GetMollieKey());
-
+$PayAmount = $MakeOrder->GetPrice();
 $payment = $mollie->payments->create([
     "amount" => [
         "currency" => "EUR",
-        "value" => $MakeOrder->GetPrice()
+        "value" => $PayAmount
     ],
     "description" => "Kaartjes Haarlem Fest",
-    "redirectUrl" => $Config->GetWebURL()."/HFPay.php",
+    "redirectUrl" => $Config->GetWebURL()."/ThankYou.php",
     "webhookUrl"  => $Config->GetWebURL()."/HFWebHook.php",
 ]);
 

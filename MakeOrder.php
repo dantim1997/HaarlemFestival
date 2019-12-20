@@ -56,7 +56,7 @@ class MakeOrder{
                     break;
             }
         }
-        return $amountPay;
+        return  number_format($amountPay, 2, '.', '');
     }
 }
 ?>
