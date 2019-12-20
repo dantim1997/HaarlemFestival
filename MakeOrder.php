@@ -33,5 +33,30 @@ class MakeOrder{
         }
         return $ticketId;
     }
+
+    public function GetPrice()
+    {
+        $items = $_SESSION['Tickets'];
+        $amountPay = 0;
+        foreach($items as $item){
+            switch ($item['TypeEvent']) {
+                case 1:
+                    break;
+                case 2:
+                    $event = $this->DB_Helper->GetEventInfoDance($item['EventId']);
+                    $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
+                    break;
+                case 3:
+                    $event = $this->DB_Helper->GetEventInfoHistoric($item['EventId']);
+                    $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
+                    break;
+                case 4:
+                    $event = $this->DB_Helper->GetEventInfoJazz($item['EventId']);
+                    $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
+                    break;
+            }
+        }
+        return $amountPay;
+    }
 }
 ?>
