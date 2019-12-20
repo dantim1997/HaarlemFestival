@@ -16,13 +16,11 @@ function ToggleAdvancedJazz() {
 	}
 }
   
-window.onload = function(){
+function Hide(){
 	document.getElementById('AdvancedFilter').style.display = 'none';
-	document.getElementById('Thursday').style.visibility = 'hidden';
 	document.getElementById('Friday').style.visibility = 'hidden';
 	document.getElementById('Saturday').style.visibility = 'hidden';
 	document.getElementById('Sunday').style.visibility = 'hidden';
-	document.getElementById('Thursday1').style.display = 'none';
 	document.getElementById('Friday1').style.display = 'none';
 	document.getElementById('Saturday1').style.display = 'none';
 	document.getElementById('Sunday1').style.display = 'none';
@@ -68,6 +66,28 @@ function ShowDate(day) {
 		document.getElementById('Saturday1').style.display = 'none';
 		document.getElementById('Thursday').style.visibility = 'hidden';
 		document.getElementById('Thursday1').style.display = 'none';
+	}
+}
+
+function JazzAddToCart(){
+	var inputs = document.getElementsByTagName('input');
+
+	for(var i = 0; i < inputs.length; i++) {
+		if(inputs[i].type.toLowerCase() == 'text') {
+			if(inputs[i].value >0){
+				id = inputs[i].id;
+				amount = inputs[i].value;
+				amount = parseInt(amount);
+				AddToCart(id, 4, amount)
+			}
+		}
+	}
+	for(var i = 0; i < inputs.length; i++) {
+		if(inputs[i].type.toLowerCase() == 'text') {
+			if(inputs[i].value >0){
+				inputs[i].value = 0;
+			}
+		}
 	}
 }
 
@@ -177,7 +197,7 @@ function ToEvent(src){
 		location.href = "Historic.php";
 	}
 	if (src == "Jazz") {
-		location.href = "jazz.php";
+		location.href = "Jazz.php";
 	}
 	if (src == "Dance") {
 		location.href = "Dance.php";
@@ -213,6 +233,20 @@ function ShoppingCartmin(amount){
 	number = number - amount;
 	document.getElementById("shoppingcartCount").innerHTML = number;
 
+}
+
+function ShoppingCartPlusJazz(id){
+	var amount = document.getElementById(id).value; 
+	amount++;
+	document.getElementById(id).value = amount;
+}
+
+function ShoppingCartMinJazz(id){
+	var amount = document.getElementById(id).value; 
+	if (amount >0){
+		amount--;
+		document.getElementById(id).value = amount;
+	}
 }
 
 function cartAmountPlus(count){
