@@ -26,6 +26,9 @@ class ThankYouView
 
 	private function Body(){
 		$nav = new Nav();
+		$helper = new DB_Helper;
+		$test = $helper->GetAllByOrderLine(65);
+		var_dump($test);
 		return $nav->SetNavBar("Home"). "
 		<div id='main'>
 			<div class='RedBar'></div>
@@ -34,7 +37,7 @@ class ThankYouView
 			</div>
 			<div class='RedBar'></div>
 
-		</div>"
+		</div>";
 	}
 
 	private function Footer(){

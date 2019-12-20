@@ -1,4 +1,9 @@
 <?php
+
+use Mollie\Api\Resources\Order;
+
+use function _PhpScoper5c0568000558c\GuzzleHttp\Psr7\str;
+
 require_once( "Autoloader.php");
 /*
  * Make sure to disable the display of errors in production code!
@@ -17,10 +22,15 @@ require_once ("mollie/examples/functions.php");
 $Config = Config::getInstance();
 
 $MakeOrder = new MakeOrder;
-$Session = new Session;
+$session = new session;
+$DB_Helper = new DB_Helper;
 $mollie = new \Mollie\Api\MollieApiClient();
+
 $mollie->setApiKey($Config->GetMollieKey());
 $PayAmount = $MakeOrder->GetPrice();
+
+$makeOrder = new MakeOrder();
+$OrderId = $makeOrder->Order($_POST, $_SESSION['Tickets']);
 $payment = $mollie->payments->create([
     "amount" => [
         "currency" => "EUR",
@@ -29,8 +39,7 @@ $payment = $mollie->payments->create([
     "description" => "Kaartjes Haarlem Fest",
     "redirectUrl" => $Config->GetWebURL()."/ThankYou.php",
     "webhookUrl"  => $Config->GetWebURL()."/HFWebHook.php",
-    "metadata" => $_SESSION["Tickets"]
+    "metadata" => (string)$OrderId
 ]);
-
 header("Location: " . $payment->getCheckoutUrl(), true, 303);
 ?>

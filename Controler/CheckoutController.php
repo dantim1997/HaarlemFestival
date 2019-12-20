@@ -34,7 +34,13 @@ class CheckoutController
 			$errorList["PostCode"] == null&&
 			$errorList["Number"] == null&&
 			$errorList["Street"] == null){
-				header("Location: HFPay.php");
+
+				//header("Location: HFPay.php");
+
+				
+			$orderid = $this->DB_Helper->GetWaitOrder(serialize($_SESSION['Tickets']));
+			$makeorder = new MakeOrder;
+			$makeorder->Order($_POST, $orderid);
 			}
 		}
 	}

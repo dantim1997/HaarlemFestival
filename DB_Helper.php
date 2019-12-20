@@ -599,6 +599,26 @@ class DB_Helper
 		return $ticket;
 	}
 
+	public function GetAllByOrderLine($id){
+		//clean Id
+		$tickets = array();
+		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("
+		select t.Id from OrderLine
+		join Tickets t on t.Id = OrderLine.TicketId
+		where OrderLine.OrderId = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id);
+		while ($stmt -> fetch()) { 
+			$ticket = array("Id"=>$Id);
+			array_push($tickets,$ticket);
+		}
+		return $tickets;
+	}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -674,6 +694,23 @@ public function RemoveavAilableTicketDance($eventId){
 	//does a prepared query
 	$stmt = $this->Conn->prepare("UPDATE DanceEvent set Amount = Amount - 1 where Id = ?");
 	$stmt->bind_param("i", $eventId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
+public function UpdateTickets($orderId){
+	//error_log("TEST..............................".$orderId);
+	//cleans email and password
+	$orderId = mysqli_real_escape_string($this->Conn, $orderId);
+
+	//does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE Tickets set StatusId = 1 where Id = ?");
+	$stmt->bind_param("i", $orderId);
 	/* Commit or rollback transaction */
 	if ($stmt->execute()) {
 		$this->Conn->commit();

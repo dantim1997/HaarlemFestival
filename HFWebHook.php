@@ -5,25 +5,27 @@ require_once ("mollie/examples/functions.php");
 
 
 $Config = Config::getInstance();
-$MakeOrder = new MakeOrder;
-$this->Session = new Session;
 $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey($Config->GetMollieKey());
 
-	$payment = $mollie->payments->get($_POST["id"]);
-    $orderId = $payment->metadata->order_id;
-    error_log($payment);
+    $payment = $mollie->payments->get($_POST["id"]);
+    $orderId = $payment->metadata;
     /*
-     * Update the order in the database.
-     */
-    database_write($orderId, $payment->status);
+    * Update the order in the database.
+    */
+    //database_write($orderId, $payment->status);
     if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
         /*
-         * The payment is paid and isn't refunded or charged back.
-         * At this point you'd probably want to start the process of delivering the product to the customer.
-         */
-        $makeOrder = new MakeOrder();
-		$makeOrder->Order($_POST, $_SESSION["Tickets"]);
+        * The payment is paid and isn't refunded or charged back.
+        * At this point you'd probably want to start the process of delivering the product to the customer.
+        */
+        
+        $DB_Helper = new DB_Helper;
+        $tickets = $DB_Helper->GetAllByOrderLine($orderId);
+        error_log("TESTLOLOLOLOLOLO.....".count($tickets) ."      ".$orderId);
+        foreach($tickets as $ticket){
+            $DB_Helper->UpdateTickets($ticket['Id']);
+        }
     } elseif ($payment->isOpen()) {
         /*
          * The payment is open.

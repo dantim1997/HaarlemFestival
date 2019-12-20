@@ -13,9 +13,8 @@ class MakeOrder{
     }
 
     public function Order($orderInfo, $items)
-    {
+    {   
         $orderId = $this->DB_Helper->CreateOrder($orderInfo);
-        error_log($_SESSION["Tickets"]);
         foreach($items as $item)
         {
             for($i = 0; $i < $item['Amount']; $i++){
@@ -23,7 +22,8 @@ class MakeOrder{
                 $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
             }
         }
-        $this->Session->CleanCart();
+        //$this->Session->CleanCart();
+        return $orderId;
     }
 
     public function ticket($eventId, $typeEvent)
