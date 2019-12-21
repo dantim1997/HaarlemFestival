@@ -226,7 +226,6 @@ p {
     color:#ffffff;
     border-color:#003300;
     text-align:center;
-    vertical-align:top;
 }
 
 .tg .tg-6jhs {
@@ -399,4 +398,10 @@ input {
 
 #pricespec {
     margin-top: 0px;
+}
+
+#bordertable {
+    border-top: 1px solid #003300;
+    margin-left: -10px;
+    margin-right: -10px;
 }

@@ -475,10 +475,15 @@ class DB_Helper
 	//get Programme for Jazz
 	public function GetArtistTableJazz($datetime){
 		//does a prepared query
-		$query = "SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE '$datetime' AND Genre IS NOT NULL";
-		$result = mysqli_query($this->Conn, $query);
-		$row = mysqli_fetch_assoc($result);
-		return $row;
+		$stmt = $this->Conn->prepare("SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE '$datetime' AND Genre IS NOT NULL");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name); 
+		$artists[] = "";
+		while ($stmt -> fetch()) { 
+			$artists[] = $Name;
+		}
+		return $artists;
 	}
 
 	//get Genres for Jazz carousel

@@ -208,9 +208,17 @@ class JazzController
 
 	public function GetArtistTable($datetime){
 		$result = $this->DB_Helper->GetArtistTableJazz($datetime);
+		$output = "";
+		$count = 0;
 		if (!empty($result)){
-			$result = implode(",", $result);
-			return $result;
+			foreach ($result as $result) {
+				if ($count >= 2){
+					$output .= "<hr id='bordertable'>";
+				}
+				$output .= $result;
+				$count++;
+			}
+			return $output;
 		}
 		else{
 			return null;
