@@ -105,9 +105,14 @@ class JazzController
 				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Name"]."<hr>
 				";
 			}
+			elseif (strpos($ticket["Name"], 'All Access') !== false){
+				$tickets .= "
+				".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price' id='pricespec'>€".$ticket["Price"]."</aside><hr>
+				";
+			}
 			else{
 				$tickets .= "
-				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; ".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price'>€".$ticket["Price"]."</aside><hr>
+				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; <aside id='artistTicket'>".$ticket["Name"]."</aside><aside class='price'>€".$ticket["Price"]."</aside><hr>
 				";
 			}
 		}
@@ -203,9 +208,17 @@ class JazzController
 
 	public function GetArtistTable($datetime){
 		$result = $this->DB_Helper->GetArtistTableJazz($datetime);
+		$output = "";
+		$count = 0;
 		if (!empty($result)){
-			$result = implode(",", $result);
-			return $result;
+			foreach ($result as $result) {
+				if ($count >= 2){
+					$output .= "<hr id='bordertable'>";
+				}
+				$output .= $result;
+				$count++;
+			}
+			return $output;
 		}
 		else{
 			return null;
@@ -217,6 +230,34 @@ class JazzController
 		$hour = date("H",strtotime($date));
 		$minute = date("i",strtotime($date));
 		return $hour .":". $minute;
+	}
+
+	public function GetTickets($date){
+		$tickets = $this->DB_Helper->GetTicketsJazz($date);
+		
+		$addtocart = "";
+		$count = 1;
+		$id = "ID";
+
+		foreach ($tickets as $ticket => $info) {
+			$addtocart .= "
+			<button onclick='ShoppingCartMinJazz(".$info["ID"].")'>-</button>
+			<input type='text' value='0' id='".$info["ID"]."'>
+			<button onclick='ShoppingCartPlusJazz(".$info["ID"].")'>+</button>
+			<br>
+			";
+			$count++;
+		}
+		return $addtocart;
+	}
+
+	public function GetLocation($date){
+		$location = $this->DB_Helper->GetLocationsJazz($date);
+		$output = "<h2>Location<h2>
+		<p class='location'>".$location["Name"]."<br>".$location["Adress"]."<br>".$location["Zipcode"]." ".$location["City"]."<br>".$location["Info"]."</p>
+		<iframe class='googlemaps' src='".$location["GoogleMaps"]."' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+		";
+		return $output;
 	}
 }
 ?>

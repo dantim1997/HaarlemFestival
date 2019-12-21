@@ -19,6 +19,17 @@ class Config
 		//return APIKey
 		return "6LePibwUAAAAALoQwjvKnqjQEd_P2ZcDiHY54oTX";
 	}
+	
+	public function GetMollieKey(){
+		//return APIKey
+		return "test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8";
+	}
+
+	public function GetWebURL(){
+		//return APIKey
+		return "http://hfteam3.infhaarlem.nl/Main53";
+	}
+
 	public function GetHeader($header){
 	//return header of each page
 	return "<!DOCTYPE html>
@@ -67,6 +78,9 @@ class Config
 		}
 		if($event == "MyProgram"){
 			return "<link rel='stylesheet' type='text/css' href='css/MyProgram.css'>";
+		}
+		if($event == 'ThankYou'){
+			return "<link rel='stylesheet' type='text/css' href='css/ThankYou.css'>";
 		}
 	}
 

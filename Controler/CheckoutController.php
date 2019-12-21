@@ -17,14 +17,8 @@ class CheckoutController
 	}
 
 	public function ProceedToPayment()
-	{
-		$errorList = array(
-			"FirstName" => "",
-			"LastName" => "",
-			"Email" => "",
-			"Adress" => "",
-			"Date" => "",
-		);
+	{	
+		$errorList = array();
 		if(isset($_POST['proceedToPaymentBTN'])){
 			
 			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
@@ -33,8 +27,21 @@ class CheckoutController
 			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
 			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 			$errorList["Street"] = $this->IsRequired("Street", "text");
-			$makeOrder = new MakeOrder();
-			$makeOrder->Order($_POST, $_SESSION["Tickets"]);
+
+			if($errorList["FirstName"] == null &&
+			$errorList["LastName"] == null&&
+			$errorList["Email"] == null&&
+			$errorList["PostCode"] == null&&
+			$errorList["Number"] == null&&
+			$errorList["Street"] == null){
+
+				//header("Location: HFPay.php");
+
+				
+			$orderid = $this->DB_Helper->GetWaitOrder(serialize($_SESSION['Tickets']));
+			$makeorder = new MakeOrder;
+			$makeorder->Order($_POST, $orderid);
+			}
 		}
 	}
 
@@ -49,7 +56,6 @@ class CheckoutController
 		if($Type == "postalCode"){
 			
 		}
-		return "";
 	}
 	
 	//get config
@@ -102,7 +108,7 @@ class CheckoutController
 				$eventInfo = $this->DB_Helper->GetEventInfoHistoric($eventId);
 				break;
 			case 4:
-				// $eventInfo = $this->DB_Helper->GetEventInfoJazz($eventId);
+				$eventInfo = $this->DB_Helper->GetEventInfoJazz($eventId);
 				break;
 		}
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
@@ -114,7 +120,6 @@ class CheckoutController
 		}
 
 		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval( $amount));
-
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p>
