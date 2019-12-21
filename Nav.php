@@ -10,7 +10,7 @@ class Nav
 	function SetNavBar($event){
 		return"
 		<div id='NavBarBorder'>
-				<div><a href='index.php'><img class='NavBarImg' src='Images/HaarlemImage.png'></a></div>
+				<div><a href='index.php'><img class='NavBarImg' src='Images/Nav/HaarlemImage.png'></a></div>
 				".$this->SetEvent("Home", $event)."
 				".$this->SetEvent("Food", $event)."
 				".$this->SetEvent("Dance", $event)."
@@ -19,8 +19,8 @@ class Nav
 				".$this->SetEvent("MyProgram", $event)."
 				<div class='right'>
 					<div class='Languages'>
-						<img class='LanguagesImages ActiveLanguage' src='Images/EnglishFlag.png'>
-						<img class='LanguagesImages' src='Images/NederlandFlag.jpg'>
+						<img class='LanguagesImages ActiveLanguage' src='Images/Nav/EnglishFlag.png'>
+						<img class='LanguagesImages' src='Images/Nav/Dutchflag.png'>
 					</div>
 					<a href='checkout.php'>
 						<div class='ShoppingCart'>
