@@ -84,7 +84,7 @@ class JazzController
 	//check if image is set
 	public function CheckImageIsSet($image){
 		if (empty($image)){
-			return "Images/unset.gif";
+			return "Images/Jazz/unset.gif";
 		}
 		else{
 			return $image;
