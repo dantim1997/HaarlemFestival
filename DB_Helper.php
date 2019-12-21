@@ -488,10 +488,15 @@ class DB_Helper
 	//get Programme for Jazz
 	public function GetArtistTableJazz($datetime){
 		//does a prepared query
-		$query = "SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE '$datetime' AND Genre IS NOT NULL";
-		$result = mysqli_query($this->Conn, $query);
-		$row = mysqli_fetch_assoc($result);
-		return $row;
+		$stmt = $this->Conn->prepare("SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE '$datetime' AND Genre IS NOT NULL");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name); 
+		$artists[] = "";
+		while ($stmt -> fetch()) { 
+			$artists[] = $Name;
+		}
+		return $artists;
 	}
 
 	//get Genres for Jazz carousel
@@ -537,6 +542,23 @@ class DB_Helper
 			$dates[] = $date;
 		}
 		return $dates;
+	}
+
+	//Get jazz location
+	public function GetLocationsJazz($date){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT v.Name, v.Adress, v.Zipcode, v.City, v.ExtraInfo, v.GoogleMaps
+		FROM Jazz j
+		INNER JOIN JazzVenues v
+		ON v.Name = j.Location
+		WHERE j.StartDateTime LIKE '".$date."%'
+		GROUP BY DATE_FORMAT(j.StartDateTime, '%Y-%m')");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfo, $GoogleMaps);
+		$stmt->fetch();
+		$location = array("Name"=>$Name, "Adress"=>$Adress, "Zipcode"=>$Zipcode, "City"=>$City, "Info"=>$ExtraInfo, "GoogleMaps"=>$GoogleMaps);
+		return $location;
 	}
 
 	//get all tickets by customer
@@ -593,6 +615,26 @@ class DB_Helper
 		$stmt->fetch();
 		$ticket = array("ID"=>$Id, "About"=>"<br><strong>".$ArtistName."</strong>", "Description"=>null, "Venue"=>$Location.", ".$Hall, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price);
 		return $ticket;
+	}
+
+	public function GetAllByOrderLine($id){
+		//clean Id
+		$tickets = array();
+		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("
+		select t.Id from OrderLine
+		join Tickets t on t.Id = OrderLine.TicketId
+		where OrderLine.OrderId = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id);
+		while ($stmt -> fetch()) { 
+			$ticket = array("Id"=>$Id);
+			array_push($tickets,$ticket);
+		}
+		return $tickets;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -670,6 +712,23 @@ public function RemoveavAilableTicketDance($eventId){
 	//does a prepared query
 	$stmt = $this->Conn->prepare("UPDATE DanceEvent set Amount = Amount - 1 where Id = ?");
 	$stmt->bind_param("i", $eventId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
+public function UpdateTickets($orderId){
+	//error_log("TEST..............................".$orderId);
+	//cleans email and password
+	$orderId = mysqli_real_escape_string($this->Conn, $orderId);
+
+	//does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE Tickets set StatusId = 1 where Id = ?");
+	$stmt->bind_param("i", $orderId);
 	/* Commit or rollback transaction */
 	if ($stmt->execute()) {
 		$this->Conn->commit();

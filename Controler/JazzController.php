@@ -208,9 +208,17 @@ class JazzController
 
 	public function GetArtistTable($datetime){
 		$result = $this->DB_Helper->GetArtistTableJazz($datetime);
+		$output = "";
+		$count = 0;
 		if (!empty($result)){
-			$result = implode(",", $result);
-			return $result;
+			foreach ($result as $result) {
+				if ($count >= 2){
+					$output .= "<hr id='bordertable'>";
+				}
+				$output .= $result;
+				$count++;
+			}
+			return $output;
 		}
 		else{
 			return null;
@@ -241,6 +249,15 @@ class JazzController
 			$count++;
 		}
 		return $addtocart;
+	}
+
+	public function GetLocation($date){
+		$location = $this->DB_Helper->GetLocationsJazz($date);
+		$output = "<h2>Location<h2>
+		<p class='location'>".$location["Name"]."<br>".$location["Adress"]."<br>".$location["Zipcode"]." ".$location["City"]."<br>".$location["Info"]."</p>
+		<iframe class='googlemaps' src='".$location["GoogleMaps"]."' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
+		";
+		return $output;
 	}
 }
 ?>
