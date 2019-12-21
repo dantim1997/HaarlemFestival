@@ -379,12 +379,12 @@ class DB_Helper
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Id);
-		$tests = array();
+		$Ids = array();
 		while ($stmt -> fetch()) {
-			$test = $Id;
-			$tests[] = $test;
+			$id = $Id;
+			$Ids[] = $id;
 		}
-		return $tests;
+		return $Ids;
 	}
 
 	public function Get_PageText($page){

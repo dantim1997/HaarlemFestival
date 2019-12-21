@@ -176,23 +176,21 @@ class CheckoutController
 	}
 
 	public function GetReservationFee() {
+		$count = 0;
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
-			$found = false;
 			foreach ($items as $item) {
 				// check if reservation is present in session
 				if ($item["TypeEvent"] == 1) {
 					// ladies and gentlemen, we got em
-					$found = true;
-				}
-				if ($found == true) {
-					break;
+					$count += $item["ChildAmount"];
+					$count += $item["AdultAmount"];
 				}
 			}
 
-			if ($found == true) {
-				$this->CheckoutModel->AddTotal(10);
-				return "<p id='reservationFee'>Reservation Fee (included in final price): €10,-</p>";
+			if ($count > 0) {
+				$this->CheckoutModel->AddTotal(10 * $count);
+				return "<p id='reservationFee'>Reservation is mandatory.  A reservation fee of €10,- per person wil be charged when a reservation is made on the Haarlem Festival site. This fee will be deducted from the final check on visiting the restaurant.</p>";
 			} else {
 				return "";
 			}
