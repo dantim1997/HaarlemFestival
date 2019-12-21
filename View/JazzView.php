@@ -72,10 +72,10 @@ class JazzView
 					<div onclick='ShowDate(4)' class='selectday'>".next($pageTexts)."</div>
 				</div>
 				<div>
-					<image id='Thursday' class='arrow-up' src='Images/arrow-up.png'>
-					<image id='Friday' class='arrow-up' src='Images/arrow-up.png'>
-					<image id='Saturday' class='arrow-up' src='Images/arrow-up.png'>
-					<image id='Sunday' class='arrow-up' src='Images/arrow-up.png'>
+					<image id='Thursday' class='arrow-up' src='Images/Jazz/arrow-up.png'>
+					<image id='Friday' class='arrow-up' src='Images/Jazz/arrow-up.png'>
+					<image id='Saturday' class='arrow-up' src='Images/Jazz/arrow-up.png'>
+					<image id='Sunday' class='arrow-up' src='Images/Jazz/arrow-up.png'>
 				</div>
 				<div id='Thursday1' class='thursday'>
 				<h1>".next($pageTexts)."</h1>
