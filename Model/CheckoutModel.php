@@ -32,5 +32,7 @@ class CheckoutModel
 		$this->Total = $this->Total + $value;
 	}
 
+	// nieuwe total
+
 }
 ?>

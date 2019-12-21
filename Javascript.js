@@ -120,21 +120,15 @@ function AddToCart(eventId, typeEvent, amount, special) {
 function FoodAddToCartHelper(count) {
 	var childAmount = parseInt(document.getElementById('pplBelow12' + count).value);
 	var adultAmount = parseInt(document.getElementById('pplAbove12' + count).value);
-	var amount = childAmount + adultAmount;
 	var extraInfo = document.getElementById('extraInfo' + count).value;
-	var startTime = document.getElementById('pickSession' + count).value;
-	var date = document.getElementById('pickDay' + count).value;
-	var name = document.getElementById('restaurantName' + count).innerHTML;
+	var id = document.getElementById('pickSession' + count).value;
+	var date = document.getElementById('date' + count).value;
 
-	if (amount > 0) {
-		$.ajax({ url: 'GetFoodEventId.php',
-		data: {startTime: startTime, date: date, name: name},
-		type: 'post',
-		success: function(output) {
-			FoodAddToCart(output, childAmount, adultAmount, startTime, date, extraInfo);
-		}
-		});
-	}
+	var e = document.getElementById('pickSession' + count);
+	var startTime = e.options[e.selectedIndex].text;
+	
+	FoodAddToCart(id, childAmount, adultAmount, startTime, date, extraInfo);
+
 }
 
 function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
@@ -147,6 +141,32 @@ function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extra
                ShoppingCartPlus(amount);
 		}
 	});
+}
+
+function SelectedDate(count, id) {
+	var date = document.getElementById('pickDay' + count).value;
+	var time = document.getElementById('pickSession' + count);
+	time.disabled = false;
+	while (time.firstChild) {
+		time.removeChild(time.firstChild);
+	}
+
+	$.ajax({ url: 'FoodHelper.php',
+	data: {date: date, id: id},
+	type: 'post',
+	success: function(output) {
+		output = JSON.parse(output);
+		for(var i = 0; i < output.length; i++) {
+			var opt = output[i];
+			var el = document.createElement("option");
+			el.textContent = String(opt.SessionStartTime);
+			el.textContent
+    		el.value = opt.Id;
+			time.appendChild(el);
+		}
+
+	}
+});
 }
 
 function RemoveFromCart(self, eventId, typeEvent, price) {

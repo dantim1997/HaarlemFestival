@@ -153,16 +153,16 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='pickDayOption'>
-						<select class='pickDay' id='pickDay".$count."'>
+						<select class='pickDay' id='pickDay".$count."' onchange='SelectedDate(".$count.", ".$section["Id"].")'>
 							<option value='Pick a day'>Pick a day</option>
-            				".$this->GetDateTimes($section["Name"], "Date")."
+            				".$this->GetDateTimes($section["Id"], "Date")."
             			</select>
 					</div>
             		<br />
 					<div class='pickSessionOption'>
-						<select class='pickSession' id='pickSession".$count."'>
+						<select class='pickSession' id='pickSession".$count."' disabled>
 							<option value='Pick a session'>Pick a session</option>
-            				".$this->GetDateTimes($section["Name"], "Time")."
+            				".$this->GetDateTimes($section["Id"], "Time")."
             			</select>
 					</div>
 					<div class='specialNeeds'>
@@ -170,6 +170,8 @@ class FoodTimesController
 						<textarea id='extraInfo".$count."' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
 					<div class='makeReservation'>
+						<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
+						<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
 						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$count.")' />
 					</div>
 				</div>
@@ -205,14 +207,14 @@ class FoodTimesController
 		return $givenPrice;
 	}
 
-	private function GetDateTimes($name, $type) {
+	private function GetDateTimes($id, $type) {
 		$dateTimes = "";
 		$index = "Session";
 		if ($type == "Date") {
-			$foodDateTimes = $this->DB_Helper->GetFoodDates($name);
+			$foodDateTimes = $this->DB_Helper->GetFoodDates($id);
 			$index .= $type;
 		} else if ($type == "Time") {
-			$foodDateTimes = $this->DB_Helper->GetFoodTimes($name);
+			$foodDateTimes = $this->DB_Helper->GetFoodTimes($id);
 			$index .= "Start".$type;
 		}
 		foreach ($foodDateTimes as $foodDateTime) {

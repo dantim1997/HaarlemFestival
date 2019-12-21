@@ -143,7 +143,6 @@ class CheckoutController
 	public function GetFoodItems($eventId, $childAmount, $adultAmount, $extraInfo) {
 		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
-		
 		$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
 		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));

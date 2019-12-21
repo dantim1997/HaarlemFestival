@@ -279,18 +279,19 @@ class DB_Helper
 	}
 
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
-		$query = "SELECT Id, Name, Cuisines, Location, Rating, NormalPrice, ChildPrice, LocationLink, Logo FROM FoodRestaurants";
+		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, r.Logo, fr.SessionStartDateTime, fr.SessionEndDateTime 
+					FROM FoodRestaurants fr JOIN Restaurants r ON fr.RestaurantId = r.Id";
 		if ($queryStringTimes != "" || $queryStringCuisine != "" || $queryStringRestaurants != "") {
 			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine. " ".$queryStringRestaurants;
 		}
-		$query .= " GROUP BY Name";
+		$query .= " GROUP BY r.Id";
 		$stmt = $this->Conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo);
+		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo, $SessionStartDateTime, $SessionEndDateTime);
 		$foodSections = array();
 		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>');
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>', "SessionStartDateTime" => $SessionStartDateTime, "SessionEndDateTime" => $SessionEndDateTime);
 			$foodSections[] = $foodSection;
 		}
 		return $foodSections;
@@ -333,7 +334,7 @@ class DB_Helper
 	}
 
 	public function GetAllCuisines() {
-		$stmt = $this->Conn->prepare("SELECT Cuisines FROM FoodRestaurants GROUP BY Cuisines");
+		$stmt = $this->Conn->prepare("SELECT Cuisines FROM Restaurants GROUP BY Cuisines");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Cuisines);
@@ -345,9 +346,9 @@ class DB_Helper
 		return $foodCuisines;
 	}
 
-	public function GetFoodTimes($name) {
-		$stmt = $this->Conn->prepare("SELECT TIME(SessionStartDateTime) FROM FoodRestaurants WHERE Name LIKE ? GROUP BY TIME(SessionStartDateTime)");
-		$stmt->bind_param("s", $name);
+	public function GetFoodTimes() {
+		$stmt = $this->Conn->prepare("SELECT TIME(SessionStartDateTime) FROM FoodRestaurants WHERE RestaurantId = ? GROUP BY TIME(SessionStartDateTime)");
+		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionStartTime);
@@ -359,9 +360,8 @@ class DB_Helper
 		return $foodTimes;
 	}
 
-	public function GetFoodDates($name) {
-		$stmt = $this->Conn->prepare("SELECT DATE(SessionStartDateTime) FROM FoodRestaurants WHERE Name LIKE ? GROUP BY DATE(SessionStartDateTime)");
-		$stmt->bind_param("s", $name);
+	public function GetFoodDates() {
+		$stmt = $this->Conn->prepare("SELECT DATE(SessionStartDateTime) FROM FoodRestaurants GROUP BY DATE(SessionStartDateTime)");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionDate);
@@ -371,20 +371,6 @@ class DB_Helper
 			$foodDates[] = $foodDate;
 		}
 		return $foodDates;
-	}
-
-	public function GetEventIdFood($dateTime, $name) {
-		$stmt = $this->Conn->prepare("SELECT Id FROM FoodRestaurants WHERE SessionStartDateTime LIKE ? AND Name LIKE ? LIMIT 1");
-		$stmt->bind_param("ss", $dateTime, $name);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($Id);
-		$Ids = array();
-		while ($stmt -> fetch()) {
-			$id = $Id;
-			$Ids[] = $id;
-		}
-		return $Ids;
 	}
 
 	public function Get_PageText($page){
@@ -420,17 +406,31 @@ class DB_Helper
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, SessionStartDateTime, SessionEndDateTime, ChildPrice, NormalPrice from FoodRestaurants where Id = ? limit 1");
+		$stmt = $this->Conn->prepare("SELECT r.Name, fr.SessionStartDateTime, fr.SessionEndDateTime, r.ChildPrice, r.NormalPrice from FoodRestaurants fr JOIN Restaurants r ON r.Id = fr.RestaurantId WHERE fr.Id = ? limit 1");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $SessionStartDateTime, $SessionEndDateTime, $ChildPrice, $AdultPrice);
+		$stmt->bind_result($Name, $SessionStartDateTime, $SessionEndDateTime, $ChildPrice, $AdultPrice);
 		$Ticket = array();
 		while ($stmt -> fetch()) { 
-			$ticket = array("ID"=>$Id, "Venue"=>$Name, "StartDateTime"=>$SessionStartDateTime, "EndDateTime"=>$SessionEndDateTime, "ChildPrice"=>$ChildPrice, "AdultPrice"=>$AdultPrice, "About"=>"", "Description" =>"");
+			$ticket = array("Venue"=>$Name, "StartDateTime"=>$SessionStartDateTime, "EndDateTime"=>$SessionEndDateTime, "ChildPrice"=>$ChildPrice, "AdultPrice"=>$AdultPrice, "About"=>"", "Description" =>"");
 			$Ticket = $ticket;
 		}
 		return $Ticket;
+	}
+	
+	public function GetFoodTimeByDate($date, $id) {
+		$stmt = $this->Conn->prepare("SELECT DATE_FORMAT(SessionStartDateTime, '%H:%i'), Id FROM FoodRestaurants WHERE RestaurantId = ? AND SessionStartDateTime LIKE ? GROUP BY TIME(SessionStartDateTime)");
+		$stmt->bind_param("is", $id, $date);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($SessionStartTime, $Id);
+		$foodTimes = array();
+		while ($stmt -> fetch()) {
+			$foodTime = array("SessionStartTime" => $SessionStartTime, "Id" => $Id);
+			$foodTimes[] = $foodTime;
+		}
+		return $foodTimes;
 	}
 
 	//get Tickets for Jazz
