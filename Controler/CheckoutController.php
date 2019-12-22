@@ -158,7 +158,7 @@ class CheckoutController
 			$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$childAmount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["ChildPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
-					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["ChildPrice"].")' type='submit' value='&#10006' name='??????'>
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["ChildPrice"].", 0)' type='submit' value='&#10006' name='??????'>
 			</div>";
 		}
 		
@@ -166,7 +166,7 @@ class CheckoutController
 			$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$adultAmount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["AdultPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
-					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["AdultPrice"].")' type='submit' value='&#10006' name='??????'>
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["AdultPrice"].", 1)' type='submit' value='&#10006' name='??????'>
 			</div>";
 		}
 

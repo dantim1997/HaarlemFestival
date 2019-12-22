@@ -192,9 +192,9 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 	});
 }
 
-function FoodRemoveFromCart(self, eventId, typeEvent, price) {
+function FoodRemoveFromCart(self, eventId, typeEvent, price, amountType) {
 	$.ajax({ url: 'RemoveFromCartFood.php',
-	data: {eventId: eventId, typeEvent: typeEvent},
+	data: {eventId: eventId, typeEvent: typeEvent, amountType: amountType},
 	type: 'post',
 	success: function(output) {
 		output = parseInt(output);
@@ -209,7 +209,7 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price) {
 			var eventday = parenttickets.parentNode;
 			eventday.remove();
 		}
-		
+
 		// get current totalAmounts
 		var totalAmount = String(document.getElementById("TotalAmount").innerHTML);
 		var totalFoodAmount = String(document.getElementById("TotalFoodAmount").innerHTML);
@@ -225,18 +225,19 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price) {
 		// calculate new totalAmount
 		var removeTotal = totalAmount - (10 * output);
 		var removeFoodTotal = totalFoodAmount - (price * output);
+		console.log(totalAmount, output, totalFoodAmount, price);
 		
 		// round down to 2 numbers behind comma
 		removeTotal = removeTotal.toFixed(2);
 		removeFoodTotal = removeFoodTotal.toFixed(2);
+
 		// replace period with comma again
-		removeTotal = String(removeTotal).replace(/\./g,',');
-		removeFoodTotal = String(removeFoodTotal).replace(/\./g,',');
+		removeTotal = String(removeTotal).replace('.', ',');
+		removeFoodTotal = String(removeFoodTotal).replace('.', ',');
+
 		// replace html element with new totalAmount
 		document.getElementById("TotalAmount").innerHTML = removeTotal;
 		document.getElementById("TotalFoodAmount").innerHTML = removeFoodTotal;
-
-		
 	}
 });	
 }
