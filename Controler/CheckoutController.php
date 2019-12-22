@@ -17,8 +17,14 @@ class CheckoutController
 	}
 
 	public function ProceedToPayment()
-	{	
-		$errorList = array();
+	{
+		$errorList = array(
+			"FirstName" => "",
+			"LastName" => "",
+			"Email" => "",
+			"Adress" => "",
+			"Date" => "",
+		);
 		if(isset($_POST['proceedToPaymentBTN'])){
 			
 			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
@@ -27,21 +33,8 @@ class CheckoutController
 			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
 			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 			$errorList["Street"] = $this->IsRequired("Street", "text");
-
-			if($errorList["FirstName"] == null &&
-			$errorList["LastName"] == null&&
-			$errorList["Email"] == null&&
-			$errorList["PostCode"] == null&&
-			$errorList["Number"] == null&&
-			$errorList["Street"] == null){
-
-				//header("Location: HFPay.php");
-
-				
-			$orderid = $this->DB_Helper->GetWaitOrder(serialize($_SESSION['Tickets']));
-			$makeorder = new MakeOrder;
-			$makeorder->Order($_POST, $orderid);
-			}
+			$makeOrder = new MakeOrder();
+			$makeOrder->Order($_POST, $_SESSION["Tickets"]);
 		}
 	}
 
