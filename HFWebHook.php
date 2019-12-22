@@ -25,6 +25,14 @@ $mollie->setApiKey($Config->GetMollieKey());
         foreach($tickets as $ticket){
             $DB_Helper->UpdateTickets($ticket['Id']);
         }
+
+        $customerInfo = $DB_Helper->GetAllCustomerInfo($orderId);
+        $PayedTickets = $DB_Helper->GetAllTicketInfoDance($orderId);
+        $PayedTickets += $DB_Helper->GetAllTicketInfoFood($orderId);
+        $PayedTickets += $DB_Helper->GetAllTicketInfoJazz($orderId);
+        $PayedTickets += $DB_Helper->GetAllTicketInfoTour($orderId);
+        $sendMail = new SendMail();
+        $sendMail->SendCustomerMail($customerInfo, $PayedTickets);
         $Session->CleanCart();
     } elseif ($payment->isOpen()) {
         /*
