@@ -853,6 +853,22 @@ public function RemoveavAilableTicketDance($eventId){
 	} 
 }
 
+public function RemoveavAilableTicketJazz($eventId){
+	//cleans email and password
+	$emailSQL = mysqli_real_escape_string($this->Conn, $eventId);
+
+	//does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE Jazz set Amount = Amount - 1 where Id = ?");
+	$stmt->bind_param("i", $eventId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
 public function UpdateTickets($orderId){
 	//error_log("TEST..............................".$orderId);
 	//cleans email and password

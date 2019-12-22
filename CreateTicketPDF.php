@@ -126,7 +126,6 @@ class PDFMaker{
 				$height = 0;
 				$amountOnPage = 0;
 			}
-			error_log($ticket[7]);
 			$qrimage = $qr->GenerateQRCode($ticket[7]);
 			$pdf->EventTicket($ticket, $height, $qrimage);
 			$height += 73;

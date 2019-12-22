@@ -36,6 +36,10 @@ class MakeOrder{
 
             $this->DB_Helper->RemoveavAilableTicketDance($eventId);
         }
+        if($typeEvent == 4){
+
+            $this->DB_Helper->RemoveavAilableTicketDance($eventId);
+        }
         usleep(5);
         return $ticketId;
     }
