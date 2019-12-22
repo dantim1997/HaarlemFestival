@@ -183,11 +183,11 @@ class FoodTimesController
 		$stars = "";
 		$emptyStars = 5 - $fullStars;
 		for ($i=0; $i < $fullStars; $i++) { 
-			$stars .= "<img src='./Images/starFull.png' class='starFull'>
+			$stars .= "<img src='./Images/Food/starFull.png' class='starFull'>
 			";
 		}
 		for ($i=0; $i < $emptyStars; $i++) { 
-			$stars .= "<img src='./Images/starEmpty.png' class='starEmpty'>
+			$stars .= "<img src='./Images/Food/starEmpty.png' class='starEmpty'>
 			";
 		}
 		return $stars;

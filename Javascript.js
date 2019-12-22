@@ -118,14 +118,15 @@ function AddToCart(eventId, typeEvent, amount, special) {
 }
 
 function FoodAddToCartHelper(count) {
+	// grab variables necessary to put ticket in session
 	var childAmount = parseInt(document.getElementById('pplBelow12' + count).value);
 	var adultAmount = parseInt(document.getElementById('pplAbove12' + count).value);
 	var extraInfo = document.getElementById('extraInfo' + count).value;
 	var id = document.getElementById('pickSession' + count).value;
 	var date = document.getElementById('date' + count).value;
 
-	var e = document.getElementById('pickSession' + count);
-	var startTime = e.options[e.selectedIndex].text;
+	var startTimeSelect = document.getElementById('pickSession' + count);
+	var startTime = startTimeSelect.options[startTimeSelect.selectedIndex].text;
 	
 	FoodAddToCart(id, childAmount, adultAmount, startTime, date, extraInfo);
 
@@ -133,14 +134,16 @@ function FoodAddToCartHelper(count) {
 
 function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
 	var amount = childAmount + adultAmount;
-    $.ajax({ url: 'AddToCartFood.php',
-    data: {eventId: eventId, childAmount: childAmount, adultAmount: adultAmount,  startTime: startTime, date: date, extraInfo: extraInfo},
-    type: 'post',
-    success: function(output) {
-			   ShowPopup();
-               ShoppingCartPlus(amount);
-		}
-	});
+	if (amount > 0) {
+		$.ajax({ url: 'AddToCartFood.php',
+		data: {eventId: eventId, childAmount: childAmount, adultAmount: adultAmount,  startTime: startTime, date: date, extraInfo: extraInfo},
+		type: 'post',
+		success: function(output) {
+				ShowPopup();
+				ShoppingCartPlus(amount);
+			}
+		});		
+	}
 }
 
 function SelectedDate(count, id) {
@@ -194,26 +197,46 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price) {
 	data: {eventId: eventId, typeEvent: typeEvent},
 	type: 'post',
 	success: function(output) {
+		output = parseInt(output);
+		
 		var parent = self.parentNode;
 		var parenttickets = parent.parentNode;
+
 		ShoppingCartmin(output);
 		self.parentNode.remove(); 
-			if (parenttickets.children.length == 0) {
-				var eventday = parenttickets.parentNode;
-				eventday.remove();
-			}
-		// get current totalAmount
-		var totalamount = document.getElementById("TotalAmount").innerHTML;
-		// replace comma's with periods so parseFloat can parse string into float
-		totalamount = parseFloat(totalamount.replace(/\,/g,'.')).toFixed(2);
+
+		if (parenttickets.children.length == 0) {
+			var eventday = parenttickets.parentNode;
+			eventday.remove();
+		}
+		
+		// get current totalAmounts
+		var totalAmount = String(document.getElementById("TotalAmount").innerHTML);
+		var totalFoodAmount = String(document.getElementById("TotalFoodAmount").innerHTML);
+		
+		// replace comma with period because parseFloat doesn't 'take' comma's ...
+		totalAmount = totalAmount.replace(',', '.');
+		totalFoodAmount = totalFoodAmount.replace(',', '.');
+		
+		// parse it to float
+		totalAmount = parseFloat(totalAmount);
+		totalFoodAmount = parseFloat(totalFoodAmount);
+		
 		// calculate new totalAmount
-		var remove = totalamount - (price * output);
+		var removeTotal = totalAmount - (10 * output);
+		var removeFoodTotal = totalFoodAmount - (price * output);
+		
 		// round down to 2 numbers behind comma
-		remove = remove.toFixed(2);
+		removeTotal = removeTotal.toFixed(2);
+		removeFoodTotal = removeFoodTotal.toFixed(2);
 		// replace period with comma again
-		remove = String(remove).replace(/\./g,',');
+		removeTotal = String(removeTotal).replace(/\./g,',');
+		removeFoodTotal = String(removeFoodTotal).replace(/\./g,',');
 		// replace html element with new totalAmount
-		document.getElementById("TotalAmount").innerHTML = remove;
+		document.getElementById("TotalAmount").innerHTML = removeTotal;
+		document.getElementById("TotalFoodAmount").innerHTML = removeFoodTotal;
+
+		
 	}
 });	
 }

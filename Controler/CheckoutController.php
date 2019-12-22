@@ -96,9 +96,9 @@ class CheckoutController
 		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
-			case 1:
-				$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
-				break;
+			//case 1:
+			//	$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
+			//	break;
 			case 2:
 				$eventInfo = $this->DB_Helper->GetEventInfoDance($eventId);
 				break;
@@ -118,11 +118,6 @@ class CheckoutController
 		}
 
 		$this->CheckoutModel->AddTotal(doubleval($eventInfo["Price"]) * doubleval($amount));
-
-		// show allergies/special needs when given
-		if (!empty($extraInfo)) {
-			$extraInfoText .= "<p class='extraInfoP'>Given allergies and/or special needs: ".$extraInfo."</p>";
-		}
 
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
@@ -146,13 +141,17 @@ class CheckoutController
 			$sortedDays[$eventDate] = "";
 		}
 
-		// two different prices and amounts (adult and child) ...
-		$value = doubleval($eventInfo["ChildPrice"]) * doubleval($childAmount) + $eventInfo["AdultPrice"] * doubleval($adultAmount);
+		// only reservation fee gets added to "total" (price that needs to be paid online)
+		$value = (intval($childAmount) + intval($adultAmount)) * 10;
 		$this->CheckoutModel->AddTotal($value);
+
+		// actual ticket prices get added to "FoodTotal" (reservation fee gets paid online, food tickets at the restaurant)
+		$foodPrice = doubleval($eventInfo["ChildPrice"]) * intval($childAmount) + doubleval($eventInfo["AdultPrice"]) * intval($adultAmount);
+		$this->CheckoutModel->AddFoodTotal($foodPrice);
 
 		// show allergies/special needs when given
 		if (!empty($extraInfo)) {
-			$extraInfoText .= "<p class='extraInfoP'>Given allergies and/or special needs: ".$extraInfo."</p>";
+			$extraInfoText .= "<p class='extraInfoP'>Given allergies and/or special needs: '".$extraInfo."'</p>";
 		}
 
 		if (!empty($childAmount)) {
@@ -188,7 +187,6 @@ class CheckoutController
 			}
 
 			if ($count > 0) {
-				$this->CheckoutModel->AddTotal(10 * $count);
 				return "<p id='reservationFee'>Reservation is mandatory.  A reservation fee of €10,- per person wil be charged when a reservation is made on the Haarlem Festival site. This fee will be deducted from the final check on visiting the restaurant.</p>";
 			} else {
 				return "";
