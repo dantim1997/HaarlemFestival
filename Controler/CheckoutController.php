@@ -34,7 +34,8 @@ class CheckoutController
 			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 			$errorList["Street"] = $this->IsRequired("Street", "text");
 			$makeOrder = new MakeOrder();
-			$makeOrder->Order($_POST, $_SESSION["Tickets"]);
+			$orderId = $makeOrder->Order($_POST, $_SESSION["Tickets"]);
+			header("Location: HFPay.php?OrderId=".$orderId);
 		}
 	}
 

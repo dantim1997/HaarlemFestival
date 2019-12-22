@@ -29,8 +29,7 @@ $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey($Config->GetMollieKey());
 $PayAmount = $MakeOrder->GetPrice();
 
-$makeOrder = new MakeOrder();
-$OrderId = $makeOrder->Order($_POST, $_SESSION['Tickets']);
+$OrderOd = $_GET["OrderId"];
 $payment = $mollie->payments->create([
     "amount" => [
         "currency" => "EUR",
