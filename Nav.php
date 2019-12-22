@@ -19,7 +19,7 @@ class Nav
 				".$this->SetEvent("MyProgram", $event)."
 				<div class='right'>
 					<div class='Languages'>
-						<img class='LanguagesImages ActiveLanguage' src='Images/Nav/Englishflag.png'>
+						<img class='LanguagesImages ActiveLanguage' src='Images/Nav/EnglishFlag.png'>
 						<img class='LanguagesImages' src='Images/Nav/Dutchflag.png'>
 					</div>
 					<a href='checkout.php'>
