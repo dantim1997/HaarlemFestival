@@ -60,19 +60,24 @@ class Nav
 		}
 	}
 
-	public function GetCartItems(){
-		if(isset($_SESSION['Tickets'])){
+	public function GetCartItems() {
+		if(isset($_SESSION['Tickets'])) {
 			$shoppingCartAmount = 0;
 			foreach ($_SESSION['Tickets'] as $items) {
-				$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+				// check if session ticket is a reservation
+				if ($items['TypeEvent'] == 1) {
+					// it's a reservation, this means session ticket contains 'Child/AdultAmount' instead of just Amount, act accordingly
+					$shoppingCartAmount = $shoppingCartAmount + intval($items['ChildAmount']) + intval($items['AdultAmount']);
+				} else {
+					$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+				}
 			}
 			return $shoppingCartAmount;
 		}
-		else{
+		else {
 			return 0;
 		}
 	}
 
 }
 ?>
-

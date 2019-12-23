@@ -89,13 +89,15 @@ class CheckoutView
 								<input class='proceedToCheckoutBTN checkoutBTN' type='submit' value='".next($pageTexts)."' name='proceedToPaymentBTN'>
 							</form>
 						</div>
+					".$this->CheckoutController->GetReservationFee()."
 					<h2 id='totallbl'>".next($pageTexts)." </h2><h2 id='TotalAmount'>".Number_format($this->CheckoutModel->GetTotal(), 2, ',', '')."</h2>	<!--Hier de totale prijs als var !-->
+					<h2 id='totalFoodlbl'>".next($pageTexts)." </h2><h2 id='TotalFoodAmount'>".Number_format($this->CheckoutModel->GetFoodTotal(), 2, ',', '')."</h2>
 				</div>
 			</div>
 		</div>";
 	}
 
-	private function Footer(){
+	private function Footer() {
 		return $this->CheckoutController->GetConfig()->SetFooter();
 	}
 }
