@@ -184,6 +184,8 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 		data: {eventId: eventId, typeEvent: typeEvent},
 		type: 'post',
 		success: function(output) {
+			console.log(output);
+			
 			var parent = self.parentNode;
 			var parenttickets = parent.parentNode;
 			ShoppingCartmin(output);
@@ -196,8 +198,9 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 			totalamount = totalamount.replace(',', '.');
 			totalamount = parseFloat(totalamount);
 			var remove = totalamount - (price * output);
+      remove = remove.toFixed(2);
 			remove = String(remove).replace('.', ',');
-			document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
+			document.getElementById("TotalAmount").innerHTML = remove;
 		}
 	});
 }

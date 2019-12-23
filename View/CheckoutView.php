@@ -91,6 +91,8 @@ class CheckoutView
 						</div>
 					".$this->CheckoutController->GetReservationFee()."
 					<h2 id='totallbl'>".next($pageTexts)." </h2><h2 id='TotalAmount'>".Number_format($this->CheckoutModel->GetTotal(), 2, ',', '')."</h2>	<!--Hier de totale prijs als var !-->
+					</br>
+					</br>
 					<h2 id='totalFoodlbl'>".next($pageTexts)." </h2><h2 id='TotalFoodAmount'>".Number_format($this->CheckoutModel->GetFoodTotal(), 2, ',', '')."</h2>
 				</div>
 			</div>
