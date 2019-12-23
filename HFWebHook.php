@@ -34,7 +34,6 @@ $mollie->setApiKey($Config->GetMollieKey());
         $AllTickets = array_merge($PayedTicketsDance, $PayedTicketsJazz);
         $AllTickets = array_merge($AllTickets, $PayedTicketsFood);
         $AllTickets = array_merge($AllTickets, $PayedTicketsTour);
-        error_log(count($AllTickets));
         $sendMail = new SendMail();
         $sendMail->SendCustomerMail($customerInfo, $AllTickets);
         $Session->CleanCart();
