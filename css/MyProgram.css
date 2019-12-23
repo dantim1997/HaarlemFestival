@@ -4,6 +4,11 @@
   table-layout: fixed;
 }
 
+.Footer{
+	position: absolute;
+	margin-bottom: 7px;
+}
+
 .TimeTable THEAD{
 	border: solid 1px;
 }

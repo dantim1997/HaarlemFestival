@@ -395,6 +395,13 @@ h5{
 	border-right: 1px solid #000000;
 }
 
+.Footer{
+	position: relative;
+	margin-top: 48px;
+	bottom: 0;
+	float: left;
+}
+
 .familyTicket{
 	text-align: center;
 	padding: 3px;
@@ -528,7 +535,7 @@ h5{
 	text-decoration: none;
 	display: inline-block;
 	background-color: #ffcc00;
-	background-image: url("../Images/add-to-cart-icon-.jpg");
+	background-image: url("../Images/Historic/add-to-cart-icon-.jpg");
 	background-repeat: no-repeat;
 	background-position: 50% 40%;
 	background-size: 28px;
