@@ -229,7 +229,7 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price, amountType) {
 		totalAmount = parseFloat(totalAmount);
 		totalFoodAmount = parseFloat(totalFoodAmount);
 		
-		// calculate new totalAmount
+		// calculate new totalAmounts
 		var removeTotal = totalAmount - (10 * output);
 		var removeFoodTotal = totalFoodAmount - (price * output);
 		console.log(totalAmount, output, totalFoodAmount, price);
