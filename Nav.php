@@ -19,8 +19,8 @@ class Nav
 				".$this->SetEvent("MyProgram", $event)."
 				<div class='right'>
 					<div class='Languages'>
-						<img class='LanguagesImages ActiveLanguage' src='Images/Nav/Englishflag.png'>
-						<img class='LanguagesImages' src='Images/Nav/Dutchflag.png'>
+						<a href='?Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='Images/Nav/Englishflag.png'></a>
+						<a href='?Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='Images/Nav/Dutchflag.png'></a>
 					</div>
 					<a href='checkout.php'>
 						<div class='ShoppingCart'>
@@ -76,6 +76,14 @@ class Nav
 		}
 		else {
 			return 0;
+		}
+	}
+
+	private function DetermineActiveLanguage($language){
+		if (isset($_SESSION['Language'])) {
+			if ($_SESSION['Language'] == $language) {
+				return 'ActiveLanguage';
+			}
 		}
 	}
 

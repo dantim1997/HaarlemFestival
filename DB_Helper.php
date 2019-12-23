@@ -373,8 +373,22 @@ class DB_Helper
 		return $foodDates;
 	}
 
-	public function Get_PageText($page){
-		$stmt = $this->Conn->prepare("SELECT ParagraphText FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+	public function Get_PageTextEnglish($page){
+		$stmt = $this->Conn->prepare("SELECT ParagraphTextEnglish FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+		$stmt->bind_param("s", $page);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($string);
+		$pageTextContent = array(); 
+		while ($stmt -> fetch()) {
+			$pageText = $string;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	public function Get_PageTextDutch($page){
+		$stmt = $this->Conn->prepare("SELECT ParagraphTextDutch FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
 		$stmt->bind_param("s", $page);
 		$stmt->execute();
 		$stmt->store_result();
