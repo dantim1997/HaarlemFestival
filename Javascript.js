@@ -67,6 +67,7 @@ function ShowDate(day) {
 		document.getElementById('Thursday').style.visibility = 'hidden';
 		document.getElementById('Thursday1').style.display = 'none';
 	}
+	JazzClearItems();
 }
 
 function JazzAddToCart(){
@@ -82,6 +83,12 @@ function JazzAddToCart(){
 			}
 		}
 	}
+	JazzClearItems();
+}
+
+function JazzClearItems(){
+	var inputs = document.getElementsByTagName('input');
+
 	for(var i = 0; i < inputs.length; i++) {
 		if(inputs[i].type.toLowerCase() == 'text') {
 			if(inputs[i].value >0){
