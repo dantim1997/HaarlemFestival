@@ -3,6 +3,10 @@ body{
 	background-size: cover;
 }
 
+.Footer{
+	margin-top: 105px;
+}
+
 .Info{
 	border:solid 1px;
 	float: left;

@@ -129,18 +129,18 @@ a:active {
 #NavBar{
 	margin-left: 30%;
 	height: 104px;
-	width: 1200px;
+	width: 1230px;
 }
 
 #NavBarBorder{
 	background-image: url("../Images/Nav/NavImage.png");
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: 110px;
-	width: 90.5%;
+	height: 111px;
+	width: 1750px;
 	margin-top: 20px;
-	margin-left: 6%;
-	margin-bottom: 11px;
+	margin-left: 5%;
+	margin-bottom: 13px;
 }
 
 .NavBarImg{
