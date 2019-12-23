@@ -39,9 +39,9 @@ class HistoricTicketInfoView
 				<div class='headerContainer'><div class='blackBar3'></div><h2>".current($pageTexts)."</h2><div class='blackBar3'></div></div><br>
 				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<div class='languageFlags'>
-						<img class='languageFlag' src='".current($pageImages)."'><h5>".next($pageTexts)."</h5>
-						<img class='languageFlag' src='".next($pageImages)."'><h5>".next($pageTexts)."</h5>
-						<img class='languageFlag' src='".next($pageImages)."'><h5>".next($pageTexts)."</h5>
+						<img class='languageFlag' src='".current($pageImages)."'><h5 class='languageTxt'>".next($pageTexts)."</h5>
+						<img class='languageFlag' src='".next($pageImages)."'><h5 class='languageTxt'>".next($pageTexts)."</h5>
+						<img class='languageFlag' src='".next($pageImages)."'><h5 class='languageTxt'>".next($pageTexts)."</h5>
 					</div>
 				<h5 id='centerAndWide'>".next($pageTexts)."</h5>
 					<p class='dates'>	
@@ -72,7 +72,7 @@ class HistoricTicketInfoView
 			<div class='ticketInfoContainer'>
 				<div class='headerContainer'><div class='blackBar4'></div><h2>".next($pageTexts)."</h2><div class='blackBar4'></div></div><br>
 				<p class='pricesmoreHeader'>
-					<b>".next($pageTexts)."<br>
+					<br>".next($pageTexts)."<br>
  					".next($pageTexts)."
     			</p>
     			<p id='centerAndWide' class='pricesMoreText'>

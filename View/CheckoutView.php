@@ -56,30 +56,30 @@ class CheckoutView
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3></td>
-										<td><input pattern='[a-zA-Z]*' class='lbltxt' type='text' placeholder='Firstname' name='FirstName'></td>
+										<td><input pattern='[a-zA-Z]*' class='lbltxt' type='text'  name='FirstName'></td>
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input pattern='[a-zA-Z]*' class='lbltxt' type='text' placeholder='LastName' name='LastName'></td>
+										<td><input pattern='[a-zA-Z]*' class='lbltxt' type='text'  name='LastName'></td>
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input class='lbltxt' type='Email' placeholder='Email' name='Email'></td>
+										<td><input class='lbltxt' type='Email'  name='Email'></td>
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input pattern='[0-9]{4}[a-zA-Z]{2}' class='lbltxt' type='text' placeholder='1111AA' name='PostCode'></td>
+										<td><input pattern='[0-9]{4}[a-zA-Z]{2}' class='lbltxt' type='text' name='PostCode'></td>
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
 										<td>
-											<input pattern='[0-9]{4}' style='width:20%;' class='lbltxt' type='number' placeholder='nr' name='HouseNumber'>
-											<input pattern='[a-zA-Z]*'style='width:80%;' class='lbltxt' type='text' placeholder='Street' name='Street'>
+											<input pattern='[0-9]{4}' style='width:20%;' class='lbltxt' type='number' name='HouseNumber'>
+											<input pattern='[a-zA-Z]*'style='width:80%;' class='lbltxt' type='text'
 										</td>
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input class='lbltxt' type='text' placeholder='Phone number' name='Phone'></td>
+										<td><input class='lbltxt' type='text'  name='Phone'></td>
 									</tr>
 								</table>
 								<p>* This is required</p>
