@@ -28,9 +28,7 @@ $mollie = new \Mollie\Api\MollieApiClient();
 
 $mollie->setApiKey($Config->GetMollieKey());
 $PayAmount = $MakeOrder->GetPrice();
-
-$makeOrder = new MakeOrder();
-$OrderId = $makeOrder->Order($_POST, $_SESSION['Tickets']);
+$OrderId = $_GET["OrderId"];
 $payment = $mollie->payments->create([
     "amount" => [
         "currency" => "EUR",
@@ -39,7 +37,7 @@ $payment = $mollie->payments->create([
     "description" => "Kaartjes Haarlem Fest",
     "redirectUrl" => $Config->GetWebURL()."/ThankYou.php",
     "webhookUrl"  => $Config->GetWebURL()."/HFWebHook.php",
-    "metadata" => (string)$OrderId
+    "metadata" => $OrderId
 ]);
 header("Location: " . $payment->getCheckoutUrl(), true, 303);
 ?>

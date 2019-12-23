@@ -63,7 +63,7 @@ class FoodMainView
   						<p>Restaurant Specktakel lays in the center of Haarlem and makes food from all over the world.<br/> <b>Food tags</b>: European, International, Asian</p>
   					</div>
   					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Toujours'><img src='./Images/Food/Toujours.png' class='gridImage'></a>
+  						<a href='FoodTimesIndex.php?restaurant=Toujours'><img src='./Images/Food/TouJours.png' class='gridImage'></a>
   						<p>Toujours is an Urban French restaurant that has an American twist. It's located in the centre of Haarlem.</br> <b>Food tags</b>: Dutch, fish and seafood, European</p>
   					</div>
   					<div class='restaurant-item'>

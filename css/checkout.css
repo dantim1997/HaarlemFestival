@@ -51,7 +51,10 @@
 
 #TotalAmount{
 	font-size: 18pt;
-	margin-top: 1%;
+}
+
+#TotalFoodAmount{
+	font-size: 18pt;
 }
 
 .bottomBar{
@@ -65,7 +68,11 @@
 
 #totallbl{
 	font-size: 18pt;
-	margin-top: 1%;
+	margin-left: 2%;
+}
+
+#totalFoodlbl{
+	font-size: 15pt;
 	margin-left: 2%;
 }
 
@@ -219,4 +226,17 @@ h4{
 }
 .removeCheckoutItem:hover{
 	background-color: #bfbfbf;
+}
+
+.extraInfoP {
+	padding-top: 7px;
+	padding-left: 2px;
+	float: left;
+	font-style: italic;
+}
+
+#reservationFee {
+	margin-left: 5%;
+	margin-top: 2%;
+	font-size: 12px;
 }

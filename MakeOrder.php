@@ -18,7 +18,8 @@ class MakeOrder{
         foreach($items as $item)
         {
             for($i = 0; $i < $item['Amount']; $i++){
-                $ticketId = $this->ticket($item['EventId'], $item['TypeEvent']);
+                $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"]);
+                $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
                 $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
             }
         }
@@ -26,12 +27,20 @@ class MakeOrder{
         return $orderId;
     }
 
-    public function ticket($eventId, $typeEvent)
+    public function ticket($eventId, $typeEvent, $price)
     {
-        $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent,"test");
+        $uniqueCode =microtime(true);
+        $uniqueCode = str_replace(".","",$uniqueCode);
+        $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent,$uniqueCode,$price);
         if($typeEvent == 2){
+
             $this->DB_Helper->RemoveavAilableTicketDance($eventId);
         }
+        if($typeEvent == 4){
+
+            $this->DB_Helper->RemoveavAilableTicketDance($eventId);
+        }
+        usleep(5);
         return $ticketId;
     }
 
@@ -58,6 +67,26 @@ class MakeOrder{
             }
         }
         return  number_format($amountPay, 2, '.', '');
+    }
+
+    public function GetEventPrice($eventId, $typeEvent)
+    {
+        switch ($typeEvent) {
+            case 1:
+                break;
+            case 2:
+                $event = $this->DB_Helper->GetEventInfoDance($eventId);
+                return doubleval($event['Price']);
+                break;
+            case 3:
+                $event = $this->DB_Helper->GetEventInfoHistoric($eventId);
+                return doubleval($event['Price']);
+                break;
+            case 4:
+                $event = $this->DB_Helper->GetEventInfoJazz($eventId);
+                return doubleval($event['Price']);
+                break;
+        }
     }
 }
 ?>

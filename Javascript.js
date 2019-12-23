@@ -67,6 +67,7 @@ function ShowDate(day) {
 		document.getElementById('Thursday').style.visibility = 'hidden';
 		document.getElementById('Thursday1').style.display = 'none';
 	}
+	JazzClearItems();
 }
 
 function JazzAddToCart(){
@@ -82,6 +83,12 @@ function JazzAddToCart(){
 			}
 		}
 	}
+	JazzClearItems();
+}
+
+function JazzClearItems(){
+	var inputs = document.getElementsByTagName('input');
+
 	for(var i = 0; i < inputs.length; i++) {
 		if(inputs[i].type.toLowerCase() == 'text') {
 			if(inputs[i].value >0){
@@ -117,23 +124,64 @@ function AddToCart(eventId, typeEvent, amount, special) {
 	}
 }
 
-function AddToCartExtraInfo(eventId, typeEvent, amount, special) {
-	var extraInfo = document.getElementById('extraInfo').value;
+function FoodAddToCartHelper(count) {
+	// grab variables necessary to put ticket in session
+	var childAmount = parseInt(document.getElementById('pplBelow12' + count).value);
+	var adultAmount = parseInt(document.getElementById('pplAbove12' + count).value);
+	var extraInfo = document.getElementById('extraInfo' + count).value;
+	var id = document.getElementById('pickSession' + count).value;
+	var date = document.getElementById('date' + count).value;
+
+	var startTimeSelect = document.getElementById('pickSession' + count);
+	var startTime = startTimeSelect.options[startTimeSelect.selectedIndex].text;
+	
+	FoodAddToCart(id, childAmount, adultAmount, startTime, date, extraInfo);
+
+}
+
+function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
+	var amount = childAmount + adultAmount;
 	if (amount > 0) {
-     $.ajax({ url: 'AddToCart.php',
-     data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special, extraInfo:extraInfo},
-     type: 'post',
-     success: function(output) {
-                   ShowPopup();
-                   ShoppingCartPlus(amount);
+		$.ajax({ url: 'AddToCartFood.php',
+		data: {eventId: eventId, childAmount: childAmount, adultAmount: adultAmount,  startTime: startTime, date: date, extraInfo: extraInfo},
+		type: 'post',
+		success: function(output) {
+				ShowPopup();
+				ShoppingCartPlus(amount);
 			}
-		});
+		});		
 	}
 }
 
-function RemoveFromCart(self,eventId, typeEvent, price) {
+function SelectedDate(count, id) {
+	var date = document.getElementById('pickDay' + count).value;
+	var time = document.getElementById('pickSession' + count);
+	time.disabled = false;
+	while (time.firstChild) {
+		time.removeChild(time.firstChild);
+	}
+
+	$.ajax({ url: 'FoodHelper.php',
+	data: {date: date, id: id},
+	type: 'post',
+	success: function(output) {
+		output = JSON.parse(output);
+		for(var i = 0; i < output.length; i++) {
+			var opt = output[i];
+			var el = document.createElement("option");
+			el.textContent = String(opt.SessionStartTime);
+			el.textContent
+    		el.value = opt.Id;
+			time.appendChild(el);
+		}
+
+	}
+});
+}
+
+function RemoveFromCart(self, eventId, typeEvent, price) {
      $.ajax({ url: 'RemoveFromCart.php',
-		data: {eventId: eventId,typeEvent: typeEvent},
+		data: {eventId: eventId, typeEvent: typeEvent},
 		type: 'post',
 		success: function(output) {
 			var parent = self.parentNode;
@@ -144,11 +192,63 @@ function RemoveFromCart(self,eventId, typeEvent, price) {
 					var eventday = parenttickets.parentNode;
 					eventday.remove();
 				}
-			var totalamount =parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
+			var totalamount = String(document.getElementById("TotalAmount").innerHTML);
+			totalamount = totalamount.replace(',', '.');
+			totalamount = parseFloat(totalamount);
 			var remove = totalamount - (price * output);
+			remove = String(remove).replace('.', ',');
 			document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
 		}
 	});
+}
+
+function FoodRemoveFromCart(self, eventId, typeEvent, price, amountType) {
+	$.ajax({ url: 'RemoveFromCartFood.php',
+	data: {eventId: eventId, typeEvent: typeEvent, amountType: amountType},
+	type: 'post',
+	success: function(output) {
+		output = parseInt(output);
+		
+		var parent = self.parentNode;
+		var parenttickets = parent.parentNode;
+
+		ShoppingCartmin(output);
+		self.parentNode.remove(); 
+
+		if (parenttickets.children.length == 0) {
+			var eventday = parenttickets.parentNode;
+			eventday.remove();
+		}
+
+		// get current totalAmounts
+		var totalAmount = String(document.getElementById("TotalAmount").innerHTML);
+		var totalFoodAmount = String(document.getElementById("TotalFoodAmount").innerHTML);
+		
+		// replace comma with period because parseFloat doesn't 'take' comma's ...
+		totalAmount = totalAmount.replace(',', '.');
+		totalFoodAmount = totalFoodAmount.replace(',', '.');
+		
+		// parse it to float
+		totalAmount = parseFloat(totalAmount);
+		totalFoodAmount = parseFloat(totalFoodAmount);
+		
+		// calculate new totalAmounts
+		var removeTotal = totalAmount - (10 * output);
+		var removeFoodTotal = totalFoodAmount - (price * output);
+		
+		// round down to 2 numbers behind comma
+		removeTotal = removeTotal.toFixed(2);
+		removeFoodTotal = removeFoodTotal.toFixed(2);
+
+		// replace period with comma again
+		removeTotal = String(removeTotal).replace('.', ',');
+		removeFoodTotal = String(removeFoodTotal).replace('.', ',');
+
+		// replace html element with new totalAmount
+		document.getElementById("TotalAmount").innerHTML = removeTotal;
+		document.getElementById("TotalFoodAmount").innerHTML = removeFoodTotal;
+	}
+});	
 }
 
 function ShowPopup() {
@@ -159,6 +259,7 @@ function ShowPopup() {
     }, 2000);
   	
 }
+
 function ToEvent(src){
 	if (src == "Historic") {
 		location.href = "Historic.php";
@@ -236,16 +337,6 @@ function GetTicketAmount(count){
 	var indentifier = "amountNumber".concat(count);
 	var number = parseInt(document.getElementById(indentifier).value);
 	return	number;
-}
-
-function GetNormalTicketCount() {
-	var normalTickets = document.getElementById('pplAbove12');
-	return parseInt(normalTickets.value);
-}
-
-function GetChildrenTicketCount() {
-	var childrenTickets = document.getElementById('pplBelow12');
-	return parseInt(childrenTickets.value);
 }
 
 function ShowHideJazzFilter(){

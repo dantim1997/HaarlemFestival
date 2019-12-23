@@ -17,8 +17,14 @@ class CheckoutController
 	}
 
 	public function ProceedToPayment()
-	{	
-		$errorList = array();
+	{
+		$errorList = array(
+			"FirstName" => "",
+			"LastName" => "",
+			"Email" => "",
+			"Adress" => "",
+			"Date" => "",
+		);
 		if(isset($_POST['proceedToPaymentBTN'])){
 			
 			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
@@ -27,21 +33,9 @@ class CheckoutController
 			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
 			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 			$errorList["Street"] = $this->IsRequired("Street", "text");
-
-			if($errorList["FirstName"] == null &&
-			$errorList["LastName"] == null&&
-			$errorList["Email"] == null&&
-			$errorList["PostCode"] == null&&
-			$errorList["Number"] == null&&
-			$errorList["Street"] == null){
-
-				//header("Location: HFPay.php");
-
-				
-			$orderid = $this->DB_Helper->GetWaitOrder(serialize($_SESSION['Tickets']));
-			$makeorder = new MakeOrder;
-			$makeorder->Order($_POST, $orderid);
-			}
+			$makeOrder = new MakeOrder();
+			$orderId = $makeOrder->Order($_POST, $_SESSION["Tickets"]);
+			header("Location: HFPay.php?OrderId=".$orderId);
 		}
 	}
 
@@ -63,14 +57,21 @@ class CheckoutController
 		return $this->Config;
 	}
 
+
 	public function GetAllItems(){
-		
 		$ticketRows = "";
 
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				$this->GetItems($item["EventId"], $item["TypeEvent"], $item["Amount"], '', $item["ExtraInfo"] = "");
+				// check if session ticket is 'normal' ticket (not a restaurant reservation)
+				if (array_key_exists("Amount", $item)) {
+					// 'normal' ticket
+					$this->GetItems($item["EventId"], $item["TypeEvent"], $item["Amount"]);
+				} else {
+					// it's a reservation, different method has to be called...
+					$this->GetFoodItems($item["EventId"], $item["ChildAmount"], $item["AdultAmount"], $item["ExtraInfo"]);
+				}
 			}
 			foreach ($this->CheckoutModel->GetSortedDays() as $key => $day) {
 				$SetDate = date('Y-m-d', strtotime($key));
@@ -84,23 +85,20 @@ class CheckoutController
 				</div>";
 			}
 		}
-		if($ticketRows == ""){
+		if ($ticketRows == "") {
 			$ticketRows = "<div class='Empty'><h3>You dont have any items in your shopping cart</h3></div>";
 		}
 
 		return $ticketRows;
 	}
 
-	public function GetItems($eventId, $typeEvent, $amount, $special, $extraInfo){
+	public function GetItems($eventId, $typeEvent, $amount) {
+		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
-			case 1:
-				if ($special == 0) {
-					$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
-				} else {
-					$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "NormalPrice");
-				}
-				break;
+			//case 1:
+			//	$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
+			//	break;
 			case 2:
 				$eventInfo = $this->DB_Helper->GetEventInfoDance($eventId);
 				break;
@@ -119,18 +117,81 @@ class CheckoutController
 			$sortedDays[$eventDate] = "";
 		}
 
-		$this->CheckoutModel->AddTotal(intval($eventInfo["Price"]) * intval( $amount));
+		$this->CheckoutModel->AddTotal(doubleval($eventInfo["Price"]) * doubleval($amount));
+
 		$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$amount." x</p>
-			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["Price"], 2, ',', ' ')."</p> ".$extraInfoText."
 					<input class='removeCheckoutItem' onclick='RemoveFromCart(this,".$eventId.",".$typeEvent.",".$eventInfo["Price"].")' type='submit' value='&#10006' name='??????'>
 		</div>";
 
+		
+		$this->CheckoutModel->SetSortedDays($sortedDays);
+	}
+
+	public function GetFoodItems($eventId, $childAmount, $adultAmount, $extraInfo) {
+		$extraInfoText = '';
+		$sortedDays = $this->CheckoutModel->GetSortedDays();
+		$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
+		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
+		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));
+
+		$eventDate = date('Y-m-d', strtotime($eventInfo["StartDateTime"]));
+		if(!array_key_exists($eventDate ,$sortedDays)){
+			$sortedDays[$eventDate] = "";
+		}
+
+		// only reservation fee gets added to "total" (price that needs to be paid online)
+		$value = (intval($childAmount) + intval($adultAmount)) * 10;
+		$this->CheckoutModel->AddTotal($value);
+
+		// actual ticket prices get added to "FoodTotal" (reservation fee gets paid online, food tickets at the restaurant)
+		$foodPrice = doubleval($eventInfo["ChildPrice"]) * intval($childAmount) + doubleval($eventInfo["AdultPrice"]) * intval($adultAmount);
+		$this->CheckoutModel->AddFoodTotal($foodPrice);
+
 		// show allergies/special needs when given
 		if (!empty($extraInfo)) {
-			$sortedDays[$eventDate] .= "<p>Given allergies and/or special needs: ".$extraInfo."</p>";
+			$extraInfoText .= "<p class='extraInfoP'>Given allergies and/or special needs: '".$extraInfo."'</p>";
 		}
+
+		if (!empty($childAmount)) {
+			$sortedDays[$eventDate] .= "<div class=ticket>
+			<p class=amountTickets>".$childAmount." x</p>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["ChildPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["ChildPrice"].", 0)' type='submit' value='&#10006' name='??????'>
+			</div>";
+		}
+		
+		if (!empty($adultAmount)) {
+			$sortedDays[$eventDate] .= "<div class=ticket>
+			<p class=amountTickets>".$adultAmount." x</p>
+			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["AdultPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["AdultPrice"].", 1)' type='submit' value='&#10006' name='??????'>
+			</div>";
+		}
+
 		$this->CheckoutModel->SetSortedDays($sortedDays);
+	}
+
+	public function GetReservationFee() {
+		$count = 0;
+		if (isset($_SESSION["Tickets"])) {
+			$items = $_SESSION["Tickets"];
+			foreach ($items as $item) {
+				// check if reservation is present in session
+				if ($item["TypeEvent"] == 1) {
+					// ladies and gentlemen, we got em
+					$count += $item["ChildAmount"];
+					$count += $item["AdultAmount"];
+				}
+			}
+
+			if ($count > 0) {
+				return "<p id='reservationFee'>Reservation is mandatory.  A reservation fee of €10,- per person wil be charged when a reservation is made on the Haarlem Festival site. This fee will be deducted from the final check on visiting the restaurant.</p>";
+			} else {
+				return "";
+			}
+		}
 	}
 
 	public function IsTimeEmtpy($startTime,$endTime){
