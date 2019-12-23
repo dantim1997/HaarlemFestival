@@ -192,8 +192,11 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 					var eventday = parenttickets.parentNode;
 					eventday.remove();
 				}
-			var totalamount = parseFloat(document.getElementById("TotalAmount").innerHTML).toFixed(2);
+			var totalamount = String(document.getElementById("TotalAmount").innerHTML);
+			totalamount = totalamount.replace(',', '.');
+			totalamount = parseFloat(totalamount);
 			var remove = totalamount - (price * output);
+			remove = String(remove).replace('.', ',');
 			document.getElementById("TotalAmount").innerHTML = remove.toFixed(2);
 		}
 	});
@@ -232,7 +235,6 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price, amountType) {
 		// calculate new totalAmounts
 		var removeTotal = totalAmount - (10 * output);
 		var removeFoodTotal = totalFoodAmount - (price * output);
-		console.log(totalAmount, output, totalFoodAmount, price);
 		
 		// round down to 2 numbers behind comma
 		removeTotal = removeTotal.toFixed(2);
