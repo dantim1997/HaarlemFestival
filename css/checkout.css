@@ -50,10 +50,12 @@
 }
 
 #TotalAmount{
+	margin-top: 0.5%;
 	font-size: 18pt;
 }
 
 #TotalFoodAmount{
+	margin-top: 0.8%;
 	font-size: 18pt;
 }
 
@@ -67,11 +69,13 @@
 }
 
 #totallbl{
+	margin-top: 0.5%;
 	font-size: 18pt;
 	margin-left: 2%;
 }
 
 #totalFoodlbl{
+	margin-top: 0.8%;
 	font-size: 15pt;
 	margin-left: 2%;
 }
@@ -117,7 +121,7 @@
 .lbltxt{
 	float: right;
 	height: 30px;
-	width: 100%;
+	width: 80%;
 	font-weight: bold;
 	margin-bottom: 2%;
 	font-size: 12pt;
