@@ -99,7 +99,7 @@ class FoodTimesController
 				</div>
 				<div class='information'>
 					<h2 id='restaurantName".$count."'>".$section["Name"]."</h2>
-					<p class='restaurantInfoP'>".$section["Location"]." <br /> <b>Cuisines: </b>".$section["Cuisines"]."</p>
+					<p class='restaurantInfoP'>".$section["Location"]." <br /> <b>".current($pageTexts).": </b>".$section["Cuisines"]."</p>
 				</div>
 				<div class='rating'>
 					".$this->GetRating($section["Rating"])."
@@ -109,7 +109,7 @@ class FoodTimesController
 					</div>
 				</div>
 				<div class='prices'>
-					<h2 class='pricesH2'>".current($pageTexts)."</h2>
+					<h2 class='pricesH2'>".next($pageTexts)."</h2>
 					<h4 class='pricesH4'>".next($pageTexts).": €10,00 <br /> ".next($pageTexts).": €".$this->CheckPrice($section["NormalPrice"])." <br /> ".next($pageTexts).": €".$this->CheckPrice($section["ChildPrice"])."
 					</h4>
 				</div>
