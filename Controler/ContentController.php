@@ -46,6 +46,9 @@ class ContentController
 		if (isset($_SESSION['Language'])){
 			$language = $_SESSION['Language'];
 		}
+		if (isset($_GET['Language'])){
+			$language = $_GET['Language'];
+		}
 		return $language;
 	}
 }

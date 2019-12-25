@@ -465,7 +465,6 @@ class DB_Helper
 
 	//get Artists for Jazz carousel filter
 	public function GetArtistsJazz($genreFilter){
-		$sql = "";
 		if (empty($genreFilter)){
 			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE Genre IS NOT NULL GROUP BY ArtistName";
 		}
@@ -488,7 +487,8 @@ class DB_Helper
 	//get Tickets for Jazz
 	public function GetTicketsJazz($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE '".$date."%' OR (ArtistName LIKE '%whole%' AND EndDateTime > '".$date."%') ORDER BY EndDateTime, Hall ASC");
+		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE ? OR (ArtistName LIKE '%whole%' AND EndDateTime > '".$date."%') ORDER BY EndDateTime, Hall ASC");
+		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Name, $StartDateTime, $EndDateTime, $Price, $Hall); 
@@ -503,7 +503,8 @@ class DB_Helper
 	//get Programme for Jazz
 	public function GetArtistTableJazz($datetime){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE '$datetime' AND Genre IS NOT NULL");
+		$stmt = $this->Conn->prepare("SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE ? AND Genre IS NOT NULL");
+		$stmt->bind_param("s", $datetime);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Name); 
@@ -566,8 +567,9 @@ class DB_Helper
 		FROM Jazz j
 		INNER JOIN JazzVenues v
 		ON v.Name = j.Location
-		WHERE j.StartDateTime LIKE '".$date."%'
+		WHERE j.StartDateTime LIKE ?
 		GROUP BY DATE_FORMAT(j.StartDateTime, '%Y-%m')");
+		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfo, $GoogleMaps);
