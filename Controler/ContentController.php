@@ -9,6 +9,7 @@ class ContentController
 	public function __construct($contentModel){
 		$this->ContentModel = $contentModel;
 		$this->Config = Config::getInstance();
+		$this->DB_Helper = new DB_Helper;
 	}
 	
 	//get config
@@ -21,8 +22,17 @@ class ContentController
 		if (isset($_GET["id"])){
 			$language = $this->GetLanguage();
 			//call DB Helper
-			$output .= "<h2>TITLE</h2>";
-			$output .= "<p>MAIN</p>";
+			$content = $this->DB_Helper->GetContentPage($_GET["id"]);
+			if ($language == "Dutch"){
+				$output .= "<h1>".$content["DutchTitle"]."</h2>";
+				$output .= $content["DutchText"];
+				$output .= "<br><br><i>Voor het laatst bewerkt op:  ".$content["Date"]."</i>";
+			}
+			else{
+				$output .= "<h1>".$content["EnglishTitle"]."</h2>";
+				$output .= $content["EnglishText"];
+				$output .= "<br><br><i>Last edited: ".$content["Date"]."</i>";
+			}
 		}
 		else {
 			$output .= "<h2>Requested page doesn't exists.</h2><br>";
