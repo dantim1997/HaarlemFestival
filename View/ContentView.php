@@ -9,6 +9,7 @@ class ContentView
 	{
 		$this->ContentController = $contentController;
 		$this->ContentModel = $contentModel;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//output to html
@@ -26,6 +27,7 @@ class ContentView
 
 	private function Body(){
 		$nav = new Nav();
+		$this->PageContentHelper->DetermineLanguage();
 		return $nav->SetNavBar("Content"). "
 		<div id='main'>
 			<div class='RedBar'></div>
