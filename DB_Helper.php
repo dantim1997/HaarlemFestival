@@ -241,11 +241,12 @@ class DB_Helper
 
 	public function GetOrderTicketsFood($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT f.id, f.Location, f.SessionStartDateTime, f.SessionEndDateTime, f.Description, '' info
+		$stmt = $this->Conn->prepare("SELECT fr.id, r.Location, fr.SessionStartDateTime, fr.SessionEndDateTime, r.Description, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
-			join FoodRestaurants f on f.Id = t.EventId
+			join FoodRestaurants fr on fr.Id = t.EventId
+			join Restaurants r on r.Id = fr.RestaurantId
 			WHERE o.OrderNumber = ? && t.TypeEvent = 1");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();

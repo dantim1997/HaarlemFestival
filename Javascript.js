@@ -98,14 +98,6 @@ function JazzClearItems(){
 	}
 }
 
-function FoodAddToCart(eventId, typeEvent) {
-	var childAmount = GetChildrenTicketCount();
-	var adultAmount = GetNormalTicketCount();
-
-	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0);
-	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1);
-}
-
 function TimeTablePDF(id){
 	var win = window.open("CreateTimeTablePDF.php?id="+id, '_blank');
   win.focus();
