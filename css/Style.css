@@ -249,3 +249,10 @@ a:active {
 	float: right;
 	padding-right: 4%;
 }
+
+.contentContainer{
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}

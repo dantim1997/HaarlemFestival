@@ -797,6 +797,20 @@ class DB_Helper
 		return $tickets;
 	}
 
+	public function GetContentPage($id){
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT TitleEnglish, TitleDutch, PageTextEnglish, PageTextDutch, LastEdited FROM Pages WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($EnglishTitle, $DutchTitle, $EnglishText, $DutchText, $Date);
+		$stmt->fetch();
+		$ticket = array("EnglishTitle"=>$EnglishTitle, "DutchTitle"=>$DutchTitle, "EnglishText"=>$EnglishText, "DutchText"=>$DutchText, "Date"=>$Date);
+		return $ticket;
+	}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
