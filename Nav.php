@@ -19,8 +19,8 @@ class Nav
 				".$this->SetEvent("MyProgram", $event)."
 				<div class='right'>
 					<div class='Languages'>
-						<a href='?Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='Images/Nav/Englishflag.png'></a>
-						<a href='?Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='Images/Nav/Dutchflag.png'></a>
+						<a href='".$this->DeterminGET()."Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='Images/Nav/Englishflag.png'></a>
+						<a href='".$this->DeterminGET()."Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='Images/Nav/Dutchflag.png'></a>
 					</div>
 					<a href='checkout.php'>
 						<div class='ShoppingCart'>
@@ -84,6 +84,25 @@ class Nav
 			if ($_SESSION['Language'] == $language) {
 				return 'ActiveLanguage';
 			}
+		}
+	}
+
+	private function DeterminGET(){
+		if (extract($_GET) >= 2 && isset($_GET['Language'])) {
+			if ($_GET['Language'] == 'English') {
+				$newUrl = substr($_SERVER['REQUEST_URI'], 0, -17);
+				return $newUrl.'&';
+			}
+			elseif ($_GET['Language'] == 'Dutch'){
+				$newUrl = substr($_SERVER['REQUEST_URI'], 0, -15);
+				return $newUrl.'&';
+			}
+		}
+		elseif (extract($_GET) > 0 && !isset($_GET['Language'])) {
+			return ''.$_SERVER['REQUEST_URI'].'&';
+		}
+		else{
+			return '?';
 		}
 	}
 
