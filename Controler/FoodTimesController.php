@@ -10,6 +10,7 @@ class FoodTimesController
 		$this->FoodTimesModel = $FoodTimesModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//get config
@@ -90,6 +91,7 @@ class FoodTimesController
 	}
 
 	private function GetSection($section, $count) {
+		$pageTexts = $this->PageContentHelper->GetPageText("FoodTimesController");
 		return "
 			<div class='restaurantSection'>
 				<div class='logo'>
@@ -107,19 +109,16 @@ class FoodTimesController
 					</div>
 				</div>
 				<div class='prices'>
-					<h2 class='pricesH2'>PRICES</h2>
-					<h4 class='pricesH4'>Reservation fee: €10,- <br /> Normal price: €".$this->CheckPrice($section["NormalPrice"])." <br /> Price for children (below the age of 12): €".$this->CheckPrice($section["ChildPrice"])."
+					<h2 class='pricesH2'>".current($pageTexts)."</h2>
+					<h4 class='pricesH4'>".next($pageTexts).": €10,00 <br /> ".next($pageTexts).": €".$this->CheckPrice($section["NormalPrice"])." <br /> ".next($pageTexts).": €".$this->CheckPrice($section["ChildPrice"])."
 					</h4>
-					<p class='pricesP'>
-						All prices include 9% VAT.
-					</p>
 				</div>
 				<div class='createReservation'>
 					<div class='createReservationH2'>
-						<h2>Create your reservation:</h2>
+						<h2>".next($pageTexts).":</h2>
 					</div>
 					<div class='peopleAboveOption'>
-						<p id='normalP'>Normal:</p>
+						<p id='normalP'>".next($pageTexts).":</p>
 						<select class='pplAbove12' id='pplAbove12".$count."'>
 							<option value='0'>0</option>
             				<option value='1'>1</option>
@@ -136,7 +135,7 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='peopleBelowOption'>
-						<p id='childrenP'>Children:</p>
+						<p id='childrenP'>".next($pageTexts).":</p>
 						<select class='pplBelow12' id='pplBelow12".$count."'>
 							<option value='0'>0</option>
             				<option value='1'>1</option>
@@ -154,19 +153,19 @@ class FoodTimesController
             		<br />
 					<div class='pickDayOption'>
 						<select class='pickDay' id='pickDay".$count."' onchange='SelectedDate(".$count.", ".$section["Id"].")'>
-							<option value='Pick a day'>Pick a day</option>
+							<option value='Pick a day'>".next($pageTexts)."</option>
             				".$this->GetDateTimes($section["Id"], "Date")."
             			</select>
 					</div>
             		<br />
 					<div class='pickSessionOption'>
 						<select class='pickSession' id='pickSession".$count."' disabled>
-							<option value='Pick a session'>Pick a session</option>
+							<option value='Pick a session'>".next($pageTexts)."</option>
             				".$this->GetDateTimes($section["Id"], "Time")."
             			</select>
 					</div>
 					<div class='specialNeeds'>
-						<p class='specialNeedsP'>Allergies or other special needs? Let us know:</p>
+						<p class='specialNeedsP'>".next($pageTexts).":</p>
 						<textarea id='extraInfo".$count."' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
 					<div class='makeReservation'>
