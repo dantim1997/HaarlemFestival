@@ -85,6 +85,10 @@ class Nav
 				return 'ActiveLanguage';
 			}
 		}
+		//By default the language is english
+		else{
+			$_SESSION['Language'] = 'English';
+		}
 	}
 
 	private function DeterminGET(){
