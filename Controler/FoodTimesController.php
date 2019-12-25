@@ -81,20 +81,22 @@ class FoodTimesController
 		}
 		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
 		$sections = "";
+		$count = 1;
 		foreach ($foodSections as $foodSection) {
-			$sections .= $this->GetSection($foodSection);
+			$sections .= $this->GetSection($foodSection, $count);
+			$count++;
 		}
 		return $sections;
 	}
 
-	private function GetSection($section) {
+	private function GetSection($section, $count) {
 		return "
 			<div class='restaurantSection'>
 				<div class='logo'>
 					".$section["Logo"]."
 				</div>
 				<div class='information'>
-					<h2>".$section["Name"]."</h2>
+					<h2 id='restaurantName".$count."'>".$section["Name"]."</h2>
 					<p class='restaurantInfoP'>".$section["Location"]." <br /> <b>Cuisines: </b>".$section["Cuisines"]."</p>
 				</div>
 				<div class='rating'>
@@ -117,8 +119,9 @@ class FoodTimesController
 						<h2>Create your reservation:</h2>
 					</div>
 					<div class='peopleAboveOption'>
-						<select class='pplAbove12' id='pplAbove12'>
-							<option value='People &gt;12'>People</option>
+						<p id='normalP'>Normal:</p>
+						<select class='pplAbove12' id='pplAbove12".$count."'>
+							<option value='0'>0</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
             				<option value='3'>3</option>
@@ -133,8 +136,9 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='peopleBelowOption'>
-						<select class='pplBelow12' id='pplBelow12'>
-							<option value='Children (&lt;12)'>Children (&lt;12)</option>
+						<p id='childrenP'>Children:</p>
+						<select class='pplBelow12' id='pplBelow12".$count."'>
+							<option value='0'>0</option>
             				<option value='1'>1</option>
             				<option value='2'>2</option>
             				<option value='3'>3</option>
@@ -149,24 +153,26 @@ class FoodTimesController
 					</div>
             		<br />
 					<div class='pickDayOption'>
-						<select class='pickDay'>
+						<select class='pickDay' id='pickDay".$count."' onchange='SelectedDate(".$count.", ".$section["Id"].")'>
 							<option value='Pick a day'>Pick a day</option>
-            				".$this->GetDateTimes($section["Name"], "Date")."
+            				".$this->GetDateTimes($section["Id"], "Date")."
             			</select>
 					</div>
             		<br />
 					<div class='pickSessionOption'>
-						<select class='pickSession'>
+						<select class='pickSession' id='pickSession".$count."' disabled>
 							<option value='Pick a session'>Pick a session</option>
-            				".$this->GetDateTimes($section["Name"], "Time")."
+            				".$this->GetDateTimes($section["Id"], "Time")."
             			</select>
 					</div>
 					<div class='specialNeeds'>
 						<p class='specialNeedsP'>Allergies or other special needs? Let us know:</p>
-						<textarea id='extraInfo' rows='2' cols='50' maxlength='40'></textarea>
+						<textarea id='extraInfo".$count."' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
 					<div class='makeReservation'>
-						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCart(".$section["Id"].", 1)' />
+						<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
+						<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
+						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$count.")' />
 					</div>
 				</div>
 			</div>
@@ -177,11 +183,11 @@ class FoodTimesController
 		$stars = "";
 		$emptyStars = 5 - $fullStars;
 		for ($i=0; $i < $fullStars; $i++) { 
-			$stars .= "<img src='./Images/starFull.png' class='starFull'>
+			$stars .= "<img src='./Images/Food/starFull.png' class='starFull'>
 			";
 		}
 		for ($i=0; $i < $emptyStars; $i++) { 
-			$stars .= "<img src='./Images/starEmpty.png' class='starEmpty'>
+			$stars .= "<img src='./Images/Food/starEmpty.png' class='starEmpty'>
 			";
 		}
 		return $stars;
@@ -201,14 +207,14 @@ class FoodTimesController
 		return $givenPrice;
 	}
 
-	private function GetDateTimes($name, $type) {
+	private function GetDateTimes($id, $type) {
 		$dateTimes = "";
 		$index = "Session";
 		if ($type == "Date") {
-			$foodDateTimes = $this->DB_Helper->GetFoodDates($name);
+			$foodDateTimes = $this->DB_Helper->GetFoodDates($id);
 			$index .= $type;
 		} else if ($type == "Time") {
-			$foodDateTimes = $this->DB_Helper->GetFoodTimes($name);
+			$foodDateTimes = $this->DB_Helper->GetFoodTimes($id);
 			$index .= "Start".$type;
 		}
 		foreach ($foodDateTimes as $foodDateTime) {

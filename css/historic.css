@@ -169,13 +169,14 @@ h4{
 	background-color: #FFFFFF;
 	float: left;
 	padding: 0;
-	height: 400px;
+	height: 420px;
 	margin-left: 20px;
 	box-shadow: 2px 3px 2px 2px #333333; 
 }
 
 .venueImgs{
 	width: 100%;
+	height: 180px;
 	padding: 0;
 	max-height: 42%;
 }
@@ -212,7 +213,7 @@ h4{
 	width: 35%;
 	margin-left: 6%;
 	margin-top: 4%;
-	height: 600px;
+	min-height: 600px;
 	float: left;
 	box-shadow: 2px 3px 2px 2px #333333; 
 	font-family: 'Heebo', sans-serif;
@@ -249,7 +250,7 @@ h4{
 .languageFlag{
 	float: left;
 	height: 50px;
-	width: 75px;
+	width: 15%;
 	margin-right: 10px;
 	margin-left: 10px;
 }
@@ -266,6 +267,10 @@ h5{
 	font-weight: bold;
 	margin-top: 3%;
 	margin-bottom: 4%;
+}
+
+.languageTxt{
+	font-size: 100%;
 }
 
 .times{
@@ -319,15 +324,15 @@ h5{
 
 /* HISTORIC ORDER TICKETSPAGE */
 .orderTicketsContainer{
-	width: 1350px;
+	max-width: 1350px;
 	background-color: #FFFFFF;
 	margin-top: 3%;
 	margin-left: 15%;
 	margin-right: 0;
-	height: 650px;
-
+	min-height: 650px;
 	box-shadow: 2px 3px 2px 2px #333333;
 	font-family: 'Heebo', sans-serif;
+	overflow: hidden;
 }
 
 .orderTicketsSelection{
@@ -395,6 +400,13 @@ h5{
 	border-right: 1px solid #000000;
 }
 
+.Footer{
+	position: relative;
+	margin-top: 48px;
+	bottom: 0;
+	float: left;
+}
+
 .familyTicket{
 	text-align: center;
 	padding: 3px;
@@ -414,7 +426,7 @@ h5{
 .normalTickets{
 	float: left;
 	width: 600px;
-	height: 200px;
+	min-height: 200px;
 	padding: 13px;
 	border-style: solid;
 	border-color: #000000;
@@ -444,7 +456,7 @@ h5{
 .familyTickets{
 	float: left;
 	width: 600px;
-	height: 200px;
+	min-height: 200px;
 	padding: 13px;
 	border-style: solid;
 	border-color: #000000;
@@ -528,7 +540,7 @@ h5{
 	text-decoration: none;
 	display: inline-block;
 	background-color: #ffcc00;
-	background-image: url("../Images/add-to-cart-icon-.jpg");
+	background-image: url("../Images/Historic/add-to-cart-icon-.jpg");
 	background-repeat: no-repeat;
 	background-position: 50% 40%;
 	background-size: 28px;
@@ -547,6 +559,7 @@ h5{
 	cursor: pointer;
 	margin-left: 40%;
 	margin-top: 3%;
+	margin-bottom: 3%;
 	outline: none;
 	background-color: #c10326;
 	border: none;

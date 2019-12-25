@@ -22,7 +22,7 @@ class User
 		$this->StartDateTime= $startDateTime;
 		$this->EndDateTime= $endDateTime;
 		$this->Price= $price;
-		$this->Artist = $artist
+		$this->Artist = $artist;
 	}
 }
 ?>

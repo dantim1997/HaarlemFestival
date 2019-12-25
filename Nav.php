@@ -19,8 +19,8 @@ class Nav
 				".$this->SetEvent("MyProgram", $event)."
 				<div class='right'>
 					<div class='Languages'>
-						<img class='LanguagesImages ActiveLanguage' src='Images/Nav/Englishflag.png'>
-						<img class='LanguagesImages' src='Images/Nav/Dutchflag.png'>
+						<a href='".$this->DeterminGET()."Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='Images/Nav/Englishflag.png'></a>
+						<a href='".$this->DeterminGET()."Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='Images/Nav/Dutchflag.png'></a>
 					</div>
 					<a href='checkout.php'>
 						<div class='ShoppingCart'>
@@ -60,19 +60,51 @@ class Nav
 		}
 	}
 
-	public function GetCartItems(){
-		if(isset($_SESSION['Tickets'])){
+	public function GetCartItems() {
+		if(isset($_SESSION['Tickets'])) {
 			$shoppingCartAmount = 0;
 			foreach ($_SESSION['Tickets'] as $items) {
-				$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+				// check if session ticket is a reservation
+				if ($items['TypeEvent'] == 1) {
+					// it's a reservation, this means session ticket contains 'Child/AdultAmount' instead of just Amount, act accordingly
+					$shoppingCartAmount = $shoppingCartAmount + intval($items['ChildAmount']) + intval($items['AdultAmount']);
+				} else {
+					$shoppingCartAmount = $shoppingCartAmount+ intval($items['Amount']);
+				}
 			}
 			return $shoppingCartAmount;
 		}
-		else{
+		else {
 			return 0;
+		}
+	}
+
+	private function DetermineActiveLanguage($language){
+		if (isset($_SESSION['Language'])) {
+			if ($_SESSION['Language'] == $language) {
+				return 'ActiveLanguage';
+			}
+		}
+	}
+
+	private function DeterminGET(){
+		if (extract($_GET) >= 2 && isset($_GET['Language'])) {
+			if ($_GET['Language'] == 'English') {
+				$newUrl = substr($_SERVER['REQUEST_URI'], 0, -17);
+				return $newUrl.'&';
+			}
+			elseif ($_GET['Language'] == 'Dutch'){
+				$newUrl = substr($_SERVER['REQUEST_URI'], 0, -15);
+				return $newUrl.'&';
+			}
+		}
+		elseif (extract($_GET) > 0 && !isset($_GET['Language'])) {
+			return ''.$_SERVER['REQUEST_URI'].'&';
+		}
+		else{
+			return '?';
 		}
 	}
 
 }
 ?>
-

@@ -50,10 +50,10 @@ class HistoricOrderTicketsView
 							<form method='post' action='historicOrderTickets.php'>
 								<div class='orderTicketsDropdwn'>
 									<select name='language' class='dropDown'>
-										<option value='-'>-</option>
+										<option value='".$this->getSelectedLanguage()."'>".$this->getSelectedLanguage()."</option>
 										<option value='English'>English</option>
 										<option value='Dutch'>Dutch</option>
-										<option value='Chinese'>Mandarin</option>
+										<option value='Mandarin'>Mandarin</option>
 									</select><br>
 									<select name='day' class='dropDown' onchange='this.form.submit()'>
 										<option value='-'>-</option>
@@ -88,6 +88,15 @@ class HistoricOrderTicketsView
 				</form>
 			</div>
 		</div>";
+	}
+
+	private function getSelectedLanguage(){
+		if (isset($_POST['language'])) {
+			return $_POST['language'];
+		}
+		else{
+			return "-";
+		}
 	}
 
 	private function Footer(){
