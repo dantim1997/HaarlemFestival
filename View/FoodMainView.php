@@ -9,6 +9,7 @@ class FoodMainView
 	{
 		$this->FoodMainController = $FoodMainController;
 		$this->FoodMainModel = $FoodMainModel;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//output to html
@@ -27,17 +28,18 @@ class FoodMainView
 
 	private function Body(){
 		$nav = new Nav();
+		$pageTexts = $this->PageContentHelper->GetPageText("FoodMain");
 		return $nav->SetNavBar("Food").
 		"<div class='container'>
 			<div class='food-header'>
-				<h1>Haarlem Food</h1>
+				<h1>".current($pageTexts)."</h1>
 			</div>
 			<div class='headertext'>
-				<p>The first thing you think about when you hear 'Haarlem' is probably not it's cuisine, but despite it being rather unknown, we think that it's perfect for after a long day of enjoying other events at the Haarlem festival.</p>
+				<p>".next($pageTexts)."</p>
 			</div>
 			<div class='timesTicketsBtn'>
 				<form action='FoodTimesIndex.php' method=''>
-					<input type='submit' class='ticketsBtn' value='Times & Tickets'/>
+					<input type='submit' class='ticketsBtn' value='".next($pageTexts)."'/>
 				</form>
 			</div>
 			<div class='restaurantsGrid-container'>
