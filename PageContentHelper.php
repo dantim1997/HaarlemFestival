@@ -28,6 +28,9 @@ class PageContentHelper
 		if (isset($_GET['Language'])) {
 			$_SESSION['Language'] = $_GET['Language'];
 		}
+		else{
+			$_SESSION['Language'] = 'English';
+		}
 	}
 
 	public function GetPageImage($page){
