@@ -36,7 +36,7 @@ $mollie->setApiKey($Config->GetMollieKey());
         $AllTickets = array_merge($AllTickets, $PayedTicketsTour);
         $sendMail = new SendMail();
         $sendMail->SendCustomerMail($customerInfo, $AllTickets);
-        $Session->CleanCart();
+        
     } elseif ($payment->isOpen()) {
         /*
          * The payment is open.

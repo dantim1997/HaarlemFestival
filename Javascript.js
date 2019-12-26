@@ -132,7 +132,6 @@ function FoodAddToCartHelper(count) {
 }
 
 function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
-	alert();
 	var amount = childAmount + adultAmount;
 	if (amount > 0) {
 		$.ajax({ url: 'AddToCartFood.php',
