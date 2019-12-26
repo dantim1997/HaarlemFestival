@@ -97,10 +97,10 @@ class MyProgramController
 	public function SetRow($ticket, $typeEvent){
 		////////////////////////////////DELETE WHEN MORE DATES FROM MORE EVENTS/////////////////
 		$TijdelijkDate = array(
+			date('Y-m-d', strtotime('2020-07-26')), 
 			date('Y-m-d', strtotime('2020-07-27')), 
 			date('Y-m-d', strtotime('2020-07-28')), 
-			date('Y-m-d', strtotime('2020-07-29')), 
-			date('Y-m-d', strtotime('2020-07-30')));
+			date('Y-m-d', strtotime('2020-07-29')));
 			$startDate = date('Y-m-d', strtotime($ticket["StartDateTime"]));
 			$startTime = date("H:i",strtotime($ticket["StartDateTime"]));
 			$endTime = date("H:i",strtotime($ticket["EndDateTime"]));

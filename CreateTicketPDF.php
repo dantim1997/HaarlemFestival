@@ -121,6 +121,7 @@ class PDFMaker{
 		$pdf->AddPage();
 		$amountOnPage = 0;
 		foreach($tickets as $ticket){
+			error_log(serialize($ticket));
 			if($amountOnPage == 3){
 				$pdf->AddPage();
 				$height = 0;

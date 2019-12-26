@@ -14,13 +14,29 @@ class MakeOrder{
 
     public function Order($orderInfo, $items)
     {   
-        $orderId = $this->DB_Helper->CreateOrder($orderInfo);
+        $uniqueCode =microtime(true);
+        $uniqueCode = str_replace(".","",$uniqueCode);
+        $orderId = $this->DB_Helper->CreateOrder($orderInfo, $uniqueCode);
         foreach($items as $item)
-        {
-            for($i = 0; $i < $item['Amount']; $i++){
-                $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"]);
-                $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
-                $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+        { 
+            if(array_key_exists("Amount" , $item)){
+                for($i = 0; $i < $item['Amount']; $i++){
+                    $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"]);
+                    $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
+                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                }
+            }
+            if(array_key_exists("AdultAmount", $item)){
+                for($i = 0; $i < $item['AdultAmount']; $i++){
+                    $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Adult");
+                    $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
+                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                }
+                for($i = 0; $i < $item['ChildAmount']; $i++){
+                    $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Child");
+                    $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
+                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                }
             }
         }
         //$this->Session->CleanCart();
@@ -51,6 +67,9 @@ class MakeOrder{
         foreach($items as $item){
             switch ($item['TypeEvent']) {
                 case 1:
+                    $event = $this->DB_Helper->GetEventInfoFood($item['EventId']);
+                    $amountPay += doubleval(10) * doubleval($item['ChildAmount']);
+                    $amountPay += doubleval(10) * doubleval($item['AdultAmount']);
                     break;
                 case 2:
                     $event = $this->DB_Helper->GetEventInfoDance($item['EventId']);
@@ -69,10 +88,17 @@ class MakeOrder{
         return  number_format($amountPay, 2, '.', '');
     }
 
-    public function GetEventPrice($eventId, $typeEvent)
+    public function GetEventPrice($eventId, $typeEvent, $typeTicket = "")
     {
         switch ($typeEvent) {
             case 1:
+                $event = $this->DB_Helper->GetEventInfoFood($eventId);
+                if($typeTicket == "Child"){
+                    return doubleval($event['ChildPrice']);
+                }
+                else{
+                    return doubleval($event['AdultPrice']);
+                }
                 break;
             case 2:
                 $event = $this->DB_Helper->GetEventInfoDance($eventId);
