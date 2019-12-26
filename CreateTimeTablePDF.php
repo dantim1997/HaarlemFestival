@@ -14,7 +14,7 @@ class Ticket extends FPDF{
 
 	function headerline($date){
 		$this->Ln(20);
-		$this->SetFont('Arial', '', 12);
+		$this->SetFont('Arial', '', 10);
 		$r = 255; $g =255; $b=102;
 		$this->SetFillColor($r, $g, $b);
 		$this->Cell(16.5,10,"Food",1,0,'L',1);
@@ -50,8 +50,17 @@ class Ticket extends FPDF{
 	function column($event = "", $r = 255, $g=255, $b=255)
 	{
 		$this->SetFillColor($r, $g, $b);
-		$this->SetFont('Arial', '', 9);
+		$this->SetFont('Arial', '', 7);
+		//$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
 		$this->Cell(39.5,10,$event,1,0,'L',1);
+	}
+	function LeftColumn($event = "", $r = 255, $g=255, $b=255)
+	{
+		$splitEvent = explode(",", $event);
+		$this->SetFillColor($r, $g, $b);
+		$this->SetFont('Arial', '', 7);
+		//$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+		$this->Cell(39.5,10,$splitEvent[0],1,0,'L',1);
 	}
 }
 if(isset($_GET)){
@@ -63,8 +72,8 @@ if(isset($_GET)){
 	$pdf->AliasNbPages();
 	$pdf->AddPage('P', 'A4', 0);
 	$pdf->headerline($Date);
-	GetFoodTickets($DB_Helper,$OrderId, $pdf);
 	GetDanceTickets($DB_Helper,$OrderId, $pdf);
+	GetFoodTickets($DB_Helper,$OrderId, $pdf);
 	GetTourTickets($DB_Helper,$OrderId, $pdf);
 	GetJazzTickets($DB_Helper,$OrderId, $pdf);
 	$pdf->Output();
@@ -102,10 +111,10 @@ function GetFoodTickets($DB_Helper,$id, $pdf){
 function SetRow($ticket, $typeEvent, $pdf){
 	////////////////////////////////DELETE WHEN MORE DATES FROM MORE EVENTS/////////////////
 	$TijdelijkDate = array(
+		date('Y-m-d', strtotime('2020-07-26')), 
 		date('Y-m-d', strtotime('2020-07-27')), 
 		date('Y-m-d', strtotime('2020-07-28')), 
-		date('Y-m-d', strtotime('2020-07-29')), 
-		date('Y-m-d', strtotime('2020-07-30')));
+		date('Y-m-d', strtotime('2020-07-29')));
 		$r = 0;
 		$g = 0;
 		$b = 0;
@@ -116,15 +125,16 @@ function SetRow($ticket, $typeEvent, $pdf){
 			case 4: $r = 102; $g =255; $b=51; break;
 		}
 		$startDate = date('Y-m-d', strtotime($ticket["StartDateTime"]));
-		$pdf->column($ticket["Name"]);
+		$pdf->LeftColumn($ticket["Name"]);
 		foreach ($TijdelijkDate as $date) {
 			if($date == $startDate){
 				$pdf->column($ticket["description"] ." ". $ticket["info"], $r, $g, $b);
+			}
+			else{
+				$pdf->column();
+			}
 		}
-		else{
-			$pdf->column();
-		}
-	}
+	$pdf->row();
 }
 
 ?>

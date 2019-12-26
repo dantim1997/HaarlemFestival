@@ -6,7 +6,8 @@ class DBConnection
 	private $conn;
 	
 	//information about the server interaction
-	private $host = 'localhost';
+	//private $host = 'localhost';
+	private $host = 'server.infhaarlem.nl';
 	private $user = 'hfteam3_user';
 	private $pass = 'ambFGSR2A';
 	private $name = 'hfteam3_db';

@@ -136,6 +136,9 @@ class DB_Helper
 
 	//get user by Id from DB by Id
 	public function GetSearch($artistSearch, $locationSearch){
+		if($artistSearch != "" && $locationSearch != ""){
+			$artistSearch .= " OR ";
+		}
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description, StartDateTime, EndDateTime, Price, GROUP_CONCAT(a.Name) Artist FROM DanceEvent as e 
 			join DanceVenue as v on v.Id = e.VenueId
@@ -660,13 +663,13 @@ class DB_Helper
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT FirstName, LastName, Email, Address, PhoneNumber FROM `Order` WHERE Id = ?");
+		$stmt = $this->Conn->prepare("SELECT FirstName, LastName, Email, Address, PhoneNumber, OrderNumber FROM `Order` WHERE Id = ?");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($FirstName, $LastName ,$Email, $Address, $PhoneNumber);
+		$stmt-> bind_result($FirstName, $LastName ,$Email, $Address, $PhoneNumber, $OrderNumber);
 		$stmt->fetch();
-		$info = array($FirstName." ".$LastName, $Email, $Address, $PhoneNumber);
+		$info = array($FirstName." ".$LastName, $Email, $Address, $PhoneNumber, $OrderNumber);
 		return $info;
 	}
 
@@ -916,7 +919,6 @@ public function RemoveavAilableTicketJazz($eventId){
 }
 
 public function UpdateTickets($orderId){
-	//error_log("TEST..............................".$orderId);
 	//cleans email and password
 	$orderId = mysqli_real_escape_string($this->Conn, $orderId);
 

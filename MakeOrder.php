@@ -14,8 +14,10 @@ class MakeOrder{
 
     public function Order($orderInfo, $items)
     {   
-        $uniqueCode =microtime(true);
+        usleep(5);
+        $uniqueCode = microtime();
         $uniqueCode = str_replace(".","",$uniqueCode);
+        $uniqueCode = str_replace(" ","",$uniqueCode);
         $orderId = $this->DB_Helper->CreateOrder($orderInfo, $uniqueCode);
         foreach($items as $item)
         { 
