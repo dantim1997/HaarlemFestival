@@ -123,12 +123,12 @@ function FoodAddToCartHelper(count) {
 	var extraInfo = document.getElementById('extraInfo' + count).value;
 	var id = document.getElementById('pickSession' + count).value;
 	var date = document.getElementById('date' + count).value;
-
+	
 	var startTimeSelect = document.getElementById('pickSession' + count);
 	var startTime = startTimeSelect.options[startTimeSelect.selectedIndex].text;
 	
 	FoodAddToCart(id, childAmount, adultAmount, startTime, date, extraInfo);
-
+	
 }
 
 function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {

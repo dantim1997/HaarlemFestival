@@ -42,7 +42,14 @@ class Ticket extends FPDF{
 		$this->Cell(20);
 		$this->Cell(40,10,'Phonenumber',0,0,'L');
 		$this->Cell(40,10,next($info),0,0,'L');
-		$this->Ln(40);
+		$this->Ln(0);
+		$this->Cell(20);
+		$this->Cell(40,10,'Ordernumber',0,0,'L');
+		$this->Cell(40,10,next($info),0,0,'L');
+		$this->Ln(10);
+		$this->Cell(20);
+		$this->SetFont('Times', 'B', 8);
+		$this->Cell(40,10,'*Use this number to see your program in my Program',0,0,'L');
 	}
 
 	function EventTicket($ticketInfo, $extraHeight, $qrImage){
@@ -105,7 +112,7 @@ class Ticket extends FPDF{
 class PDFMaker{
 	public function MakePDF($customerInfo, $tickets)
 	{
-		//$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655");
+		//$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655", ordernumber);
 		/*$tickets = array();
 		$tickets[] = array("Hardwell B2B", "5060.00", "customer", "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", qrcode);*/
 		

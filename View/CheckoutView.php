@@ -45,15 +45,7 @@ class CheckoutView
 					<div class='input'>				
 					<form method='post' action=''>	
 								<table>
-									<tr>
-										<td><h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3></td>
-										<td><select class='dropDown2'>
-											<option selected value='IDEAL'>IDEAL</option>
-											<option value='VISA'>VISA</option>
-											<option value='Paypal'>Paypal</option>
-											</select>		
-										</td>
-									</tr>
+									
 									<tr>
 										<td><h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3></td>
 										<td><input pattern='[a-zA-Z]*' class='lbltxt' type='text'  name='FirstName'></td>
@@ -74,7 +66,7 @@ class CheckoutView
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
 										<td>
 											<input pattern='[0-9]{4}' style='width:20%;' class='lbltxt' type='number' name='HouseNumber'>
-											<input pattern='[a-zA-Z]*'style='width:80%;' class='lbltxt' type='text'
+											<input pattern='[a-zA-Z]*'style='width:80%;' class='lbltxt' type='text' placeholder='Street' name='Street'>
 										</td>
 									</tr>
 									<tr>
