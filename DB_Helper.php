@@ -241,11 +241,12 @@ class DB_Helper
 
 	public function GetOrderTicketsFood($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT f.id, f.Location, f.SessionStartDateTime, f.SessionEndDateTime, f.Description, '' info
+		$stmt = $this->Conn->prepare("SELECT fr.id, r.Location, fr.SessionStartDateTime, fr.SessionEndDateTime, r.Description, '' info
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
-			join FoodRestaurants f on f.Id = t.EventId
+			join FoodRestaurants fr on fr.Id = t.EventId
+			join Restaurants r on r.Id = fr.RestaurantId
 			WHERE o.OrderNumber = ? && t.TypeEvent = 1");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
@@ -373,8 +374,22 @@ class DB_Helper
 		return $foodDates;
 	}
 
-	public function Get_PageText($page){
-		$stmt = $this->Conn->prepare("SELECT ParagraphText FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+	public function Get_PageTextEnglish($page){
+		$stmt = $this->Conn->prepare("SELECT ParagraphTextEnglish FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
+		$stmt->bind_param("s", $page);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($string);
+		$pageTextContent = array(); 
+		while ($stmt -> fetch()) {
+			$pageText = $string;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	public function Get_PageTextDutch($page){
+		$stmt = $this->Conn->prepare("SELECT ParagraphTextDutch FROM EventParagraph WHERE EventPage LIKE ? ORDER BY PageSequenceNumber ASC");
 		$stmt->bind_param("s", $page);
 		$stmt->execute();
 		$stmt->store_result();
@@ -450,7 +465,6 @@ class DB_Helper
 
 	//get Artists for Jazz carousel filter
 	public function GetArtistsJazz($genreFilter){
-		$sql = "";
 		if (empty($genreFilter)){
 			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE Genre IS NOT NULL GROUP BY ArtistName";
 		}
@@ -473,7 +487,8 @@ class DB_Helper
 	//get Tickets for Jazz
 	public function GetTicketsJazz($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE '".$date."%' OR (ArtistName LIKE '%whole%' AND EndDateTime > '".$date."%') ORDER BY EndDateTime, Hall ASC");
+		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE ? OR (ArtistName LIKE '%whole%' AND EndDateTime > '".$date."%') ORDER BY EndDateTime, Hall ASC");
+		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Name, $StartDateTime, $EndDateTime, $Price, $Hall); 
@@ -488,7 +503,8 @@ class DB_Helper
 	//get Programme for Jazz
 	public function GetArtistTableJazz($datetime){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE '$datetime' AND Genre IS NOT NULL");
+		$stmt = $this->Conn->prepare("SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE ? AND Genre IS NOT NULL");
+		$stmt->bind_param("s", $datetime);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Name); 
@@ -551,8 +567,9 @@ class DB_Helper
 		FROM Jazz j
 		INNER JOIN JazzVenues v
 		ON v.Name = j.Location
-		WHERE j.StartDateTime LIKE '".$date."%'
+		WHERE j.StartDateTime LIKE ?
 		GROUP BY DATE_FORMAT(j.StartDateTime, '%Y-%m')");
+		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfo, $GoogleMaps);
@@ -780,6 +797,20 @@ class DB_Helper
 			array_push($tickets,$ticket);
 		}
 		return $tickets;
+	}
+
+	public function GetContentPage($id){
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT TitleEnglish, TitleDutch, PageTextEnglish, PageTextDutch, LastEdited FROM Pages WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($EnglishTitle, $DutchTitle, $EnglishText, $DutchText, $Date);
+		$stmt->fetch();
+		$ticket = array("EnglishTitle"=>$EnglishTitle, "DutchTitle"=>$DutchTitle, "EnglishText"=>$EnglishText, "DutchText"=>$DutchText, "Date"=>$Date);
+		return $ticket;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
