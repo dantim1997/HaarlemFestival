@@ -117,6 +117,7 @@ a:active {
 	background-color: #FFFFFF;
 	bottom: 0;
 	float: left;
+	position: absolute;
 	width: 100%;
 }
 
@@ -124,6 +125,7 @@ a:active {
 	margin-top: 6px;
 	margin-left: 30%;
 	font-size: 20px;
+	margin-bottom: 0;
 }
 
 #NavBar{
