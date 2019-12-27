@@ -9,10 +9,9 @@
 }
 
 .Footer{
-	position: relative;
-	margin-top: 85px;
-	bottom: 0;
+  position: relative;
 }
+
 .bottomHalfCheckout{
 	width: 100%;
 	height: 500px;

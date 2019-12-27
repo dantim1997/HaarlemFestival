@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+.Footer{
+  position: relative;
+}
+
 /*RESTAURANT FILTER*/
 .restaurantFilter {
   float: left;
