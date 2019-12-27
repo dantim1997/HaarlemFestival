@@ -4,6 +4,10 @@ body {
     background-size: contain;
 }
 
+.Footer{
+  position: relative;
+}
+
 .main {
     font-family: Arial, Helvetica, sans-serif;
     margin-top: 200px;
@@ -41,10 +45,7 @@ body {
     width: 100%;
 }
 
-.Footer {
-    margin-top: 0px;
-    color: black;
-}
+
 
 .content {
     background-color: rgba(0, 153, 102, 1);

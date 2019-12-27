@@ -26,7 +26,7 @@ class CheckoutController
 			"Date" => "",
 		);
 		if(isset($_POST['proceedToPaymentBTN'])){
-			
+			var_dump($_SESSION["Tickets"]);
 			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 			$errorList["LastName"] = $this->IsRequired("LastName", "text");
 			$errorList["Email"] = $this->IsRequired("Email", "text");
@@ -96,9 +96,6 @@ class CheckoutController
 		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
-			//case 1:
-			//	$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId, "ChildPrice");
-			//	break;
 			case 2:
 				$eventInfo = $this->DB_Helper->GetEventInfoDance($eventId);
 				break;
