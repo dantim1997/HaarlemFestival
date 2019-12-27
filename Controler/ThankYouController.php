@@ -9,6 +9,8 @@ class ThankYouController
 	public function __construct($indexModel){
 		$this->IndexModel = $indexModel;
 		$this->Config = Config::getInstance();
+		$Session = new Session;
+		$Session->CleanCart();
 	}
 	
 	//get config
@@ -16,5 +18,4 @@ class ThankYouController
 		return $this->Config;
 	}
 }
-
 ?>

@@ -93,6 +93,7 @@ class JazzController
 
 	//get tickets for event day
 	public function FillTickets($date){
+		$date .= "%";
 		$ticket = $this->DB_Helper->GetTicketsJazz($date);
 		$tickets = "";
 		foreach ($ticket as $ticket) {
@@ -233,6 +234,7 @@ class JazzController
 	}
 
 	public function GetTickets($date){
+		$date .= "%";
 		$tickets = $this->DB_Helper->GetTicketsJazz($date);
 		
 		$addtocart = "";
@@ -252,6 +254,7 @@ class JazzController
 	}
 
 	public function GetLocation($date){
+		$date .= "%";
 		$location = $this->DB_Helper->GetLocationsJazz($date);
 		$output = "<h2>Location<h2>
 		<p class='location'>".$location["Name"]."<br>".$location["Adress"]."<br>".$location["Zipcode"]." ".$location["City"]."<br>".$location["Info"]."</p>

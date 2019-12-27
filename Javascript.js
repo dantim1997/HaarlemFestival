@@ -98,14 +98,6 @@ function JazzClearItems(){
 	}
 }
 
-function FoodAddToCart(eventId, typeEvent) {
-	var childAmount = GetChildrenTicketCount();
-	var adultAmount = GetNormalTicketCount();
-
-	AddToCartExtraInfo(eventId, typeEvent, childAmount, 0);
-	AddToCartExtraInfo(eventId, typeEvent, adultAmount, 1);
-}
-
 function TimeTablePDF(id){
 	var win = window.open("CreateTimeTablePDF.php?id="+id, '_blank');
   win.focus();
@@ -131,12 +123,12 @@ function FoodAddToCartHelper(count) {
 	var extraInfo = document.getElementById('extraInfo' + count).value;
 	var id = document.getElementById('pickSession' + count).value;
 	var date = document.getElementById('date' + count).value;
-
+	
 	var startTimeSelect = document.getElementById('pickSession' + count);
 	var startTime = startTimeSelect.options[startTimeSelect.selectedIndex].text;
 	
 	FoodAddToCart(id, childAmount, adultAmount, startTime, date, extraInfo);
-
+	
 }
 
 function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
