@@ -8,6 +8,10 @@ body {
  background-size: cover;
 }
 
+.Footer{
+  position: relative;
+}
+
 .historicHomeButtons{
 	width: 350px;
 	padding: 12px 25px;
@@ -213,6 +217,7 @@ h4{
 	width: 35%;
 	margin-left: 6%;
 	margin-top: 4%;
+	margin-bottom: 77px;
 	min-height: 600px;
 	float: left;
 	box-shadow: 2px 3px 2px 2px #333333; 
@@ -329,6 +334,7 @@ h5{
 	margin-top: 3%;
 	margin-left: 15%;
 	margin-right: 0;
+	margin-bottom: 34px;
 	min-height: 650px;
 	box-shadow: 2px 3px 2px 2px #333333;
 	font-family: 'Heebo', sans-serif;
@@ -400,12 +406,8 @@ h5{
 	border-right: 1px solid #000000;
 }
 
-.Footer{
-	position: relative;
-	margin-top: 48px;
-	bottom: 0;
-	float: left;
-}
+
+
 
 .familyTicket{
 	text-align: center;
