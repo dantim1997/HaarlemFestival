@@ -347,6 +347,22 @@ h5{
 	height: 200px;
 }
 
+.unavailableTickets{
+	width: 400px;
+	padding: 10px;
+	margin-left: 470px;
+	margin-top: 6%;
+	border-radius: 20px;
+	border-style: dashed;
+	border-width: 2px;
+	border-color: #e81a1a;
+	background-color: #ffb3b3;
+}
+
+.unavailableTickets:empty{
+	visibility: hidden;
+}
+
 
 .blackBar5{
 	width: 14%;

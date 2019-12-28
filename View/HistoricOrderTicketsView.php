@@ -69,6 +69,8 @@ class HistoricOrderTicketsView
 
 				<h5 class='dayLabel'>".$this->ticketInformation['day']."</h5>
 
+				<p class='unavailableTickets'>".$this->ticketInformation['NotAvailable']."</p>
+
 				<div class='ticketsContainer'>
 					<h5 class='normalTicket'>".next($pageTexts)."</h5>
 					<h5 class='familyTicket'>".next($pageTexts)."</h5>

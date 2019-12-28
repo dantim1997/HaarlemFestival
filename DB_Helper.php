@@ -270,15 +270,15 @@ class DB_Helper
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language, TypeTicket from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT * from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("sss", $language, $day, $type);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $Description, $StartDateTime, $EndDateTime, $Price, $Language, $TypeTicket); 
+		$stmt-> bind_result($Id, $Description, $StartDateTime, $EndDateTime, $Price, $Language, $TypeTicket, $ReferenceId, $Amount); 
 		$tours = array();
 		while ($stmt -> fetch()) { 
-			$tour = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language, "TypeTicket"=>$TypeTicket);
+			$tour = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language, "TypeTicket"=>$TypeTicket, "ReferenceId"=>$ReferenceId, "Amount"=>$Amount);
 			$tours[] = $tour;
 		}
 		return $tours;
@@ -817,6 +817,40 @@ class DB_Helper
 		$ticket = array("EnglishTitle"=>$EnglishTitle, "DutchTitle"=>$DutchTitle, "EnglishText"=>$EnglishText, "DutchText"=>$DutchText, "Date"=>$Date);
 		return $ticket;
 	}
+
+	public function GetAmountHistoric($id){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Type, $ReferenceId);
+		$stmt->fetch();
+		$type = $Type;
+		if ($type == 'Family') {
+			$id = $ReferenceId;
+		}
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Amount FROM HistoricTours WHERE Id = ?");
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Amount);
+		$stmt->fetch();
+		$amount = $Amount;
+		return $amount;
+	}
+
+	public function GetAmountDance(){
+		
+	}
+	public function GetAmountFood(){
+		
+	}
+	public function GetAmountJazz(){
+		
+	}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
