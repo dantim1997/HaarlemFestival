@@ -32,13 +32,19 @@ class DanceTimeTableController
 		$specials = $this->DB_Helper->Get_AllSpecialEvents();
 
 		$specialTickets="";
-		foreach ($specials as $special) {
-			$specialTickets.= "
-			<tr>
+		if(count($specials) > 0){
+
+			foreach ($specials as $special) {
+				$specialTickets.= "
+				<tr>
 				<td>".$special["description"]."</td><td>&euro; ".$special["price"]."</td>
 				<td><input type='Button' class='AddButton'
-					onclick='AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
-			</tr>";
+				onclick='AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
+				</tr>";
+			}
+		}
+		else{
+			$specialTickets .= "<i style='color:red;'>There are no Sessions</i>";
 		}
 
 		return $specialTickets;
