@@ -8,6 +8,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
     $DB_Helper = new DB_Helper();
     $existingamount = 0;
     $maxamount = 0;
+    $amount = $_POST['amount'];
     foreach($_SESSION["Tickets"] as $item){
         if($item["EventId"] == $eventId){
             $existingamount = $item["Amount"];
@@ -21,14 +22,28 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
             $maxamount= $DB_Helper->GetTicketAmountDance($eventId);
             break;
         case 3:
-                $maxamount =  $DB_Helper->GetAmountHistoric($eventId);
+            $historic = $DB_Helper->GetAmountHistoric($eventId);
+            $maxamount =  $historic['Amount'];
+
+            $familyTourByReferenceId = $DB_Helper->GetToursByReferenceId($eventId);
+
+            if ($historic['Type'] == 'Family') {
+                $amount = $amount * 4;
+            }    
+            foreach($_SESSION["Tickets"] as $item){
+                if ($familyTourByReferenceId == $item["EventId"]) {
+                    $existingamount += $item['Amount']; 
+                }
+                if ($historic['ReferenceId']  != 0 && $item["EventId"] == $historic['ReferenceId']) {
+                    $existingamount += $item["Amount"];
+                }
+            }
             break;
         case 4:
             $maxamount = $DB_Helper->GetTicketAmountJazz($eventId);
             break;
     }
-    if($_POST['amount'] + $existingamount <= $maxamount){
-        $amount = $_POST['amount'];
+    if($amount + $existingamount <= $maxamount){
         $session->AddToCart($eventId,$TypeEvent,$amount);
         print 1;
     }

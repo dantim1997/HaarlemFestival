@@ -12,7 +12,7 @@ body {
   position: relative;
 }
 
-.historicHomeButtons{
+#historicHomeButtons{
 	width: 350px;
 	padding: 12px 25px;
 	font-size: 25px;
@@ -29,7 +29,7 @@ body {
 	box-shadow: 2px 2px 2px 2px #333333;
 }
 
-#downloadRouteBTN{
+.downloadRouteBTN{
 	margin-left: 40.5%;
 	margin-top: 2%;
 	text-align: left;
@@ -42,7 +42,7 @@ body {
 	background-size: 40px;
 }
 
-.historicHomeButtons:hover{
+#historicHomeButtons:hover{
 	background-color: #990000;
 }
 
@@ -306,7 +306,7 @@ h5{
 	margin-top: 7%;
 }
 
-.orderNowButton{
+#orderNowButton{
 	width: 90%;
 	padding: 6px 25px;
 	font-size: 25pt;
@@ -323,7 +323,7 @@ h5{
 	box-shadow: 2px 2px 2px 2px #333333;
 }
 
-.orderNowButton:hover{
+#orderNowButton:hover{
 	background-color: #990000;
 }
 
@@ -568,7 +568,7 @@ h5{
 	background-color: #ffdb4d;
 }
 
-.proceedToCheckoutButton{
+#proceedToCheckoutButton{
 	padding: 5px 25px;
 	font-size: 19pt;
 	font-weight: normal;
@@ -588,6 +588,6 @@ h5{
 	box-shadow: 2px 2px 2px 2px #808080;
 }
 
-.proceedToCheckoutButton:hover{
+#proceedToCheckoutButton:hover{
 	background-color: #990000;
 }

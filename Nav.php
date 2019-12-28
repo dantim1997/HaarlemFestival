@@ -22,7 +22,7 @@ class Nav
 						<a href='".$this->DeterminGET()."Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='Images/Nav/Englishflag.png'></a>
 						<a href='".$this->DeterminGET()."Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='Images/Nav/Dutchflag.png'></a>
 					</div>
-					<a href='checkout.php'>
+					<a href='Checkout.php'>
 						<div class='ShoppingCart'>
 							<div class='shopcartItems' id='shoppingcartCount'>".$this->GetCartItems()."</div>
 						</div>
@@ -35,7 +35,7 @@ class Nav
 				<span class='popuptext' >
 					<p id='#popupHeader'>Ticket(s) added to cart!</p>
 					<hr id='hrBars'>
-					<a href='checkout.php' class='toCheckoutBTN'>To Cart</a>
+					<a href='Checkout.php' class='toCheckoutBTN'>To Cart</a>
 				</span>
 			</div>
 		</div>";
