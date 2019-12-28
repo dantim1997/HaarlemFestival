@@ -42,11 +42,11 @@ class Ticket extends FPDF{
 		$this->Cell(20);
 		$this->Cell(40,10,'Phonenumber',0,0,'L');
 		$this->Cell(40,10,next($info),0,0,'L');
-		$this->Ln(0);
+		$this->Ln();
 		$this->Cell(20);
 		$this->Cell(40,10,'Ordernumber',0,0,'L');
 		$this->Cell(40,10,next($info),0,0,'L');
-		$this->Ln(10);
+		$this->Ln();
 		$this->Cell(20);
 		$this->SetFont('Times', 'B', 8);
 		$this->Cell(40,10,'*Use this number to see your program in my Program',0,0,'L');

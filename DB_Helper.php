@@ -780,7 +780,7 @@ class DB_Helper
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
 		$stmt = $this->Conn->prepare("
-		SELECT h.Description, o.FirstName, o.LastName, 'test' location, h.Language, h.StartDateTime, h.EndDateTime, t.Price, t.QRCode FROM `Order` o
+		SELECT h.Description, o.FirstName, o.LastName, 'Church of St. Bavo' location, h.Language, h.StartDateTime, h.EndDateTime, t.Price, t.QRCode FROM `Order` o
 		Join OrderLine ol on ol.OrderId = o.Id
 		JOIN Tickets t on t.Id = ol.TicketId
 		Join HistoricTours h on h.Id = t.EventId
@@ -818,6 +818,74 @@ class DB_Helper
 		return $ticket;
 	}
 
+	public function GetTicketAmountDance($eventId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Amount FROM DanceEvent WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Amount);
+		$stmt->fetch();
+		$amount = $Amount;
+		return $amount;
+	}
+
+	public function GetTicketAmountFood($eventId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Amount FROM FoodRestaurants WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Amount);
+		$stmt->fetch();
+		$amount = $Amount;
+		return $amount;
+	}
+
+	public function GetAmountHistoric($id){
+        //does a prepared query
+        $stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt-> bind_result($Type, $ReferenceId);
+        $stmt->fetch();
+        $type = $Type;
+        if ($type == 'Family') {
+            $id = $ReferenceId;
+        }
+        //does a prepared query
+        $stmt = $this->Conn->prepare("SELECT Amount FROM HistoricTours WHERE Id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt-> bind_result($Amount);
+        $stmt->fetch();
+        $amount = $Amount;
+        return $amount;
+    }
+
+	public function GetTicketAmountJazz($eventId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Amount FROM Jazz WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Amount);
+		$stmt->fetch();
+		$amount = $Amount;
+		return $amount;
+	}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -830,20 +898,26 @@ public function CreateOrder($orderInfo, $uniqueCode){
 	$Street = mysqli_real_escape_string($this->Conn, $orderInfo['Street']);
 	$PostCode = mysqli_real_escape_string($this->Conn, $orderInfo['PostCode']);
 	$HouseNumber = mysqli_real_escape_string($this->Conn, $orderInfo['HouseNumber']);
-
+	var_dump($orderInfo['PhoneNumber']);
+	if(isset($orderInfo['PhoneNumber'])){
+		$PhoneNumber = mysqli_real_escape_string($this->Conn, $orderInfo['PhoneNumber']);
+	}
+	else{
+		$PhoneNumber = "";
+	}
 	$adress = $PostCode . " ". $Street . " ". $HouseNumber;
 	$Date = date("Y-m-d H:i:s");
 	//does prepared query
-	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date, OrderNumber) VALUES(?, ?, ?, ?, ?, ?)");
-	$stmt->bind_param("ssssss", $FirstName, $LastName, $Email,$adress, $Date, $uniqueCode);
-	/* Commit or rollback transaction */
+	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date, OrderNumber, PhoneNumber) VALUES(?, ?, ?, ?, ?, ?, ?)");
+	$stmt->bind_param("sssssss", $FirstName, $LastName, $Email,$adress, $Date, $uniqueCode, $PhoneNumber);
+	// Commit or rollback transaction
 	if ($stmt->execute()) {
 		$this->Conn->commit();
 		return $stmt->insert_id;
 	} else {
 		$this->Conn->rollback();
 		return 0;
-	}   
+	} 
 }
 
 public function CreateTicket($eventId, $TypeEvent, $QRCode, $price){
@@ -908,6 +982,22 @@ public function RemoveavAilableTicketJazz($eventId){
 
 	//does a prepared query
 	$stmt = $this->Conn->prepare("UPDATE Jazz set Amount = Amount - 1 where Id = ?");
+	$stmt->bind_param("i", $eventId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
+public function RemoveavAilableTicketTour($eventId){
+	//cleans email and password
+	$emailSQL = mysqli_real_escape_string($this->Conn, $eventId);
+
+	//does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE HistoricTours set Amount = Amount - 1 where Id = ?");
 	$stmt->bind_param("i", $eventId);
 	/* Commit or rollback transaction */
 	if ($stmt->execute()) {
