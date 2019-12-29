@@ -27,7 +27,7 @@ class CheckoutController
 		);
 		
 		if(isset($_POST['proceedToPaymentBTN'])){
-			if(count($_SESSION["Tickets"]) == 0){
+			if(count($_SESSION["Tickets"]) != 0){
 				var_dump($_SESSION["Tickets"]);
 				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 				$errorList["LastName"] = $this->IsRequired("LastName", "text");
@@ -39,6 +39,7 @@ class CheckoutController
 				$orderId = $makeOrder->Order($_POST, $_SESSION["Tickets"]);
 				header("Location: HFPay.php?OrderId=".$orderId);
 			}
+			error_log("error?");
 		}
 	}
 
@@ -63,7 +64,6 @@ class CheckoutController
 
 	public function GetAllItems(){
 		$ticketRows = "";
-
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
