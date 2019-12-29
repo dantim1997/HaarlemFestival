@@ -105,12 +105,17 @@ function TimeTablePDF(id){
 
 function AddToCart(eventId, typeEvent, amount, special) {
 	if (amount > 0) {
-     $.ajax({ url: 'AddToCart.php',
-     data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special},
-     type: 'post',
-     success: function(output) {
-                   ShowPopup();
-                   ShoppingCartPlus(amount);
+		$.ajax({ url: 'AddToCart.php',
+		data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special},
+		type: 'post',
+		success: function(output) {
+				if(output == 1){
+					ShowPopup();
+					ShoppingCartPlus(amount);
+				}
+				else{
+					alert("Sorry there are not enough tickets left for your request.");
+				}
 			}
 		});
 	}
@@ -271,7 +276,7 @@ function ToEvent(src){
 }
 
 function showTickets(){
-	location.href = ("historicOrderTickets.php");
+	location.href = ("HistoricOrderTickets.php");
 }
 
 function SelectedDay(date){

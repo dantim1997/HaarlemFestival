@@ -47,7 +47,7 @@ class HistoricOrderTicketsView
 								".next($pageTexts)."<br>
 								".next($pageTexts)."
 							</p>
-							<form method='post' action='historicOrderTickets.php'>
+							<form method='post' action='HistoricOrderTickets.php'>
 								<div class='orderTicketsDropdwn'>
 									<select name='language' class='dropDown'>
 										<option value='".$this->getSelectedLanguage()."'>".$this->getSelectedLanguage()."</option>
@@ -69,6 +69,8 @@ class HistoricOrderTicketsView
 
 				<h5 class='dayLabel'>".$this->ticketInformation['day']."</h5>
 
+				<p class='unavailableTickets'>".$this->ticketInformation['NotAvailable']."</p>
+
 				<div class='ticketsContainer'>
 					<h5 class='normalTicket'>".next($pageTexts)."</h5>
 					<h5 class='familyTicket'>".next($pageTexts)."</h5>
@@ -83,9 +85,7 @@ class HistoricOrderTicketsView
 				</div>
 
 				<!-- Proceed to checkout button -->
-				<form method='post' action='checkout.php'>	
-					<input class='proceedToCheckoutButton' type='submit' value='".next($pageTexts)."' name='ProceedToCheckout'>
-				</form>
+				<a href='Checkout.php' id='proceedToCheckoutButton' type='submit' name='ProceedToCheckout'>".next($pageTexts)."</a>
 			</div>
 		</div>";
 	}

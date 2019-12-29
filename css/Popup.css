@@ -1,25 +1,9 @@
 /* Popup container - can be anything you want */
 .popup {
+  margin-left: 85%;
   position: absolute;
-  margin-left: 80%;
-  float: right;
-  display: inline-block;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 10;
   display: none;
 }
-
-.popupContent{
-  position: sticky;
-  top: 0;
-  left: 0;
-  
-}
-
 
 /* The actual popup */
 .popup .popuptext {
@@ -35,8 +19,20 @@
   border-radius: 6px;
   padding: 8px 0;
   float: right;
+  position: absolute;
 }
 
+.popupHeader{
+  font-size: 4pt;
+  margin-bottom: 0;
+}
+
+#myPopup{
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
 
 /* Toggle this class - hide and show the popup */
 .popup .show {
@@ -56,10 +52,6 @@
   to {opacity:1 ;}
 }
 
-.popupHeader{
-  font-size: 4pt;
-  margin-bottom: 0;
-}
 
 #hrBars{
   background-color: #000000;
