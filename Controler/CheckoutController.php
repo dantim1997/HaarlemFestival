@@ -25,9 +25,9 @@ class CheckoutController
 			"Adress" => "",
 			"Date" => "",
 		);
-		if(count($_SESSION["Tickets"]) == 0){
-
-			if(isset($_POST['proceedToPaymentBTN'])){
+		
+		if(isset($_POST['proceedToPaymentBTN'])){
+			if(count($_SESSION["Tickets"]) == 0){
 				var_dump($_SESSION["Tickets"]);
 				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 				$errorList["LastName"] = $this->IsRequired("LastName", "text");

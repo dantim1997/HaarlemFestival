@@ -1005,11 +1005,22 @@ public function RemoveavAilableTicketJazz($eventId){
 
 public function RemoveavAilableTicketTour($eventId){
 	//cleans email and password
-	$emailSQL = mysqli_real_escape_string($this->Conn, $eventId);
-
+	$id = mysqli_real_escape_string($this->Conn, $eventId);
+	//does a prepared query
+	$stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
+	$stmt->bind_param("i", $id);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt-> bind_result($Type, $ReferenceId);
+	$stmt->fetch();
+	$type = $Type;
+	$ref = $ReferenceId;
+	if ($type == 'Family') {
+		$id = $ReferenceId;
+	}
 	//does a prepared query
 	$stmt = $this->Conn->prepare("UPDATE HistoricTours set Amount = Amount - 1 where Id = ?");
-	$stmt->bind_param("i", $eventId);
+	$stmt->bind_param("i", $id);
 	/* Commit or rollback transaction */
 	if ($stmt->execute()) {
 		$this->Conn->commit();
