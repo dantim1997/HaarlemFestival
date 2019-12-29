@@ -114,7 +114,7 @@ function AddToCart(eventId, typeEvent, amount, special) {
 					ShoppingCartPlus(amount);
 				}
 				else{
-
+					alert("Sorry there are not enough tickets left for your request.");
 				}
 			}
 		});
@@ -276,7 +276,7 @@ function ToEvent(src){
 }
 
 function showTickets(){
-	location.href = ("historicOrderTickets.php");
+	location.href = ("HistoricOrderTickets.php");
 }
 
 function SelectedDay(date){

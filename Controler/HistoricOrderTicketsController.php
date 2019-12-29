@@ -19,7 +19,7 @@ class HistoricOrderTicketsController
 		return $this->Config;
 	}
 	public function GetTickets(){
-		if (isset($_POST['day'])) {
+		if (isset($_POST['day']) && isset($_POST['language'])) {
 			//Get all the session from the database matching the given filters
 			$normalTickets = $this->DB_Helper->GetToursByFilters($_POST['language'], $_POST['day'], "Normal");
 			$familyTickets = $this->DB_Helper->GetToursByFilters($_POST['language'], $_POST['day'], "Family");
@@ -45,7 +45,7 @@ class HistoricOrderTicketsController
 		$normalTickets = "<div class='normalTicketsLabels'>";
 		//Add the text of each ticket.
 		foreach ($tours as $tour) {
-			if ($this->DB_Helper->GetAmountHistoric($tour->Id) >= 1) {
+			if ($this->DB_Helper->GetAmountHistoric($tour->Id)['Amount'] >= 1) {
 				$normalTickets .= "<h5 class=ticket>".$tour->Description."</h5>";
 			}
 			else{
@@ -60,7 +60,7 @@ class HistoricOrderTicketsController
 		//Add buttons for each ticket
 		foreach ($tours as $tour) {
 			//Check for available tickets
-			if ($this->DB_Helper->GetAmountHistoric($tour->Id) >= 1) {
+			if ($this->DB_Helper->GetAmountHistoric($tour->Id)['Amount'] >= 1) {
 				$normalTickets .= "<div class='ticketButtons'>
 					<button class='removeBTN' type='button' onclick='cartAmountMinus(".$count.")'>-</button>
 					<input class='ticketTxt' type='text' value='1' id='amountNumber".$count."'>
@@ -80,7 +80,7 @@ class HistoricOrderTicketsController
 		$count = 4;
 		//Add the text of each ticket
 		foreach ($tours as $tour) {
-			if ($this->DB_Helper->GetAmountHistoric($tour->Id) >= 4) {
+			if ($this->DB_Helper->GetAmountHistoric($tour->Id)['Amount'] >= 4) {
 				$familyTickets .= "<h5 class=ticket>".$tour->Description."</h5>";
 			}
 			else{
@@ -93,7 +93,7 @@ class HistoricOrderTicketsController
 
 		//Add buttons for each ticket
 		foreach ($tours as $tour) {
-			if ($this->DB_Helper->GetAmountHistoric($tour->Id) >= 4) {
+			if ($this->DB_Helper->GetAmountHistoric($tour->Id)['Amount'] >= 4) {
 				$familyTickets .= "<div class='ticketButtons'>	
 									<button class='removeBTN' type='button' onclick='cartAmountMinus(".$count.")'>-</button>
 									<input class='ticketTxt' type='text' value='1' id='amountNumber".$count."'>

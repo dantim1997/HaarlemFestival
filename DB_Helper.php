@@ -617,9 +617,6 @@ class DB_Helper
 		$stmt-> bind_result($Id, $Language, $TypeTicket, $Price, $StartDateTime, $EndDateTime); 
 		$Ticket = array();
 		while ($stmt -> fetch()) { 
-			if($TypeTicket == 'Family'){
-				$TypeTicket = 'Family (4 people)';
-			}
 			$ticket = array("ID"=>$Id, "Venue"=>"Church of St. Bavo", "About"=>$Language, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$TypeTicket ." Tour", "Price"=>$Price);
 		}
 		return $ticket;
@@ -868,7 +865,7 @@ class DB_Helper
         $stmt->store_result();
         $stmt-> bind_result($Amount);
         $stmt->fetch();
-        $amount = $Amount;
+        $amount = array('Amount' => $Amount, 'Type' => $Type, 'ReferenceId' => $ReferenceId);
         return $amount;
     }
 
@@ -885,6 +882,19 @@ class DB_Helper
 		$stmt->fetch();
 		$amount = $Amount;
 		return $amount;
+	}
+
+	public function GetToursByReferenceId($referenceId){
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $referenceId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Id FROM HistoricTours WHERE ReferenceId = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id);
+		$stmt->fetch();
+		return $Id;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
