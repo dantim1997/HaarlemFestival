@@ -255,10 +255,11 @@ p.specialNeedsP {
   text-align: center;
   border-width: 0px;
   background-color: rgba(221, 4, 43, 1);
-  font-size: 25px;
+  font-size: 22px;
   padding: 8px;
   color: #FFFFFF;
   border-radius: 5px;
+  width: 45%;
 }
 
 .makeReservationBtn:hover {
@@ -274,4 +275,11 @@ p.specialNeedsP {
 #normalP {
   height: 0px;
   margin-left: 10px;
+}
+
+#emptyTicketsWarning {
+  margin-left: 50%;
+  margin-top: -39px;
+  color: red;
+  font-weight: bold;
 }
