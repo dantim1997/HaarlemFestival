@@ -35,7 +35,7 @@ class JazzView
 			</div>
 			<div class='content'>
 				<h1>".next($pageTexts)."</h1>
-				<p>".next($pageTexts)."</p>
+				<p class='paragraph'>".next($pageTexts)."</p>
 				<h2>".next($pageTexts)."</h2>
 
 					<button onclick='ToggleAdvancedJazz()' class='filterbutton2'>".next($pageTexts)."</button>
@@ -139,7 +139,7 @@ class JazzView
 				</div>
 				<div id='Sunday1' class='sunday'>
 					<h1>".next($pageTexts)."</h1>
-					<p>".next($pageTexts)."</p>
+					<p class='paragraph'>".next($pageTexts)."</p>
 					<br>
 					<h2>".next($pageTexts)."</h2>
 					<br>

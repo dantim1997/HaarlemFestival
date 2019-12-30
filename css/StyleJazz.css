@@ -6,6 +6,7 @@ body {
 
 .Footer{
   position: relative;
+  margin-top: 0px;
 }
 
 .main {
@@ -45,8 +46,6 @@ body {
     width: 100%;
 }
 
-
-
 .content {
     background-color: rgba(0, 153, 102, 1);
     padding: 40px;
@@ -64,7 +63,7 @@ h2 {
     margin-top: 40px;
 }
 
-p {
+.paragraph {
     font-size: 22px;
 }
 
