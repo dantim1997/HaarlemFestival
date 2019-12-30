@@ -103,17 +103,18 @@ function TimeTablePDF(id){
   win.focus();
 }
 
-function AddToCart(eventId, typeEvent, amount, special) {
-	if (amount > 0) {
+function AddToCart(eventId, typeEvent, amount, childAmount = 0, adultAmount = 0, startTime = "", date = "", extraInfo = "") {
+	amountCheck = amount + childAmount + adultAmount;
+	if (amountCheck > 0) {
 		$.ajax({ url: 'AddToCart.php',
-		data: {eventId: eventId,typeEvent: typeEvent, amount:amount, special:special},
+		data: {eventId: eventId,typeEvent: typeEvent, amount:amount, childAmount: childAmount, adultAmount: adultAmount, startTime: startTime, date: date, extraInfo: extraInfo},
 		type: 'post',
 		success: function(output) {
-				if(output == 1){
+				if (output == 1) {
 					ShowPopup();
-					ShoppingCartPlus(amount);
+					ShoppingCartPlus(amountCheck);
 				}
-				else{
+				else {
 					alert("Sorry there are not enough tickets left for your request.");
 				}
 			}
@@ -126,27 +127,20 @@ function FoodAddToCartHelper(count) {
 	var childAmount = parseInt(document.getElementById('pplBelow12' + count).value);
 	var adultAmount = parseInt(document.getElementById('pplAbove12' + count).value);
 	var extraInfo = document.getElementById('extraInfo' + count).value;
-	var id = document.getElementById('pickSession' + count).value;
+	var eventId = document.getElementById('pickSession' + count).value;
 	var date = document.getElementById('date' + count).value;
 	
 	var startTimeSelect = document.getElementById('pickSession' + count);
 	var startTime = startTimeSelect.options[startTimeSelect.selectedIndex].text;
 	
-	FoodAddToCart(id, childAmount, adultAmount, startTime, date, extraInfo);
+	console.log(eventId, childAmount, adultAmount, startTime, date, extraInfo);
 	
-}
-
-function FoodAddToCart(eventId, childAmount, adultAmount, startTime, date, extraInfo) {
-	var amount = childAmount + adultAmount;
-	if (amount > 0) {
-		$.ajax({ url: 'AddToCartFood.php',
-		data: {eventId: eventId, childAmount: childAmount, adultAmount: adultAmount,  startTime: startTime, date: date, extraInfo: extraInfo},
-		type: 'post',
-		success: function(output) {
-				ShowPopup();
-				ShoppingCartPlus(amount);
-			}
-		});		
+	// check if selected time is valid, act accordingly
+	var timeCheck = startTime.search(":");
+	if (timeCheck == 2) {
+		AddToCart(eventId, 1, 0, childAmount, adultAmount, startTime, date, extraInfo);
+	} else {
+		alert("Please select a time.");
 	}
 }
 
@@ -163,7 +157,7 @@ function SelectedDate(count, id) {
 	type: 'post',
 	success: function(output) {
 		output = JSON.parse(output);
-		for(var i = 0; i < output.length; i++) {
+		for (var i = 0; i < output.length; i++) {
 			var opt = output[i];
 			var el = document.createElement("option");
 			el.textContent = String(opt.SessionStartTime);

@@ -180,7 +180,6 @@ class CheckoutController
 			foreach ($items as $item) {
 				// check if reservation is present in session
 				if ($item["TypeEvent"] == 1) {
-					// ladies and gentlemen, we got em
 					$count += $item["ChildAmount"];
 					$count += $item["AdultAmount"];
 				}
