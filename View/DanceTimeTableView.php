@@ -59,7 +59,7 @@ class DanceTimeTableView
 							</table>
 							".current($pageTexts)."
 						</div>
-						<a href='checkout.php'><div class='ProceeToCheckout'>".next($pageTexts)."</div>
+						<a href='Checkout.php'><div class='ProceeToCheckout'>".next($pageTexts)."</div>
 						</a>
 			    <div class='col-sm-1'></div>
 			  </div>

@@ -87,9 +87,7 @@ class HistoricTicketInfoView
     			</p>
 
     			<!-- Order now button -->
-				<form method='post' action='historicOrderTickets.php'>	
-					<input class='orderNowButton' type='submit' value='".next($pageTexts)."' name='histroricOrderTicketsBTN'>
-				</form>
+				<a href='HistoricOrderTickets.php' id='orderNowButton' type='submit' name='histroricOrderTicketsBTN'>".next($pageTexts)."</a>
 			</div>
 		</div>
 		</div>";

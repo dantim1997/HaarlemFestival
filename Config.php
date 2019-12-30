@@ -82,6 +82,9 @@ class Config
 		if($event == 'ThankYou'){
 			return "<link rel='stylesheet' type='text/css' href='css/ThankYou.css'>";
 		}
+		if($event == 'Content'){
+			return "<link rel='stylesheet' type='text/css' href='css/Content.css'>";
+		}
 	}
 
 	public function SetFooter(){

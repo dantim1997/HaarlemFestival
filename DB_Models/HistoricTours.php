@@ -9,8 +9,10 @@ Class HistoricTours{
 	public $EndDateTime;
 	public $Price;
 	public $TypeTicket;
+	public $ReferenceId;
+	public $Amount;
 
-	function __construct($id, $language, $description, $startDateTime, $endDateTime, $price, $typeTicket){
+	function __construct($id, $language, $description, $startDateTime, $endDateTime, $price, $typeTicket,  $referenceId, $amount){
 		$this->Id = $id;
 		$this->Language = $language;
 		$this->Description = $description;
@@ -18,6 +20,8 @@ Class HistoricTours{
 		$this->EndDateTime = $endDateTime;
 		$this->Price = $price;
 		$this->TypeTicket = $typeTicket;
+		$this->Amount = $amount;
+		$this->ReferenceId = $referenceId;
 	}
 }
 

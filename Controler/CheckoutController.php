@@ -25,17 +25,21 @@ class CheckoutController
 			"Adress" => "",
 			"Date" => "",
 		);
+		
 		if(isset($_POST['proceedToPaymentBTN'])){
-			var_dump($_SESSION["Tickets"]);
-			$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
-			$errorList["LastName"] = $this->IsRequired("LastName", "text");
-			$errorList["Email"] = $this->IsRequired("Email", "text");
-			$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
-			$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
-			$errorList["Street"] = $this->IsRequired("Street", "text");
-			$makeOrder = new MakeOrder();
-			$orderId = $makeOrder->Order($_POST, $_SESSION["Tickets"]);
-			header("Location: HFPay.php?OrderId=".$orderId);
+			if(count($_SESSION["Tickets"]) != 0){
+				var_dump($_SESSION["Tickets"]);
+				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
+				$errorList["LastName"] = $this->IsRequired("LastName", "text");
+				$errorList["Email"] = $this->IsRequired("Email", "text");
+				$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
+				$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
+				$errorList["Street"] = $this->IsRequired("Street", "text");
+				$makeOrder = new MakeOrder();
+				$orderId = $makeOrder->Order($_POST, $_SESSION["Tickets"]);
+				header("Location: HFPay.php?OrderId=".$orderId);
+			}
+			error_log("error?");
 		}
 	}
 
@@ -60,7 +64,6 @@ class CheckoutController
 
 	public function GetAllItems(){
 		$ticketRows = "";
-
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {

@@ -270,15 +270,15 @@ class DB_Helper
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language, TypeTicket from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT * from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("sss", $language, $day, $type);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Id, $Description, $StartDateTime, $EndDateTime, $Price, $Language, $TypeTicket); 
+		$stmt-> bind_result($Id, $Description, $StartDateTime, $EndDateTime, $Price, $Language, $TypeTicket, $ReferenceId, $Amount); 
 		$tours = array();
 		while ($stmt -> fetch()) { 
-			$tour = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language, "TypeTicket"=>$TypeTicket);
+			$tour = array("Id"=>$Id, "Description"=>$Description, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Price"=>$Price, "Language"=>$Language, "TypeTicket"=>$TypeTicket, "ReferenceId"=>$ReferenceId, "Amount"=>$Amount);
 			$tours[] = $tour;
 		}
 		return $tours;
@@ -617,9 +617,6 @@ class DB_Helper
 		$stmt-> bind_result($Id, $Language, $TypeTicket, $Price, $StartDateTime, $EndDateTime); 
 		$Ticket = array();
 		while ($stmt -> fetch()) { 
-			if($TypeTicket == 'Family'){
-				$TypeTicket = 'Family (4 people)';
-			}
 			$ticket = array("ID"=>$Id, "Venue"=>"Church of St. Bavo", "About"=>$Language, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$TypeTicket ." Tour", "Price"=>$Price);
 		}
 		return $ticket;
@@ -780,7 +777,7 @@ class DB_Helper
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
 		$stmt = $this->Conn->prepare("
-		SELECT h.Description, o.FirstName, o.LastName, 'test' location, h.Language, h.StartDateTime, h.EndDateTime, t.Price, t.QRCode FROM `Order` o
+		SELECT h.Description, o.FirstName, o.LastName, 'Church of St. Bavo' location, h.Language, h.StartDateTime, h.EndDateTime, t.Price, t.QRCode FROM `Order` o
 		Join OrderLine ol on ol.OrderId = o.Id
 		JOIN Tickets t on t.Id = ol.TicketId
 		Join HistoricTours h on h.Id = t.EventId
@@ -818,6 +815,88 @@ class DB_Helper
 		return $ticket;
 	}
 
+	public function GetTicketAmountDance($eventId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Amount FROM DanceEvent WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Amount);
+		$stmt->fetch();
+		$amount = $Amount;
+		return $amount;
+	}
+
+	public function GetTicketAmountFood($eventId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Amount FROM FoodRestaurants WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Amount);
+		$stmt->fetch();
+		$amount = $Amount;
+		return $amount;
+	}
+
+
+	public function GetAmountHistoric($id){
+        //does a prepared query
+        $stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt-> bind_result($Type, $ReferenceId);
+        $stmt->fetch();
+        $type = $Type;
+        if ($type == 'Family') {
+            $id = $ReferenceId;
+        }
+        //does a prepared query
+        $stmt = $this->Conn->prepare("SELECT Amount FROM HistoricTours WHERE Id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt-> bind_result($Amount);
+        $stmt->fetch();
+        $amount = array('Amount' => $Amount, 'Type' => $Type, 'ReferenceId' => $ReferenceId);
+        return $amount;
+    }
+
+	public function GetTicketAmountJazz($eventId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Amount FROM Jazz WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Amount);
+		$stmt->fetch();
+		$amount = $Amount;
+		return $amount;
+	}
+
+	public function GetToursByReferenceId($referenceId){
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $referenceId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Id FROM HistoricTours WHERE ReferenceId = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id);
+		$stmt->fetch();
+		return $Id;
+	}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -830,20 +909,26 @@ public function CreateOrder($orderInfo, $uniqueCode){
 	$Street = mysqli_real_escape_string($this->Conn, $orderInfo['Street']);
 	$PostCode = mysqli_real_escape_string($this->Conn, $orderInfo['PostCode']);
 	$HouseNumber = mysqli_real_escape_string($this->Conn, $orderInfo['HouseNumber']);
-
+	var_dump($orderInfo['PhoneNumber']);
+	if(isset($orderInfo['PhoneNumber'])){
+		$PhoneNumber = mysqli_real_escape_string($this->Conn, $orderInfo['PhoneNumber']);
+	}
+	else{
+		$PhoneNumber = "";
+	}
 	$adress = $PostCode . " ". $Street . " ". $HouseNumber;
 	$Date = date("Y-m-d H:i:s");
 	//does prepared query
-	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date, OrderNumber) VALUES(?, ?, ?, ?, ?, ?)");
-	$stmt->bind_param("ssssss", $FirstName, $LastName, $Email,$adress, $Date, $uniqueCode);
-	/* Commit or rollback transaction */
+	$stmt = $this->Conn->prepare("INSERT INTO `Order` (FirstName, LastName, Email, Address, Date, OrderNumber, PhoneNumber) VALUES(?, ?, ?, ?, ?, ?, ?)");
+	$stmt->bind_param("sssssss", $FirstName, $LastName, $Email,$adress, $Date, $uniqueCode, $PhoneNumber);
+	// Commit or rollback transaction
 	if ($stmt->execute()) {
 		$this->Conn->commit();
 		return $stmt->insert_id;
 	} else {
 		$this->Conn->rollback();
 		return 0;
-	}   
+	} 
 }
 
 public function CreateTicket($eventId, $TypeEvent, $QRCode, $price){
@@ -909,6 +994,33 @@ public function RemoveavAilableTicketJazz($eventId){
 	//does a prepared query
 	$stmt = $this->Conn->prepare("UPDATE Jazz set Amount = Amount - 1 where Id = ?");
 	$stmt->bind_param("i", $eventId);
+	/* Commit or rollback transaction */
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
+public function RemoveavAilableTicketTour($eventId){
+	//cleans email and password
+	$id = mysqli_real_escape_string($this->Conn, $eventId);
+	//does a prepared query
+	$stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
+	$stmt->bind_param("i", $id);
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt-> bind_result($Type, $ReferenceId);
+	$stmt->fetch();
+	$type = $Type;
+	$ref = $ReferenceId;
+	if ($type == 'Family') {
+		$id = $ReferenceId;
+	}
+	//does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE HistoricTours set Amount = Amount - 1 where Id = ?");
+	$stmt->bind_param("i", $id);
 	/* Commit or rollback transaction */
 	if ($stmt->execute()) {
 		$this->Conn->commit();

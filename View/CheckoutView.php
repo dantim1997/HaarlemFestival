@@ -71,7 +71,7 @@ class CheckoutView
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input class='lbltxt' type='text'  name='Phone'></td>
+										<td><input class='lbltxt' type='text'  name='PhoneNumber'></td>
 									</tr>
 								</table>
 								<p>* This is required</p>
