@@ -286,7 +286,7 @@ class DB_Helper
 	}
 
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
-		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, r.Logo, fr.SessionStartDateTime, fr.SessionEndDateTime 
+		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, r.Logo, fr.SessionStartDateTime, fr.SessionEndDateTime, fr.Amount 
 					FROM FoodRestaurants fr JOIN Restaurants r ON fr.RestaurantId = r.Id";
 		if ($queryStringTimes != "" || $queryStringCuisine != "" || $queryStringRestaurants != "") {
 			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine. " ".$queryStringRestaurants;
@@ -295,10 +295,10 @@ class DB_Helper
 		$stmt = $this->Conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo, $SessionStartDateTime, $SessionEndDateTime);
+		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo, $SessionStartDateTime, $SessionEndDateTime, $Amount);
 		$foodSections = array();
 		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>', "SessionStartDateTime" => $SessionStartDateTime, "SessionEndDateTime" => $SessionEndDateTime);
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>', "SessionStartDateTime" => $SessionStartDateTime, "SessionEndDateTime" => $SessionEndDateTime, "Amount" => $Amount);
 			$foodSections[] = $foodSection;
 		}
 		return $foodSections;
@@ -967,9 +967,25 @@ public function CreateOrderLine($orderId, $ticketId){
 		return 0;
 	}   
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+public function RemoveAvailableTicketFood($restaurantId){
+	// does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE FoodRestaurants SET Amount = Amount - 1 WHERE Id = ?");
+	$stmt->bind_param("i", $restaurantId);
+
+	// commit or rollback transaction
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
 //reset the password with the new password and send a mail
 public function RemoveavAilableTicketDance($eventId){
 	//cleans email and password
