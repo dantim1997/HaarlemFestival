@@ -126,8 +126,7 @@ h2.searchRestaurants {
 
 /*RESTAURANTS SECTION*/
 .restaurants {
-  float: right;
-  margin-left: -100px;
+  margin-left: 300px;
   width: 80%;
   height: auto;
 }
