@@ -28,13 +28,13 @@ class MakeOrder{
                     $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
                 }
             }
-            if(array_key_exists("AdultAmount", $item)){
-                for($i = 0; $i < $item['AdultAmount']; $i++){
+            if (array_key_exists("AdultAmount", $item)) {
+                for ($i = 0; $i < $item['AdultAmount']; $i++) {
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Adult");
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
                     $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
                 }
-                for($i = 0; $i < $item['ChildAmount']; $i++){
+                for ($i = 0; $i < $item['ChildAmount']; $i++) {
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Child");
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
                     $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
@@ -47,18 +47,22 @@ class MakeOrder{
 
     public function ticket($eventId, $typeEvent, $price)
     {
-        $uniqueCode =microtime(true);
+        $uniqueCode = microtime(true);
         $uniqueCode = str_replace(".","",$uniqueCode);
-        $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent,$uniqueCode,$price);
-        if($typeEvent == 2){
+        $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent, $uniqueCode, $price);
+        if ($typeEvent == 1) {
+            $restaurantId = $this->DB_Helper->GetRestaurantIdByEventId($eventId);
+            $this->DB_Helper->RemoveAvailableTicketFood($restaurantId);
+        }
+        if ($typeEvent == 2) {
 
             $this->DB_Helper->RemoveavAilableTicketDance($eventId);
         }
-        if($typeEvent == 4){
+        if ($typeEvent == 4) {
 
             $this->DB_Helper->RemoveavAilableTicketJazz($eventId);
         }
-        if($typeEvent == 3){
+        if ($typeEvent == 3) {
 
             $this->DB_Helper->RemoveavAilableTicketTour($eventId);
         }
@@ -99,10 +103,10 @@ class MakeOrder{
         switch ($typeEvent) {
             case 1:
                 $event = $this->DB_Helper->GetEventInfoFood($eventId);
-                if($typeTicket == "Child"){
+                if ($typeTicket == "Child") {
                     return doubleval($event['ChildPrice']);
                 }
-                else{
+                else {
                     return doubleval($event['AdultPrice']);
                 }
                 break;

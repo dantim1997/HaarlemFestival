@@ -897,6 +897,20 @@ class DB_Helper
 		return $Id;
 	}
 
+	public function GetRestaurantIdByEventId($eventId) {
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
+
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT RestaurantId FROM FoodRestaurants WHERE Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id);
+		$stmt->fetch();
+		return $Id;
+	}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -967,9 +981,25 @@ public function CreateOrderLine($orderId, $ticketId){
 		return 0;
 	}   
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+public function RemoveAvailableTicketFood($restaurantId){
+	// does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE FoodRestaurants SET Amount = Amount - 1 WHERE RestaurantId = ?");
+	$stmt->bind_param("i", $restaurantId);
+
+	// commit or rollback transaction
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
 //reset the password with the new password and send a mail
 public function RemoveavAilableTicketDance($eventId){
 	//cleans email and password
