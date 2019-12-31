@@ -51,8 +51,7 @@ class MakeOrder{
         $uniqueCode = str_replace(".","",$uniqueCode);
         $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent, $uniqueCode, $price);
         if ($typeEvent == 1) {
-            $restaurantId = $this->DB_Helper->GetRestaurantIdByEventId($eventId);
-            $this->DB_Helper->RemoveAvailableTicketFood($restaurantId);
+            $this->DB_Helper->RemoveAvailableTicketFood($eventId);
         }
         if ($typeEvent == 2) {
 

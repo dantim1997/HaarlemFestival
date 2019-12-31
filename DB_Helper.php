@@ -897,20 +897,6 @@ class DB_Helper
 		return $Id;
 	}
 
-	public function GetRestaurantIdByEventId($eventId) {
-		//clean Id
-		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
-
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT RestaurantId FROM FoodRestaurants WHERE Id = ?");
-		$stmt->bind_param("i", $IdSQL);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($Id);
-		$stmt->fetch();
-		return $Id;
-	}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -988,7 +974,7 @@ public function CreateOrderLine($orderId, $ticketId){
 
 public function RemoveAvailableTicketFood($restaurantId){
 	// does a prepared query
-	$stmt = $this->Conn->prepare("UPDATE FoodRestaurants SET Amount = Amount - 1 WHERE RestaurantId = ?");
+	$stmt = $this->Conn->prepare("UPDATE FoodRestaurants SET Amount = Amount - 1 WHERE Id = ?");
 	$stmt->bind_param("i", $restaurantId);
 
 	// commit or rollback transaction
