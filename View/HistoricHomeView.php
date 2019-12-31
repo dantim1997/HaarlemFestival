@@ -73,8 +73,8 @@ class HistoricHomeView
 				<div class='historicBox'>
 					<div class='headerContainer'><div class='blackBar2'></div><h2>".next($pageTexts)."</h2><div class='blackBar2'></div></div><br>
 					<ul class='pricesList'>
-						<li>".next($pageTexts)."</li>
-						<li>".next($pageTexts)."</li>
+						<li class='liLeft'>".next($pageTexts)."</li>
+						<li class='liLeft'>".next($pageTexts)."</li>
 					</ul>
 
 					<!-- Tickets button -->
