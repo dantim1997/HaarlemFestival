@@ -103,3 +103,8 @@ p {
   opacity: 0.6;
   cursor: pointer;
 }
+
+.descriptionAndCuisines {
+  width: 300px;
+  margin-left: -20px;
+}

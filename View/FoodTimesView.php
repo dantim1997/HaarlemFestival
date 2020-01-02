@@ -27,7 +27,7 @@ class FoodTimesView
 
 	private function Body() {
 		$nav = new Nav();
-		$pageTexts = $this->PageContentHelper->GetPageText("FoodTimesView");
+		$pageTexts = $this->PageContentHelper->GetPageText("RestaurantFilterFood");
 		return $nav->SetNavBar("Food").
 		"
 		<div class='restaurantFilter'>

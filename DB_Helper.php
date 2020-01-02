@@ -307,9 +307,24 @@ class DB_Helper
 	
 	}
 
+	public function GetRestaurantInfo() {
+		$stmt = $this->Conn->prepare("SELECT r.Name, ei.Image, r.Cuisines FROM Restaurants r JOIN EventImage ei ON r.ImageRef = ei.Id");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Name, $Image, $Cuisines);
+		$restaurantImages = array();
+		while ($stmt -> fetch()) {
+			$restaurantImage = array("Name" => $Name, "Image" => $Image, "Cuisines" => $Cuisines);
+			$restaurantImages[] = $restaurantImage;
+		}
+		return $restaurantImages;
+	}
+
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
-		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, r.Logo, fr.SessionStartDateTime, fr.SessionEndDateTime, fr.Amount 
-					FROM FoodRestaurants fr JOIN Restaurants r ON fr.RestaurantId = r.Id";
+		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, ei.Image, fr.SessionStartDateTime, fr.SessionEndDateTime, fr.Amount 
+					FROM FoodRestaurants fr 
+					JOIN Restaurants r ON fr.RestaurantId = r.Id
+					JOIN EventImage ei ON r.ImageRef = ei.Id";
 		if ($queryStringTimes != "" || $queryStringCuisine != "" || $queryStringRestaurants != "") {
 			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine. " ".$queryStringRestaurants;
 		}
@@ -442,6 +457,34 @@ class DB_Helper
 			$pageImageContent[] = $imageContent;
 		}
 		return $pageImageContent;
+	}
+
+	public function GetFoodDescriptionEnglish($name) {
+		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextEnglish FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	public function GetFoodDescriptionDutch($name) {
+		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextDutch FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
 	}
 
 	//get all tickets by customer
