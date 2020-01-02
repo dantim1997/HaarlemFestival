@@ -83,8 +83,28 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, da.About, da.KnownFor, ei.Image from DanceArtist da
+		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, ep.ParagraphTextEnglish, da.KnownFor, ei.Image from DanceArtist da
 		JOIN EventImage ei on ei.Id = da.ImageRef
+		JOIN EventParagraph ep on ep.Id = da.ParagraphId
+		where da.Id != 0");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor, $ImageName); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>$ImageName);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	//get user by Id from DB by Id
+	public function GetArtistsNL(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, ep.ParagraphTextDutch, da.KnownFor, ei.Image from DanceArtist da
+		JOIN EventImage ei on ei.Id = da.ImageRef
+		JOIN EventParagraph ep on ep.Id = da.ParagraphId
 		where da.Id != 0");
 		//$stmt->bind_param();
 		$stmt->execute();
@@ -272,7 +292,7 @@ class DB_Helper
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT * from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT Id, Descriptiom, StartDateTime, EndDateTime, Price, Language, TypeTicket, ReferenceId, Amount from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("sss", $language, $day, $type);
 		$stmt->execute();
@@ -287,9 +307,24 @@ class DB_Helper
 	
 	}
 
+	public function GetRestaurantInfo() {
+		$stmt = $this->Conn->prepare("SELECT r.Name, ei.Image, r.Cuisines FROM Restaurants r JOIN EventImage ei ON r.ImageRef = ei.Id");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Name, $Image, $Cuisines);
+		$restaurantImages = array();
+		while ($stmt -> fetch()) {
+			$restaurantImage = array("Name" => $Name, "Image" => $Image, "Cuisines" => $Cuisines);
+			$restaurantImages[] = $restaurantImage;
+		}
+		return $restaurantImages;
+	}
+
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
-		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, r.Logo, fr.SessionStartDateTime, fr.SessionEndDateTime, fr.Amount 
-					FROM FoodRestaurants fr JOIN Restaurants r ON fr.RestaurantId = r.Id";
+		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, ei.Image, fr.SessionStartDateTime, fr.SessionEndDateTime, fr.Amount 
+					FROM FoodRestaurants fr 
+					JOIN Restaurants r ON fr.RestaurantId = r.Id
+					JOIN EventImage ei ON r.ImageRef = ei.Id";
 		if ($queryStringTimes != "" || $queryStringCuisine != "" || $queryStringRestaurants != "") {
 			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine. " ".$queryStringRestaurants;
 		}
@@ -422,6 +457,34 @@ class DB_Helper
 			$pageImageContent[] = $imageContent;
 		}
 		return $pageImageContent;
+	}
+
+	public function GetFoodDescriptionEnglish($name) {
+		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextEnglish FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	public function GetFoodDescriptionDutch($name) {
+		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextDutch FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
 	}
 
 	//get all tickets by customer
@@ -918,6 +981,19 @@ class DB_Helper
 			$pages[] = $page;
 		}
 		return $pages;
+	}
+	
+	public function CheckMail($Email){
+		//clean Id
+		$EmailSQL = mysqli_real_escape_string($this->Conn, $Email);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT OrderNumber FROM `Order` WHERE Email = ? limit 1");
+		$stmt->bind_param("s", $EmailSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($orderCode);
+		$stmt->fetch();
+		return $orderCode;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
