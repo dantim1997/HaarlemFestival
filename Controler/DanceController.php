@@ -56,7 +56,7 @@ class DanceController
 
 		$artistslist = "";
 		foreach ($this->Dancemodel->GetArtists() as $artist) {
-			$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='Images/Dance/Artists/".$artist["ImageName"].".png'> </div>";
+			$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='".$artist["ImageName"]."'> </div>";
 		}
 		return $artistslist;
 	}
@@ -82,7 +82,7 @@ class DanceController
 		        </div>
 		        <div class='modal-body ModalHeight'>
 		          <div class='ArtistInfo'>
-		            <img src='Images/Dance/Artists/".$artist["ImageName"].".png'>
+		            <img src='".$artist["ImageName"]."'>
 		            Genre: ".$artist["Types"]."
 		            <br>
 		            <h4>Known for:</h4>
