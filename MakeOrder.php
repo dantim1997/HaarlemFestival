@@ -15,9 +15,12 @@ class MakeOrder{
     public function Order($orderInfo, $items)
     {   
         usleep(5);
-        $uniqueCode = microtime();
-        $uniqueCode = str_replace(".","",$uniqueCode);
-        $uniqueCode = str_replace(" ","",$uniqueCode);
+        $uniqueCode = $orderInfo["OrderNumber"];
+        if($orderInfo["OrderNumber"] == ""){
+            $uniqueCode = microtime();
+            $uniqueCode = str_replace(".","",$uniqueCode);
+            $uniqueCode = str_replace(" ","",$uniqueCode);
+        }
         $orderId = $this->DB_Helper->CreateOrder($orderInfo, $uniqueCode);
         foreach($items as $item)
         { 
