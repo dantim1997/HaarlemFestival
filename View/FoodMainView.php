@@ -25,7 +25,6 @@ class FoodMainView
 		return $this->FoodMainController->GetConfig()->GetHeader("FoodMain");
 	}
 
-
 	private function Body(){
 		$nav = new Nav();
 		$pageTexts = $this->PageContentHelper->GetPageText("FoodMain");
@@ -44,38 +43,7 @@ class FoodMainView
 			</div>
 			<div class='restaurantsGrid-container'>
 				<div class='restaurantsContainer'>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Grand Cafe Brinkmann'><img src='./Images/Food/Brinkmann.png' class='gridImage'></a>
-  						<p>A grand café located in the center of Haarlem, and next to the Grote Kerk. <br/> <b>Food tags</b>: Dutch, European, Modern</p>
-  					</div>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Restaurant ML'><img src='./Images/Food/ML.png' class='gridImage'></a>
-  						<p>Restaurant ML is decorated with a Michelin star and located in the centre of Haarlem. <br/> <b>Food tags</b>: Dutch, fish, seafood and European</p>
-  					</div>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Restaurant Fris'><img src='./Images/Food/Fris.png' class='gridImage'></a>
-  						<p>Located on the more outer ridges of Haarlem, restaurant Fris serves mainly French seasonal dishes.<br/> <b>Food tags</b>: Dutch, French, European</p>
-  					</div>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Ratatouille'><img src='./Images/Food/Ratatouille.png' class='gridImage'></a>
-  						<p>Ratatouille is, as the name suggests, a French restaurant that is in posession of a Michelin star since 2014.<br/> <b>Food tags</b>: French, fish and seafood, European</p>
-  					</div>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Specktakel'><img src='./Images/Food/Specktakel.png' class='gridImage'></a>
-  						<p>Restaurant Specktakel lays in the center of Haarlem and makes food from all over the world.<br/> <b>Food tags</b>: European, International, Asian</p>
-  					</div>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Toujours'><img src='./Images/Food/TouJours.png' class='gridImage'></a>
-  						<p>Toujours is an Urban French restaurant that has an American twist. It's located in the centre of Haarlem.</br> <b>Food tags</b>: Dutch, fish and seafood, European</p>
-  					</div>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Mr_Mrs'><img src='./Images/Food/MrMrs.png' class='gridImage'></a>
-  						<p>Mr & Mrs is known for serving some nice wine with their food.</br> <b>Food tags</b>: Dutch, fish and seafood, European</p>
-  					</div>
-  					<div class='restaurant-item'>
-  						<a href='FoodTimesIndex.php?restaurant=Golden Bull'><img src='./Images/Food/GoldenBull.png' class='gridImage'></a>
-  						<p>The golden bull is a Steak restaurant in the centre of Haarlem.</br> <b>Food tags</b>: Steakhouse, Argentinian, European</p>
-  					</div>
+  					".$this->FoodMainController->GetRestaurants()."
   				</div>
 			</div>
 		</div>";
