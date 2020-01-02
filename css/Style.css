@@ -116,7 +116,7 @@ a:active {
 	border: solid 1px;
 	height: 60px;
 	background-color: #FFFFFF;
-	bottom: 0;
+	bottom: -40px;
 	float: left;
 	position: absolute;
 	width: 100%;
