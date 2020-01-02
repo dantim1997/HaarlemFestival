@@ -60,7 +60,7 @@ class JazzController
 	}
 
 	//define genre
-	public function BepaalGenre($genre){
+	private function BepaalGenre($genre){
 		if ($genre == "Blues"){
 			return "genre1";
 		}
@@ -82,7 +82,7 @@ class JazzController
 	}
 
 	//check if image is set
-	public function CheckImageIsSet($image){
+	private function CheckImageIsSet($image){
 		if (empty($image)){
 			return "Images/Jazz/unset.gif";
 		}
@@ -143,7 +143,7 @@ class JazzController
 		   		if(!$first){
 		   			$searchStringGenre .= " OR ";
 				}
-		   		$searchStringGenre .= "Genre LIKE '%".$genreCheckbox."%'";
+		   		$searchStringGenre .= "n.Genre LIKE '%".$genreCheckbox."%'";
 				$first = false;
 			}
 		}
@@ -157,7 +157,6 @@ class JazzController
 
 		//get times
 		$time = $this->DB_Helper->GetTimesJazz();
-
 
 		//convert time
 		foreach ($time as $time) {
@@ -187,7 +186,7 @@ class JazzController
 		return $output;
 	}
 
-	public function GetDates(){
+	private function GetDates(){
 		$date = $this->DB_Helper->GetDatesJazz();
 		$newdates = array();
 		foreach ($date as $date) {
@@ -207,7 +206,7 @@ class JazzController
 		return $output;
 	}
 
-	public function GetArtistTable($datetime){
+	private function GetArtistTable($datetime){
 		$result = $this->DB_Helper->GetArtistTableJazz($datetime);
 		$output = "";
 		$count = 0;
@@ -226,7 +225,7 @@ class JazzController
 		}
 	}
 
-	public function FromDateTimeToTime($date){
+	private function FromDateTimeToTime($date){
 		//convert datetime to time
 		$hour = date("H",strtotime($date));
 		$minute = date("i",strtotime($date));
@@ -257,10 +256,24 @@ class JazzController
 		$date .= "%";
 		$location = $this->DB_Helper->GetLocationsJazz($date);
 		$output = "<h2>Location<h2>
-		<p class='location'>".$location["Name"]."<br>".$location["Adress"]."<br>".$location["Zipcode"]." ".$location["City"]."<br>".$location["Info"]."</p>
+		<p class='location'>".$location["Name"]."<br>".$location["Adress"]."<br>".$location["Zipcode"]." ".$location["City"]."<br>".$this->GetLocationInfo($location["InfoEnglish"],$location["InfoDutch"])."</p>
 		<iframe class='googlemaps' src='".$location["GoogleMaps"]."' frameborder='0' style='border:0;' allowfullscreen=''></iframe>
 		";
 		return $output;
+	}
+
+	private function GetLocationInfo($infoE, $infoD){
+		if (isset($_SESSION['Language'])){
+			if ($_SESSION['Language'] == "Dutch"){
+				return $infoD;
+			}
+			else {
+				return $infoE;
+			}
+		}
+		else{
+			return $infoE;
+		}
 	}
 }
 ?>

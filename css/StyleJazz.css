@@ -343,6 +343,7 @@ input {
     color: white;
     text-align: center;
     width: 95%;
+    cursor: pointer;
 }
 
 .carousel{
@@ -376,6 +377,7 @@ input {
     background-color: red;
     color: white;
     width: 200px;
+    cursor: pointer;
 }
 
 .filterbutton2 {
@@ -383,6 +385,7 @@ input {
     color: white;
     width: 300px;
     height: 40px;
+    cursor: pointer;
 }
 
 .checkbox {
