@@ -78,7 +78,11 @@ class FoodTimesController
 				$first = false;
 			}
 		} else if (isset($_GET['restaurant'])) {
-			$queryStringRestaurants = "Name LIKE '".$_GET['restaurant']."'";
+			$restaurantName = $_GET['restaurant'];
+			if (strpos($restaurantName, "Mr.") !== false) {
+				$restaurantName = "Mr. & Mrs.";
+			}
+			$queryStringRestaurants = "Name LIKE '".$restaurantName."'";
 		}
 		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
 		$sections = "";
