@@ -474,10 +474,18 @@ class DB_Helper
 	//get Artists for Jazz carousel filter
 	public function GetArtistsJazz($genreFilter){
 		if (empty($genreFilter)){
-			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE Genre IS NOT NULL GROUP BY ArtistName";
+			$sql = "SELECT n.ArtistName, e.Image, n.Genre 
+			FROM Jazz n
+			INNER JOIN EventImage e
+			ON e.Id = n.ImageRef
+			WHERE n.Genre IS NOT NULL GROUP BY n.ArtistName";
 		}
 		else{
-			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE ".$genreFilter." AND Genre IS NOT NULL GROUP BY ArtistName";
+			$sql = "SELECT n.ArtistName, e.Image, n.Genre 
+			FROM Jazz n
+			INNER JOIN EventImage e
+			ON e.Id = n.ImageRef
+			WHERE ".$genreFilter." AND n.Genre IS NOT NULL GROUP BY n.ArtistName";
 		}
 		//does a prepared query
 		$stmt = $this->Conn->prepare($sql);
@@ -571,7 +579,7 @@ class DB_Helper
 	//Get jazz location
 	public function GetLocationsJazz($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT v.Name, v.Adress, v.Zipcode, v.City, v.ExtraInfo, v.GoogleMaps
+		$stmt = $this->Conn->prepare("SELECT v.Name, v.Adress, v.Zipcode, v.City, v.ExtraInfoEnglish, v.ExtraInfoDutch, v.GoogleMaps
 		FROM Jazz j
 		INNER JOIN JazzVenues v
 		ON v.Name = j.Location
@@ -580,9 +588,9 @@ class DB_Helper
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfo, $GoogleMaps);
+		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfoEnglish, $ExtraInfoDutch, $GoogleMaps);
 		$stmt->fetch();
-		$location = array("Name"=>$Name, "Adress"=>$Adress, "Zipcode"=>$Zipcode, "City"=>$City, "Info"=>$ExtraInfo, "GoogleMaps"=>$GoogleMaps);
+		$location = array("Name"=>$Name, "Adress"=>$Adress, "Zipcode"=>$Zipcode, "City"=>$City, "InfoEnglish"=>$ExtraInfoEnglish, "InfoDutch"=>$ExtraInfoDutch, "GoogleMaps"=>$GoogleMaps);
 		return $location;
 	}
 
@@ -847,7 +855,6 @@ class DB_Helper
 		return $amount;
 	}
 
-
 	public function GetAmountHistoric($id){
         //does a prepared query
         $stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
@@ -1063,6 +1070,7 @@ public function UpdateTickets($orderId){
 		$this->Conn->rollback();
 	} 
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Delete
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
