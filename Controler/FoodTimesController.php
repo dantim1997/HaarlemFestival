@@ -91,7 +91,7 @@ class FoodTimesController
 	}
 
 	private function GetSection($section, $count) {
-		$pageTexts = $this->PageContentHelper->GetPageText("FoodTimesController");
+		$pageTexts = $this->PageContentHelper->GetPageText("RestaurantSection");
 		return "
 			<div class='restaurantSection'>
 				<div class='logo'>
@@ -151,7 +151,7 @@ class FoodTimesController
 					<div class='makeReservation'>
 						<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
 						<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
-						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$count.")' />
+						<input type='button' class='makeReservationBtn' value='".next($pageTexts)."' onclick='FoodAddToCartHelper(".$count.")' />
 						<div id='emptyTicketsWarning'>
 							".$this->TicketsUnavailable($section)."
 						</div>
