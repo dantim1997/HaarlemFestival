@@ -43,8 +43,8 @@ class CheckoutView
 					<div class='checkoutControls'>
 					<div class='input'>				
 					<form method='post' action=''>	
+					<input id='OrderNumber' value='' class='lbltxt' type='hidden'  name='OrderNumber'>
 								<table>
-									
 									<tr>
 										<td><h3 class='selectlbl selectlblextra'>".next($pageTexts)."</h3></td>
 										<td><input pattern='[a-zA-Z]*' class='lbltxt' type='text'  name='FirstName'></td>
@@ -55,11 +55,11 @@ class CheckoutView
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input class='lbltxt' type='Email'  name='Email'></td>
+										<td><input id='EmailControl' onfocusout='CheckMail()' class='lbltxt' type='Email'  name='Email'></td>
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input pattern='[0-9]{4}[a-zA-Z]{2}' class='lbltxt' type='text' name='PostCode'></td>
+										<td><input  pattern='[0-9]{4}[a-zA-Z]{2}' class='lbltxt'  type='text' name='PostCode'></td>
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>

@@ -53,18 +53,38 @@ class DanceController
 	}
 	
 	Public function SetArtists(){
-
 		$artistslist = "";
-		foreach ($this->Dancemodel->GetArtists() as $artist) {
-			$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='".$artist["ImageName"]."'> </div>";
+
+		//If Dutch is chosen switch to it.
+		if (isset($_SESSION['Language']) && $_SESSION['Language'] == 'Dutch') {
+			foreach ($this->DB_Helper->GetArtistsNL() as $artist) {
+				$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='".$artist["ImageName"]."'> </div>";
+			}
 		}
+		//By default we use English.
+		else{
+			foreach ($this->DB_Helper->GetArtists() as $artist) {
+				$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='".$artist["ImageName"]."'> </div>";
+			}
+		}
+
 		return $artistslist;
 	}
 
 	public function GetModals(){
 		$modals = "";
-		foreach ($this->Dancemodel->GetArtists() as $artist) {
-			$modals .= $this->GetModal($artist);	
+
+		//If Dutch is chosen switch to it.
+		if (isset($_SESSION['Language']) && $_SESSION['Language'] == 'Dutch') {
+			foreach ($this->DB_Helper->GetArtistsNL() as $artist) {
+				$modals .= $this->GetModal($artist);	
+			}
+		}
+		//By default we use English.
+		else{
+			foreach ($this->DB_Helper->GetArtists() as $artist) {
+				$modals .= $this->GetModal($artist);	
+			}
 		}
 		return $modals;
 	}
