@@ -83,8 +83,28 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, da.About, da.KnownFor, ei.Image from DanceArtist da
+		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, ep.ParagraphTextEnglish, da.KnownFor, ei.Image from DanceArtist da
 		JOIN EventImage ei on ei.Id = da.ImageRef
+		JOIN EventParagraph ep on ep.Id = da.ParagraphId
+		where da.Id != 0");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor, $ImageName); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>$ImageName);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	//get user by Id from DB by Id
+	public function GetArtistsNL(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, ep.ParagraphTextDutch, da.KnownFor, ei.Image from DanceArtist da
+		JOIN EventImage ei on ei.Id = da.ImageRef
+		JOIN EventParagraph ep on ep.Id = da.ParagraphId
 		where da.Id != 0");
 		//$stmt->bind_param();
 		$stmt->execute();
@@ -897,6 +917,19 @@ class DB_Helper
 		$stmt-> bind_result($Id);
 		$stmt->fetch();
 		return $Id;
+	}
+
+	public function CheckMail($Email){
+		//clean Id
+		$EmailSQL = mysqli_real_escape_string($this->Conn, $Email);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT OrderNumber FROM `Order` WHERE Email = ? limit 1");
+		$stmt->bind_param("s", $EmailSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($orderCode);
+		$stmt->fetch();
+		return $orderCode;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

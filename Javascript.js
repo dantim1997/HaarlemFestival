@@ -341,3 +341,18 @@ function ShowHideJazzFilter(){
     	x.style.display = 'block';
   	}
 }
+
+function CheckMail(){
+	var Email = document.getElementById("EmailControl").value;
+	$.ajax({ url: 'CheckMail.php',
+	data: {Email: Email},
+	type: 'post',
+	success: function(output) {
+		if(output != false){
+			if(confirm("We see that there is a purchase with the same email, Do you want to combine them?")){
+				document.getElementById("OrderNumber").value = output;
+			}
+		}
+	}
+});	
+}
