@@ -36,9 +36,8 @@ class CheckoutView
 
 				<!-- date of ticket in cart -->
 				<div>
-							".$this->CheckoutController->GetAllItems()."
-
-					</div>
+					".$this->CheckoutController->GetAllItems()."
+				</div>
 				<div class='bottomHalfCheckout'>
 					<div class='bottomBar'></div>
 					<div class='checkoutControls'>

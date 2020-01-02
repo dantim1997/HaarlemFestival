@@ -119,7 +119,7 @@ class PDFMaker{
 		define('EURO',chr(128));
 		require_once( "Autoloader.php");
 		$qr  = new QrGenerator;
-		
+		$Config = Config::getInstance();
 		$pdf = new Ticket();
 		$height = 0;
 		$pdf->AliasNbPages();
@@ -133,7 +133,7 @@ class PDFMaker{
 				$height = 0;
 				$amountOnPage = 0;
 			}
-			$qrimage = $qr->GenerateQRCode($ticket[7]);
+			$qrimage = $qr->GenerateQRCode("http://hfteam3.infhaarlem.nl/CMS53" ."/CMSTicket.php?TicketCode=". $ticket[7], $ticket[7]);
 			$pdf->EventTicket($ticket, $height, $qrimage);
 			$height += 73;
 		
