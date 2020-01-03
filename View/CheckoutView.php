@@ -41,7 +41,7 @@ class CheckoutView
 				<div class='bottomHalfCheckout'>
 					<div class='bottomBar'></div>
 					<div class='checkoutControls'>
-					<div class='input'>				
+					<div class='input'>	
 					<form method='post' action=''>	
 					<input id='OrderNumber' value='' class='lbltxt' type='hidden'  name='OrderNumber'>
 								<table>
@@ -65,7 +65,7 @@ class CheckoutView
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
 										<td>
 											<input pattern='[0-9]{4}' style='width:20%;' class='lbltxt' type='number' name='HouseNumber'>
-											<input pattern='[a-zA-Z]*'style='width:80%;' class='lbltxt' type='text' placeholder='Street' name='Street'>
+											<input pattern='[a-zA-Z]*'style='width:60%;' class='lbltxt' type='text' placeholder='Street' name='Street'>
 										</td>
 									</tr>
 									<tr>
@@ -73,7 +73,7 @@ class CheckoutView
 										<td><input class='lbltxt' type='text'  name='PhoneNumber'></td>
 									</tr>
 								</table>
-								<p>* This is required</p>
+								<p id='checkoutRequiredNotice'>* This is required</p>
 							</div>
 							
 							<!-- proceed to payment button -->
@@ -84,7 +84,7 @@ class CheckoutView
 					<h2 id='totallbl'>".next($pageTexts)." </h2><h2 id='TotalAmount'>".Number_format($this->CheckoutModel->GetTotal(), 2, ',', '')."</h2>	<!--Hier de totale prijs als var !-->
 					</br>
 					</br>
-					<h2 id='totalFoodlbl'>".next($pageTexts)." </h2><h2 id='TotalFoodAmount'>".Number_format($this->CheckoutModel->GetFoodTotal(), 2, ',', '')."</h2>
+					".$this->CheckoutController->GetFoodPrice(next($pageTexts))."
 				</div>
 			</div>
 		</div>";

@@ -96,7 +96,8 @@
 .selectlbl{
 	font-weight: bold;
 	font-size: 16pt;
-	width: 100%;
+	margin-left: -60px;
+	width: 140%;
 	float: left;
 	margin-bottom: 4%;
 }
@@ -242,4 +243,9 @@ h4{
 	margin-left: 5%;
 	margin-top: 2%;
 	font-size: 12px;
+	width: 500px;
+}
+
+#checkoutRequiredNotice {
+	margin-left: -50px;
 }
