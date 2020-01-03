@@ -292,7 +292,7 @@ class DB_Helper
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT * from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT Id, Descriptiom, StartDateTime, EndDateTime, Price, Language, TypeTicket, ReferenceId, Amount from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("sss", $language, $day, $type);
 		$stmt->execute();
@@ -969,6 +969,20 @@ class DB_Helper
 		return $Id;
 	}
 
+	public function GetFooterPages(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Id, TitleDutch, TitleEnglish FROM Pages");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $TitleDutch, $TitleEnglish); 
+		$pages = array();
+		while ($stmt -> fetch()) { 
+			$page = array("ID"=>$Id, "EnglishTitle"=>$TitleEnglish, "DutchTitle"=>$TitleDutch);
+			$pages[] = $page;
+		}
+		return $pages;
+	}
+	
 	public function CheckMail($Email){
 		//clean Id
 		$EmailSQL = mysqli_real_escape_string($this->Conn, $Email);
