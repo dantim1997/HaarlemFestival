@@ -996,6 +996,20 @@ class DB_Helper
 		return $orderCode;
 	}
 
+	public function GetEventDates(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT StartDateTime From Jazz GROUP BY DATE(StartDateTime)");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Dates); 
+		$date = array();
+		while ($stmt -> fetch()) { 
+			$date = array("Dates"=>substr($Dates, 0, -9));
+			$dates[] = $date;
+		}
+		return $dates;
+	}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Insert
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
