@@ -91,7 +91,13 @@ class FoodTimesController
 			$sections .= $this->GetSection($foodSection, $count);
 			$count++;
 		}
-		return $sections;
+
+		// check if results exists, otherwise return message
+		if ($sections == "") {
+			return "<p id='noResultsFood'>No results found.</p>";
+		} else {
+			return $sections;
+		}
 	}
 
 	private function GetSection($section, $count) {
