@@ -264,7 +264,7 @@ class JazzController
 
 	private function GetLocationInfo($infoE, $infoD){
 		if (isset($_SESSION['Language'])){
-			if ($_SESSION['Language'] == "Dutch"){
+			if (EncryptionHelper::Decrypt($_SESSION['Language']) == "Dutch"){
 				return $infoD;
 			}
 			else {

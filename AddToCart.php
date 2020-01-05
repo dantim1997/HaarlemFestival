@@ -21,7 +21,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
         $existingChildAmount = 0;
         $existingAdultAmount = 0;
 
-        foreach($_SESSION["Tickets"] as $item){
+        foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
             if($item["EventId"] == $eventId){
                 $existingChildAmount = $item["ChildAmount"];
                 $existingAdultAmount = $item["AdultAmount"];
@@ -31,7 +31,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
         // normal ticket is being added
         $existingamount = 0;
         
-        foreach($_SESSION["Tickets"] as $item){
+        foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
             if($item["EventId"] == $eventId){
                 $existingamount = $item["Amount"];
             }
@@ -54,7 +54,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
             if ($historic['Type'] == 'Family') {
                 $amount = $amount * 4;
             }    
-            foreach($_SESSION["Tickets"] as $item) {
+            foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item) {
                 if ($familyTourByReferenceId == $item["EventId"]) {
                     $existingamount += $item['Amount']; 
                 }

@@ -103,13 +103,13 @@ class Config
 		$output = "";
 		$pages = $this->DB_Helper->GetFooterPages();
 		foreach ($pages as $pages) {
-			$output .= "<a href='Content.php?id=".$pages['ID']."'><p class='footerlink'>".$pages[$_SESSION['Language']."Title"]."</p> </a>";
+			$output .= "<a href='Content.php?id=".$pages['ID']."'><p class='footerlink'>".$pages[EncryptionHelper::Decrypt($_SESSION['Language'])."Title"]."</p> </a>";
 		}
 		return $output;
 	}
 
 	private function GetTax(){
-		if (isset($_SESSION['Language']) && $_SESSION['Language'] == "Dutch"){
+		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == "Dutch"){
 			return "Alle prijzen zijn inclusief BTW, overige belastingen, exclusief verzendkosten en service kosten.";
 		}
 		else{
