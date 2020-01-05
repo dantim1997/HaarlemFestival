@@ -179,10 +179,8 @@ class CheckoutController
 		if (isset($_SESSION["Tickets"])) {
 			$items = $_SESSION["Tickets"];
 			foreach ($items as $item) {
-				if (array_key_exists("Amount", $item)) {
+				if (array_key_exists("AdultAmount", $item)) {
 					return "<h2 id='totalFoodlbl'>".$pageText." </h2><h2 id='TotalFoodAmount'>".Number_format($this->CheckoutModel->GetFoodTotal(), 2, ',', '')."</h2>";
-				} else {
-					return "";
 				}
 			}
 		}

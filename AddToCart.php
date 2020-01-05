@@ -21,8 +21,8 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
         $existingChildAmount = 0;
         $existingAdultAmount = 0;
 
-        foreach($_SESSION["Tickets"] as $item){
-            if($item["EventId"] == $eventId){
+        foreach ($_SESSION["Tickets"] as $item) {
+            if ($item["EventId"] == $eventId) {
                 $existingChildAmount = $item["ChildAmount"];
                 $existingAdultAmount = $item["AdultAmount"];
             }
@@ -31,8 +31,8 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
         // normal ticket is being added
         $existingamount = 0;
         
-        foreach($_SESSION["Tickets"] as $item){
-            if($item["EventId"] == $eventId){
+        foreach ($_SESSION["Tickets"] as $item) {
+            if ($item["EventId"] == $eventId) {
                 $existingamount = $item["Amount"];
             }
         }
@@ -40,10 +40,10 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
 
     switch ($TypeEvent) {
         case 1:
-            $maxamount= $DB_Helper->GetTicketAmountFood($eventId);
+            $maxamount = $DB_Helper->GetTicketAmountFood($eventId);
             break;
         case 2:
-            $maxamount= $DB_Helper->GetTicketAmountDance($eventId);
+            $maxamount = $DB_Helper->GetTicketAmountDance($eventId);
             break;
         case 3:
             $historic = $DB_Helper->GetAmountHistoric($eventId);
@@ -53,7 +53,8 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
 
             if ($historic['Type'] == 'Family') {
                 $amount = $amount * 4;
-            }    
+            }
+            
             foreach($_SESSION["Tickets"] as $item) {
                 if ($familyTourByReferenceId == $item["EventId"]) {
                     $existingamount += $item['Amount']; 
