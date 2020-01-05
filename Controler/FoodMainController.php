@@ -25,7 +25,7 @@ class FoodMainController
 
 		foreach ($restaurantInfos as $restaurantInfo) {
 			// find out what language we're using
-			if (isset($_SESSION['Language']) && $_SESSION['Language'] == 'Dutch') {
+			if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
 				$pageTexts = $this->DB_Helper->GetFoodDescriptionDutch($restaurantInfo["Name"]);
 			} else {
 				$pageTexts = $this->DB_Helper->GetFoodDescriptionEnglish($restaurantInfo["Name"]);

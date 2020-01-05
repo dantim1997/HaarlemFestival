@@ -27,8 +27,8 @@ class CheckoutController
 		);
 		
 		if(isset($_POST['proceedToPaymentBTN'])){
-			if(count($_SESSION["Tickets"]) != 0){
-				var_dump($_SESSION["Tickets"]);
+			if(count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0){
+				var_dump(EncryptionHelper::Decrypt($_SESSION["Tickets"]));
 				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 				$errorList["LastName"] = $this->IsRequired("LastName", "text");
 				$errorList["Email"] = $this->IsRequired("Email", "text");
@@ -36,7 +36,7 @@ class CheckoutController
 				$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 				$errorList["Street"] = $this->IsRequired("Street", "text");
 				$makeOrder = new MakeOrder();
-				$orderId = $makeOrder->Order($_POST, $_SESSION["Tickets"]);
+				$orderId = $makeOrder->Order($_POST, EncryptionHelper::Decrypt($_SESSION["Tickets"]));
 				header("Location: HFPay.php?OrderId=".$orderId);
 			}
 			error_log("error?");
@@ -65,7 +65,7 @@ class CheckoutController
 	public function GetAllItems(){
 		$ticketRows = "";
 		if (isset($_SESSION["Tickets"])) {
-			$items = $_SESSION["Tickets"];
+			$items = EncryptionHelper::Decrypt($_SESSION["Tickets"]);
 			foreach ($items as $item) {
 				// check if session ticket is 'normal' ticket (not a restaurant reservation)
 				if (array_key_exists("Amount", $item)) {
@@ -177,7 +177,7 @@ class CheckoutController
 
 	public function GetFoodPrice($pageText) {
 		if (isset($_SESSION["Tickets"])) {
-			$items = $_SESSION["Tickets"];
+			$items = EncryptionHelper::Decrypt($_SESSION["Tickets"]);
 			foreach ($items as $item) {
 				if (array_key_exists("AdultAmount", $item)) {
 					return "<h2 id='totalFoodlbl'>".$pageText." </h2><h2 id='TotalFoodAmount'>".Number_format($this->CheckoutModel->GetFoodTotal(), 2, ',', '')."</h2>";
@@ -189,7 +189,7 @@ class CheckoutController
 	public function GetReservationFee() {
 		$count = 0;
 		if (isset($_SESSION["Tickets"])) {
-			$items = $_SESSION["Tickets"];
+			$items = EncryptionHelper::Decrypt($_SESSION["Tickets"]);
 			foreach ($items as $item) {
 				// check if reservation is present in session
 				if ($item["TypeEvent"] == 1) {

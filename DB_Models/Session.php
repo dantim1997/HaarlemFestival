@@ -17,7 +17,7 @@ class Session
 		if(!isset($_SESSION['Tickets'])){
 			$_SESSION['Tickets'] = array();
 		}
-		$allCartItems = $_SESSION['Tickets'];
+		$allCartItems = EncryptionHelper::Decrypt($_SESSION['Tickets']);
 		$newCartItems = array();
 		$added = false;
 		foreach ($allCartItems as $cartItem) {
@@ -37,7 +37,7 @@ class Session
 		}
 
 		$_SESSION['Tickets'] = null;
-		$_SESSION['Tickets'] = $newCartItems;
+		$_SESSION['Tickets'] = EncryptionHelper::Encrypt($newCartItems);
 	}
 
 	function AddToCartFood($eventId, $childAmount, $adultAmount, $startTime, $date, $extraInfo) {
@@ -45,7 +45,7 @@ class Session
 		if (!isset($_SESSION['Tickets'])){
 			$_SESSION['Tickets'] = array();
 		}
-		$allCartItems = $_SESSION['Tickets'];
+		$allCartItems = EncryptionHelper::Decrypt($_SESSION['Tickets']);
 		$newCartItems = array();
 		$added = false;
 		foreach ($allCartItems as $cartItem) {
@@ -67,14 +67,14 @@ class Session
 		}
 
 		$_SESSION['Tickets'] = null;
-		$_SESSION['Tickets'] = $newCartItems;
+		$_SESSION['Tickets'] = EncryptionHelper::Encrypt($newCartItems);
 	}
 
 	function RemoveFromCart($eventId, $typeEvent){
 		if(!isset($_SESSION['Tickets'])){
 			$_SESSION['Tickets'] = array();
 		}
-		$allCartItems = $_SESSION['Tickets'];
+		$allCartItems = EncryptionHelper::Decrypt($_SESSION['Tickets']);
 		$newCartItems = array();
 		$removedAmount = 0;
 
@@ -88,7 +88,7 @@ class Session
 		}
 
 		$_SESSION['Tickets'] = null;
-		$_SESSION['Tickets'] = $newCartItems;
+		$_SESSION['Tickets'] = EncryptionHelper::Encrypt($newCartItems);
 
 		return $removedAmount;
 	}
@@ -97,7 +97,7 @@ class Session
 		if (!isset($_SESSION['Tickets'])) {
 			$_SESSION['Tickets'] = array();
 		}
-		$allCartItems = $_SESSION['Tickets'];
+		$allCartItems = EncryptionHelper::Decrypt($_SESSION['Tickets']);
 		$newCartItems = array();
 		$removedAmount = 0;
 
@@ -131,7 +131,7 @@ class Session
 		}
 
 		$_SESSION['Tickets'] = null;
-		$_SESSION['Tickets'] = $newCartItems;
+		$_SESSION['Tickets'] = EncryptionHelper::Encrypt($newCartItems);
 
 		return $removedAmount;
 	}
