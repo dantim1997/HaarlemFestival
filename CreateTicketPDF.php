@@ -133,7 +133,7 @@ class PDFMaker{
 				$height = 0;
 				$amountOnPage = 0;
 			}
-			$qrimage = $qr->GenerateQRCode("http://hfteam3.infhaarlem.nl/CMS53" ."/CMSTicket.php?TicketCode=". $ticket[7], $ticket[7]);
+			$qrimage = $qr->GenerateQRCode("http://cms.hfteam3.infhaarlem.nl/" ."CMSTicket.php?TicketCode=". $ticket[7], $ticket[7]);
 			$pdf->EventTicket($ticket, $height, $qrimage);
 			$height += 73;
 		
