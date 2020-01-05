@@ -282,3 +282,11 @@ p.specialNeedsP {
   color: red;
   font-weight: bold;
 }
+
+#noResultsFood {
+  margin-left: 40%;
+  font-size: 20px;
+  color: red;
+  margin-top: 60px;
+  margin-bottom: 605px;
+}
