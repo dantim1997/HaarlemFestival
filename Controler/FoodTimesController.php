@@ -78,7 +78,11 @@ class FoodTimesController
 				$first = false;
 			}
 		} else if (isset($_GET['restaurant'])) {
-			$queryStringRestaurants = "Name LIKE '".$_GET['restaurant']."'";
+			$restaurantName = $_GET['restaurant'];
+			if (strpos($restaurantName, "Mr.") !== false) {
+				$restaurantName = "Mr. & Mrs.";
+			}
+			$queryStringRestaurants = "Name LIKE '".$restaurantName."'";
 		}
 		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
 		$sections = "";
@@ -87,11 +91,17 @@ class FoodTimesController
 			$sections .= $this->GetSection($foodSection, $count);
 			$count++;
 		}
-		return $sections;
+
+		// check if results exists, otherwise return message
+		if ($sections == "") {
+			return "<p id='noResultsFood'>No results found.</p>";
+		} else {
+			return $sections;
+		}
 	}
 
 	private function GetSection($section, $count) {
-		$pageTexts = $this->PageContentHelper->GetPageText("FoodTimesController");
+		$pageTexts = $this->PageContentHelper->GetPageText("RestaurantSection");
 		return "
 			<div class='restaurantSection'>
 				<div class='logo'>
@@ -120,34 +130,14 @@ class FoodTimesController
 					<div class='peopleAboveOption'>
 						<p id='normalP'>".next($pageTexts).":</p>
 						<select class='pplAbove12' id='pplAbove12".$count."'>
-							<option value='0'>0</option>
-            				<option value='1'>1</option>
-            				<option value='2'>2</option>
-            				<option value='3'>3</option>
-            				<option value='4'>4</option>
-            				<option value='5'>5</option>
-            				<option value='6'>6</option>
-            				<option value='7'>7</option>
-            				<option value='8'>8</option>
-            				<option value='9'>9</option>
-            				<option value='10'>10</option>
-            			</select>
+							".$this->SelectOptions($section)."
+						</select>
 					</div>
             		<br />
 					<div class='peopleBelowOption'>
 						<p id='childrenP'>".next($pageTexts).":</p>
 						<select class='pplBelow12' id='pplBelow12".$count."'>
-							<option value='0'>0</option>
-            				<option value='1'>1</option>
-            				<option value='2'>2</option>
-            				<option value='3'>3</option>
-            				<option value='4'>4</option>
-            				<option value='5'>5</option>
-            				<option value='6'>6</option>
-            				<option value='7'>7</option>
-            				<option value='8'>8</option>
-            				<option value='9'>9</option>
-        					<option value='10'>10</option>
+							".$this->SelectOptions($section)."
             			</select>
 					</div>
             		<br />
@@ -171,7 +161,10 @@ class FoodTimesController
 					<div class='makeReservation'>
 						<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
 						<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
-						<input type='button' class='makeReservationBtn' value='Make Reservation' onclick='FoodAddToCartHelper(".$count.")' />
+						<input type='button' class='makeReservationBtn' value='".next($pageTexts)."' onclick='FoodAddToCartHelper(".$count.")' />
+						<div id='emptyTicketsWarning'>
+							".$this->TicketsUnavailable($section)."
+						</div>
 					</div>
 				</div>
 			</div>
@@ -204,6 +197,28 @@ class FoodTimesController
 			$givenPrice .= ',-';
 		}
 		return $givenPrice;
+	}
+
+	private function SelectOptions($section) {
+		$options = "";
+		$amount = 0;
+
+		if ($section["Amount"] >= 11) {
+			$amount = 11;
+		} else {
+			$amount = $section["Amount"];
+		}
+
+		for ($i=0; $i < $amount; $i++) {
+			$options .= "<option value='".$i."'>".$i."</option>";
+		}
+		return $options;
+	}
+
+	private function TicketsUnavailable($section) {
+		if ($section["Amount"] == 0) {
+			return "TICKETS SOLD OUT";
+		}
 	}
 
 	private function GetDateTimes($id, $type) {

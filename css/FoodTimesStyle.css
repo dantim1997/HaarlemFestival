@@ -126,8 +126,7 @@ h2.searchRestaurants {
 
 /*RESTAURANTS SECTION*/
 .restaurants {
-  float: right;
-  margin-left: -100px;
+  margin-left: 300px;
   width: 80%;
   height: auto;
 }
@@ -255,10 +254,11 @@ p.specialNeedsP {
   text-align: center;
   border-width: 0px;
   background-color: rgba(221, 4, 43, 1);
-  font-size: 25px;
+  font-size: 22px;
   padding: 8px;
   color: #FFFFFF;
   border-radius: 5px;
+  width: 45%;
 }
 
 .makeReservationBtn:hover {
@@ -274,4 +274,19 @@ p.specialNeedsP {
 #normalP {
   height: 0px;
   margin-left: 10px;
+}
+
+#emptyTicketsWarning {
+  margin-left: 50%;
+  margin-top: -39px;
+  color: red;
+  font-weight: bold;
+}
+
+#noResultsFood {
+  margin-left: 40%;
+  font-size: 20px;
+  color: red;
+  margin-top: 60px;
+  margin-bottom: 605px;
 }

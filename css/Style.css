@@ -107,15 +107,16 @@ a:active {
 	margin-right: 5px;
 	width: 30px;
 	height: 30px;
+	margin-top: 7.5px;
 }
 
 .Footer{
 	margin-top: 10px;
 	margin-bottom: 0;
 	border: solid 1px;
-	height: 45px;
+	height: 60px;
 	background-color: #FFFFFF;
-	bottom: 0;
+	bottom: -40px;
 	float: left;
 	position: absolute;
 	width: 100%;
@@ -123,9 +124,9 @@ a:active {
 
 #DesignedBy{
 	margin-top: 6px;
-	margin-left: 30%;
 	font-size: 20px;
 	margin-bottom: 0;
+	text-align: center;
 }
 
 #NavBar{
@@ -257,4 +258,19 @@ a:active {
 	margin-right: 10%;
 	margin-top: 40px;
 	margin-bottom: 40px;
+}
+
+.footerlink{
+	color: #DD042B;
+	text-decoration: underline;
+	margin: 10px;
+	float: left;
+	margin-top: 17px;
+}
+
+#footertax{
+	font-size: 12px;
+	text-align: center;
+	font-style: italic;
+	height: 8px;
 }

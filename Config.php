@@ -1,4 +1,5 @@
 <?php
+require_once("DB_Helper.php");
 class Config
 {
 	private static $instance = null;	
@@ -27,7 +28,7 @@ class Config
 
 	public function GetWebURL(){
 		//return APIKey
-		return "http://hfteam3.infhaarlem.nl/Main53";
+		return "http://hfteam3.infhaarlem.nl/main";
 	}
 
 	public function GetHeader($header){
@@ -88,13 +89,32 @@ class Config
 	}
 
 	public function SetFooter(){
-		return "<div class='Footer'>
+		return "<footer class='Footer'>".$this->GetFooterPages()."
 		<p id='DesignedBy'>Designed by: Chris Lips, Thijs van Tol, Tim Gras, Stan Roozendaal en Stef Robbe
-		<image class='MediaIcons' src='Images/Home/instagram-icon-black.png'>
-		<image class='MediaIcons' src='Images/Home/facebook-icon.png'>
-		</p>
-	</div>
+		<a href='https://www.instagram.com/explore/tags/haarlemfestival/'><image class='MediaIcons' src='Images/Home/instagram-icon-black.png'></a>
+		<a href='https://www.facebook.com/Haarlem-Festival-100428948092059/'><image class='MediaIcons' src='Images/Home/facebook-icon.png'></a></p>
+		<p id='footertax'>".$this->GetTax()."</p>
+	</footer>
 	</body></html>";
+	}
+
+	private function GetFooterPages(){
+		$this->DB_Helper = new DB_Helper;
+		$output = "";
+		$pages = $this->DB_Helper->GetFooterPages();
+		foreach ($pages as $pages) {
+			$output .= "<a href='Content.php?id=".$pages['ID']."'><p class='footerlink'>".$pages[$_SESSION['Language']."Title"]."</p> </a>";
+		}
+		return $output;
+	}
+
+	private function GetTax(){
+		if (isset($_SESSION['Language']) && $_SESSION['Language'] == "Dutch"){
+			return "Alle prijzen zijn inclusief BTW, overige belastingen, exclusief verzendkosten en service kosten.";
+		}
+		else{
+			return "All prices are inclusive of VAT and other taxes and excluding any shipping costs and service charge.";
+		}
 	}
 }
 ?>

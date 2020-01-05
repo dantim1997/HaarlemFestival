@@ -29,13 +29,14 @@ class JazzView
 	private function Body(){
 		$nav = new Nav();
 		$pageTexts = $this->PageContentHelper->GetPageText("Jazz");
+		$dates = $this->JazzController->GetEventDates();
 		return $nav->SetNavBar("Jazz"). "<div class='main'>
 			<div class='container'>
 				<div class='title'>".current($pageTexts)."</div>
 			</div>
 			<div class='content'>
 				<h1>".next($pageTexts)."</h1>
-				<p>".next($pageTexts)."</p>
+				<p class='paragraph'>".next($pageTexts)."</p>
 				<h2>".next($pageTexts)."</h2>
 
 					<button onclick='ToggleAdvancedJazz()' class='filterbutton2'>".next($pageTexts)."</button>
@@ -81,73 +82,73 @@ class JazzView
 				<h1>".next($pageTexts)."</h1>
 				<br>
 				<div class='form'>
-						".$this->JazzController->GetTickets('2020-07-26')."
+						".$this->JazzController->GetTickets($dates[0]["Dates"])."
 						<br>
 						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
 				</div>
 				<div class='tickets'>
 					<hr>
-					".$this->JazzController->FillTickets("2020-07-26")."
+					".$this->JazzController->FillTickets($dates[0]["Dates"])."
 					<br>
 					<br>
 					<br>
 					<br>
 					<br>
 					<br>
-					".$this->JazzController->GetLocation("2020-07-26")."
+					".$this->JazzController->GetLocation($dates[0]["Dates"])."
 				</div>
 				</div>
 				<div id='Friday1' class='friday'>
 				<h1>".next($pageTexts)."</h1>
 				<br>
 				<div class='form'>
-						".$this->JazzController->GetTickets('2020-07-27')."
+						".$this->JazzController->GetTickets($dates[1]["Dates"])."
 						<br>
 						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
 				</div>
 				<div class='tickets'>
 					<hr>
-					".$this->JazzController->FillTickets("2020-07-27")."
+					".$this->JazzController->FillTickets($dates[1]["Dates"])."
 					<br>
 					<br>
 					<br>
 					<br>
 					<br>
 					<br>
-					".$this->JazzController->GetLocation("2020-07-27")."
+					".$this->JazzController->GetLocation($dates[1]["Dates"])."
 				</div>
 				</div>
 				<div id='Saturday1' class='saturday'>
 					<h1>".next($pageTexts)."</h1>
 					<br>
 					<div class='form'>
-						".$this->JazzController->GetTickets('2020-07-28')."
+						".$this->JazzController->GetTickets($dates[2]["Dates"])."
 						<br>
 						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
 					</div>
 					<div class='tickets'>
 						<hr>
-						".$this->JazzController->FillTickets("2020-07-28")."
+						".$this->JazzController->FillTickets($dates[2]["Dates"])."
 						<br>
 						<br>
 						<br>
 						<br>
 						<br>
 						<br>
-						".$this->JazzController->GetLocation("2020-07-28")."
+						".$this->JazzController->GetLocation($dates[2]["Dates"])."
 					</div>
 				</div>
 				<div id='Sunday1' class='sunday'>
 					<h1>".next($pageTexts)."</h1>
-					<p>".next($pageTexts)."</p>
+					<p class='paragraph'>".next($pageTexts)."</p>
 					<br>
 					<h2>".next($pageTexts)."</h2>
 					<br>
 					<hr>
-					".$this->JazzController->FillTickets("2020-07-29")."
+					".$this->JazzController->FillTickets($dates[3]["Dates"])."
 					<br>
 					<br>
-					".$this->JazzController->GetLocation("2020-07-29")."
+					".$this->JazzController->GetLocation($dates[3]["Dates"])."
 				</div>
 			</div>
 		</div>

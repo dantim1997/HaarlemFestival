@@ -1,19 +1,43 @@
 <?php
 require_once("Autoloader.php");
-if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amount'])) {
+if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amount']) && isset($_POST['childAmount']) && isset($_POST['adultAmount']) && isset($_POST['startTime']) && isset($_POST['date']) && isset($_POST['extraInfo'])) {
     $eventId = $_POST['eventId'];
     $TypeEvent = $_POST['typeEvent'];
 
     $session = new Session;
     $DB_Helper = new DB_Helper();
-    $existingamount = 0;
     $maxamount = 0;
+
+    $isFoodReservation = false;
+
     $amount = $_POST['amount'];
-    foreach($_SESSION["Tickets"] as $item){
-        if($item["EventId"] == $eventId){
-            $existingamount = $item["Amount"];
+    $childAmount = $_POST['childAmount'];
+    $adultAmount = $_POST['adultAmount'];
+    
+    if (($childAmount != 0 || $adultAmount != 0) && $amount == 0) {
+        // food reservation is being added
+        $isFoodReservation = true;
+
+        $existingChildAmount = 0;
+        $existingAdultAmount = 0;
+
+        foreach($_SESSION["Tickets"] as $item){
+            if($item["EventId"] == $eventId){
+                $existingChildAmount = $item["ChildAmount"];
+                $existingAdultAmount = $item["AdultAmount"];
+            }
+        }
+    } else {
+        // normal ticket is being added
+        $existingamount = 0;
+        
+        foreach($_SESSION["Tickets"] as $item){
+            if($item["EventId"] == $eventId){
+                $existingamount = $item["Amount"];
+            }
         }
     }
+
     switch ($TypeEvent) {
         case 1:
             $maxamount= $DB_Helper->GetTicketAmountFood($eventId);
@@ -30,7 +54,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
             if ($historic['Type'] == 'Family') {
                 $amount = $amount * 4;
             }    
-            foreach($_SESSION["Tickets"] as $item){
+            foreach($_SESSION["Tickets"] as $item) {
                 if ($familyTourByReferenceId == $item["EventId"]) {
                     $existingamount += $item['Amount']; 
                 }
@@ -43,12 +67,25 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
             $maxamount = $DB_Helper->GetTicketAmountJazz($eventId);
             break;
     }
-    if($amount + $existingamount <= $maxamount){
-        $session->AddToCart($eventId,$TypeEvent,$amount);
-        print 1;
-    }
-    else{
-        print 0;
+
+    if ($isFoodReservation) {
+        // we're adding a foodreservation, call different method ...
+        if ($childAmount + $adultAmount <= $maxamount) {
+            $session->AddToCartFood($eventId, $childAmount, $adultAmount, $_POST['startTime'], $_POST['date'], $_POST['extraInfo']);
+            print 1;
+        }
+        else {
+            print 0;
+        }
+    } else {
+        // adding normal reservation ...
+        if ($amount + $existingamount <= $maxamount) {
+            $session->AddToCart($eventId, $TypeEvent, $amount);
+            print 1;
+        }
+        else {
+            print 0;
+        }
     }
 }
 ?>

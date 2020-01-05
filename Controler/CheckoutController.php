@@ -145,8 +145,8 @@ class CheckoutController
 		$value = (intval($childAmount) + intval($adultAmount)) * 10;
 		$this->CheckoutModel->AddTotal($value);
 
-		// actual ticket prices get added to "FoodTotal" (reservation fee gets paid online, food tickets at the restaurant)
-		$foodPrice = doubleval($eventInfo["ChildPrice"]) * intval($childAmount) + doubleval($eventInfo["AdultPrice"]) * intval($adultAmount);
+		// actual ticket prices get added to "FoodTotal" (reservation fee gets paid online, food tickets - reservation fee at the restaurant)
+		$foodPrice = doubleval(($eventInfo["ChildPrice"]) * intval($childAmount) + doubleval($eventInfo["AdultPrice"]) * intval($adultAmount) - $value);
 		$this->CheckoutModel->AddFoodTotal($foodPrice);
 
 		// show allergies/special needs when given
@@ -155,22 +155,37 @@ class CheckoutController
 		}
 
 		if (!empty($childAmount)) {
+			$restaurantPrice = $eventInfo["ChildPrice"] - 10;
 			$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$childAmount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["ChildPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
-					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["ChildPrice"].", 0)' type='submit' value='&#10006' name='??????'>
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$restaurantPrice.", 0)' type='submit' value='&#10006' name='??????'>
 			</div>";
 		}
 		
 		if (!empty($adultAmount)) {
+			$restaurantPrice = $eventInfo["AdultPrice"] - 10;
 			$sortedDays[$eventDate] .= "<div class=ticket>
 			<p class=amountTickets>".$adultAmount." x</p>
 			<p class='ticketText'>".$eventInfo["Venue"]." ".$eventInfo["About"]." ".$eventInfo["Description"]." ".$this->IsTimeEmtpy($startTime,$endTime)."  € ".Number_format($eventInfo["AdultPrice"], 2, ',', ' ')."</p> ".$extraInfoText."
-					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$eventInfo["AdultPrice"].", 1)' type='submit' value='&#10006' name='??????'>
+					<input class='removeCheckoutItem' onclick='FoodRemoveFromCart(this,".$eventId.", 1, ".$restaurantPrice.", 1)' type='submit' value='&#10006' name='??????'>
 			</div>";
 		}
 
 		$this->CheckoutModel->SetSortedDays($sortedDays);
+	}
+
+	public function GetFoodPrice($pageText) {
+		if (isset($_SESSION["Tickets"])) {
+			$items = $_SESSION["Tickets"];
+			foreach ($items as $item) {
+				if (array_key_exists("Amount", $item)) {
+					return "<h2 id='totalFoodlbl'>".$pageText." </h2><h2 id='TotalFoodAmount'>".Number_format($this->CheckoutModel->GetFoodTotal(), 2, ',', '')."</h2>";
+				} else {
+					return "";
+				}
+			}
+		}
 	}
 
 	public function GetReservationFee() {
@@ -180,7 +195,6 @@ class CheckoutController
 			foreach ($items as $item) {
 				// check if reservation is present in session
 				if ($item["TypeEvent"] == 1) {
-					// ladies and gentlemen, we got em
 					$count += $item["ChildAmount"];
 					$count += $item["AdultAmount"];
 				}

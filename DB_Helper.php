@@ -83,7 +83,29 @@ class DB_Helper
 	//get user by Id from DB by Id
 	public function GetArtists(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Name, Types, About, KnownFor, ImageName from DanceArtist where Id != 0");
+		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, ep.ParagraphTextEnglish, da.KnownFor, ei.Image from DanceArtist da
+		JOIN EventImage ei on ei.Id = da.ImageRef
+		JOIN EventParagraph ep on ep.Id = da.ParagraphId
+		where da.Id != 0");
+		//$stmt->bind_param();
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor, $ImageName); 
+		$artists = array();
+		while ($stmt -> fetch()) { 
+			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>$ImageName);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	//get user by Id from DB by Id
+	public function GetArtistsNL(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT da.Id, da.Name, da.Types, ep.ParagraphTextDutch, da.KnownFor, ei.Image from DanceArtist da
+		JOIN EventImage ei on ei.Id = da.ImageRef
+		JOIN EventParagraph ep on ep.Id = da.ParagraphId
+		where da.Id != 0");
 		//$stmt->bind_param();
 		$stmt->execute();
 		$stmt->store_result();
@@ -285,9 +307,24 @@ class DB_Helper
 	
 	}
 
+	public function GetRestaurantInfo() {
+		$stmt = $this->Conn->prepare("SELECT r.Name, ei.Image, r.Cuisines FROM Restaurants r JOIN EventImage ei ON r.ImageRef = ei.Id");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($Name, $Image, $Cuisines);
+		$restaurantImages = array();
+		while ($stmt -> fetch()) {
+			$restaurantImage = array("Name" => $Name, "Image" => $Image, "Cuisines" => $Cuisines);
+			$restaurantImages[] = $restaurantImage;
+		}
+		return $restaurantImages;
+	}
+
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
-		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, r.Logo, fr.SessionStartDateTime, fr.SessionEndDateTime 
-					FROM FoodRestaurants fr JOIN Restaurants r ON fr.RestaurantId = r.Id";
+		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, ei.Image, fr.SessionStartDateTime, fr.SessionEndDateTime, fr.Amount 
+					FROM FoodRestaurants fr 
+					JOIN Restaurants r ON fr.RestaurantId = r.Id
+					JOIN EventImage ei ON r.ImageRef = ei.Id";
 		if ($queryStringTimes != "" || $queryStringCuisine != "" || $queryStringRestaurants != "") {
 			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine. " ".$queryStringRestaurants;
 		}
@@ -295,10 +332,10 @@ class DB_Helper
 		$stmt = $this->Conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo, $SessionStartDateTime, $SessionEndDateTime);
+		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo, $SessionStartDateTime, $SessionEndDateTime, $Amount);
 		$foodSections = array();
 		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>', "SessionStartDateTime" => $SessionStartDateTime, "SessionEndDateTime" => $SessionEndDateTime);
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>', "SessionStartDateTime" => $SessionStartDateTime, "SessionEndDateTime" => $SessionEndDateTime, "Amount" => $Amount);
 			$foodSections[] = $foodSection;
 		}
 		return $foodSections;
@@ -422,6 +459,34 @@ class DB_Helper
 		return $pageImageContent;
 	}
 
+	public function GetFoodDescriptionEnglish($name) {
+		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextEnglish FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	public function GetFoodDescriptionDutch($name) {
+		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextDutch FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
 	//get all tickets by customer
 	public function GetEventInfoFood($Id) {
 		//clean Id
@@ -472,10 +537,18 @@ class DB_Helper
 	//get Artists for Jazz carousel filter
 	public function GetArtistsJazz($genreFilter){
 		if (empty($genreFilter)){
-			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE Genre IS NOT NULL GROUP BY ArtistName";
+			$sql = "SELECT n.ArtistName, e.Image, n.Genre 
+			FROM Jazz n
+			INNER JOIN EventImage e
+			ON e.Id = n.ImageRef
+			WHERE n.Genre IS NOT NULL GROUP BY n.ArtistName";
 		}
 		else{
-			$sql = "SELECT ArtistName, ArtistImage, Genre FROM Jazz WHERE ".$genreFilter." AND Genre IS NOT NULL GROUP BY ArtistName";
+			$sql = "SELECT n.ArtistName, e.Image, n.Genre 
+			FROM Jazz n
+			INNER JOIN EventImage e
+			ON e.Id = n.ImageRef
+			WHERE ".$genreFilter." AND n.Genre IS NOT NULL GROUP BY n.ArtistName";
 		}
 		//does a prepared query
 		$stmt = $this->Conn->prepare($sql);
@@ -569,7 +642,7 @@ class DB_Helper
 	//Get jazz location
 	public function GetLocationsJazz($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT v.Name, v.Adress, v.Zipcode, v.City, v.ExtraInfo, v.GoogleMaps
+		$stmt = $this->Conn->prepare("SELECT v.Name, v.Adress, v.Zipcode, v.City, v.ExtraInfoEnglish, v.ExtraInfoDutch, v.GoogleMaps
 		FROM Jazz j
 		INNER JOIN JazzVenues v
 		ON v.Name = j.Location
@@ -578,9 +651,9 @@ class DB_Helper
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfo, $GoogleMaps);
+		$stmt-> bind_result($Name, $Adress, $Zipcode, $City, $ExtraInfoEnglish, $ExtraInfoDutch, $GoogleMaps);
 		$stmt->fetch();
-		$location = array("Name"=>$Name, "Adress"=>$Adress, "Zipcode"=>$Zipcode, "City"=>$City, "Info"=>$ExtraInfo, "GoogleMaps"=>$GoogleMaps);
+		$location = array("Name"=>$Name, "Adress"=>$Adress, "Zipcode"=>$Zipcode, "City"=>$City, "InfoEnglish"=>$ExtraInfoEnglish, "InfoDutch"=>$ExtraInfoDutch, "GoogleMaps"=>$GoogleMaps);
 		return $location;
 	}
 
@@ -845,7 +918,6 @@ class DB_Helper
 		return $amount;
 	}
 
-
 	public function GetAmountHistoric($id){
         //does a prepared query
         $stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
@@ -895,6 +967,47 @@ class DB_Helper
 		$stmt-> bind_result($Id);
 		$stmt->fetch();
 		return $Id;
+	}
+
+	public function GetFooterPages(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT Id, TitleDutch, TitleEnglish FROM Pages");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Id, $TitleDutch, $TitleEnglish); 
+		$pages = array();
+		while ($stmt -> fetch()) { 
+			$page = array("ID"=>$Id, "EnglishTitle"=>$TitleEnglish, "DutchTitle"=>$TitleDutch);
+			$pages[] = $page;
+		}
+		return $pages;
+	}
+	
+	public function CheckMail($Email){
+		//clean Id
+		$EmailSQL = mysqli_real_escape_string($this->Conn, $Email);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT OrderNumber FROM `Order` WHERE Email = ? limit 1");
+		$stmt->bind_param("s", $EmailSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($orderCode);
+		$stmt->fetch();
+		return $orderCode;
+	}
+
+	public function GetEventDates(){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT StartDateTime From Jazz GROUP BY DATE(StartDateTime)");
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($Dates); 
+		$date = array();
+		while ($stmt -> fetch()) { 
+			$date = array("Dates"=>substr($Dates, 0, -9));
+			$dates[] = $date;
+		}
+		return $dates;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -967,9 +1080,25 @@ public function CreateOrderLine($orderId, $ticketId){
 		return 0;
 	}   
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Update
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+public function RemoveAvailableTicketFood($restaurantId){
+	// does a prepared query
+	$stmt = $this->Conn->prepare("UPDATE FoodRestaurants SET Amount = Amount - 1 WHERE Id = ?");
+	$stmt->bind_param("i", $restaurantId);
+
+	// commit or rollback transaction
+	if ($stmt->execute()) {
+		$this->Conn->commit();
+		return true;
+	} else {
+		$this->Conn->rollback();
+	} 
+}
+
 //reset the password with the new password and send a mail
 public function RemoveavAilableTicketDance($eventId){
 	//cleans email and password
@@ -1045,6 +1174,7 @@ public function UpdateTickets($orderId){
 		$this->Conn->rollback();
 	} 
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Delete
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
