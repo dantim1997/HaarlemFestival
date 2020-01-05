@@ -53,7 +53,7 @@ class AdvancedDanceSearchView
 						  </div>
 						</div>
 						</div>
-						<div><a href='Checkout.php'><div class='ProceeToCheckout'>".current($pageTexts)."</div>
+						<div><a href='Checkout.php'><div id='proceedToCheckoutButton'>".current($pageTexts)."</div>
 							</a></div>
 					</div>
 			    <div class='col-sm-1'></div>
