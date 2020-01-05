@@ -275,5 +275,14 @@ class JazzController
 			return $infoE;
 		}
 	}
+
+	public function GetEventDates(){
+		$datetime = $this->DB_Helper->GetEventDates();
+		$date = array();
+		foreach ($datetime as $datetime) {
+			$date[] = $datetime;
+		}
+		return $date;
+	}
 }
 ?>
