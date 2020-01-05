@@ -74,7 +74,7 @@ class MakeOrder{
 
     public function GetPrice()
     {
-        $items = $_SESSION['Tickets'];
+        $items = EncryptionHelper::Decrypt($_SESSION['Tickets']);
         $amountPay = 0;
         foreach($items as $item){
             switch ($item['TypeEvent']) {

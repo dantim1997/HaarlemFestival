@@ -292,7 +292,7 @@ class DB_Helper
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, Descriptiom, StartDateTime, EndDateTime, Price, Language, TypeTicket, ReferenceId, Amount from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
+		$stmt = $this->Conn->prepare("SELECT Id, Description, StartDateTime, EndDateTime, Price, Language, TypeTicket, ReferenceId, Amount from HistoricTours WHERE Language LIKE ? AND StartDateTime LIKE ? AND TypeTicket LIKE ? ORDER BY StartDateTime ASC");
 		$day = "%".$day."%"; 
 		$stmt->bind_param("sss", $language, $day, $type);
 		$stmt->execute();
