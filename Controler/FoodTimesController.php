@@ -206,7 +206,7 @@ class FoodTimesController
 		if ($section["Amount"] >= 11) {
 			$amount = 11;
 		} else {
-			$amount = $section["Amount"];
+			$amount = $section["Amount"] + 1;
 		}
 
 		for ($i=0; $i < $amount; $i++) {
