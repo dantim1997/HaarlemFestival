@@ -91,8 +91,8 @@ class Config
 	public function SetFooter(){
 		return "<footer class='Footer'>".$this->GetFooterPages()."
 		<p id='DesignedBy'>Designed by: Chris Lips, Thijs van Tol, Tim Gras, Stan Roozendaal en Stef Robbe
-		<a href='https://www.instagram.com/explore/tags/haarlemfestival/'><image class='MediaIcons' src='Images/Home/instagram-icon-black.png'></a>
-		<a href='https://www.facebook.com/Haarlem-Festival-100428948092059/'><image class='MediaIcons' src='Images/Home/facebook-icon.png'></a></p>
+		<a href='https://www.instagram.com/explore/tags/haarlemfestival/'><image class='MediaIcons' src='http://hfteam3.infhaarlem.nl/cms/Images/Home/instagram-icon-black.png'></a>
+		<a href='https://www.facebook.com/Haarlem-Festival-100428948092059/'><image class='MediaIcons' src='http://hfteam3.infhaarlem.nl/cms/Images/Home/facebook-icon.png'></a></p>
 		<p id='footertax'>".$this->GetTax()."</p>
 	</footer>
 	</body></html>";

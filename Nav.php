@@ -10,7 +10,7 @@ class Nav
 	function SetNavBar($event){
 		return"
 		<div id='NavBarBorder'>
-				<div><a href='index.php'><img class='NavBarImg' src='Images/Nav/HaarlemImage.png'></a></div>
+				<div><a href='index.php'><img class='NavBarImg' src='http://hfteam3.infhaarlem.nl/cms/Images/Nav/HaarlemImage.png'></a></div>
 				".$this->SetEvent("Home", $event)."
 				".$this->SetEvent("Food", $event)."
 				".$this->SetEvent("Dance", $event)."
@@ -19,8 +19,8 @@ class Nav
 				".$this->SetEvent("MyProgram", $event)."
 				<div class='right'>
 					<div class='Languages'>
-						<a href='".$this->DeterminGET()."Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='Images/Nav/Englishflag.png'></a>
-						<a href='".$this->DeterminGET()."Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='Images/Nav/Dutchflag.png'></a>
+						<a href='".$this->DeterminGET()."Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='http://hfteam3.infhaarlem.nl/cms/Images/Nav/Englishflag.png'></a>
+						<a href='".$this->DeterminGET()."Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='http://hfteam3.infhaarlem.nl/cms/Images/Nav/Dutchflag.png'></a>
 					</div>
 					<a href='Checkout.php'>
 						<div class='ShoppingCart'>

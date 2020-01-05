@@ -29,32 +29,32 @@ class IndexView
 	private function Body(){
 		$nav = new Nav();
 		$pageTexts = $this->PageContentHelper->GetPageText("Index");
-		$pageImages = $this->PageContentHelper->GetPageimage("Index");
+		$PageImages = $this->PageContentHelper->GetPageImage("Index");
 		return $nav->SetNavBar("Home"). "
 		<div id='main'>
 			<div class='RedBar'></div>
 			<div class='HomepageImages'>
-				<image class='Logo' src='".current($pageImages)."'>
+				<image class='Logo' src='".current($PageImages)."'>
 					<div class='Imagecontainer'>
-						<image class='HomepageImage' src='".next($pageImages)."'>
+						<image class='HomepageImage' src='".next($PageImages)."'>
 					    <div class='overlay' id='Food' onclick='ToEvent(id)'>
 						  <div class='imageText'>".current($pageTexts)."</div>
 						</div>
 					</div>
 					<div class='Imagecontainer'>
-						<image class='HomepageImage' src='".next($pageImages)."'>
+						<image class='HomepageImage' src='".next($PageImages)."'>
 						<div class='overlay' id='Dance' onclick='ToEvent(id)'>
 						    <div class='imageText'>".next($pageTexts)."</div>
 						</div>
 					</div>
 					<div class='Imagecontainer'>
-						<image class='HomepageImage' src='".next($pageImages)."'>
+						<image class='HomepageImage' src='".next($PageImages)."'>
 						<div class='overlay' id='Historic' onclick='ToEvent(id)'>
 						    <div class='imageText'>".next($pageTexts)."</div>
 						</div>
 					</div>
 					<div class='Imagecontainer'>
-						<image class='HomepageImage' src='".next($pageImages)."'>
+						<image class='HomepageImage' src='".next($PageImages)."'>
 						<div class='overlay' id='Jazz' onclick='ToEvent(id)'>
 						    <div class='imageText'>".next($pageTexts)."</div>
 						</div>

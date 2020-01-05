@@ -1,6 +1,30 @@
 body{
-	background-image: url("../Images/Dance/BackgroundDance.jpg");
+	background-image: url("http://hfteam3.infhaarlem.nl/cms/Images/Dance/BackgroundDance.jpg");
 	background-size: cover;
+}
+
+#proceedToCheckoutButton{
+	padding: 5px 25px;
+	font-size: 19pt;
+	font-weight: normal;
+	text-align: center;
+	float: left;
+	cursor: pointer;
+	margin-left: 40%;
+	margin-top: 8%;
+	margin-bottom: 3%;
+	outline: none;
+	background-color: #c10326;
+	border: none;
+	border-radius: 6px;
+	color: #FFFFFF;
+	text-decoration: none;
+	display: inline-block;
+	box-shadow: 2px 2px 2px 2px #808080;
+}
+
+#proceedToCheckoutButton:hover{
+	background-color: #990000;
 }
 
 .Info{
