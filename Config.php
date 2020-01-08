@@ -1,5 +1,5 @@
 <?php
-require_once("DB_Helper.php");
+require_once("Repositories/FooterRepository.php");
 class Config
 {
 	private static $instance = null;	
@@ -99,9 +99,9 @@ class Config
 	}
 
 	private function GetFooterPages(){
-		$this->DB_Helper = new DB_Helper;
+		$this->FooterRepository = new FooterRepository;
 		$output = "";
-		$pages = $this->DB_Helper->GetFooterPages();
+		$pages = $this->FooterRepository->GetFooterPages();
 		foreach ($pages as $pages) {
 			$output .= "<a href='Content.php?id=".$pages['ID']."'><p class='footerlink'>".$pages[EncryptionHelper::Decrypt($_SESSION['Language'])."Title"]."</p> </a>";
 		}
