@@ -87,7 +87,7 @@ class OrderRepository
 			if($location == ""){
 				$location = "Multiple Locations";
 			}
-			$ticket = array($artist." ".$description, $price, $firstName ." ". $lastName, $location, $address, $date,$duration, $qrCode );
+			$ticket = array($artist." ".$description, $price, $location, $address, $date,$duration, $qrCode );
 			array_push($tickets,$ticket);
 		}
 		return $tickets;
@@ -118,7 +118,7 @@ class OrderRepository
 			if($startTime == "00:00:00"){
 				$duration = "All Day";
 			}
-			$ticket = array($reservation, $price, $firstName ." ". $lastName, $location, $address, $date,$duration , $qrCode);
+			$ticket = array($reservation, $price, $location, $address, $date,$duration , $qrCode);
 			array_push($tickets,$ticket);
 		}
 		return $tickets;
@@ -149,7 +149,7 @@ class OrderRepository
 			if($startTime == "00:00:00"){
 				$duration = "All Day";
 			}
-			$ticket = array($artist, $price, $firstName ." ". $lastName, $location." (".$hall.")", $address, $date,$duration, $qrCode );
+			$ticket = array($artist, $price, $location." (".$hall.")", $address, $date,$duration, $qrCode );
 			array_push($tickets,$ticket);
 		}
 		return $tickets;
@@ -179,7 +179,7 @@ class OrderRepository
 			if($startTime == "00:00:00"){
 				$duration = "All Day";
 			}
-			$ticket = array($description, $price, $firstName ." ". $lastName, $location, "", $date,$duration, $qrCode );
+			$ticket = array($description,$price, $location, "", $date,$duration, $qrCode );
 			array_push($tickets,$ticket);
 		}
 		return $tickets;

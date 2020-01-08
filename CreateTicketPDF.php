@@ -73,8 +73,8 @@ class Ticket extends FPDF{
 		$this->Cell(10,10,EURO." ".next($ticketInfo),0,0,'L');
 		$this->Ln(7);
 		$this->Cell(159);
-		$this->Cell(12,3,'Customer:',0,0,'L');
-		$this->MultiCell(17,3,next($ticketInfo),0,"B");
+		$this->Cell(12,3,'',0,0,'L');
+		$this->MultiCell(17,3,"",0,"B");
 		
 		
 		$this->Ln(-12);
@@ -108,13 +108,12 @@ class Ticket extends FPDF{
 	}
 
 }
-
 class PDFMaker{
 	public function MakePDF($customerInfo, $tickets)
 	{
-		//$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655", ordernumber);
-		/*$tickets = array();
-		$tickets[] = array("Hardwell B2B", "5060.00", "customer", "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", qrcode);*/
+		/*$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655", 0);
+		$tickets = array();
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", 0);*/
 		
 		define('EURO',chr(128));
 		require_once( "Autoloader.php");
@@ -133,13 +132,13 @@ class PDFMaker{
 				$height = 0;
 				$amountOnPage = 0;
 			}
-			$qrimage = $qr->GenerateQRCode("http://cms.hfteam3.infhaarlem.nl/" ."CMSTicket.php?TicketCode=". $ticket[7], $ticket[7]);
+			$qrimage = $qr->GenerateQRCode("http://cms.hfteam3.infhaarlem.nl/" ."CMSTicket.php?TicketCode=". $ticket[6], $ticket[6]);
 			$pdf->EventTicket($ticket, $height, $qrimage);
 			$height += 73;
 		
 			$amountOnPage++;
 		}
-		return $pdf->Output('attachment.pdf', 'S');
+		return $pdf->Output()('attachment.pdf', 'S');
 	}
 }
 
