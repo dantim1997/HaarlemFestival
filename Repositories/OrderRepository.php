@@ -272,7 +272,7 @@ class OrderRepository
 		return $orderCode;
 	}
 
-		//get tickets
+	//get tickets
 	public function GetOrderTicketsDance($orderId){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description, Description info FROM `Order` as o
@@ -300,5 +300,30 @@ class OrderRepository
 		return $events;
 	}
 
+	//get tickets
+	public function GetOrderTicketsTour($orderId){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info
+			FROM `Order` o
+			join OrderLine ol on ol.OrderId = o.id
+			join Tickets t on t.Id = ol.TicketId
+			join HistoricTours ht on ht.Id = t.EventId
+			WHERE o.OrderNumber = ? && t.TypeEvent = 3
+			group by ol.id");
+		$stmt->bind_param("i", $orderId);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
+		$events = array();
+		while ($stmt -> fetch()) { 
+			if($description == ","){
+				$description = "";
+			}
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
+			$events[] = $event;
+		}
+		//return $array;
+		return $events;
+	}
 }
 ?>

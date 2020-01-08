@@ -20,34 +20,6 @@ class HistoricRepository
 		return $this->Conn;
 	}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Select
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-	//get tickets
-	public function GetOrderTicketsTour($orderId){
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info
-			FROM `Order` o
-			join OrderLine ol on ol.OrderId = o.id
-			join Tickets t on t.Id = ol.TicketId
-			join HistoricTours ht on ht.Id = t.EventId
-			WHERE o.OrderNumber = ? && t.TypeEvent = 3
-			group by ol.id");
-		$stmt->bind_param("i", $orderId);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
-		$events = array();
-		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
-			$events[] = $event;
-		}
-		//return $array
-		return $events;
-	}
-
 	//Get the sessions for historic
 	public function GetToursByFilters($language, $day, $type){
 		//does a prepared query
