@@ -138,7 +138,7 @@ class PDFMaker{
 		
 			$amountOnPage++;
 		}
-		return $pdf->Output()('attachment.pdf', 'S');
+		return $pdf->Output('attachment.pdf', 'S');
 	}
 }
 
