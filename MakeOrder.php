@@ -8,7 +8,7 @@ class MakeOrder{
     public function __construct()
     {
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->DanceRepository = new DanceRepository;
 		$this->Session = new Session;
     }
 
@@ -84,7 +84,7 @@ class MakeOrder{
                     $amountPay += doubleval(10) * doubleval($item['AdultAmount']);
                     break;
                 case 2:
-                    $event = $this->DB_Helper->GetEventInfoDance($item['EventId']);
+                    $event = $this->DanceRepository->GetEventInfoDance($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 3:
@@ -113,7 +113,7 @@ class MakeOrder{
                 }
                 break;
             case 2:
-                $event = $this->DB_Helper->GetEventInfoDance($eventId);
+                $event = $this->DanceRepository->GetEventInfoDance($eventId);
                 return doubleval($event['Price']);
                 break;
             case 3:

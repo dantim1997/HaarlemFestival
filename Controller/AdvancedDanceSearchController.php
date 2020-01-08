@@ -29,7 +29,7 @@ class AdvancedDanceSearchController
 	}
 
 	public function MakeLocationAdvancedSearch(){
-		$locations =$this->DB_Helper->GetLocations();
+		$locations =$this->DanceRepository->GetLocations();
 		$locationSearchlist = "";
 		foreach ($locations as $location) {
 			$locationSearchlist .= "<input type='checkbox' name='LocationCheckbox[]' value=".$location["Id"]."><label>".$location["Name"]."</label><br/>";
@@ -69,7 +69,7 @@ class AdvancedDanceSearchController
 		   }
 		}
 		if(isset($_GET['ArtistCheckbox']) || isset($_GET['LocationCheckbox'])){
-			$tickets = $this->CreateTickets($this->DB_Helper->GetSearch($searchStringArtist,$searchStringLocation));
+			$tickets = $this->CreateTickets($this->DanceRepository->GetSearch($searchStringArtist,$searchStringLocation));
 			return $tickets;
 		}
 		return null;

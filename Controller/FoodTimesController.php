@@ -9,7 +9,7 @@ class FoodTimesController
 	public function __construct($FoodTimesModel){
 		$this->FoodTimesModel = $FoodTimesModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->FoodRepository = new FoodRepository;
 		$this->PageContentHelper = new PageContentHelper();
 	}
 
@@ -84,7 +84,7 @@ class FoodTimesController
 			}
 			$queryStringRestaurants = "Name LIKE '".$restaurantName."'";
 		}
-		$foodSections = $this->DB_Helper->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
+		$foodSections = $this->FoodRepository->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
 		$sections = "";
 		$count = 1;
 		foreach ($foodSections as $foodSection) {
