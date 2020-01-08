@@ -13,6 +13,8 @@ class CheckoutController
 		$this->Config = Config::getInstance();
 		$this->HistoricRepository = new HistoricRepository;
 		$this->DanceRepository = new DanceRepository;
+		$this->JazzRepository = new JazzRepository;
+		$this->FoodRepository = new FoodRepository;
 		$this->Session = new Session;
 		$this->ProceedToPayment();
 	}
@@ -107,7 +109,7 @@ class CheckoutController
 				$eventInfo = $this->HistoricRepository->GetEventInfoHistoric($eventId);
 				break;
 			case 4:
-				$eventInfo = $this->HistoricRepository->GetEventInfoJazz($eventId);
+				$eventInfo = $this->JazzRepository->GetEventInfoJazz($eventId);
 				break;
 		}
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
@@ -133,7 +135,7 @@ class CheckoutController
 	public function GetFoodItems($eventId, $childAmount, $adultAmount, $extraInfo) {
 		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
-		$eventInfo = $this->HistoricRepository->GetEventInfoFood($eventId);
+		$eventInfo = $this->FoodRepository->GetEventInfoFood($eventId);
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
 		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));
 

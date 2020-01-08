@@ -28,7 +28,7 @@ class FoodRepository
 		$stmt->bind_result($Name, $Image, $Cuisines);
 		$restaurantImages = array();
 		while ($stmt -> fetch()) {
-			$restaurantImage = array("Name" => $Name, "Image" => $Image, "Cuisines" => $Cuisines);
+			$restaurantImage = array("Name" => $Name, "Image" => "http://hfteam3.infhaarlem.nl/cms/".$Image, "Cuisines" => $Cuisines);
 			$restaurantImages[] = $restaurantImage;
 		}
 		return $restaurantImages;
@@ -49,7 +49,7 @@ class FoodRepository
 		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo, $SessionStartDateTime, $SessionEndDateTime, $Amount);
 		$foodSections = array();
 		while ($stmt -> fetch()) {
-			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="'.$Logo.'" class="restaurantInfoImages"/>', "SessionStartDateTime" => $SessionStartDateTime, "SessionEndDateTime" => $SessionEndDateTime, "Amount" => $Amount);
+			$foodSection = array("Id" => $Id, "Name" => $Name, "Cuisines" => $Cuisines, "Location" => $Location, "Rating" => $Rating, "NormalPrice" => $NormalPrice, "ChildPrice" => $ChildPrice, "LocationLink" => $LocationLink, "Logo" => '<img src="http://hfteam3.infhaarlem.nl/cms/'.$Logo.'" class="restaurantInfoImages"/>', "SessionStartDateTime" => $SessionStartDateTime, "SessionEndDateTime" => $SessionEndDateTime, "Amount" => $Amount);
 			$foodSections[] = $foodSection;
 		}
 		return $foodSections;

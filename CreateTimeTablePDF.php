@@ -80,27 +80,27 @@ if(isset($_GET)){
 else{
 	header("Location: MyProgram.php");
 }
-function GetDanceTickets($DB_Helper,$id, $pdf){
+function GetDanceTickets($OrderRepository,$id, $pdf){
 	$tickets = $OrderRepository->GetOrderTicketsDance($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 2, $pdf);
 	}
 }
-function GetTourTickets($DB_Helper,$id, $pdf){
+function GetTourTickets($OrderRepository,$id, $pdf){
 	$tickets = $OrderRepository->GetOrderTicketsTour($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 3,$pdf);
 	}
 }
 
-function GetJazzTickets($DB_Helper,$id, $pdf){
+function GetJazzTickets($OrderRepository,$id, $pdf){
 	$tickets = $OrderRepository->GetOrderTicketsJazz($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 4,$pdf);
 	}
 }
 
-function GetFoodTickets($DB_Helper,$id, $pdf){
+function GetFoodTickets($OrderRepository,$id, $pdf){
 	$tickets = $OrderRepository->GetOrderTicketsFood($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 1,$pdf);

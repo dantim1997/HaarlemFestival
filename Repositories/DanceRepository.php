@@ -89,7 +89,7 @@ class DanceRepository
 		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor, $ImageName); 
 		$artists = array();
 		while ($stmt -> fetch()) { 
-			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>$ImageName);
+			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>"http://hfteam3.infhaarlem.nl/cms/".$ImageName);
 			$artists[] = $artist;
 		}
 		return $artists;
@@ -108,7 +108,7 @@ class DanceRepository
 		$stmt-> bind_result($Id, $Name, $Types, $About, $KnownFor, $ImageName); 
 		$artists = array();
 		while ($stmt -> fetch()) { 
-			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>$ImageName);
+			$artist = array("Id"=>$Id, "Name"=>$Name, "Types"=>$Types, "About"=>$About, "KnownFor"=>$KnownFor, "ImageName"=>"http://hfteam3.infhaarlem.nl/cms/".$ImageName);
 			$artists[] = $artist;
 		}
 		return $artists;
