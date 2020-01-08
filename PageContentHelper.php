@@ -14,7 +14,7 @@ class PageContentHelper
 		$this->DetermineLanguage();
 
 		//If Dutch is chosen switch to it.
-		if (isset($_SESSION['Language']) && $_SESSION['Language'] == 'Dutch') {
+		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
 			return $this->DB_Helper->Get_PageTextDutch($page);
 		}
 		//By default we use English.
@@ -26,7 +26,7 @@ class PageContentHelper
 	public function DetermineLanguage(){
 		//If a language is chosen switch to it.
 		if (isset($_GET['Language'])) {
-			$_SESSION['Language'] = $_GET['Language'];
+			$_SESSION['Language'] = EncryptionHelper::Encrypt($_GET['Language']);
 		}
 	}
 

@@ -63,7 +63,7 @@ class Nav
 	public function GetCartItems() {
 		if(isset($_SESSION['Tickets'])) {
 			$shoppingCartAmount = 0;
-			foreach ($_SESSION['Tickets'] as $items) {
+			foreach (EncryptionHelper::Decrypt($_SESSION['Tickets']) as $items) {
 				// check if session ticket is a reservation
 				if ($items['TypeEvent'] == 1) {
 					// it's a reservation, this means session ticket contains 'Child/AdultAmount' instead of just Amount, act accordingly
@@ -81,12 +81,12 @@ class Nav
 
 	private function DetermineActiveLanguage($language){
 		if (isset($_SESSION['Language'])) {
-			if ($_SESSION['Language'] == $language) {
+			if (EncryptionHelper::Decrypt($_SESSION['Language']) == $language) {
 				return 'ActiveLanguage';
 			}
 		}
 		else{
-			$_SESSION['Language'] = 'English';
+			$_SESSION['Language'] = EncryptionHelper::Encrypt('English');
 		}
 	}
 

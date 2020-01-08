@@ -56,7 +56,7 @@ class DanceController
 		$artistslist = "";
 
 		//If Dutch is chosen switch to it.
-		if (isset($_SESSION['Language']) && $_SESSION['Language'] == 'Dutch') {
+		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
 			foreach ($this->DB_Helper->GetArtistsNL() as $artist) {
 				$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='".$artist["ImageName"]."'> </div>";
 			}
@@ -75,7 +75,7 @@ class DanceController
 		$modals = "";
 
 		//If Dutch is chosen switch to it.
-		if (isset($_SESSION['Language']) && $_SESSION['Language'] == 'Dutch') {
+		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
 			foreach ($this->DB_Helper->GetArtistsNL() as $artist) {
 				$modals .= $this->GetModal($artist);	
 			}
