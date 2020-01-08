@@ -8,7 +8,11 @@ class MakeOrder{
     public function __construct()
     {
 		$this->Config = Config::getInstance();
-		$this->DanceRepository = new DanceRepository;
+        $this->DB_Helper = new DB_Helper;
+        $this->HistoricRepository = new HistoricRepository;
+        $this->DanceRepository = new DanceRepository;
+        $this->JazzRepository = new JazzRepository;
+        $this->FoodRepository = new FoodRepository;
 		$this->Session = new Session;
     }
 
@@ -79,7 +83,7 @@ class MakeOrder{
         foreach($items as $item){
             switch ($item['TypeEvent']) {
                 case 1:
-                    $event = $this->DB_Helper->GetEventInfoFood($item['EventId']);
+                    $event = $this->FoodRepository->GetEventInfoFood($item['EventId']);
                     $amountPay += doubleval(10) * doubleval($item['ChildAmount']);
                     $amountPay += doubleval(10) * doubleval($item['AdultAmount']);
                     break;
@@ -88,11 +92,11 @@ class MakeOrder{
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 3:
-                    $event = $this->DB_Helper->GetEventInfoHistoric($item['EventId']);
+                    $event = $this->HistoricRepository->GetEventInfoHistoric($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 4:
-                    $event = $this->DB_Helper->GetEventInfoJazz($item['EventId']);
+                    $event = $this->JazzRepository->GetEventInfoJazz($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
             }
@@ -104,7 +108,7 @@ class MakeOrder{
     {
         switch ($typeEvent) {
             case 1:
-                $event = $this->DB_Helper->GetEventInfoFood($eventId);
+                $event = $this->FoodRepository->GetEventInfoFood($eventId);
                 if ($typeTicket == "Child") {
                     return doubleval($event['ChildPrice']);
                 }
@@ -117,11 +121,11 @@ class MakeOrder{
                 return doubleval($event['Price']);
                 break;
             case 3:
-                $event = $this->DB_Helper->GetEventInfoHistoric($eventId);
+                $event = $this->HistoricRepository->GetEventInfoHistoric($eventId);
                 return doubleval($event['Price']);
                 break;
             case 4:
-                $event = $this->DB_Helper->GetEventInfoJazz($eventId);
+                $event = $this->JazzRepository->GetEventInfoJazz($eventId);
                 return doubleval($event['Price']);
                 break;
         }

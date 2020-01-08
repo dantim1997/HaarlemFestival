@@ -20,36 +20,8 @@ class JazzRepository
 		return $this->Conn;
 	}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Select
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-	//get tickets
-	public function GetOrderTicketsJazz($orderId){
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName, '' info
-			FROM `Order` o
-			join OrderLine ol on ol.OrderId = o.id
-			join Tickets t on t.Id = ol.TicketId
-			join Jazz j on j.Id = t.EventId
-			WHERE o.OrderNumber = ? && t.TypeEvent = 4");
-		$stmt->bind_param("i", $orderId);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
-		$events = array();
-		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
-			$events[] = $event;
-		}
-		//return $array
-		return $events;
-	}
-
-
 	//get Tickets for Jazz
-	public function GetTimeTableJazz(){
+	/*public function GetTimeTableJazz(){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM Jazz");
 		$stmt->execute();
@@ -61,7 +33,7 @@ class JazzRepository
 			$artists[] = $artist;
 		}
 		return $artists;
-	}
+	}*/
 
 	//get Artists for Jazz carousel filter
 	public function GetArtistsJazz($genreFilter){

@@ -94,7 +94,7 @@ class JazzController
 	//get tickets for event day
 	public function FillTickets($date){
 		$date .= "%";
-		$ticket = $this->DB_Helper->GetTicketsJazz($date);
+		$ticket = $this->JazzRepository->GetTicketsJazz($date);
 		$tickets = "";
 		foreach ($ticket as $ticket) {
 			$starttime = strtotime($ticket["StartDateTime"]);
@@ -122,7 +122,7 @@ class JazzController
 	
 	//get genre for filter
 	public function MakeGenreAdvancedSearch(){
-		$artist =$this->DB_Helper->GetGenresJazz();
+		$artist =$this->JazzRepository->GetGenresJazz();
 		$artistsSearchlist = "";
 		foreach ($artist as $artist) {
 			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$artist["Genre"]."><label>".$artist["Genre"]."</label><br/>";
@@ -156,7 +156,7 @@ class JazzController
 		$output = $this->GetDates();
 
 		//get times
-		$time = $this->DB_Helper->GetTimesJazz();
+		$time = $this->JazzRepository->GetTimesJazz();
 
 		//convert time
 		foreach ($time as $time) {
@@ -207,7 +207,7 @@ class JazzController
 	}
 
 	private function GetArtistTable($datetime){
-		$result = $this->DB_Helper->GetArtistTableJazz($datetime);
+		$result = $this->JazzRepository->GetArtistTableJazz($datetime);
 		$output = "";
 		$count = 0;
 		if (!empty($result)){
@@ -234,7 +234,7 @@ class JazzController
 
 	public function GetTickets($date){
 		$date .= "%";
-		$tickets = $this->DB_Helper->GetTicketsJazz($date);
+		$tickets = $this->JazzRepository->GetTicketsJazz($date);
 		
 		$addtocart = "";
 		$count = 1;
@@ -277,7 +277,7 @@ class JazzController
 	}
 
 	public function GetEventDates(){
-		$datetime = $this->DB_Helper->GetEventDates();
+		$datetime = $this->JazzRepository->GetEventDates();
 		$date = array();
 		foreach ($datetime as $datetime) {
 			$date[] = $datetime;

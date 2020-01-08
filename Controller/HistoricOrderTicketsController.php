@@ -12,6 +12,7 @@ class HistoricOrderTicketsController
 		$this->HistoricOrderTicketsModel = $historicOrderTicketsModel;
 		$this->Config = Config::getInstance();
 		$this->HistoricRepository = new HistoricRepository;
+		$this->OrderRepository = new OrderRepository;
 	}
 	
 	//get config
