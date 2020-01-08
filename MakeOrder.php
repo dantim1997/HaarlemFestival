@@ -10,7 +10,9 @@ class MakeOrder{
 		$this->Config = Config::getInstance();
         $this->DB_Helper = new DB_Helper;
         $this->HistoricRepository = new HistoricRepository;
-		$this->DanceRepository = new DanceRepository;
+        $this->DanceRepository = new DanceRepository;
+        $this->JazzRepository = new JazzRepository;
+        $this->FoodRepository = new FoodRepository;
 		$this->Session = new Session;
     }
 
@@ -81,7 +83,7 @@ class MakeOrder{
         foreach($items as $item){
             switch ($item['TypeEvent']) {
                 case 1:
-                    $event = $this->DB_Helper->GetEventInfoFood($item['EventId']);
+                    $event = $this->FoodRepository->GetEventInfoFood($item['EventId']);
                     $amountPay += doubleval(10) * doubleval($item['ChildAmount']);
                     $amountPay += doubleval(10) * doubleval($item['AdultAmount']);
                     break;
@@ -94,7 +96,7 @@ class MakeOrder{
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 4:
-                    $event = $this->DB_Helper->GetEventInfoJazz($item['EventId']);
+                    $event = $this->JazzRepository->GetEventInfoJazz($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
             }
@@ -106,7 +108,7 @@ class MakeOrder{
     {
         switch ($typeEvent) {
             case 1:
-                $event = $this->DB_Helper->GetEventInfoFood($eventId);
+                $event = $this->FoodRepository->GetEventInfoFood($eventId);
                 if ($typeTicket == "Child") {
                     return doubleval($event['ChildPrice']);
                 }
@@ -123,7 +125,7 @@ class MakeOrder{
                 return doubleval($event['Price']);
                 break;
             case 4:
-                $event = $this->DB_Helper->GetEventInfoJazz($eventId);
+                $event = $this->JazzRepository->GetEventInfoJazz($eventId);
                 return doubleval($event['Price']);
                 break;
         }
