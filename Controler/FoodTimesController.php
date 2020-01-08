@@ -163,7 +163,7 @@ class FoodTimesController
 						<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
 						<input type='button' class='makeReservationBtn' value='".next($pageTexts)."' onclick='FoodAddToCartHelper(".$count.")' />
 						<div id='emptyTicketsWarning'>
-							".$this->TicketsUnavailable($section)."
+							".$this->TicketsUnavailable($section, $count, next($pageTexts))."
 						</div>
 					</div>
 				</div>
@@ -205,8 +205,8 @@ class FoodTimesController
 
 		if ($section["Amount"] >= 11) {
 			$amount = 11;
-		} else {
-			$amount = $section["Amount"];
+		} else if ($section["Amount"] == 1) {
+			$amount =2;
 		}
 
 		for ($i=0; $i < $amount; $i++) {
@@ -215,10 +215,25 @@ class FoodTimesController
 		return $options;
 	}
 
-	private function TicketsUnavailable($section) {
+	private function TicketsUnavailable($section, $count, $pageText) {
+		$htmlElements = "";
 		if ($section["Amount"] == 0) {
-			return "TICKETS SOLD OUT";
-		}
+			$htmlElements .= "
+			<div class='makeReservation'>
+				<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
+				<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
+				<input type='button' class='makeReservationBtn' value='".$pageText."' disabled' />
+				<div id='emptyTicketsWarning'>TICKETS SOLD OUT</div>
+			</div>";
+		} else {
+			$htmlElements .= "
+			<div class='makeReservation'>
+				<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
+				<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
+				<input type='button' class='makeReservationBtn' value='".$pageText."' onclick='FoodAddToCartHelper(".$count.")' />
+				<div id='emptyTicketsWarning'></div>
+			</div>";
+		}	
 	}
 
 	private function GetDateTimes($id, $type) {
