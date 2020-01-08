@@ -65,7 +65,7 @@ class CheckoutView
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
 										<td>
 											<input pattern='[0-9]{4}' style='width:20%;' class='lbltxt' type='number' name='HouseNumber'>
-											<input pattern='[a-zA-Z]*'style='width:60%;' class='lbltxt' type='text' placeholder='Street' name='Street'>
+											<input pattern='[a-zA-Z]*'style='width:60%;' class='lbltxt' type='text' name='Street'>
 										</td>
 									</tr>
 									<tr>

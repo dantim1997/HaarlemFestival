@@ -8,7 +8,7 @@ class CheckoutController
 
 	public $SortedDays = array();
 
-	public function __construct($checkoutModel){
+	public function __construct($checkoutModel) {
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->DB_Helper = new DB_Helper;
@@ -26,8 +26,8 @@ class CheckoutController
 			"Date" => "",
 		);
 		
-		if(isset($_POST['proceedToPaymentBTN'])){
-			if(count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0){
+		if (isset($_POST['proceedToPaymentBTN'])) {
+			if (count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0) {
 				var_dump(EncryptionHelper::Decrypt($_SESSION["Tickets"]));
 				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 				$errorList["LastName"] = $this->IsRequired("LastName", "text");
@@ -45,13 +45,13 @@ class CheckoutController
 
 	public function IsRequired($name, $Type)
 	{
-		if( $_POST[$name] == Null || $_POST[$name] == ""){
+		if ($_POST[$name] == NULL || $_POST[$name] == "") {
 			return "Field is required";
 		}
-		if($Type == "Email"){
+		if ($Type == "Email") {
 
 		}
-		if($Type == "postalCode"){
+		if ($Type == "postalCode") {
 			
 		}
 	}
@@ -60,7 +60,6 @@ class CheckoutController
 	public function GetConfig(){
 		return $this->Config;
 	}
-
 
 	public function GetAllItems(){
 		$ticketRows = "";
