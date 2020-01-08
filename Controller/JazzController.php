@@ -9,7 +9,7 @@ class JazzController
 	public function __construct($jazzModel){
 		$this->JazzModel = $jazzModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->JazzRepository = new JazzRepository;
 	}
 	
 	//get config
@@ -19,7 +19,7 @@ class JazzController
 
 	//Get Artists
 	public function MakeArtistCarousel($filter = null){
-		$artist = $this->DB_Helper->GetArtistsJazz($filter);
+		$artist = $this->JazzRepository->GetArtistsJazz($filter);
 		$artists = "";
 		$counter = 0;
 		$first = true;
@@ -187,7 +187,7 @@ class JazzController
 	}
 
 	private function GetDates(){
-		$date = $this->DB_Helper->GetDatesJazz();
+		$date = $this->JazzRepository->GetDatesJazz();
 		$newdates = array();
 		foreach ($date as $date) {
 			$tempdate = date("l - d F", strtotime($date["StartDateTime"]));
@@ -254,7 +254,7 @@ class JazzController
 
 	public function GetLocation($date){
 		$date .= "%";
-		$location = $this->DB_Helper->GetLocationsJazz($date);
+		$location = $this->JazzRepository->GetLocationsJazz($date);
 		$output = "<h2>Location<h2>
 		<p class='location'>".$location["Name"]."<br>".$location["Adress"]."<br>".$location["Zipcode"]." ".$location["City"]."<br>".$this->GetLocationInfo($location["InfoEnglish"],$location["InfoDutch"])."</p>
 		<iframe class='googlemaps' src='".$location["GoogleMaps"]."' frameborder='0' style='border:0;' allowfullscreen=''></iframe>

@@ -9,7 +9,7 @@ class AdvancedDanceSearchController
 
 	public function __construct($advancedDanceSearchModel){
 		$this->AdvancedDanceSearchModel = $advancedDanceSearchModel;
-		$this->DB_Helper = new DB_Helper;
+		$this->DanceRepository = new DanceRepository;
 		$this->Config = Config::getInstance();
 		$this->PageContentHelper = new PageContentHelper();
 	}
@@ -20,7 +20,7 @@ class AdvancedDanceSearchController
 	}
 
 	public function MakeArtistAdvancedSearch(){
-		$artists =$this->DB_Helper->GetArtists();
+		$artists =$this->DanceRepository->GetArtists();
 		$artistsSearchlist = "";
 		foreach ($artists as $artist) {
 			$artistsSearchlist .= "<input type='checkbox' name='ArtistCheckbox[]' value=".$artist["Id"]."><label>".$artist["Name"]."</label><br/>";

@@ -9,9 +9,9 @@ class DanceController
 	public function __construct($danceModel){
 		$this->Dancemodel = $danceModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->DanceRepository = new DanceRepository;
 
-		$this->Dancemodel->SetArtists($this->DB_Helper->GetArtists());
+		$this->Dancemodel->SetArtists($this->DanceRepository->GetArtists());
 	}
 	
 	//get config
@@ -31,7 +31,7 @@ class DanceController
 	}
 
 	public function GetSpecialTickets(){
-		$specials = $this->DB_Helper->Get_AllSpecialEvents();
+		$specials = $this->DanceRepository->Get_AllSpecialEvents();
 
 		$specialTickets="";
 		if(count($specials) > 0){
@@ -57,13 +57,13 @@ class DanceController
 
 		//If Dutch is chosen switch to it.
 		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
-			foreach ($this->DB_Helper->GetArtistsNL() as $artist) {
+			foreach ($this->DanceRepository->GetArtistsNL() as $artist) {
 				$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='".$artist["ImageName"]."'> </div>";
 			}
 		}
 		//By default we use English.
 		else{
-			foreach ($this->DB_Helper->GetArtists() as $artist) {
+			foreach ($this->DanceRepository->GetArtists() as $artist) {
 				$artistslist .= "<div class='Artist' data-toggle='modal' data-target='#Artists".$artist["Id"]."'>".$artist["Name"]." <img class='ArtistImage' src='".$artist["ImageName"]."'> </div>";
 			}
 		}
@@ -76,13 +76,13 @@ class DanceController
 
 		//If Dutch is chosen switch to it.
 		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
-			foreach ($this->DB_Helper->GetArtistsNL() as $artist) {
+			foreach ($this->DanceRepository->GetArtistsNL() as $artist) {
 				$modals .= $this->GetModal($artist);	
 			}
 		}
 		//By default we use English.
 		else{
-			foreach ($this->DB_Helper->GetArtists() as $artist) {
+			foreach ($this->DanceRepository->GetArtists() as $artist) {
 				$modals .= $this->GetModal($artist);	
 			}
 		}
@@ -129,7 +129,7 @@ class DanceController
 	}
 
 	public function SetTable($artistId){
-		$Sessions = $this->DB_Helper->GetEventsByArtist($artistId);
+		$Sessions = $this->DanceRepository->GetEventsByArtist($artistId);
 		$tablerows ="";
 		if(count($Sessions) > 0){
 			foreach ($Sessions as $session) {

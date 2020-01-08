@@ -1,5 +1,5 @@
 <?php
-	require_once( "Autoloader.php");
+require_once( "Autoloader.php");
 class DanceTimeTableController 
 {
 	private $DanceModel;
@@ -9,7 +9,7 @@ class DanceTimeTableController
 	public function __construct($danceModel){
 		$this->Dancemodel = $danceModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->DanceRepository = new DanceRepository;
 		$this->Session = new Session;
 	}
 	
@@ -21,7 +21,7 @@ class DanceTimeTableController
 	//makes each event in a row
 	public function AddEvent($date){
 		//get all events by date
-		$events = $this->DB_Helper->Get_AllDanceEventsByDate($date."%");
+		$events = $this->DanceRepository->Get_AllDanceEventsByDate($date."%");
 
 		$tableEvent= "";
 		//foreach event in the array make a row
@@ -36,7 +36,7 @@ class DanceTimeTableController
 	// takes special tickets and put them in a row
 	public function GetSpecialTickets(){
 		// get all events in the dancevent where special is 1 and the amount is higher then 0
-		$specials = $this->DB_Helper->Get_AllSpecialEvents();
+		$specials = $this->DanceRepository->Get_AllSpecialEvents();
 
 		$specialTickets="";
 		// check if there is any special tickets
@@ -114,7 +114,7 @@ class DanceTimeTableController
 	// get all artists and set them in the checkboxlist for advanced search
 	public function MakeArtistAdvancedSearch(){
 		//get all artists
-		$artist =$this->DB_Helper->GetArtists();
+		$artist =$this->DanceRepository->GetArtists();
 		$artistsSearchlist = "";
 		// foreach artist make a checkbox 
 		foreach ($artist as $artist) {
@@ -156,7 +156,7 @@ class DanceTimeTableController
 	//makes the head of the timetable
 	public function MakeTimeTables(){
 		//get all dates of the events
-		$dates =$this->DB_Helper->GetDates();
+		$dates =$this->DanceRepository->GetDates();
 
 		// get all buttons of the timetables
 		$TimeTables = $this->GetDates($dates);

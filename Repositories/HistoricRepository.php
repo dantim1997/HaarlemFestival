@@ -1,5 +1,5 @@
 <?php
-class DB_Helper
+class HistoricRepository
 {
 	private $Conn;
 	

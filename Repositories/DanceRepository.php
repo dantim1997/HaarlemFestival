@@ -190,33 +190,7 @@ class DanceRepository
 		return $venues;
 	}
 
-	//get tickets
-	public function GetOrderTicketsDance($orderId){
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name) description, Description info FROM `Order` as o
-			join OrderLine ol on ol.OrderId = o.Id 
-			join Tickets t on t.Id = ol.TicketId
-			join DanceEvent e on e.id = t.eventid
-			join DanceVenue as v on v.Id = e.VenueId
-			join performingact as p on p.EventId = e.Id 
-			join DanceArtist a on a.Id = p.ArtistId
-			WHERE o.OrderNumber = ? && t.TypeEvent = 2
-			GROUP by ol.id");
-		$stmt->bind_param("i", $orderId);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
-		$events = array();
-		while ($stmt -> fetch()) { 
-			if($description == ","){
-				$description = "";
-			}
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
-			$events[] = $event;
-		}
-		//return $array;
-		return $events;
-	}
+
 
 	//get all tickets by customer
 	public function GetEventInfoDance($id){
