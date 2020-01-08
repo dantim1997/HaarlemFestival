@@ -179,7 +179,7 @@ class OrderRepository
 			if($startTime == "00:00:00"){
 				$duration = "All Day";
 			}
-			$ticket = array($description." (".$language.")", $price, $firstName ." ". $lastName, $location, "", $date,$duration, $qrCode );
+			$ticket = array($description, $price, $firstName ." ". $lastName, $location, "", $date,$duration, $qrCode );
 			array_push($tickets,$ticket);
 		}
 		return $tickets;

@@ -28,7 +28,7 @@ class Config
 
 	public function GetWebURL(){
 		//return APIKey
-		return "http://hfteam3.infhaarlem.nl/main";
+		return "http://dev.hfteam3.infhaarlem.nl";
 	}
 
 	public function GetHeader($header){

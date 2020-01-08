@@ -7,8 +7,8 @@ class SendMail{
         // email stuff (change data below)
         $to = $customerInfo[1]; 
         $from = "NOREPLY@HaarlemFestival.nl"; 
-        $subject = "send email with pdf attachment"; 
-        $message = "<p>Thank you for purchesing the tickets.</p>";
+        $subject = "Your tickets to Haarlem Festival"; 
+        $message = "<p>Thank you for purchasing the tickets.</p>";
         
         // a random hash will be necessary to send mixed content
         $separator = md5(time());
@@ -33,10 +33,9 @@ class SendMail{
         // no more headers after this, we start the body! //
         
         // message
-        $body = "";
+        $body =  $message.$eol;
         $body .= "Content-Type: text/html; charset=\"iso-8859-1\"".$eol;
         $body .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
-        $body .= $message.$eol;
         
         // attachment
         $body .= "--".$separator.$eol;
