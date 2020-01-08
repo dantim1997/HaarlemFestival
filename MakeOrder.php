@@ -8,7 +8,8 @@ class MakeOrder{
     public function __construct()
     {
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+        $this->DB_Helper = new DB_Helper;
+        $this->HistoricRepository = new HistoricRepository;
 		$this->Session = new Session;
     }
 
@@ -88,7 +89,7 @@ class MakeOrder{
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 3:
-                    $event = $this->DB_Helper->GetEventInfoHistoric($item['EventId']);
+                    $event = $this->HistoricRepository->GetEventInfoHistoric($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 4:
@@ -117,7 +118,7 @@ class MakeOrder{
                 return doubleval($event['Price']);
                 break;
             case 3:
-                $event = $this->DB_Helper->GetEventInfoHistoric($eventId);
+                $event = $this->HistoricRepository->GetEventInfoHistoric($eventId);
                 return doubleval($event['Price']);
                 break;
             case 4:

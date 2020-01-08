@@ -6,6 +6,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
 
     $session = new Session;
     $DB_Helper = new DB_Helper();
+    $HistoricRepository = new HistoricRepository();
     $maxamount = 0;
 
     $isFoodReservation = false;
@@ -49,7 +50,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
             $historic = $DB_Helper->GetAmountHistoric($eventId);
             $maxamount =  $historic['Amount'];
 
-            $familyTourByReferenceId = $DB_Helper->GetToursByReferenceId($eventId);
+            $familyTourByReferenceId = $HistoricRepository->GetToursByReferenceId($eventId);
 
             if ($historic['Type'] == 'Family') {
                 $amount = $amount * 4;
