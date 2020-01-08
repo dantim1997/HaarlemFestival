@@ -14,7 +14,7 @@ class PageContentHelper
 		$this->DetermineLanguage();
 
 		//If Dutch is chosen switch to it.
-		if (isset($_SESSION['Language']) && $_SESSION['Language'] == 'Dutch') {
+		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
 			return $this->DB_Helper->Get_PageTextDutch($page);
 		}
 		//By default we use English.
@@ -26,12 +26,23 @@ class PageContentHelper
 	public function DetermineLanguage(){
 		//If a language is chosen switch to it.
 		if (isset($_GET['Language'])) {
-			$_SESSION['Language'] = $_GET['Language'];
+			$_SESSION['Language'] = EncryptionHelper::Encrypt($_GET['Language']);
 		}
 	}
 
 	public function GetPageImage($page){
-		return $this->DB_Helper->Get_PageImage($page);
+		$images = $this->DB_Helper->Get_PageImage($page);
+		//Modify the image paths so they get the images from the cms folder
+		$newImages = array();
+		foreach ($images as $image) {
+			array_push($newImages, $this->ModifyImageURL($image));
+		}
+		return $newImages;
+	}
+
+	public function ModifyImageURL($image){
+		$newUrl = "http://hfteam3.infhaarlem.nl/cms/" . $image;
+		return $newUrl;
 	}
 
 }

@@ -175,11 +175,11 @@ class FoodTimesController
 		$stars = "";
 		$emptyStars = 5 - $fullStars;
 		for ($i=0; $i < $fullStars; $i++) { 
-			$stars .= "<img src='./Images/Food/starFull.png' class='starFull'>
+			$stars .= "<img src='http://hfteam3.infhaarlem.nl/cms/Images/Food/starFull.png' class='starFull'>
 			";
 		}
 		for ($i=0; $i < $emptyStars; $i++) { 
-			$stars .= "<img src='./Images/Food/starEmpty.png' class='starEmpty'>
+			$stars .= "<img src='http://hfteam3.infhaarlem.nl/cms/Images/Food/starEmpty.png' class='starEmpty'>
 			";
 		}
 		return $stars;
@@ -206,7 +206,7 @@ class FoodTimesController
 		if ($section["Amount"] >= 11) {
 			$amount = 11;
 		} else {
-			$amount = $section["Amount"];
+			$amount = $section["Amount"] + 1;
 		}
 
 		for ($i=0; $i < $amount; $i++) {

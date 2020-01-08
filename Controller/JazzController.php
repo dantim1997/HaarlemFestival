@@ -84,7 +84,7 @@ class JazzController
 	//check if image is set
 	private function CheckImageIsSet($image){
 		if (empty($image)){
-			return "Images/Jazz/unset.gif";
+			return "http://hfteam3.infhaarlem.nl/cms/Images/Jazz/unset.gif";
 		}
 		else{
 			return $image;
@@ -264,7 +264,7 @@ class JazzController
 
 	private function GetLocationInfo($infoE, $infoD){
 		if (isset($_SESSION['Language'])){
-			if ($_SESSION['Language'] == "Dutch"){
+			if (EncryptionHelper::Decrypt($_SESSION['Language']) == "Dutch"){
 				return $infoD;
 			}
 			else {

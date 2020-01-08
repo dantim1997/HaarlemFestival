@@ -116,7 +116,7 @@ a:active {
 	border: solid 1px;
 	height: 60px;
 	background-color: #FFFFFF;
-	bottom: -40px;
+	bottom: 1px;
 	float: left;
 	position: absolute;
 	width: 100%;
@@ -136,7 +136,7 @@ a:active {
 }
 
 #NavBarBorder{
-	background-image: url("../Images/Nav/NavImage.png");
+	background-image: url("http://hfteam3.infhaarlem.nl/cms/Images/Nav/NavImage.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 111px;
@@ -224,7 +224,7 @@ a:active {
 }
 
 .ShoppingCart{
-	background-image: url("../Images/Nav/ShoppingCart.png");
+	background-image: url("http://hfteam3.infhaarlem.nl/cms/Images/Nav/ShoppingCart.png");
 	background-size: cover;
 	float: left;
 	margin-top: 20px;
@@ -234,7 +234,7 @@ a:active {
 }
 
 .ShoppingCart:hover{
-	background-image: url("../Images/Nav/ShoppingCartRed.png");
+	background-image: url("http://hfteam3.infhaarlem.nl/cms/Images/Nav/ShoppingCartRed.png");
 }
 
 .shopcartItems{
