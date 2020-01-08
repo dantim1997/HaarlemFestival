@@ -127,7 +127,7 @@ class DanceTimeTableController
 	// get all locations and set them in the checkboxlist for advanced search
 	public function MakeLocationAdvancedSearch(){
 		//get all locations
-		$locations =$this->DB_Helper->GetLocations();
+		$locations =$this->DanceRepository->GetLocations();
 		$locationSearchlist = "";
 		// foreach location make a checkbox
 		foreach ($locations as $location) {

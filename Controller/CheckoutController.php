@@ -12,6 +12,7 @@ class CheckoutController
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->HistoricRepository = new HistoricRepository;
+		$this->DanceRepository = new DanceRepository;
 		$this->Session = new Session;
 		$this->ProceedToPayment();
 	}
@@ -100,7 +101,7 @@ class CheckoutController
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 2:
-				$eventInfo = $this->HistoricRepository->GetEventInfoDance($eventId);
+				$eventInfo = $this->DanceRepository->GetEventInfoDance($eventId);
 				break;
 			case 3:
 				$eventInfo = $this->HistoricRepository->GetEventInfoHistoric($eventId);

@@ -20,7 +20,7 @@ class DanceController
 	}
 
 	public function GetLocation(){
-		$locations = $this->DB_Helper->GetLocations();
+		$locations = $this->DanceRepository->GetLocations();
 
 		$venues="";
 		foreach ($locations as $location) {

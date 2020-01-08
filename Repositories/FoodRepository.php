@@ -20,27 +20,6 @@ class FoodRepository
 		return $this->Conn;
 	}
 
-	public function GetOrderTicketsFood($orderId){
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT fr.id, r.Location, fr.SessionStartDateTime, fr.SessionEndDateTime, r.Name, '' info
-		FROM `Order` o
-		join OrderLine ol on ol.OrderId = o.id
-		join Tickets t on t.Id = ol.TicketId
-		join FoodRestaurants fr on fr.Id = t.EventId
-		join Restaurants r on r.Id = fr.RestaurantId
-		WHERE o.OrderNumber = ? && t.TypeEvent = 1");
-		$stmt->bind_param("i", $orderId);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
-		$events = array();
-		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
-			$events[] = $event;
-		}
-		//return $array
-		return $events;
-	}
 
 	public function GetRestaurantInfo() {
 		$stmt = $this->Conn->prepare("SELECT r.Name, ei.Image, r.Cuisines FROM Restaurants r JOIN EventImage ei ON r.ImageRef = ei.Id");

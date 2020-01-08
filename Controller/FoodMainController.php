@@ -9,7 +9,7 @@ class FoodMainController
 	public function __construct($FoodMainModel){
 		$this->FoodMainModel = $FoodMainModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->FoodRepository = new FoodRepository;
 		$this->PageContentHelper = new PageContentHelper();
 	}
 	
@@ -21,7 +21,7 @@ class FoodMainController
 	public function GetRestaurants() {
 		$restaurants = "";
 		$function = "";
-		$restaurantInfos = $this->DB_Helper->GetRestaurantInfo();
+		$restaurantInfos = $this->FoodRepository->GetRestaurantInfo();
 
 		foreach ($restaurantInfos as $restaurantInfo) {
 			// find out what language we're using
