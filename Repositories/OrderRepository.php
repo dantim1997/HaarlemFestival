@@ -20,11 +20,6 @@ class OrderRepository
 		return $this->Conn;
 	}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Select
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 	public function GetAllByOrderLine($id){
 		//clean Id
 		$tickets = array();
@@ -221,7 +216,7 @@ class OrderRepository
 		return $amount;
 	}
 
-	public function GetAmountHistoric($id){
+	public function GetTicketAmountHistoric($id){
         //does a prepared query
         $stmt = $this->Conn->prepare("SELECT TypeTicket, ReferenceId FROM HistoricTours WHERE Id = ?");
         $stmt->bind_param("i", $id);

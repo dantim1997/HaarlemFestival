@@ -5,7 +5,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
     $TypeEvent = $_POST['typeEvent'];
 
     $session = new Session;
-    $DB_Helper = new DB_Helper();
+    $OrderRepository = new OrderRepository();
     $HistoricRepository = new HistoricRepository();
     $maxamount = 0;
 
@@ -41,13 +41,13 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
 
     switch ($TypeEvent) {
         case 1:
-            $maxamount = $DB_Helper->GetTicketAmountFood($eventId);
+            $maxamount = $OrderRepository->GetTicketAmountFood($eventId);
             break;
         case 2:
-            $maxamount = $DB_Helper->GetTicketAmountDance($eventId);
+            $maxamount = $OrderRepository->GetTicketAmountDance($eventId);
             break;
         case 3:
-            $historic = $DB_Helper->GetAmountHistoric($eventId);
+            $historic = $OrderRepository->GetTicketAmountHistoric($eventId);
             $maxamount =  $historic['Amount'];
 
             $familyTourByReferenceId = $HistoricRepository->GetToursByReferenceId($eventId);
@@ -65,7 +65,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
             }
             break;
         case 4:
-            $maxamount = $DB_Helper->GetTicketAmountJazz($eventId);
+            $maxamount = $OrderRepository->GetTicketAmountJazz($eventId);
             break;
     }
 

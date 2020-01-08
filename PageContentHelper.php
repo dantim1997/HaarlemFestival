@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 class PageContentHelper 
 {
 	public function __construct(){
-		$this->DB_Helper = new DB_Helper;
+		$this->LanguageRepository = new LanguageRepository;
 	}
 	
 
@@ -15,11 +15,11 @@ class PageContentHelper
 
 		//If Dutch is chosen switch to it.
 		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == 'Dutch') {
-			return $this->DB_Helper->Get_PageTextDutch($page);
+			return $this->LanguageRepository->Get_PageTextDutch($page);
 		}
 		//By default we use English.
 		else{
-			return $this->DB_Helper->Get_PageTextEnglish($page);
+			return $this->LanguageRepository->Get_PageTextEnglish($page);
 		}
 	}
 
@@ -31,7 +31,7 @@ class PageContentHelper
 	}
 
 	public function GetPageImage($page){
-		$images = $this->DB_Helper->Get_PageImage($page);
+		$images = $this->LanguageRepository->Get_PageImage($page);
 		//Modify the image paths so they get the images from the cms folder
 		$newImages = array();
 		foreach ($images as $image) {
