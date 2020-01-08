@@ -19,7 +19,7 @@ class FoodTimesController
 	}
 
 	public function GetFilterTimes($side) {
-		$foodTimes = $this->DB_Helper->GetAllFoodSessions($side);
+		$foodTimes = $this->FoodRepository->GetAllFoodSessions($side);
 		$times = "";
 		foreach ($foodTimes as $foodTime) {
 			$time = new DateTime($foodTime["SessionStartDateTime"]);
@@ -31,7 +31,7 @@ class FoodTimesController
 	}
 
 	public function GetCuisines($start, $amount) {
-		$groupedCuisines = $this->DB_Helper->GetAllCuisines();
+		$groupedCuisines = $this->FoodRepository->GetAllCuisines();
 		$cuisinesWithDuplicates = array();
 		$cuisines = array();
 		foreach ($groupedCuisines as $cuisine) {
@@ -225,10 +225,10 @@ class FoodTimesController
 		$dateTimes = "";
 		$index = "Session";
 		if ($type == "Date") {
-			$foodDateTimes = $this->DB_Helper->GetFoodDates($id);
+			$foodDateTimes = $this->FoodRepository->GetFoodDates($id);
 			$index .= $type;
 		} else if ($type == "Time") {
-			$foodDateTimes = $this->DB_Helper->GetFoodTimes($id);
+			$foodDateTimes = $this->FoodRepository->GetFoodTimes($id);
 			$index .= "Start".$type;
 		}
 		foreach ($foodDateTimes as $foodDateTime) {
