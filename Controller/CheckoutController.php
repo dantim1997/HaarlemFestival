@@ -71,7 +71,7 @@ class CheckoutController
 
 	private function CheckForError($errorList) {
 		$containsError = false;
-		if (empty($errorList["FirstName"]) || empty($errorList["LastName"]) || empty($errorList["Email"]) || empty($errorList["PostCode"]) || empty($errorList["Number"]) || empty($errorList["Street"])) {
+		if (!empty($errorList["FirstName"]) || !empty($errorList["LastName"]) || !empty($errorList["Email"]) || !empty($errorList["PostCode"]) || !empty($errorList["Number"]) || !empty($errorList["Street"])) {
 			$containsError = true;
 		}
 		return $containsError;
