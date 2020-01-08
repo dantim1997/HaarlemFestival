@@ -8,7 +8,8 @@ class MakeOrder{
     public function __construct()
     {
 		$this->Config = Config::getInstance();
-        $this->DB_Helper = new DB_Helper;
+        $this->PaymentService = new PaymentService;
+        $this->TicketService = new TicketService;
         $this->HistoricRepository = new HistoricRepository;
         $this->DanceRepository = new DanceRepository;
         $this->JazzRepository = new JazzRepository;
@@ -25,26 +26,26 @@ class MakeOrder{
             $uniqueCode = str_replace(".","",$uniqueCode);
             $uniqueCode = str_replace(" ","",$uniqueCode);
         }
-        $orderId = $this->DB_Helper->CreateOrder($orderInfo, $uniqueCode);
+        $orderId = $this->PaymentService->CreateOrder($orderInfo, $uniqueCode);
         foreach($items as $item)
         { 
             if(array_key_exists("Amount" , $item)){
                 for($i = 0; $i < $item['Amount']; $i++){
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"]);
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
-                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                    $this->PaymentService->CreateOrderLine($orderId, $ticketId);
                 }
             }
             if (array_key_exists("AdultAmount", $item)) {
                 for ($i = 0; $i < $item['AdultAmount']; $i++) {
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Adult");
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
-                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                    $this->PaymentService->CreateOrderLine($orderId, $ticketId);
                 }
                 for ($i = 0; $i < $item['ChildAmount']; $i++) {
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Child");
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
-                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                    $this->PaymentService->CreateOrderLine($orderId, $ticketId);
                 }
             }
         }
@@ -56,21 +57,21 @@ class MakeOrder{
     {
         $uniqueCode = microtime(true);
         $uniqueCode = str_replace(".","",$uniqueCode);
-        $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent, $uniqueCode, $price);
+        $ticketId = $this->PaymentService->CreateTicket($eventId, $typeEvent, $uniqueCode, $price);
         if ($typeEvent == 1) {
-            $this->DB_Helper->RemoveAvailableTicketFood($eventId);
+            $this->TicketService->RemoveAvailableTicketFood($eventId);
         }
         if ($typeEvent == 2) {
 
-            $this->DB_Helper->RemoveavAilableTicketDance($eventId);
+            $this->TicketService->RemoveAvailableTicketDance($eventId);
         }
         if ($typeEvent == 4) {
 
-            $this->DB_Helper->RemoveavAilableTicketJazz($eventId);
+            $this->TicketService->RemoveAvailableTicketJazz($eventId);
         }
         if ($typeEvent == 3) {
 
-            $this->DB_Helper->RemoveavAilableTicketTour($eventId);
+            $this->TicketService->RemoveAvailableTicketTour($eventId);
         }
         usleep(5);
         return $ticketId;

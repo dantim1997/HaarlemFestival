@@ -1,5 +1,5 @@
 <?php
-class DB_Helper
+class DB_Helperr
 {
 	private $Conn;
 	
