@@ -11,7 +11,10 @@ class CheckoutController
 	public function __construct($checkoutModel){
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->HistoricRepository = new HistoricRepository;
+		$this->DanceRepository = new DanceRepository;
+		$this->JazzRepository = new JazzRepository;
+		$this->FoodRepository = new FoodRepository;
 		$this->Session = new Session;
 		$this->ProceedToPayment();
 	}
@@ -100,13 +103,13 @@ class CheckoutController
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
 		switch ($typeEvent) {
 			case 2:
-				$eventInfo = $this->DB_Helper->GetEventInfoDance($eventId);
+				$eventInfo = $this->DanceRepository->GetEventInfoDance($eventId);
 				break;
 			case 3:
-				$eventInfo = $this->DB_Helper->GetEventInfoHistoric($eventId);
+				$eventInfo = $this->HistoricRepository->GetEventInfoHistoric($eventId);
 				break;
 			case 4:
-				$eventInfo = $this->DB_Helper->GetEventInfoJazz($eventId);
+				$eventInfo = $this->JazzRepository->GetEventInfoJazz($eventId);
 				break;
 		}
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
@@ -132,7 +135,7 @@ class CheckoutController
 	public function GetFoodItems($eventId, $childAmount, $adultAmount, $extraInfo) {
 		$extraInfoText = '';
 		$sortedDays = $this->CheckoutModel->GetSortedDays();
-		$eventInfo = $this->DB_Helper->GetEventInfoFood($eventId);
+		$eventInfo = $this->FoodRepository->GetEventInfoFood($eventId);
 		$startTime = date("H:i",strtotime($eventInfo["StartDateTime"]));
 		$endTime = date("H:i",strtotime($eventInfo["EndDateTime"]));
 
