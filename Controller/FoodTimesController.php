@@ -13,7 +13,7 @@ class FoodTimesController
 		$this->PageContentHelper = new PageContentHelper();
 	}
 
-	//get config
+	// get config
 	public function GetConfig(){
 		return $this->Config;
 	}
