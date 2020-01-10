@@ -18,35 +18,40 @@ class MyProgramController
 		return $this->Config;
 	}
 
-	public function CheckOrderNumber(){
+	public function CheckOrderNumber($pageContent){
 		if(isset($_POST["OrderNumber"])){
-			return $this->GetTimeTable($_POST["OrderNumber"]);
+			setcookie('dsakjsdf891', EncryptionHelper::Encrypt($_POST["OrderNumber"]), time()+86400*30);
+			return $this->GetTimeTable($_POST["OrderNumber"], $pageContent);
+		}
+		elseif (isset($_COOKIE["dsakjsdf891"])) {
+			return $this->GetTimeTable(EncryptionHelper::Decrypt($_COOKIE["dsakjsdf891"]), $pageContent);
 		}
 	}
 
-	public function GetTimeTable($orderNumber)
-	{
-		$timeTable = "<div>
-						<h2>Event Schedule:</h2>
+	public function GetTimeTable($orderNumber, $pageContent)
+	{	
+		$timeTable = "
+					<div>
+						<h2>".$pageContent[2]."</h2>
 				    	<div class='Event FoodBackground'>Food</div>
 				    	<div class='Event DanceBackground'>Dance</div>
 				    	<div class='Event HistoricBackground'>Historic</div>
 				    	<div class='Event JazzBackground'>Jazz</div>
 				    </div>";
-		$timeTable .= $this->GetTickets($orderNumber);
+		$timeTable .= $this->GetTickets($orderNumber, $pageContent);
 		$timeTable .= "<div><button onclick='TimeTablePDF(".$orderNumber.")' class='ProceeToCheckout'>Download</button></div>
 						    </div>";
 		return $timeTable;
 	}
 
-	public function GetTickets($id){
+	public function GetTickets($id, $pageContent){
 		$rows = "<table class='TimeTable'><THEAD>
 			    <TR>
 			      <TH></TH>
-			      <TH>Donderdag</TH>
-			      <TH>Vrijdag</TH>
-			      <TH>Zaterdag</TH>
-			      <TH>Zondag</TH>
+			      <TH>".$pageContent[3]."</TH>
+			      <TH>".$pageContent[4]."</TH>
+			      <TH>".$pageContent[5]."</TH>
+			      <TH>".$pageContent[6]."</TH>
 			    </TR>
 			  </THEAD>";
 		$rows .= $this->GetDanceTickets($id);
