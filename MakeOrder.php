@@ -8,7 +8,12 @@ class MakeOrder{
     public function __construct()
     {
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+        $this->PaymentService = new PaymentService;
+        $this->TicketService = new TicketService;
+        $this->HistoricRepository = new HistoricRepository;
+        $this->DanceRepository = new DanceRepository;
+        $this->JazzRepository = new JazzRepository;
+        $this->FoodRepository = new FoodRepository;
 		$this->Session = new Session;
     }
 
@@ -21,26 +26,26 @@ class MakeOrder{
             $uniqueCode = str_replace(".","",$uniqueCode);
             $uniqueCode = str_replace(" ","",$uniqueCode);
         }
-        $orderId = $this->DB_Helper->CreateOrder($orderInfo, $uniqueCode);
+        $orderId = $this->PaymentService->CreateOrder($orderInfo, $uniqueCode);
         foreach($items as $item)
         { 
             if(array_key_exists("Amount" , $item)){
                 for($i = 0; $i < $item['Amount']; $i++){
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"]);
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
-                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                    $this->PaymentService->CreateOrderLine($orderId, $ticketId);
                 }
             }
             if (array_key_exists("AdultAmount", $item)) {
                 for ($i = 0; $i < $item['AdultAmount']; $i++) {
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Adult");
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
-                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                    $this->PaymentService->CreateOrderLine($orderId, $ticketId);
                 }
                 for ($i = 0; $i < $item['ChildAmount']; $i++) {
                     $price = $this->GetEventPrice($item['EventId'], $item["TypeEvent"], "Child");
                     $ticketId = $this->ticket($item['EventId'], $item['TypeEvent'], $price);
-                    $this->DB_Helper->CreateOrderLine($orderId, $ticketId);
+                    $this->PaymentService->CreateOrderLine($orderId, $ticketId);
                 }
             }
         }
@@ -52,21 +57,21 @@ class MakeOrder{
     {
         $uniqueCode = microtime(true);
         $uniqueCode = str_replace(".","",$uniqueCode);
-        $ticketId = $this->DB_Helper->CreateTicket($eventId, $typeEvent, $uniqueCode, $price);
+        $ticketId = $this->PaymentService->CreateTicket($eventId, $typeEvent, $uniqueCode, $price);
         if ($typeEvent == 1) {
-            $this->DB_Helper->RemoveAvailableTicketFood($eventId);
+            $this->TicketService->RemoveAvailableTicketFood($eventId);
         }
         if ($typeEvent == 2) {
 
-            $this->DB_Helper->RemoveavAilableTicketDance($eventId);
+            $this->TicketService->RemoveAvailableTicketDance($eventId);
         }
         if ($typeEvent == 4) {
 
-            $this->DB_Helper->RemoveavAilableTicketJazz($eventId);
+            $this->TicketService->RemoveAvailableTicketJazz($eventId);
         }
         if ($typeEvent == 3) {
 
-            $this->DB_Helper->RemoveavAilableTicketTour($eventId);
+            $this->TicketService->RemoveAvailableTicketTour($eventId);
         }
         usleep(5);
         return $ticketId;
@@ -79,20 +84,20 @@ class MakeOrder{
         foreach($items as $item){
             switch ($item['TypeEvent']) {
                 case 1:
-                    $event = $this->DB_Helper->GetEventInfoFood($item['EventId']);
+                    $event = $this->FoodRepository->GetEventInfoFood($item['EventId']);
                     $amountPay += doubleval(10) * doubleval($item['ChildAmount']);
                     $amountPay += doubleval(10) * doubleval($item['AdultAmount']);
                     break;
                 case 2:
-                    $event = $this->DB_Helper->GetEventInfoDance($item['EventId']);
+                    $event = $this->DanceRepository->GetEventInfoDance($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 3:
-                    $event = $this->DB_Helper->GetEventInfoHistoric($item['EventId']);
+                    $event = $this->HistoricRepository->GetEventInfoHistoric($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
                 case 4:
-                    $event = $this->DB_Helper->GetEventInfoJazz($item['EventId']);
+                    $event = $this->JazzRepository->GetEventInfoJazz($item['EventId']);
                     $amountPay += doubleval($event['Price']) * doubleval($item['Amount']);
                     break;
             }
@@ -104,7 +109,7 @@ class MakeOrder{
     {
         switch ($typeEvent) {
             case 1:
-                $event = $this->DB_Helper->GetEventInfoFood($eventId);
+                $event = $this->FoodRepository->GetEventInfoFood($eventId);
                 if ($typeTicket == "Child") {
                     return doubleval($event['ChildPrice']);
                 }
@@ -113,15 +118,15 @@ class MakeOrder{
                 }
                 break;
             case 2:
-                $event = $this->DB_Helper->GetEventInfoDance($eventId);
+                $event = $this->DanceRepository->GetEventInfoDance($eventId);
                 return doubleval($event['Price']);
                 break;
             case 3:
-                $event = $this->DB_Helper->GetEventInfoHistoric($eventId);
+                $event = $this->HistoricRepository->GetEventInfoHistoric($eventId);
                 return doubleval($event['Price']);
                 break;
             case 4:
-                $event = $this->DB_Helper->GetEventInfoJazz($eventId);
+                $event = $this->JazzRepository->GetEventInfoJazz($eventId);
                 return doubleval($event['Price']);
                 break;
         }

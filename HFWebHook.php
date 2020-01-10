@@ -20,17 +20,18 @@ $mollie->setApiKey($Config->GetMollieKey());
         * At this point you'd probably want to start the process of delivering the product to the customer.
         */
 		$Session = new Session;
-        $DB_Helper = new DB_Helper;
-        $tickets = $DB_Helper->GetAllByOrderLine($orderId);
+        $PaymentService = new PaymentService;
+        $OrderRepository = new OrderRepository;
+        $tickets = $OrderRepository->GetAllByOrderLine($orderId);
         foreach($tickets as $ticket){
-            $DB_Helper->UpdateTickets($ticket['Id']);
+            $PaymentService->UpdateTickets($ticket['Id']);
         }
 
-        $customerInfo = $DB_Helper->GetAllCustomerInfo($orderId);
-        $PayedTicketsDance = $DB_Helper->GetAllTicketInfoDance($orderId);
-        $PayedTicketsFood = $DB_Helper->GetAllTicketInfoFood($orderId);
-        $PayedTicketsJazz = $DB_Helper->GetAllTicketInfoJazz($orderId);
-        $PayedTicketsTour = $DB_Helper->GetAllTicketInfoTour($orderId);
+        $customerInfo = $OrderRepository->GetAllCustomerInfo($orderId);
+        $PayedTicketsDance = $OrderRepository->GetAllTicketInfoDance($orderId);
+        $PayedTicketsFood = $OrderRepository->GetAllTicketInfoFood($orderId);
+        $PayedTicketsJazz = $OrderRepository->GetAllTicketInfoJazz($orderId);
+        $PayedTicketsTour = $OrderRepository->GetAllTicketInfoTour($orderId);
         $AllTickets = array_merge($PayedTicketsDance, $PayedTicketsJazz);
         $AllTickets = array_merge($AllTickets, $PayedTicketsFood);
         $AllTickets = array_merge($AllTickets, $PayedTicketsTour);

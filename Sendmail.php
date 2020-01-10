@@ -7,7 +7,7 @@ class SendMail{
         // email stuff (change data below)
         $to = $customerInfo[1]; 
         $from = "NOREPLY@HaarlemFestival.nl"; 
-        $subject = "send email with pdf attachment"; 
+        $subject = "Your tickets to Haarlem Festival"; 
         $message = "<p>Thank you for purchesing the tickets.</p>";
         
         // a random hash will be necessary to send mixed content

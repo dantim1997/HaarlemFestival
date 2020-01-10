@@ -9,7 +9,7 @@ class ContentController
 	public function __construct($contentModel){
 		$this->ContentModel = $contentModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->LanguageRepository = new LanguageRepository;
 	}
 	
 	//get config
@@ -22,7 +22,7 @@ class ContentController
 		if (isset($_GET["id"])){
 			$language = $this->GetLanguage();
 			//call DB Helper
-			$content = $this->DB_Helper->GetContentPage($_GET["id"]);
+			$content = $this->LanguageRepository->GetContentPage($_GET["id"]);
 			if ($language == "Dutch"){
 				$output .= "<h1>".$content["DutchTitle"]."</h2>";
 				$output .= $content["DutchText"];
