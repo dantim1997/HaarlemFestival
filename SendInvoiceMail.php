@@ -47,7 +47,7 @@ class SendInvoiceMail{
         $body .= "--".$separator."--";
         
         // send message
-        //mail($to, $subject, $body, $headers);
+        mail($to, $subject, $body, $headers);
         
     }
     }

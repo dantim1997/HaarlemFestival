@@ -1,6 +1,6 @@
 <?php
 require_once("Autoloader.php");
-require "./fpdf181/fpdf.php";
+require_once( "./fpdf181/fpdf.php");
 class Invoice extends FPDF{
 	function header(){
 		$this->SetFont('Arial','B',25);
@@ -117,7 +117,7 @@ class PDFInvoiceMaker{
 		$pdf->AliasNbPages();
 		$pdf->AddPage();
 		$pdf->content($customerInfo, $tickets);
-		$pdf->Output();
+		return $pdf->Output('attachment.pdf', 'S');
 	}
 }
 ?>
