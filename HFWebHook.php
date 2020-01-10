@@ -38,8 +38,6 @@ $mollie->setApiKey($Config->GetMollieKey());
         $sendInvoiceMail = new SendInvoiceMail();
         $sendInvoiceMail->SendCustomerMail($InvoicecustomerInfo, $AllTicketsInvoice);
         
-        sleep(10);
-        
         error_log("mail 2");
         $customerInfo = $OrderRepository->GetAllCustomerInfo($orderId);
         $PayedTicketsDance = $OrderRepository->GetAllTicketInfoDance($orderId);
