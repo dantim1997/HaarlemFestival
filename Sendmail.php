@@ -8,7 +8,7 @@ class SendMail{
         $to = $customerInfo[1]; 
         $from = "NOREPLY@HaarlemFestival.nl"; 
         $subject = "Your tickets to Haarlem Festival"; 
-        $message = "<p>Thank you for purchesing the tickets.</p>";
+        $message = "<p>Thank you for purchasing the tickets.</p>";
         
         // a random hash will be necessary to send mixed content
         $separator = md5(time());
