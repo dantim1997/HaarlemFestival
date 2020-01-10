@@ -203,9 +203,9 @@ class OrderRepository
 
 	public function GetTicketAmountFood($eventId)
 	{
-		//clean Id
+		// clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $eventId);
-		//does a prepared query
+		// does a prepared query
 		$stmt = $this->Conn->prepare("SELECT Amount FROM FoodRestaurants WHERE Id = ?");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();

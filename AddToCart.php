@@ -23,7 +23,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
         $existingAdultAmount = 0;
 
         foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
-            if($item["EventId"] == $eventId){
+            if ($item["EventId"] == $eventId) {
                 $existingChildAmount = $item["ChildAmount"];
                 $existingAdultAmount = $item["AdultAmount"];
             }
@@ -71,7 +71,7 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
 
     if ($isFoodReservation) {
         // we're adding a foodreservation, call different method ...
-        if ($childAmount + $adultAmount <= $maxamount) {
+        if ($childAmount + $adultAmount + $existingChildAmount + $existingAdultAmount <= $maxamount) {
             $session->AddToCartFood($eventId, $childAmount, $adultAmount, $_POST['startTime'], $_POST['date'], $_POST['extraInfo']);
             print 1;
         }
