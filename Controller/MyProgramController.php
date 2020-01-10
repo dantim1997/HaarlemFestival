@@ -9,7 +9,7 @@ class MyProgramController
 	public function __construct($myProgramModel){
 		$this->MyProgrammodel = $myProgramModel;
 		$this->Config = Config::getInstance();
-		$this->DB_Helper = new DB_Helper;
+		$this->OrderRepository = new OrderRepository;
 
 	}
 	
@@ -59,7 +59,7 @@ class MyProgramController
 	}
 
 	public function GetDanceTickets($id){
-		$tickets = $this->DB_Helper->GetOrderTicketsDance($id);
+		$tickets = $this->OrderRepository->GetOrderTicketsDance($id);
 		$rows = "";
 		foreach ($tickets as $ticket) {
 			$rows .= $this->SetRow($ticket, "DanceBackground");
@@ -68,7 +68,7 @@ class MyProgramController
 	}
 
 	public function GetTourTickets($id){
-		$tickets = $this->DB_Helper->GetOrderTicketsTour($id);
+		$tickets = $this->OrderRepository->GetOrderTicketsTour($id);
 		$rows = "";
 		foreach ($tickets as $ticket) {
 			$rows .= $this->SetRow($ticket, "HistoricBackground");
@@ -77,7 +77,7 @@ class MyProgramController
 	}
 
 	public function GetJazzTickets($id){
-		$tickets = $this->DB_Helper->GetOrderTicketsJazz($id);
+		$tickets = $this->OrderRepository->GetOrderTicketsJazz($id);
 		$rows = "";
 		foreach ($tickets as $ticket) {
 			$rows .= $this->SetRow($ticket, "JazzBackground");
@@ -86,7 +86,7 @@ class MyProgramController
 	}
 
 	public function GetFoodTickets($id){
-		$tickets = $this->DB_Helper->GetOrderTicketsFood($id);
+		$tickets = $this->OrderRepository->GetOrderTicketsFood($id);
 		$rows = "";
 		foreach ($tickets as $ticket) {
 			$rows .= $this->SetRow($ticket, "FoodBackground");

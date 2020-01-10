@@ -1,11 +1,11 @@
 <?php
 require_once("Autoloader.php");
-if (isset($_POST['Email'])) {
-    $DB_Helper = new DB_Helper();
+if(isset($_POST['Email'])) {
+    $OrderRepository = new OrderRepository();
     
-    $OrderCode = $DB_Helper->CheckMail($_POST["Email"]);
-    if ($OrderCode != "") {
-        print $OrderCode;
+    $OrderCode = $OrderRepository->CheckMail($_POST["Email"]);
+    if($OrderCode != ""){
+        echo $OrderCode;
     }
     else {
         print false;
