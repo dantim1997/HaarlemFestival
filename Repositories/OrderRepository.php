@@ -365,5 +365,134 @@ class OrderRepository
 		//return $array;
 		return $events;
 	}
+
+	public function GetInvoiceTicketsDance($orderId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("select  GROUP_CONCAT(a.Name) artist, e.Description, e.StartDateTime, e.EndDateTime,count(e.id) amount, t.Price, '9%' vat from `Order` o 
+		JOIN OrderLine ol on ol.OrderId = o.Id
+		JOIN Tickets t on t.Id = ol.TicketId
+		JOIN DanceEvent e on e.Id = t.EventId
+		JOIN performingact p on p.EventId = e.Id
+		JOIN DanceArtist a on a.Id = p.ArtistId
+		JOIN DanceVenue v on v.Id = e.VenueId
+		where o.Id = ? && t.TypeEvent = 2
+		GROUP by e.Id");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($artist, $description, $startdate, $enddate, $amount, $price, $vat);
+		$invoiceTickets = array();
+		while ($stmt -> fetch()) { 
+			if($description == ","){
+				$description = "";
+			}
+			$invoiceTicket = array($artist, $description, $startdate, $enddate, $amount, $price , $vat);
+			$invoiceTickets[] = $invoiceTicket;
+		}
+		//return $array;
+		return $invoiceTickets;
+	}
+
+	public function GetInvoiceTicketsFood($orderId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("select  r.Name, '' description, fr.SessionStartDateTime, fr.SessionEndDateTime, count(fr.id) amount, t.Price, '9%' vat from `Order` o 
+		JOIN OrderLine ol on ol.OrderId = o.Id
+		JOIN Tickets t on t.Id = ol.TicketId
+		JOIN FoodRestaurants fr on fr.Id = t.EventId
+		JOIN Restaurants r on r.Id = fr.RestaurantId
+		where o.Id = ? && t.TypeEvent = 1
+		GROUP by fr.Id");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($artist, $description, $startdate, $enddate, $amount, $price, $vat);
+		$invoiceTickets = array();
+		while ($stmt -> fetch()) { 
+			if($description == ","){
+				$description = "";
+			}
+			$invoiceTicket = array($artist, $description, $startdate, $enddate, $amount, $price , $vat);
+			$invoiceTickets[] = $invoiceTicket;
+		}
+		//return $array;
+		return $invoiceTickets;
+	}
+
+	public function GetInvoiceTicketsJazz($orderId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("select  j.ArtistName, '' description, j.StartDateTime, j.EndDateTime, count(j.id) amount, t.Price, '9%' vat from `Order` o 
+		JOIN OrderLine ol on ol.OrderId = o.Id
+		JOIN Tickets t on t.Id = ol.TicketId
+		JOIN Jazz j on j.Id = t.EventId
+		where o.Id = ? && t.TypeEvent = 1
+		GROUP by j.Id");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($artist, $description, $startdate, $enddate, $amount, $price, $vat);
+		$invoiceTickets = array();
+		while ($stmt -> fetch()) { 
+			if($description == ","){
+				$description = "";
+			}
+			$invoiceTicket = array($artist, $description, $startdate, $enddate, $amount, $price , $vat);
+			$invoiceTickets[] = $invoiceTicket;
+		}
+		//return $array;
+		return $invoiceTickets;
+	}
+
+	public function GetInvoiceTicketsTour($orderId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("select  h.Description, '' description, h.StartDateTime, h.EndDateTime, count(h.id) amount, t.Price, '9%' vat from `Order` o 
+		JOIN OrderLine ol on ol.OrderId = o.Id
+		JOIN Tickets t on t.Id = ol.TicketId
+		JOIN HistoricTours h on h.Id = t.EventId
+		where o.Id = ? && t.TypeEvent = 1
+		GROUP by h.Id");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($artist, $description, $startdate, $enddate, $amount, $price, $vat);
+		$invoiceTickets = array();
+		while ($stmt -> fetch()) { 
+			if($description == ","){
+				$description = "";
+			}
+			$invoiceTicket = array($artist, $description, $startdate, $enddate, $amount, $price , $vat);
+			$invoiceTickets[] = $invoiceTicket;
+		}
+		//return $array;
+		return $invoiceTickets;
+	}
+
+	public function GetInvoiceOrder($orderId)
+	{
+		//clean Id
+		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
+		//does a prepared query
+		$stmt = $this->Conn->prepare("select  o.FirstName, o.LastName, o.OrderNumber, o.Address, o.PhoneNumber, o.Email from `Order` o 
+		where o.Id = ?");
+		$stmt->bind_param("i", $IdSQL);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($firstname, $lastName, $OrderNumber, $address, $PhoneNumber, $Email);
+		$stmt->fetch();
+			$invoiceOrder = array($firstname, $lastName, $OrderNumber, $address, $PhoneNumber, $Email , Date("d-m-Y"));
+		//return $array;
+		return $invoiceOrder;
+	}
 }
 ?>
