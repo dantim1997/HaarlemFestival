@@ -24,8 +24,8 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
 
         foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
             if ($item["EventId"] == $eventId) {
-                $existingChildAmount = $item["ChildAmount"];
-                $existingAdultAmount = $item["AdultAmount"];
+                $existingChildAmount = $item["childAmount"];
+                $existingAdultAmount = $item["adultAmount"];
             }
         }
     } else {
