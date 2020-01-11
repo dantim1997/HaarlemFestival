@@ -5,14 +5,14 @@ require "./fpdf181/fpdf.php";
 class Ticket extends FPDF{
 	public $User;
 
-	function header(){
+	function header($OrderId){
 		
+	}
+	
+	function headerline($date, $OrderId){
 		$this->SetFont('Arial', 'B', 20);
 		$this->Ln(20);
-		$this->Cell(0,5,'Your Timetable from order: 630259',0,0,'L');
-	}
-
-	function headerline($date){
+		$this->Cell(0,5,'Your Timetable from order: '.$OrderId,0,0,'L');
 		$this->Ln(20);
 		$this->SetFont('Arial', '', 10);
 		$r = 255; $g =255; $b=102;
@@ -70,7 +70,7 @@ if(isset($_GET)){
 	$pdf = new Ticket();
 	$pdf->AliasNbPages();
 	$pdf->AddPage('P', 'A4', 0);
-	$pdf->headerline($Date);
+	$pdf->headerline($Date,$OrderId);
 	GetDanceTickets($OrderRepository,$OrderId, $pdf);
 	GetFoodTickets($OrderRepository,$OrderId, $pdf);
 	GetTourTickets($OrderRepository,$OrderId, $pdf);

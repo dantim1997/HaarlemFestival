@@ -1,5 +1,5 @@
 <?php
-require "./fpdf181/fpdf.php";
+require_once( "./fpdf181/fpdf.php");
 
 class Ticket extends FPDF{
 	function header(){
@@ -115,7 +115,6 @@ class PDFMaker{
 		$tickets = array();
 		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", 0);*/
 		
-		define('EURO',chr(128));
 		require_once( "Autoloader.php");
 		$qr  = new QrGenerator;
 		$Config = Config::getInstance();
