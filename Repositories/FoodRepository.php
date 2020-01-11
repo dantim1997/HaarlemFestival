@@ -35,7 +35,7 @@ class FoodRepository
 	}
 
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
-		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, ei.Image, fr.SessionStartDateTime, fr.SessionEndDateTime, fr.Amount 
+		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, ei.Image, fr.SessionStartDateTime, fr.SessionEndDateTime, SUM(fr.Amount) 
 					FROM FoodRestaurants fr 
 					JOIN Restaurants r ON fr.RestaurantId = r.Id
 					JOIN EventImage ei ON r.ImageRef = ei.Id";

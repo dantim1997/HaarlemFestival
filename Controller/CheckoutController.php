@@ -8,7 +8,7 @@ class CheckoutController
 
 	public $SortedDays = array();
 
-	public function __construct($checkoutModel){
+	public function __construct($checkoutModel) {
 		$this->CheckoutModel = $checkoutModel;
 		$this->Config = Config::getInstance();
 		$this->HistoricRepository = new HistoricRepository;
@@ -29,18 +29,29 @@ class CheckoutController
 			"Date" => "",
 		);
 		
-		if(isset($_POST['proceedToPaymentBTN'])){
-			if(count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0){
-				var_dump(EncryptionHelper::Decrypt($_SESSION["Tickets"]));
+		if (isset($_POST['proceedToPaymentBTN'])) {
+			// count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0
+			if (array_key_exists("Tickets", $_SESSION) && !empty($_SESSION["Tickets"])) {
 				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 				$errorList["LastName"] = $this->IsRequired("LastName", "text");
 				$errorList["Email"] = $this->IsRequired("Email", "text");
 				$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
 				$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 				$errorList["Street"] = $this->IsRequired("Street", "text");
-				$makeOrder = new MakeOrder();
-				$orderId = $makeOrder->Order($_POST, EncryptionHelper::Decrypt($_SESSION["Tickets"]));
-				header("Location: HFPay.php?OrderId=".$orderId);
+
+				$activeError = $this->CheckForError($errorList);
+
+				if ($activeError) {
+					$message = "Make sure to fill in all required fields!";
+					echo "<script type='text/javascript'>alert('$message');</script>";
+				} else {
+					$makeOrder = new MakeOrder();
+					$orderId = $makeOrder->Order($_POST, EncryptionHelper::Decrypt($_SESSION["Tickets"]));
+					header("Location: HFPay.php?OrderId=".$orderId);
+				}
+			} else {
+				$message = "Your cart is empty!";
+				echo "<script type='text/javascript'>alert('$message');</script>";
 			}
 			error_log("error?");
 		}
@@ -48,22 +59,30 @@ class CheckoutController
 
 	public function IsRequired($name, $Type)
 	{
-		if( $_POST[$name] == Null || $_POST[$name] == ""){
+		if ($_POST[$name] == NULL || $_POST[$name] == "") {
 			return "Field is required";
 		}
-		if($Type == "Email"){
+		// ???
+		if ($Type == "Email") {
 
 		}
-		if($Type == "postalCode"){
+		if ($Type == "postalCode") {
 			
 		}
+	}
+
+	private function CheckForError($errorList) {
+		$containsError = false;
+		if (!empty($errorList["FirstName"]) || !empty($errorList["LastName"]) || !empty($errorList["Email"]) || !empty($errorList["PostCode"]) || !empty($errorList["Number"]) || !empty($errorList["Street"])) {
+			$containsError = true;
+		}
+		return $containsError;
 	}
 	
 	//get config
 	public function GetConfig(){
 		return $this->Config;
 	}
-
 
 	public function GetAllItems(){
 		$ticketRows = "";

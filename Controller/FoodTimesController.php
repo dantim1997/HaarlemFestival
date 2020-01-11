@@ -13,7 +13,7 @@ class FoodTimesController
 		$this->PageContentHelper = new PageContentHelper();
 	}
 
-	//get config
+	// get config
 	public function GetConfig(){
 		return $this->Config;
 	}
@@ -130,14 +130,34 @@ class FoodTimesController
 					<div class='peopleAboveOption'>
 						<p id='normalP'>".next($pageTexts).":</p>
 						<select class='pplAbove12' id='pplAbove12".$count."'>
-							".$this->SelectOptions($section)."
+							<option value='0'>0</option>
+							<option value='1'>1</option>
+							<option value='2'>2</option>
+							<option value='3'>3</option>
+							<option value='4'>4</option>
+							<option value='5'>5</option>
+							<option value='6'>6</option>
+							<option value='7'>7</option>
+							<option value='8'>8</option>
+							<option value='9'>9</option>
+							<option value='10'>10</option>
 						</select>
 					</div>
             		<br />
 					<div class='peopleBelowOption'>
 						<p id='childrenP'>".next($pageTexts).":</p>
 						<select class='pplBelow12' id='pplBelow12".$count."'>
-							".$this->SelectOptions($section)."
+							<option value='0'>0</option>
+							<option value='1'>1</option>
+							<option value='2'>2</option>
+							<option value='3'>3</option>
+							<option value='4'>4</option>
+							<option value='5'>5</option>
+							<option value='6'>6</option>
+							<option value='7'>7</option>
+							<option value='8'>8</option>
+							<option value='9'>9</option>
+							<option value='10'>10</option>
             			</select>
 					</div>
             		<br />
@@ -158,14 +178,7 @@ class FoodTimesController
 						<p class='specialNeedsP'>".next($pageTexts).":</p>
 						<textarea id='extraInfo".$count."' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
-					<div class='makeReservation'>
-						<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
-						<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
-						<input type='button' class='makeReservationBtn' value='".next($pageTexts)."' onclick='FoodAddToCartHelper(".$count.")' />
-						<div id='emptyTicketsWarning'>
-							".$this->TicketsUnavailable($section)."
-						</div>
-					</div>
+					".$this->TicketsUnavailable($section, $count, next($pageTexts))."
 				</div>
 			</div>
 			";
@@ -199,26 +212,43 @@ class FoodTimesController
 		return $givenPrice;
 	}
 
-	private function SelectOptions($section) {
-		$options = "";
-		$amount = 0;
+	// private function SelectOptions($section) {
+	// 	$options = "";
+	// 	$amount = 0;
 
-		if ($section["Amount"] >= 11) {
-			$amount = 11;
-		} else {
-			$amount = $section["Amount"] + 1;
-		}
+	// 	if ($section["Amount"] >= 11) {
+	// 		$amount = 11;
+	// 	} else {
+	// 		$amount = $section["Amount"] + 1;
+	// 	}
 
-		for ($i=0; $i < $amount; $i++) {
-			$options .= "<option value='".$i."'>".$i."</option>";
-		}
-		return $options;
-	}
+	// 	for ($i=0; $i < $amount; $i++) {
+	// 		$options .= "<option value='".$i."'>".$i."</option>";
+	// 	}
+	// 	return $options;
+	// }
 
-	private function TicketsUnavailable($section) {
+	private function TicketsUnavailable($section, $count, $pageText) {
+		$htmlElements = "";
+		
 		if ($section["Amount"] == 0) {
-			return "TICKETS SOLD OUT";
+			$htmlElements .= "
+			<div class='makeReservation'>
+				<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
+				<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
+				<input type='button' class='makeReservationBtn' value='".$pageText."' disabled/>
+				<div id='emptyTicketsWarning'>TICKETS SOLD OUT</div>
+			</div>";
+		} else {
+			$htmlElements .= "
+			<div class='makeReservation'>
+				<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
+				<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
+				<input type='button' class='makeReservationBtn' value='".$pageText."' onclick='FoodAddToCartHelper(".$count.")' />
+				<div id='emptyTicketsWarning'></div>
+			</div>";
 		}
+		return $htmlElements;
 	}
 
 	private function GetDateTimes($id, $type) {
