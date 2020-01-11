@@ -27,6 +27,18 @@ $mollie->setApiKey($Config->GetMollieKey());
             $PaymentService->UpdateTickets($ticket['Id']);
         }
 
+        error_log("mail 1");
+        $InvoiceModel = new InvoiceModel;
+        $InvoicecustomerInfo = $OrderRepository->GetInvoiceOrder($orderId);
+        $AllTicketsInvoice = $OrderRepository->GetInvoiceTicketsDance($orderId);
+        $AllTicketsInvoice = array_merge($AllTicketsInvoice, $OrderRepository->GetInvoiceTicketsFood($orderId));
+        $AllTicketsInvoice = array_merge($AllTicketsInvoice, $OrderRepository->GetInvoiceTicketsJazz($orderId));
+        $AllTicketsInvoice = array_merge($AllTicketsInvoice, $OrderRepository->GetInvoiceTicketsTour($orderId));
+        $AllTicketsInvoice = $InvoiceModel->InvoiceModelMaker($AllTicketsInvoice);
+        $sendInvoiceMail = new SendInvoiceMail();
+        $sendInvoiceMail->SendCustomerMail($InvoicecustomerInfo, $AllTicketsInvoice);
+        
+        error_log("mail 2");
         $customerInfo = $OrderRepository->GetAllCustomerInfo($orderId);
         $PayedTicketsDance = $OrderRepository->GetAllTicketInfoDance($orderId);
         $PayedTicketsFood = $OrderRepository->GetAllTicketInfoFood($orderId);

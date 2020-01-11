@@ -1,14 +1,14 @@
 <?php
     require_once( "Autoloader.php");
-    require_once( "CreateTicketPDF.php");
-class SendMail{
+    require_once( "CreateInvoicePDF.php");
+class SendInvoiceMail{
     public function SendCustomerMail($customerInfo, $tickets)
     {
         // email stuff (change data below)
-        $to = $customerInfo[1]; 
+        $to = $customerInfo[5]; 
         $from = "NOREPLY@HaarlemFestival.nl"; 
-        $subject = "Your tickets to Haarlem Festival"; 
-        $message = "<p>Thank you for purchasing the tickets.</p>";
+        $subject = "Your Invoice of Haarlem Festival"; 
+        $message = "<p>Thank you for purchesing the tickets.</p>";
         
         // a random hash will be necessary to send mixed content
         $separator = md5(time());
@@ -17,11 +17,11 @@ class SendMail{
         $eol = PHP_EOL;
         
         // attachment name
-        $filename = "Tickets_Haarlem_Festival.pdf";
+        $filename = "Invoice_Haarlem_Festival.pdf";
         
         // encode data (puts attachment in proper format)
         
-        $PDF = new PDFMaker();
+        $PDF = new PDFInvoiceMaker;
         $pdfdoc = $PDF->MakePDF($customerInfo, $tickets);
         $attachment = chunk_split(base64_encode($pdfdoc));
         
