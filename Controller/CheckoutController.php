@@ -31,8 +31,7 @@ class CheckoutController
 		
 		if (isset($_POST['proceedToPaymentBTN'])) {
 			// count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0
-			if (array_key_exists("Tickets", EncryptionHelper::Decrypt($_SESSION)) && !empty(EncryptionHelper::Decrypt($_SESSION["Tickets"]))) {
-				//var_dump(EncryptionHelper::Decrypt($_SESSION["Tickets"]));
+			if (array_key_exists("Tickets", $_SESSION) && !empty($_SESSION["Tickets"])) {
 				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 				$errorList["LastName"] = $this->IsRequired("LastName", "text");
 				$errorList["Email"] = $this->IsRequired("Email", "text");
