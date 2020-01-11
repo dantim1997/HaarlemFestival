@@ -87,6 +87,7 @@ class Nav
 		}
 		else{
 			$_SESSION['Language'] = EncryptionHelper::Encrypt('English');
+			return 'ActiveLanguage';
 		}
 	}
 
