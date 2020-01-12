@@ -28,7 +28,7 @@ class MyProgramView
 
 	private function Body(){
 		$nav = new Nav();
-		$pageContent = $this->PageContentHelper->GetPageText("MyProgramme");
+		$pageContent = $this->PageContentHelper->GetPageText("MyProgram");
 		return $nav->SetNavBar("MyProgram"). "
 		<div id='main'>
 			<div class='container-fluid'>
