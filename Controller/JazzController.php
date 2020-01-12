@@ -41,7 +41,7 @@ class JazzController
 				<div class='artistname'>".$artist["Name"]."</div>
 				<div class='artistcontainer'>
 					<image class='artistimage' src='".$this->CheckImageIsSet($artist["Image"])."'>
-					<div class='".$this->BepaalGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
+					<div class='".$this->DefineGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
 					<div class='genre0'>0</div> 
 				</div>
 			</div>
@@ -60,7 +60,7 @@ class JazzController
 	}
 
 	//define genre
-	private function BepaalGenre($genre){
+	private function DefineGenre($genre){
 		if ($genre == "Blues"){
 			return "genre1";
 		}
@@ -151,11 +151,12 @@ class JazzController
 		return $output;
 	}
 
+	//Make programme table
 	public function GetTable(){
 		//Get header (dates) of table
 		$output = $this->GetDates();
 
-		//get times
+		//get times (first column)
 		$time = $this->JazzRepository->GetTimesJazz();
 
 		//convert time
@@ -174,8 +175,7 @@ class JazzController
 			$date3 = "2020-07-28"; $date3 = date('Y-m-d H:i:s', strtotime("$date3 $time"));
 			$date4 = "2020-07-29"; $date4 = date('Y-m-d H:i:s', strtotime("$date4 $time"));
 
-			$output .= "
-			<tr>
+			$output .= "<tr>
 			<td class='tg-6jhs'>".$newtimebegin[$i]." - ".$newtimeend[$i]."</td>
 			<td class='tg-m4n1'>".$this->GetArtistTable($date1)."</td>
 			<td class='tg-m4n1'>".$this->GetArtistTable($date2)."</td>
@@ -186,6 +186,7 @@ class JazzController
 		return $output;
 	}
 
+	//Get dates for programme table
 	private function GetDates(){
 		$date = $this->JazzRepository->GetDatesJazz();
 		$newdates = array();
@@ -206,6 +207,7 @@ class JazzController
 		return $output;
 	}
 
+	//Get artist/band name for programme table
 	private function GetArtistTable($datetime){
 		$result = $this->JazzRepository->GetArtistTableJazz($datetime);
 		$output = "";
@@ -225,6 +227,7 @@ class JazzController
 		}
 	}
 
+	//Make DateTime to Time
 	private function FromDateTimeToTime($date){
 		//convert datetime to time
 		$hour = date("H",strtotime($date));
@@ -232,6 +235,7 @@ class JazzController
 		return $hour .":". $minute;
 	}
 
+	//Get all tickets for jazz
 	public function GetTickets($date){
 		$date .= "%";
 		$tickets = $this->JazzRepository->GetTicketsJazz($date);
@@ -252,6 +256,7 @@ class JazzController
 		return $addtocart;
 	}
 
+	//Get event location of each day
 	public function GetLocation($date){
 		$date .= "%";
 		$location = $this->JazzRepository->GetLocationsJazz($date);
@@ -262,6 +267,7 @@ class JazzController
 		return $output;
 	}
 
+	//Get extra info for location
 	private function GetLocationInfo($infoE, $infoD){
 		if (isset($_SESSION['Language'])){
 			if (EncryptionHelper::Decrypt($_SESSION['Language']) == "Dutch"){
@@ -276,6 +282,7 @@ class JazzController
 		}
 	}
 
+	//Get Dates for JazzView
 	public function GetEventDates(){
 		$datetime = $this->JazzRepository->GetEventDates();
 		$date = array();
