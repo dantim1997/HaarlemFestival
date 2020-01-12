@@ -278,7 +278,7 @@ class OrderRepository
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
 			WHERE o.OrderNumber = ? && t.TypeEvent = 2
-			GROUP by ol.id");
+			GROUP by ol.id && p.EventId");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
@@ -298,20 +298,21 @@ class OrderRepository
 	
 	public function GetOrderTicketsFood($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT fr.id, r.Location, fr.SessionStartDateTime, fr.SessionEndDateTime, r.Name, '' info
+		$stmt = $this->Conn->prepare("SELECT fr.id, r.Location, fr.SessionStartDateTime, fr.SessionEndDateTime, r.Name, '' info, count(fr.id) amount
 		FROM `Order` o
 		join OrderLine ol on ol.OrderId = o.id
 		join Tickets t on t.Id = ol.TicketId
 		join FoodRestaurants fr on fr.Id = t.EventId
 		join Restaurants r on r.Id = fr.RestaurantId
-		WHERE o.OrderNumber = ? && t.TypeEvent = 1");
+		WHERE o.OrderNumber = ? && t.TypeEvent = 1
+		GROUP by fr.Id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info, $amount); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description. " (".$amount.")", "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
@@ -321,19 +322,20 @@ class OrderRepository
 	//get tickets
 	public function GetOrderTicketsJazz($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName, '' info
+		$stmt = $this->Conn->prepare("SELECT j.id, j.Location, j.StartDateTime, j.EndDateTime, j.ArtistName, '' info , count(j.id) amount
 			FROM `Order` o
 			join OrderLine ol on ol.OrderId = o.id
 			join Tickets t on t.Id = ol.TicketId
 			join Jazz j on j.Id = t.EventId
-			WHERE o.OrderNumber = ? && t.TypeEvent = 4");
+			WHERE o.OrderNumber = ? && t.TypeEvent = 4
+			group by j.Id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info, $amount); 
 		$events = array();
 		while ($stmt -> fetch()) { 
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description. " (".$amount.")", "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
 			$events[] = $event;
 		}
 		//return $array
