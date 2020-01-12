@@ -46,9 +46,6 @@ class ContentController
 		if (isset($_SESSION['Language'])){
 			$language = EncryptionHelper::Decrypt($_SESSION['Language']);
 		}
-		if (isset($_GET['Language'])){
-			$language = EncryptionHelper::Decrypt($_GET['Language']);
-		}
 		return $language;
 	}
 }
