@@ -38,6 +38,7 @@ class CheckoutController
 				$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
 				$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 				$errorList["Street"] = $this->IsRequired("Street", "text");
+				$errorList["AgeCheck"] = $this->IsRequired("AgeCheck", "checkbox");
 
 				$activeError = $this->CheckForError($errorList);
 
@@ -59,7 +60,7 @@ class CheckoutController
 
 	public function IsRequired($name, $Type)
 	{
-		if ($_POST[$name] == NULL || $_POST[$name] == "") {
+		if (!isset($_POST[$name]) || $_POST[$name] == NULL || $_POST[$name] == "" ) {
 			return "Field is required";
 		}
 		// ???
@@ -73,7 +74,7 @@ class CheckoutController
 
 	private function CheckForError($errorList) {
 		$containsError = false;
-		if (!empty($errorList["FirstName"]) || !empty($errorList["LastName"]) || !empty($errorList["Email"]) || !empty($errorList["PostCode"]) || !empty($errorList["Number"]) || !empty($errorList["Street"])) {
+		if (!empty($errorList["FirstName"]) || !empty($errorList["LastName"]) || !empty($errorList["Email"]) || !empty($errorList["PostCode"]) || !empty($errorList["Number"]) || !empty($errorList["Street"]) || !empty($errorList["AgeCheck"])) {
 			$containsError = true;
 		}
 		return $containsError;
