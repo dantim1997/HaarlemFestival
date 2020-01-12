@@ -110,6 +110,7 @@ function AddToCart(eventId, typeEvent, amount, childAmount = 0, adultAmount = 0,
 		data: {eventId: eventId,typeEvent: typeEvent, amount:amount, childAmount: childAmount, adultAmount: adultAmount, startTime: startTime, date: date, extraInfo: extraInfo},
 		type: 'post',
 		success: function(output) {
+				console.log(typeof output, output);
 				if (output == 1) {
 					ShowPopup();
 					ShoppingCartPlus(amountCheck);
