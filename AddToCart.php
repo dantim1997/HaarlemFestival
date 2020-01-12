@@ -14,27 +14,27 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
     $amount = $_POST['amount'];
     $childAmount = $_POST['childAmount'];
     $adultAmount = $_POST['adultAmount'];
+    $existingamount = 0;
+    $existingChildAmount = 0;
+    $existingAdultAmount = 0;
     
-    if (($childAmount != 0 || $adultAmount != 0) && $amount == 0) {
-        // food reservation is being added
-        $isFoodReservation = true;
+    if(isset($_SESSION["Tickets"])){
+        if (($childAmount != 0 || $adultAmount != 0) && $amount == 0) {
+            // food reservation is being added
+            $isFoodReservation = true;
 
-        $existingChildAmount = 0;
-        $existingAdultAmount = 0;
-
-        foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
-            if ($item["EventId"] == $eventId) {
-                $existingChildAmount = $item["childAmount"];
-                $existingAdultAmount = $item["adultAmount"];
+            foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
+                if ($item["EventId"] == $eventId) {
+                    $existingChildAmount = $item["childAmount"];
+                    $existingAdultAmount = $item["adultAmount"];
+                }
             }
-        }
-    } else {
-        // normal ticket is being added
-        $existingamount = 0;
-        
-        foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
-            if($item["EventId"] == $eventId){
-                $existingamount = $item["Amount"];
+        } else {
+            // normal ticket is being added
+            foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
+                if($item["EventId"] == $eventId){
+                    $existingamount = $item["Amount"];
+                }
             }
         }
     }
