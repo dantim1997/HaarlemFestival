@@ -20,21 +20,6 @@ class JazzRepository
 		return $this->Conn;
 	}
 
-	//get Tickets for Jazz
-	/*public function GetTimeTableJazz(){
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ArtistName, StartDateTime, EndDateTime FROM Jazz");
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt-> bind_result($Name, $StartDateTime, $EndDateTime); 
-		$artists = array();
-		while ($stmt -> fetch()) { 
-			$artist = array("Name"=>$Name, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
-			$artists[] = $artist;
-		}
-		return $artists;
-	}*/
-
 	//get Artists for Jazz carousel filter
 	public function GetArtistsJazz($genreFilter){
 		if (empty($genreFilter)){
@@ -67,7 +52,11 @@ class JazzRepository
 	//get Tickets for Jazz
 	public function GetTicketsJazz($date){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall FROM Jazz WHERE StartDateTime LIKE ? OR (ArtistName LIKE '%whole%' AND EndDateTime > '".$date."%') ORDER BY EndDateTime, Hall ASC");
+		$stmt = $this->Conn->prepare("SELECT ID, ArtistName, StartDateTime, EndDateTime, Price, Hall 
+		FROM Jazz 
+		WHERE StartDateTime LIKE ? AND Amount > 0 
+		ORDER BY EndDateTime, Hall 
+		ASC");
 		$stmt->bind_param("s", $date);
 		$stmt->execute();
 		$stmt->store_result();
@@ -83,7 +72,9 @@ class JazzRepository
 	//get Programme for Jazz
 	public function GetArtistTableJazz($datetime){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ArtistName FROM Jazz WHERE StartDateTime LIKE ? AND Genre IS NOT NULL");
+		$stmt = $this->Conn->prepare("SELECT ArtistName 
+		FROM Jazz 
+		WHERE StartDateTime LIKE ? AND Genre IS NOT NULL");
 		$stmt->bind_param("s", $datetime);
 		$stmt->execute();
 		$stmt->store_result();
@@ -98,7 +89,10 @@ class JazzRepository
 	//get Genres for Jazz carousel
 	public function GetGenresJazz(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Genre FROM Jazz WHERE Genre IS NOT NULL GROUP BY Genre");
+		$stmt = $this->Conn->prepare("SELECT Genre 
+		FROM Jazz 
+		WHERE Genre IS NOT NULL 
+		GROUP BY Genre");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Genre); 
@@ -113,7 +107,10 @@ class JazzRepository
 	//Get dates for jazz
 	public function GetDatesJazz(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime FROM Jazz GROUP BY DATE(StartDateTime) ASC");
+		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime 
+		FROM Jazz 
+		GROUP BY DATE(StartDateTime) 
+		ASC");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($StartDateTime, $EndDateTime); 
@@ -128,7 +125,11 @@ class JazzRepository
 	//Get times for jazz programme
 	public function GetTimesJazz(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime FROM Jazz WHERE Genre IS NOT NULL GROUP BY TIME(StartDateTime) ASC");
+		$stmt = $this->Conn->prepare("SELECT StartDateTime, EndDateTime 
+		FROM Jazz 
+		WHERE Genre IS NOT NULL 
+		GROUP BY TIME(StartDateTime) 
+		ASC");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($StartDateTime, $EndDateTime); 
@@ -158,11 +159,14 @@ class JazzRepository
 		return $location;
 	}
 
+	//Get checkout info
 	public function GetEventInfoJazz($id){
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT Id, ArtistName, Hall, Location, Price, StartDateTime, EndDateTime FROM Jazz WHERE Id = ?");
+		$stmt = $this->Conn->prepare("SELECT Id, ArtistName, Hall, Location, Price, StartDateTime, EndDateTime 
+		FROM Jazz 
+		WHERE Id = ?");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
@@ -172,9 +176,12 @@ class JazzRepository
 		return $ticket;
 	}
 
+	//Get event dates for view
 	public function GetEventDates(){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT StartDateTime From Jazz GROUP BY DATE(StartDateTime)");
+		$stmt = $this->Conn->prepare("SELECT StartDateTime 
+		From Jazz 
+		GROUP BY DATE(StartDateTime)");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Dates); 

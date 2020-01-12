@@ -15,7 +15,8 @@ function ToggleAdvancedJazz() {
 		x.style.display = 'block';
 	}
 }
-  
+
+//Hide Jazz Select Days
 function Hide(){
 	document.getElementById('AdvancedFilter').style.display = 'none';
 	document.getElementById('Friday').style.visibility = 'hidden';
@@ -25,7 +26,8 @@ function Hide(){
 	document.getElementById('Saturday1').style.display = 'none';
 	document.getElementById('Sunday1').style.display = 'none';
 }
-  
+
+//Show Jazz div $DAY
 function ShowDate(day) {
 	if(day == 1){
 		document.getElementById('Thursday').style.visibility = 'unset';
@@ -70,6 +72,7 @@ function ShowDate(day) {
 	JazzClearItems();
 }
 
+//Add to cart for jazz
 function JazzAddToCart(){
 	var inputs = document.getElementsByTagName('input');
 
@@ -86,6 +89,7 @@ function JazzAddToCart(){
 	JazzClearItems();
 }
 
+//Clear all form input "text"
 function JazzClearItems(){
 	var inputs = document.getElementsByTagName('input');
 
@@ -100,7 +104,7 @@ function JazzClearItems(){
 
 function TimeTablePDF(id){
 	var win = window.open("CreateTimeTablePDF.php?id="+id, '_blank');
-  win.focus();
+	win.focus();
 }
 
 function AddToCart(eventId, typeEvent, amount, childAmount = 0, adultAmount = 0, startTime = "", date = "", extraInfo = "") {
@@ -166,7 +170,7 @@ function SelectedDate(count, id) {
 		}
 
 	}
-});
+	});
 }
 
 function RemoveFromCart(self, eventId, typeEvent, price) {
@@ -239,7 +243,7 @@ function FoodRemoveFromCart(self, eventId, typeEvent, price, amountType) {
 		document.getElementById("TotalAmount").innerHTML = removeTotal;
 		document.getElementById("TotalFoodAmount").innerHTML = removeFoodTotal;
 	}
-});	
+	});	
 }
 
 function ShowPopup() {
@@ -291,7 +295,6 @@ function ShoppingCartmin(amount){
 	var number = parseInt(document.getElementById("shoppingcartCount").innerHTML);
 	number = number - amount;
 	document.getElementById("shoppingcartCount").innerHTML = number;
-
 }
 
 function ShoppingCartPlusJazz(id){
@@ -351,5 +354,5 @@ function CheckMail(){
 			}
 		}
 	}
-});	
+	});	
 }
