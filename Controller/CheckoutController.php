@@ -30,14 +30,15 @@ class CheckoutController
 		);
 		
 		if (isset($_POST['proceedToPaymentBTN'])) {
-			// array_key_exists("Tickets", $_SESSION) && !empty($_SESSION["Tickets"])
-			if (count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0) {
+			// count(EncryptionHelper::Decrypt($_SESSION["Tickets"])) != 0
+			if (array_key_exists("Tickets", $_SESSION) && !empty($_SESSION["Tickets"])) {
 				$errorList["FirstName"] = $this->IsRequired("FirstName", "text");
 				$errorList["LastName"] = $this->IsRequired("LastName", "text");
 				$errorList["Email"] = $this->IsRequired("Email", "text");
 				$errorList["PostCode"] = $this->IsRequired("PostCode", "postalCode");
 				$errorList["Number"] = $this->IsRequired("HouseNumber", "number");
 				$errorList["Street"] = $this->IsRequired("Street", "text");
+				$errorList["AgeCheck"] = $this->IsRequired("AgeCheck", "checkbox");
 
 				$activeError = $this->CheckForError($errorList);
 
@@ -59,7 +60,7 @@ class CheckoutController
 
 	public function IsRequired($name, $Type)
 	{
-		if ($_POST[$name] == NULL || $_POST[$name] == "") {
+		if (!isset($_POST[$name]) || $_POST[$name] == NULL || $_POST[$name] == "" ) {
 			return "Field is required";
 		}
 		// ???
@@ -73,7 +74,7 @@ class CheckoutController
 
 	private function CheckForError($errorList) {
 		$containsError = false;
-		if (!empty($errorList["FirstName"]) || !empty($errorList["LastName"]) || !empty($errorList["Email"]) || !empty($errorList["PostCode"]) || !empty($errorList["Number"]) || !empty($errorList["Street"])) {
+		if (!empty($errorList["FirstName"]) || !empty($errorList["LastName"]) || !empty($errorList["Email"]) || !empty($errorList["PostCode"]) || !empty($errorList["Number"]) || !empty($errorList["Street"]) || !empty($errorList["AgeCheck"])) {
 			$containsError = true;
 		}
 		return $containsError;
