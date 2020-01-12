@@ -30,7 +30,7 @@ class ThankYouView
 		<div id='main'>
 			<div class='RedBar'></div>
 			<div class='ThankYou'>
-			<h1>Thank you of buying ticket(s)</h1>
+			<h1>Thank you for buying ticket(s)</h1>
 			</div>
 			<div class='RedBar'></div>
 

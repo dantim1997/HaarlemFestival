@@ -1,5 +1,5 @@
 <?php
-require_once("DB_Helper.php");
+require_once("Repositories/FooterRepository.php");
 class Config
 {
 	private static $instance = null;	
@@ -28,7 +28,7 @@ class Config
 
 	public function GetWebURL(){
 		//return APIKey
-		return "http://hfteam3.infhaarlem.nl/main";
+		return "http://dev.hfteam3.infhaarlem.nl";
 	}
 
 	public function GetHeader($header){
@@ -91,25 +91,25 @@ class Config
 	public function SetFooter(){
 		return "<footer class='Footer'>".$this->GetFooterPages()."
 		<p id='DesignedBy'>Designed by: Chris Lips, Thijs van Tol, Tim Gras, Stan Roozendaal en Stef Robbe
-		<a href='https://www.instagram.com/explore/tags/haarlemfestival/'><image class='MediaIcons' src='Images/Home/instagram-icon-black.png'></a>
-		<a href='https://www.facebook.com/Haarlem-Festival-100428948092059/'><image class='MediaIcons' src='Images/Home/facebook-icon.png'></a></p>
+		<a href='https://www.instagram.com/explore/tags/haarlemfestival/'><image class='MediaIcons' src='http://hfteam3.infhaarlem.nl/cms/Images/Home/instagram-icon-black.png'></a>
+		<a href='https://www.facebook.com/Haarlem-Festival-100428948092059/'><image class='MediaIcons' src='http://hfteam3.infhaarlem.nl/cms/Images/Home/facebook-icon.png'></a></p>
 		<p id='footertax'>".$this->GetTax()."</p>
 	</footer>
 	</body></html>";
 	}
 
 	private function GetFooterPages(){
-		$this->DB_Helper = new DB_Helper;
+		$this->FooterRepository = new FooterRepository;
 		$output = "";
-		$pages = $this->DB_Helper->GetFooterPages();
+		$pages = $this->FooterRepository->GetFooterPages();
 		foreach ($pages as $pages) {
-			$output .= "<a href='Content.php?id=".$pages['ID']."'><p class='footerlink'>".$pages[$_SESSION['Language']."Title"]."</p> </a>";
+			$output .= "<a href='Content.php?id=".$pages['ID']."'><p class='footerlink'>".$pages[EncryptionHelper::Decrypt($_SESSION['Language'])."Title"]."</p> </a>";
 		}
 		return $output;
 	}
 
 	private function GetTax(){
-		if (isset($_SESSION['Language']) && $_SESSION['Language'] == "Dutch"){
+		if (isset($_SESSION['Language']) && EncryptionHelper::Decrypt($_SESSION['Language']) == "Dutch"){
 			return "Alle prijzen zijn inclusief BTW, overige belastingen, exclusief verzendkosten en service kosten.";
 		}
 		else{

@@ -20,17 +20,30 @@ $mollie->setApiKey($Config->GetMollieKey());
         * At this point you'd probably want to start the process of delivering the product to the customer.
         */
 		$Session = new Session;
-        $DB_Helper = new DB_Helper;
-        $tickets = $DB_Helper->GetAllByOrderLine($orderId);
+        $PaymentService = new PaymentService;
+        $OrderRepository = new OrderRepository;
+        $tickets = $OrderRepository->GetAllByOrderLine($orderId);
         foreach($tickets as $ticket){
-            $DB_Helper->UpdateTickets($ticket['Id']);
+            $PaymentService->UpdateTickets($ticket['Id']);
         }
 
-        $customerInfo = $DB_Helper->GetAllCustomerInfo($orderId);
-        $PayedTicketsDance = $DB_Helper->GetAllTicketInfoDance($orderId);
-        $PayedTicketsFood = $DB_Helper->GetAllTicketInfoFood($orderId);
-        $PayedTicketsJazz = $DB_Helper->GetAllTicketInfoJazz($orderId);
-        $PayedTicketsTour = $DB_Helper->GetAllTicketInfoTour($orderId);
+        error_log("mail 1");
+        $InvoiceModel = new InvoiceModel;
+        $InvoicecustomerInfo = $OrderRepository->GetInvoiceOrder($orderId);
+        $AllTicketsInvoice = $OrderRepository->GetInvoiceTicketsDance($orderId);
+        $AllTicketsInvoice = array_merge($AllTicketsInvoice, $OrderRepository->GetInvoiceTicketsFood($orderId));
+        $AllTicketsInvoice = array_merge($AllTicketsInvoice, $OrderRepository->GetInvoiceTicketsJazz($orderId));
+        $AllTicketsInvoice = array_merge($AllTicketsInvoice, $OrderRepository->GetInvoiceTicketsTour($orderId));
+        $AllTicketsInvoice = $InvoiceModel->InvoiceModelMaker($AllTicketsInvoice);
+        $sendInvoiceMail = new SendInvoiceMail();
+        $sendInvoiceMail->SendCustomerMail($InvoicecustomerInfo, $AllTicketsInvoice);
+        
+        error_log("mail 2");
+        $customerInfo = $OrderRepository->GetAllCustomerInfo($orderId);
+        $PayedTicketsDance = $OrderRepository->GetAllTicketInfoDance($orderId);
+        $PayedTicketsFood = $OrderRepository->GetAllTicketInfoFood($orderId);
+        $PayedTicketsJazz = $OrderRepository->GetAllTicketInfoJazz($orderId);
+        $PayedTicketsTour = $OrderRepository->GetAllTicketInfoTour($orderId);
         $AllTickets = array_merge($PayedTicketsDance, $PayedTicketsJazz);
         $AllTickets = array_merge($AllTickets, $PayedTicketsFood);
         $AllTickets = array_merge($AllTickets, $PayedTicketsTour);

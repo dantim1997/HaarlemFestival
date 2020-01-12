@@ -23,7 +23,6 @@ $Config = Config::getInstance();
 
 $MakeOrder = new MakeOrder;
 $session = new session;
-$DB_Helper = new DB_Helper;
 $mollie = new \Mollie\Api\MollieApiClient();
 
 $mollie->setApiKey($Config->GetMollieKey());

@@ -10,7 +10,7 @@ class Nav
 	function SetNavBar($event){
 		return"
 		<div id='NavBarBorder'>
-				<div><a href='index.php'><img class='NavBarImg' src='Images/Nav/HaarlemImage.png'></a></div>
+				<div><a href='index.php'><img class='NavBarImg' src='http://hfteam3.infhaarlem.nl/cms/Images/Nav/HaarlemImage.png'></a></div>
 				".$this->SetEvent("Home", $event)."
 				".$this->SetEvent("Food", $event)."
 				".$this->SetEvent("Dance", $event)."
@@ -19,8 +19,8 @@ class Nav
 				".$this->SetEvent("MyProgram", $event)."
 				<div class='right'>
 					<div class='Languages'>
-						<a href='".$this->DeterminGET()."Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='Images/Nav/Englishflag.png'></a>
-						<a href='".$this->DeterminGET()."Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='Images/Nav/Dutchflag.png'></a>
+						<a href='".$this->DeterminGET()."Language=English'><img class='LanguagesImages ".$this->DetermineActiveLanguage('English')."' src='http://hfteam3.infhaarlem.nl/cms/Images/Nav/Englishflag.png'></a>
+						<a href='".$this->DeterminGET()."Language=Dutch'><img class='LanguagesImages ".$this->DetermineActiveLanguage('Dutch')."' src='http://hfteam3.infhaarlem.nl/cms/Images/Nav/Dutchflag.png'></a>
 					</div>
 					<a href='Checkout.php'>
 						<div class='ShoppingCart'>
@@ -63,7 +63,7 @@ class Nav
 	public function GetCartItems() {
 		if(isset($_SESSION['Tickets'])) {
 			$shoppingCartAmount = 0;
-			foreach ($_SESSION['Tickets'] as $items) {
+			foreach (EncryptionHelper::Decrypt($_SESSION['Tickets']) as $items) {
 				// check if session ticket is a reservation
 				if ($items['TypeEvent'] == 1) {
 					// it's a reservation, this means session ticket contains 'Child/AdultAmount' instead of just Amount, act accordingly
@@ -81,12 +81,13 @@ class Nav
 
 	private function DetermineActiveLanguage($language){
 		if (isset($_SESSION['Language'])) {
-			if ($_SESSION['Language'] == $language) {
+			if (EncryptionHelper::Decrypt($_SESSION['Language']) == $language) {
 				return 'ActiveLanguage';
 			}
 		}
 		else{
-			$_SESSION['Language'] = 'English';
+			$_SESSION['Language'] = EncryptionHelper::Encrypt('English');
+			return 'ActiveLanguage';
 		}
 	}
 

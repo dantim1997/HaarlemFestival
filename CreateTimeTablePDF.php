@@ -5,14 +5,14 @@ require "./fpdf181/fpdf.php";
 class Ticket extends FPDF{
 	public $User;
 
-	function header(){
+	function header($OrderId){
 		
+	}
+	
+	function headerline($date, $OrderId){
 		$this->SetFont('Arial', 'B', 20);
 		$this->Ln(20);
-		$this->Cell(0,5,'Your Timetable from order: 630259',0,0,'L');
-	}
-
-	function headerline($date){
+		$this->Cell(0,5,'Your Timetable from order: '.$OrderId,0,0,'L');
 		$this->Ln(20);
 		$this->SetFont('Arial', '', 10);
 		$r = 255; $g =255; $b=102;
@@ -64,45 +64,44 @@ class Ticket extends FPDF{
 	}
 }
 if(isset($_GET)){
-
-	$DB_Helper = new DB_Helper;
+	$OrderRepository = new OrderRepository;
 	$OrderId = $_GET['id'];
 	$Date = array('2020-07-26', '2020-07-27', '2020-07-28', '2020-07-29');
 	$pdf = new Ticket();
 	$pdf->AliasNbPages();
 	$pdf->AddPage('P', 'A4', 0);
-	$pdf->headerline($Date);
-	GetDanceTickets($DB_Helper,$OrderId, $pdf);
-	GetFoodTickets($DB_Helper,$OrderId, $pdf);
-	GetTourTickets($DB_Helper,$OrderId, $pdf);
-	GetJazzTickets($DB_Helper,$OrderId, $pdf);
+	$pdf->headerline($Date,$OrderId);
+	GetDanceTickets($OrderRepository,$OrderId, $pdf);
+	GetFoodTickets($OrderRepository,$OrderId, $pdf);
+	GetTourTickets($OrderRepository,$OrderId, $pdf);
+	GetJazzTickets($OrderRepository,$OrderId, $pdf);
 	$pdf->Output();
 }
 else{
 	header("Location: MyProgram.php");
 }
-function GetDanceTickets($DB_Helper,$id, $pdf){
-	$tickets = $DB_Helper->GetOrderTicketsDance($id);
+function GetDanceTickets($OrderRepository,$id, $pdf){
+	$tickets = $OrderRepository->GetOrderTicketsDance($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 2, $pdf);
 	}
 }
-function GetTourTickets($DB_Helper,$id, $pdf){
-	$tickets = $DB_Helper->GetOrderTicketsTour($id);
+function GetTourTickets($OrderRepository,$id, $pdf){
+	$tickets = $OrderRepository->GetOrderTicketsTour($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 3,$pdf);
 	}
 }
 
-function GetJazzTickets($DB_Helper,$id, $pdf){
-	$tickets = $DB_Helper->GetOrderTicketsJazz($id);
+function GetJazzTickets($OrderRepository,$id, $pdf){
+	$tickets = $OrderRepository->GetOrderTicketsJazz($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 4,$pdf);
 	}
 }
 
-function GetFoodTickets($DB_Helper,$id, $pdf){
-	$tickets = $DB_Helper->GetOrderTicketsFood($id);
+function GetFoodTickets($OrderRepository,$id, $pdf){
+	$tickets = $OrderRepository->GetOrderTicketsFood($id);
 	foreach ($tickets as $ticket) {
 		SetRow($ticket, 1,$pdf);
 	}

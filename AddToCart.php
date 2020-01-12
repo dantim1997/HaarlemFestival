@@ -5,7 +5,8 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
     $TypeEvent = $_POST['typeEvent'];
 
     $session = new Session;
-    $DB_Helper = new DB_Helper();
+    $OrderRepository = new OrderRepository();
+    $HistoricRepository = new HistoricRepository();
     $maxamount = 0;
 
     $isFoodReservation = false;
@@ -21,17 +22,17 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
         $existingChildAmount = 0;
         $existingAdultAmount = 0;
 
-        foreach($_SESSION["Tickets"] as $item){
-            if($item["EventId"] == $eventId){
-                $existingChildAmount = $item["ChildAmount"];
-                $existingAdultAmount = $item["AdultAmount"];
+        foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
+            if ($item["EventId"] == $eventId) {
+                $existingChildAmount = $item["childAmount"];
+                $existingAdultAmount = $item["adultAmount"];
             }
         }
     } else {
         // normal ticket is being added
         $existingamount = 0;
         
-        foreach($_SESSION["Tickets"] as $item){
+        foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
             if($item["EventId"] == $eventId){
                 $existingamount = $item["Amount"];
             }
@@ -40,21 +41,21 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
 
     switch ($TypeEvent) {
         case 1:
-            $maxamount= $DB_Helper->GetTicketAmountFood($eventId);
+            $maxamount = $OrderRepository->GetTicketAmountFood($eventId);
             break;
         case 2:
-            $maxamount= $DB_Helper->GetTicketAmountDance($eventId);
+            $maxamount = $OrderRepository->GetTicketAmountDance($eventId);
             break;
         case 3:
-            $historic = $DB_Helper->GetAmountHistoric($eventId);
+            $historic = $OrderRepository->GetTicketAmountHistoric($eventId);
             $maxamount =  $historic['Amount'];
 
-            $familyTourByReferenceId = $DB_Helper->GetToursByReferenceId($eventId);
+            $familyTourByReferenceId = $HistoricRepository->GetToursByReferenceId($eventId);
 
             if ($historic['Type'] == 'Family') {
                 $amount = $amount * 4;
             }    
-            foreach($_SESSION["Tickets"] as $item) {
+            foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item) {
                 if ($familyTourByReferenceId == $item["EventId"]) {
                     $existingamount += $item['Amount']; 
                 }
@@ -64,13 +65,13 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
             }
             break;
         case 4:
-            $maxamount = $DB_Helper->GetTicketAmountJazz($eventId);
+            $maxamount = $OrderRepository->GetTicketAmountJazz($eventId);
             break;
     }
 
     if ($isFoodReservation) {
         // we're adding a foodreservation, call different method ...
-        if ($childAmount + $adultAmount <= $maxamount) {
+        if ($childAmount + $adultAmount + $existingChildAmount + $existingAdultAmount <= $maxamount) {
             $session->AddToCartFood($eventId, $childAmount, $adultAmount, $_POST['startTime'], $_POST['date'], $_POST['extraInfo']);
             print 1;
         }

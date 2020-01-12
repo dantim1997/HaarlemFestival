@@ -9,6 +9,7 @@ class MyProgramView
 	{
 		$this->MyProgramController = $myProgramController;
 		$this->MyProgramModel = $myProgramModel;
+		$this->PageContentHelper = new PageContentHelper();
 	}
 
 	//output to html
@@ -27,16 +28,17 @@ class MyProgramView
 
 	private function Body(){
 		$nav = new Nav();
+		$pageContent = $this->PageContentHelper->GetPageText("MyProgramme");
 		return $nav->SetNavBar("MyProgram"). "
 		<div id='main'>
 			<div class='container-fluid'>
 				<div class='row'>
 				    <div class='col-sm-2' ></div>
 					    <div class='col-sm-9'>
-					    	<div class='OrderNumber'><form method='post'>Enter your OrderNumber: <input type='Text' name='OrderNumber'><button class='ViewProgram'>View Programme</button></form>
+					    	<div class='OrderNumber'><form method='post'>".$pageContent[0]."<input type='Text' name='OrderNumber'><button class='ViewProgram'>".$pageContent[1]."</button></form>
 					    	</div>
 					    <div>
-					    ".$this->MyProgramController->CheckOrderNumber()."
+					    ".$this->MyProgramController->CheckOrderNumber($pageContent)."
 						</div>
 					    <div class='col-sm-2'></div>
 				  	</div>
