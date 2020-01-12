@@ -7,8 +7,8 @@ if(isset($_POST['Email'])) {
     if($OrderCode != ""){
         echo $OrderCode;
     }
-    else{
-        echo false;
+    else {
+        print false;
     }
 }
 ?>

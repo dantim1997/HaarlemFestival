@@ -132,9 +132,7 @@ function FoodAddToCartHelper(count) {
 	
 	var startTimeSelect = document.getElementById('pickSession' + count);
 	var startTime = startTimeSelect.options[startTimeSelect.selectedIndex].text;
-	
-	console.log(eventId, childAmount, adultAmount, startTime, date, extraInfo);
-	
+		
 	// check if selected time is valid, act accordingly
 	var timeCheck = startTime.search(":");
 	if (timeCheck == 2) {
@@ -175,8 +173,6 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 		data: {eventId: eventId, typeEvent: typeEvent},
 		type: 'post',
 		success: function(output) {
-			console.log(output);
-			
 			var parent = self.parentNode;
 			var parenttickets = parent.parentNode;
 			ShoppingCartmin(output);
@@ -189,7 +185,7 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 			totalamount = totalamount.replace(',', '.');
 			totalamount = parseFloat(totalamount);
 			var remove = totalamount - (price * output);
-      remove = remove.toFixed(2);
+      		remove = remove.toFixed(2);
 			remove = String(remove).replace('.', ',');
 			document.getElementById("TotalAmount").innerHTML = remove;
 		}
@@ -348,8 +344,8 @@ function CheckMail(){
 	data: {Email: Email},
 	type: 'post',
 	success: function(output) {
-		if(output != false){
-			if(confirm("We see that there is a purchase with the same email, Do you want to combine them?")){
+		if (output != false) {
+			if (confirm("We see that there is a purchase with the same email, would you like to combine them?")){
 				document.getElementById("OrderNumber").value = output;
 			}
 		}

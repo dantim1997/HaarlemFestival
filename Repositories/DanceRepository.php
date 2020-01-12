@@ -198,20 +198,17 @@ class DanceRepository
 		$IdSQL = mysqli_real_escape_string($this->Conn, $id);
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT e.Id, v.Name, e.Description 'About', e.startdatetime, e.EndDateTime, GROUP_CONCAT(a.Name)'description', e.Price FROM DanceEvent e
-			JOIN DanceVenue v on v.Id = e.VenueId
-			join performingact as p on p.EventId = e.Id 
-			join DanceArtist a on a.Id = p.ArtistId
+			LEFT JOIN DanceVenue v on v.Id = e.VenueId
+			LEFT join performingact as p on p.EventId = e.Id 
+			LEFT join DanceArtist a on a.Id = p.ArtistId
 			where e.Id = ?");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($Id, $Venue, $About, $StartDateTime, $EndDateTime, $Description, $Price); 
-		$User = array();
-		while ($stmt -> fetch()) { 
-			$user = array("ID"=>$Id, "Venue"=>$Venue, "About"=>$About, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$Description, "Price"=>$Price);
-			$User = $user;
-		}
-		return $User;
+		$stmt -> fetch();
+		$user = array("ID"=>$Id, "Venue"=>$Venue, "About"=>$About, "StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime, "Description"=>$Description, "Price"=>$Price);
+		return $user;
 	}
 }
 ?>

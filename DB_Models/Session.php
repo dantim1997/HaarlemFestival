@@ -50,7 +50,7 @@ class Session
 		$added = false;
 		foreach ($allCartItems as $cartItem) {
 			// check if reservation already exists in cart (eventId, startTime and date define if the cartItem already exists in current session)
-			if ($eventId == $cartItem['EventId'] && $startTime == $cartItem['StartTime'] && $date == $cartItem['Date']) {
+			if ($eventId == $cartItem['EventId'] && $startTime == $cartItem['startTime'] && $date == $cartItem['Date']) {
 				// reservation already exists in session
 				$cartItem['ChildAmount'] = intval($cartItem['ChildAmount']) + intval($childAmount);
 				$cartItem['AdultAmount'] = intval($cartItem['AdultAmount']) + intval($adultAmount);
