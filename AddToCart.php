@@ -17,11 +17,13 @@ if(isset($_POST['eventId']) && isset($_POST['typeEvent']) && isset($_POST['amoun
     $existingamount = 0;
     $existingChildAmount = 0;
     $existingAdultAmount = 0;
+    if (($childAmount != 0 || $adultAmount != 0) && $amount == 0) {
+        // food reservation is being added
+        $isFoodReservation = true;
+    }
     
     if(isset($_SESSION["Tickets"])){
         if (($childAmount != 0 || $adultAmount != 0) && $amount == 0) {
-            // food reservation is being added
-            $isFoodReservation = true;
 
             foreach(EncryptionHelper::Decrypt($_SESSION["Tickets"]) as $item){
                 if ($item["EventId"] == $eventId) {
