@@ -18,6 +18,7 @@ class FoodTimesController
 		return $this->Config;
 	}
 
+	// get all the times from DB to put in filter on left side
 	public function GetFilterTimes($side) {
 		$foodTimes = $this->FoodRepository->GetAllFoodSessions($side);
 		$times = "";
@@ -30,6 +31,7 @@ class FoodTimesController
 		return $times;
 	}
 
+	// get all the cuisines from DB and make them in MakeCuisines()
 	public function GetCuisines($start, $amount) {
 		$groupedCuisines = $this->FoodRepository->GetAllCuisines();
 		$cuisinesWithDuplicates = array();
@@ -45,6 +47,7 @@ class FoodTimesController
 		return $this->MakeCuisines($cuisines, $start, $amount);
 	}
 
+	// make filter cuisines code
 	private function MakeCuisines($cuisines, $start, $amount) {
 		$allCuisines = "";
 		for ($i=$start; $i < $amount; $i++) {
@@ -54,6 +57,7 @@ class FoodTimesController
 		return $allCuisines;
 	}
 
+	// get all food restaurant sections
 	public function GetSections() {
 		$queryStringTimes = "";
 		$queryStringCuisines = "";
@@ -84,9 +88,11 @@ class FoodTimesController
 			}
 			$queryStringRestaurants = "Name LIKE '".$restaurantName."'";
 		}
+		// get restaurants from DB
 		$foodSections = $this->FoodRepository->GetFoodSections($queryStringTimes, $queryStringCuisines, $queryStringRestaurants);
 		$sections = "";
 		$count = 1;
+		// get HMTL code for each restaurant
 		foreach ($foodSections as $foodSection) {
 			if ($foodSection["Amount"] > 0) {
 				$sections .= $this->GetSection($foodSection, $count);
@@ -102,6 +108,7 @@ class FoodTimesController
 		}
 	}
 
+	// create HTML code for each restaurant section
 	private function GetSection($section, $count) {
 		$pageTexts = $this->PageContentHelper->GetPageText("RestaurantSection");
 		return "
@@ -190,6 +197,7 @@ class FoodTimesController
 			";
 	}
 
+	// get restaurant rating and create HTML code
 	private function GetRating($fullStars) {
 		$stars = "";
 		$emptyStars = 5 - $fullStars;
@@ -218,6 +226,7 @@ class FoodTimesController
 		return $givenPrice;
 	}
 
+	// get dateTimes for reservation creation
 	private function GetDateTimes($id, $type) {
 		$dateTimes = "";
 		$index = "Session";
