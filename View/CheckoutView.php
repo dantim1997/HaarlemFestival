@@ -70,7 +70,11 @@ class CheckoutView
 									</tr>
 									<tr>
 										<td><h3 class='selectlbl'>".next($pageTexts)."</h3></td>
-										<td><input class='lbltxt' type='text'  name='PhoneNumber'></td>
+										<td><input class='lbltxt' type='text' name='PhoneNumber'></td>
+									</tr>
+									<tr>
+										<td><h2 class='selectlblh2'>".next($pageTexts)."</h2></td>
+										<td><input class='lblcheckbox' type='checkbox' name='AgeCheck'></td>
 									</tr>
 								</table>
 								<p id='checkoutRequiredNotice'>* This is required</p>

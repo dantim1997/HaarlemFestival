@@ -88,8 +88,10 @@ class FoodTimesController
 		$sections = "";
 		$count = 1;
 		foreach ($foodSections as $foodSection) {
-			$sections .= $this->GetSection($foodSection, $count);
-			$count++;
+			if ($foodSection["Amount"] > 0) {
+				$sections .= $this->GetSection($foodSection, $count);
+				$count++;
+			}
 		}
 
 		// check if results exists, otherwise return message
@@ -178,7 +180,11 @@ class FoodTimesController
 						<p class='specialNeedsP'>".next($pageTexts).":</p>
 						<textarea id='extraInfo".$count."' rows='2' cols='50' maxlength='40'></textarea>
 					</div>
-					".$this->TicketsUnavailable($section, $count, next($pageTexts))."
+					<div class='makeReservation'>
+						<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
+						<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
+						<input type='button' class='makeReservationBtn' value='".next($pageTexts)."' onclick='FoodAddToCartHelper(".$count.")' />
+					</div>
 				</div>
 			</div>
 			";
@@ -210,45 +216,6 @@ class FoodTimesController
 			$givenPrice .= ',-';
 		}
 		return $givenPrice;
-	}
-
-	// private function SelectOptions($section) {
-	// 	$options = "";
-	// 	$amount = 0;
-
-	// 	if ($section["Amount"] >= 11) {
-	// 		$amount = 11;
-	// 	} else {
-	// 		$amount = $section["Amount"] + 1;
-	// 	}
-
-	// 	for ($i=0; $i < $amount; $i++) {
-	// 		$options .= "<option value='".$i."'>".$i."</option>";
-	// 	}
-	// 	return $options;
-	// }
-
-	private function TicketsUnavailable($section, $count, $pageText) {
-		$htmlElements = "";
-		
-		if ($section["Amount"] == 0) {
-			$htmlElements .= "
-			<div class='makeReservation'>
-				<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
-				<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
-				<input type='button' class='makeReservationBtn' value='".$pageText."' disabled/>
-				<div id='emptyTicketsWarning'>TICKETS SOLD OUT</div>
-			</div>";
-		} else {
-			$htmlElements .= "
-			<div class='makeReservation'>
-				<input type='hidden' id='date".$count."' value='".$section["SessionStartDateTime"]."'/>
-				<input type='hidden' id='name".$count."' value='".$section["Name"]."'/>
-				<input type='button' class='makeReservationBtn' value='".$pageText."' onclick='FoodAddToCartHelper(".$count.")' />
-				<div id='emptyTicketsWarning'></div>
-			</div>";
-		}
-		return $htmlElements;
 	}
 
 	private function GetDateTimes($id, $type) {
