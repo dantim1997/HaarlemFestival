@@ -108,7 +108,6 @@ class FoodTimesController
 			if ($foodSection["Amount"] > 0) {
 				// add Restaurant section code to $sections variable which gets returned and echoed
 				// $count is given to give each restaurant unique HTML Id's allowing for the add to cart function
-
 				$sections .= $this->GetSection($foodSection, $count);
 				$count++;
 			}
@@ -230,8 +229,7 @@ class FoodTimesController
 	private function CheckPrice($givenPrice) {
 		return str_replace('.', ',', (string)$givenPrice);
 	}
-
-
+	
 	// get dates for reservation creation
 	private function GetDates($id) {
 		$dates = "";
