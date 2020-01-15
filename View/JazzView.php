@@ -49,7 +49,7 @@ class JazzView
 
 				<div id='carouselExampleControls' class='carousel slide' data-ride='carousel'>
 					<div class='carousel-inner'>
-					  ".$this->JazzController->GetFilterResults()."
+					  ".$this->JazzController->MakeCarousel()."
   					</div>
   						<a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
     					<span class='carousel-control-prev-icon' aria-hidden='true'></span>
@@ -63,7 +63,7 @@ class JazzView
 
 				<h2>".next($pageTexts)."</h2>
 					<table class='tg'>
-					".$this->JazzController->GetTable()."
+					".$this->JazzController->GetProgramme()."
 					</table>
 				<h2>".next($pageTexts)."</h2>
 				<div class='dates'>
@@ -82,7 +82,7 @@ class JazzView
 				<h1>".next($pageTexts)."</h1>
 				<br>
 				<div class='form'>
-						".$this->JazzController->GetTickets($dates[0]["Dates"])."
+						".$this->JazzController->GetOrderForm($dates[0]["Dates"])."
 						<br>
 						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
 				</div>
@@ -102,7 +102,7 @@ class JazzView
 				<h1>".next($pageTexts)."</h1>
 				<br>
 				<div class='form'>
-						".$this->JazzController->GetTickets($dates[1]["Dates"])."
+						".$this->JazzController->GetOrderForm($dates[1]["Dates"])."
 						<br>
 						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
 				</div>
@@ -122,7 +122,7 @@ class JazzView
 					<h1>".next($pageTexts)."</h1>
 					<br>
 					<div class='form'>
-						".$this->JazzController->GetTickets($dates[2]["Dates"])."
+						".$this->JazzController->GetOrderForm($dates[2]["Dates"])."
 						<br>
 						<input class='addCart' onclick='JazzAddToCart()' type='submit' value='Add Tickets'>
 					</div>

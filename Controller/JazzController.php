@@ -17,42 +17,77 @@ class JazzController
 		return $this->Config;
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////													CAROUSEL													//////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//get filter for genre search
+	public function MakeGenreAdvancedSearch(){
+		$artist =$this->JazzRepository->GetGenresJazz();
+		$artistsSearchlist = "";
+		foreach ($artist as $artist) {
+			//Make input fields for the form
+			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$artist["Genre"]."><label>".$artist["Genre"]."</label><br/>";
+		}
+		return $artistsSearchlist;
+	}
+
+	//Get Carousel
+	public function MakeCarousel(){
+		$searchStringGenre = "";
+		$output = "";
+		$first = true;
+
+		//Check if filter is set
+		if(isset($_GET['GenreCheckbox']))
+		{
+		   foreach ($_GET['GenreCheckbox'] as $genreCheckbox ) 
+			{
+		   		if(!$first){
+					//Add "OR" to the mysql parameter for combining the select results
+		   			$searchStringGenre .= " OR ";
+				}
+		   		$searchStringGenre .= "n.Genre LIKE '%".$genreCheckbox."%'";
+				$first = false;
+			}
+		}
+		$output = $this->GetArtists($searchStringGenre);
+		return $output;
+	}
+
 	//Get Artists
-	public function MakeArtistCarousel($filter = null){
+	private function GetArtists($filter = null){
+		//Get DB results based on de filter
 		$artist = $this->JazzRepository->GetArtistsJazz($filter);
 		$artists = "";
 		$counter = 0;
 		$first = true;
 		foreach ($artist as $artist) {
 			$counter++;
+			//If is first item add div header
 			if ($first){
-				$artists .= "
-				<div class='carousel-item active'>
-				<div class='artists'>";
+				$artists .= "<div class='carousel-item active'><div class='artists'>";
 			}
+			//else add normal item
 			else if ($counter == 1 && !$first){
-				$artists .= "
-				<div class='carousel-item'>
-				<div class='artists'>";
+				$artists .= "<div class='carousel-item'><div class='artists'>";
 			}
 			$first = false;
-			$artists .= "
-			<div class='artist'>
-				<div class='artistname'>".$artist["Name"]."</div>
-				<div class='artistcontainer'>
-					<image class='artistimage' src='".$this->CheckImageIsSet($artist["Image"])."'>
-					<div class='".$this->DefineGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
-					<div class='genre0'>0</div> 
-				</div>
-			</div>
-			";
+			$artists .= "<div class='artist'>
+							<div class='artistname'>".$artist["Name"]."</div>
+							<div class='artistcontainer'>
+								<image class='artistimage' src='".$this->CheckImageIsSet($artist["Image"])."'>
+								<div class='".$this->DefineGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
+								<div class='genre0'>0</div> 
+						</div></div>";
+			//Close artist section (1 row = 4 columns)
 			if ($counter == 4){
 				$counter = 0;
-				$artists .= "
-				</div></div>";
+				$artists .= "</div></div>";
 			}
 		}
 		$check = $counter % 4;
+		//Close div section if items are not 0 (prevents empty slide)
 		if ($check != 0){
 			$artists .= "</div></div>";
 		}
@@ -61,28 +96,28 @@ class JazzController
 
 	//define genre
 	private function DefineGenre($genre){
-		if ($genre == "Blues"){
-			return "genre1";
-		}
-		elseif ($genre == "Ragtime"){
-			return "genre2";
-		}
-		elseif ($genre == "Classic"){
-			return "genre3";
-		}
-		elseif ($genre == "Classic"){
-			return "genre4";
-		}
-		elseif ($genre == "Jazz Rock"){
-			return "genre5";
-		}
-		else {
-			return "genre0";
+		//Check witch css class must be returned
+		switch ($genre) {
+			case "Blues":
+				return "genre1";
+				break;
+			case "Ragtime":
+				return "genre2";
+				break;
+			case "Classic":
+				return "genre3";
+				break;
+			case "Jazz Rock":
+				return "genre4";
+				break;
+			default:
+				return "genre0";
 		}
 	}
 
 	//check if image is set
 	private function CheckImageIsSet($image){
+		//If image is not set, set a default image
 		if (empty($image)){
 			return "http://hfteam3.infhaarlem.nl/cms/Images/Jazz/unset.gif";
 		}
@@ -91,97 +126,42 @@ class JazzController
 		}
 	}
 
-	//get tickets for event day
-	public function FillTickets($date){
-		$date .= "%";
-		$ticket = $this->JazzRepository->GetTicketsJazz($date);
-		$tickets = "";
-		foreach ($ticket as $ticket) {
-			$starttime = strtotime($ticket["StartDateTime"]);
-			$endtime = strtotime($ticket["EndDateTime"]);
-
-			//Check if entry is free
-			if ($ticket["Price"] == "0.00"){
-				$tickets .= "
-				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Name"]."<hr>
-				";
-			}
-			elseif (strpos($ticket["Name"], 'All Access') !== false){
-				$tickets .= "
-				".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price' id='pricespec'>€".$ticket["Price"]."</aside><hr>
-				";
-			}
-			else{
-				$tickets .= "
-				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; <aside id='artistTicket'>".$ticket["Name"]."</aside><aside class='price'>€".$ticket["Price"]."</aside><hr>
-				";
-			}
-		}
-		return $tickets;
-	}
-	
-	//get genre for filter
-	public function MakeGenreAdvancedSearch(){
-		$artist =$this->JazzRepository->GetGenresJazz();
-		$artistsSearchlist = "";
-		foreach ($artist as $artist) {
-			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$artist["Genre"]."><label>".$artist["Genre"]."</label><br/>";
-		}
-		return $artistsSearchlist;
-	}
-
-	//GetFilterResult
-	public function GetFilterResults(){
-		$searchStringGenre = "";
-		$output = "";
-		$first = true;
-
-		if(isset($_GET['GenreCheckbox']))
-		{
-		   foreach ($_GET['GenreCheckbox'] as $genreCheckbox ) 
-			{
-		   		if(!$first){
-		   			$searchStringGenre .= " OR ";
-				}
-		   		$searchStringGenre .= "n.Genre LIKE '%".$genreCheckbox."%'";
-				$first = false;
-			}
-		}
-		$output = $this->MakeArtistCarousel($searchStringGenre);
-		return $output;
-	}
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////													PROGRAMME													//////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Make programme table
-	public function GetTable(){
+	public function GetProgramme(){
 		//Get header (dates) of table
 		$output = $this->GetDates();
 
 		//get times (first column)
 		$time = $this->JazzRepository->GetTimesJazz();
 
-		//convert time
+		//collect all times (start and end date)
 		foreach ($time as $time) {
 			$timebegin = date("H:i", strtotime($time["StartDateTime"]));
 			$newtimebegin[] = $timebegin;
+			
 			$timeend = date("H:i", strtotime($time["EndDateTime"]));
 			$newtimeend[] = $timeend;
 		}
 		
-		//create rows
-		for($i=0; $i<count($newtimebegin); $i++) {
-			$time = $newtimebegin[$i];
-			$date1 = "2020-07-26"; $date1 = date('Y-m-d H:i:s', strtotime("$date1 $time"));
-			$date2 = "2020-07-27"; $date2 = date('Y-m-d H:i:s', strtotime("$date2 $time"));
-			$date3 = "2020-07-28"; $date3 = date('Y-m-d H:i:s', strtotime("$date3 $time"));
-			$date4 = "2020-07-29"; $date4 = date('Y-m-d H:i:s', strtotime("$date4 $time"));
+		//Get event days and set variables
+		$days = $this->GetEventDates();
+		$date0 = ""; $date1 = ""; $date2 = ""; $date3 = ""; $date4 = ""; $date5 = "";
 
-			$output .= "<tr>
-			<td class='tg-6jhs'>".$newtimebegin[$i]." - ".$newtimeend[$i]."</td>
-			<td class='tg-m4n1'>".$this->GetArtistTable($date1)."</td>
-			<td class='tg-m4n1'>".$this->GetArtistTable($date2)."</td>
-			<td class='tg-m4n1'>".$this->GetArtistTable($date3)."</td>
-			<td class='tg-m4n1'>".$this->GetArtistTable($date4)."</td>
-			<tr>";
+		//create rows
+		for($i=0; $i < count($newtimebegin); $i++) {
+			$time = $newtimebegin[$i];
+			$output .= "<tr><td class='tg-6jhs'>".$newtimebegin[$i]." - ".$newtimeend[$i]."</td>";
+			//Add rows foreach day
+			for ($counter=0; $counter < count($days); $counter++) { 
+				${"date$counter"} = $days[$counter]["Dates"]; 
+				${"date$counter"} = date('Y-m-d H:i:s', strtotime(${"date$counter"}." $time"));
+				$output .= "<td class='tg-m4n1'>".$this->GetArtistForProgramme(${"date$counter"})."</td>";
+			}
+			$output .= "<tr>";
 		}
 		return $output;
 	}
@@ -208,8 +188,8 @@ class JazzController
 	}
 
 	//Get artist/band name for programme table
-	private function GetArtistTable($datetime){
-		$result = $this->JazzRepository->GetArtistTableJazz($datetime);
+	private function GetArtistForProgramme($datetime){
+		$result = $this->JazzRepository->GetArtistName($datetime);
 		$output = "";
 		$count = 0;
 		if (!empty($result)){
@@ -227,16 +207,43 @@ class JazzController
 		}
 	}
 
-	//Make DateTime to Time
-	private function FromDateTimeToTime($date){
-		//convert datetime to time
-		$hour = date("H",strtotime($date));
-		$minute = date("i",strtotime($date));
-		return $hour .":". $minute;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////													TICKETS 													//////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//get tickets for event day
+	public function FillTickets($date){
+		$date .= "%";
+		$ticket = $this->JazzRepository->GetTicketsJazz($date);
+		$tickets = "";
+		foreach ($ticket as $ticket) {
+			$starttime = strtotime($ticket["StartDateTime"]);
+			$endtime = strtotime($ticket["EndDateTime"]);
+
+			//Check if entry is free
+			if ($ticket["Price"] == "0.00"){
+				$tickets .= "
+				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Name"]."<hr>
+				";
+			}
+			//Check if ticket is an all access pass
+			elseif (strpos($ticket["Name"], 'All Access') !== false){
+				$tickets .= "
+				".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price' id='pricespec'>€".$ticket["Price"]."</aside><hr>
+				";
+			}
+			//Else show a normal ticket
+			else{
+				$tickets .= "
+				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; <aside id='artistTicket'>".$ticket["Name"]."</aside><aside class='price'>€".$ticket["Price"]."</aside><hr>
+				";
+			}
+		}
+		return $tickets;
 	}
 
 	//Get all tickets for jazz
-	public function GetTickets($date){
+	public function GetOrderForm($date){
 		$date .= "%";
 		$tickets = $this->JazzRepository->GetTicketsJazz($date);
 		
@@ -244,6 +251,7 @@ class JazzController
 		$count = 1;
 		$id = "ID";
 
+		//Create input [Add/Remove/Input]
 		foreach ($tickets as $ticket => $info) {
 			$addtocart .= "
 			<button onclick='ShoppingCartMinJazz(".$info["ID"].")'>-</button>
@@ -255,6 +263,10 @@ class JazzController
 		}
 		return $addtocart;
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////													LOCATION													//////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Get event location of each day
 	public function GetLocation($date){
@@ -281,6 +293,10 @@ class JazzController
 			return $infoE;
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////													OTHERS	 													//////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Get Dates for JazzView
 	public function GetEventDates(){
