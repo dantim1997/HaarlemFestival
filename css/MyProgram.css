@@ -4,6 +4,9 @@
   table-layout: fixed;
 }
 
+.ActiveXtraWide{
+	width: 190px;
+}
 
 .TimeTable THEAD{
 	border: solid 1px;

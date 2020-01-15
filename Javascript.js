@@ -269,7 +269,7 @@ function ToEvent(src){
 		location.href = "Dance.php";
 	}
 	if (src == "Food") {
-		location.href = "food.php";
+		location.href = "Food.php";
 	}
 }
 
