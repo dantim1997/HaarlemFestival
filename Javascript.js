@@ -107,7 +107,9 @@ function TimeTablePDF(id){
 	win.focus();
 }
 
+// js function to add tickets to cart. 'normal' tickets only need eventId, typeEvent and amount. Reservations need more info, thus they're 0 or "" on default so normal tickets adding isn't changed
 function AddToCart(eventId, typeEvent, amount, childAmount = 0, adultAmount = 0, startTime = "", date = "", extraInfo = "") {
+	// check to make sure amount that's being added is not a negative number or 0
 	amountCheck = amount + childAmount + adultAmount;
 	if (amountCheck > 0) {
 		$.ajax({ url: 'AddToCart.php',
@@ -139,13 +141,14 @@ function FoodAddToCartHelper(count) {
 		
 	// check if selected time is valid, act accordingly
 	var timeCheck = startTime.search(":");
-	if (timeCheck == 2) {
+	if (timeCheck == 2 && startTime.length == 5) {
 		AddToCart(eventId, 1, 0, childAmount, adultAmount, startTime, date, extraInfo);
 	} else {
 		alert("Please select a time.");
 	}
 }
 
+// when a user selects a date for a restaurant, the corresponding times AND foodRestaurant Id are picked up, allowing for the correct ticket information to be displayed in the checkout
 function SelectedDate(count, id) {
 	var date = document.getElementById('pickDay' + count).value;
 	var time = document.getElementById('pickSession' + count);
@@ -158,8 +161,10 @@ function SelectedDate(count, id) {
 	data: {date: date, id: id},
 	type: 'post',
 	success: function(output) {
+		// parse output back to array allowing usage
 		output = JSON.parse(output);
 		for (var i = 0; i < output.length; i++) {
+			// for the length of the array, create time 'options' and add them to select time element
 			var opt = output[i];
 			var el = document.createElement("option");
 			el.textContent = String(opt.SessionStartTime);
@@ -167,7 +172,6 @@ function SelectedDate(count, id) {
     		el.value = opt.Id;
 			time.appendChild(el);
 		}
-
 	}
 	});
 }
@@ -265,7 +269,7 @@ function ToEvent(src){
 		location.href = "Dance.php";
 	}
 	if (src == "Food") {
-		location.href = "food.php";
+		location.href = "Food.php";
 	}
 }
 

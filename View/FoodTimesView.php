@@ -2,9 +2,11 @@
 require_once("Autoloader.php");
 class FoodTimesView
 {
+	// create variables to be instantiated
 	private $FoodTimesController;
 	private $FoodTimesModel;
 
+	// instantiate variables
 	public function __construct($FoodTimesController, $FoodTimesModel)
 	{
 		$this->FoodTimesController = $FoodTimesController;
@@ -12,7 +14,7 @@ class FoodTimesView
 		$this->PageContentHelper = new PageContentHelper();
 	}
 
-	//output to html
+	// output to html
 	public function output() {
 		$page = "";
 		$page .= $this->Header();
@@ -21,12 +23,15 @@ class FoodTimesView
 		return $page;
 	}
 
+	// get header from config file
 	private function Header() {
 		return $this->FoodTimesController->GetConfig()->GetHeader("FoodTimes");
 	}
 
+	// return body HTML code, partially generically generated based upon data in database in controller
 	private function Body() {
 		$nav = new Nav();
+		// get page text from database
 		$pageTexts = $this->PageContentHelper->GetPageText("RestaurantFilterFood");
 		return $nav->SetNavBar("Food").
 		"

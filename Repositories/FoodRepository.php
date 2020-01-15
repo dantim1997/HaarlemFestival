@@ -1,28 +1,31 @@
 <?php
 class FoodRepository
 {
-	private $Conn;
+	private $conn;
 	
 	function __construct()
 	{
 		$DBConnection = DBConnection::getInstance();	
-		$this->Conn = $DBConnection->getConnection();
+		$this->conn = $DBConnection->getConnection();
 
-		if($this->Conn->connect_error){
-			die("Connection failed:" . $this->Conn->connect_error);
+		if($this->conn->connect_error){
+			die("Connection failed:" . $this->conn->connect_error);
 		}
 
-		/* Switch off auto commit to allow transactions*/
-		$this->Conn->autocommit(FALSE);
+		// switch off auto commit to allow transactions
+		$this->conn->autocommit(FALSE);
 	}
 
 	public function GetConn(){
-		return $this->Conn;
+		return $this->conn;
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// MAIN PAGE
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public function GetRestaurantInfo() {
-		$stmt = $this->Conn->prepare("SELECT r.Name, ei.Image, r.Cuisines FROM Restaurants r JOIN EventImage ei ON r.ImageRef = ei.Id");
+		$stmt = $this->conn->prepare("SELECT r.Name, ei.Image, r.Cuisines FROM Restaurants r JOIN EventImage ei ON r.ImageRef = ei.Id");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Name, $Image, $Cuisines);
@@ -33,6 +36,40 @@ class FoodRepository
 		}
 		return $restaurantImages;
 	}
+		
+	// grab the food description in English
+	public function GetFoodDescriptionEnglish($name) {
+		$stmt = $this->conn->prepare("SELECT ep.ParagraphTextEnglish FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	// grab the food description in Dutch
+	public function GetFoodDescriptionDutch($name) {
+		$stmt = $this->conn->prepare("SELECT ep.ParagraphTextDutch FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt->bind_result($descriptionText);
+		$pageTextContent = array();
+		while ($stmt -> fetch()) {
+			$pageText = $descriptionText;
+			$pageTextContent[] = $pageText;
+		}
+		return $pageTextContent;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// TIMES_TICKETS PAGE
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public function GetFoodSections($queryStringTimes, $queryStringCuisine, $queryStringRestaurants) {
 		$query = "SELECT r.Id, r.Name, r.Cuisines, r.Location, r.Rating, r.NormalPrice, r.ChildPrice, r.LocationLink, ei.Image, fr.SessionStartDateTime, fr.SessionEndDateTime, SUM(fr.Amount) 
@@ -43,7 +80,7 @@ class FoodRepository
 			$query .= " WHERE ".$queryStringTimes." ".$queryStringCuisine. " ".$queryStringRestaurants;
 		}
 		$query .= " GROUP BY r.Id";
-		$stmt = $this->Conn->prepare($query);
+		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Id, $Name, $Cuisines, $Location, $Rating, $NormalPrice, $ChildPrice, $LocationLink, $Logo, $SessionStartDateTime, $SessionEndDateTime, $Amount);
@@ -55,13 +92,14 @@ class FoodRepository
 		return $foodSections;
 	}
 
+
 	public function GetAllFoodSessions($side) {
 		if ($side == "left") {
 			$query = "SELECT SessionStartDateTime FROM FoodRestaurants GROUP BY SessionStartDateTime ORDER BY SessionStartDateTime LIMIT 5";
 		} else if ("right") {
 			$query = "SELECT SessionStartDateTime FROM FoodRestaurants GROUP BY SessionStartDateTime ORDER BY SessionStartDateTime LIMIT 5 OFFSET 5";
 		}
-		$stmt = $this->Conn->prepare($query);
+		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionStartDateTime);
@@ -73,8 +111,9 @@ class FoodRepository
 		return $foodSessions;
 	}
 
+	// get all food cuisines
 	public function GetAllCuisines() {
-		$stmt = $this->Conn->prepare("SELECT Cuisines FROM Restaurants GROUP BY Cuisines");
+		$stmt = $this->conn->prepare("SELECT Cuisines FROM Restaurants GROUP BY Cuisines");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($Cuisines);
@@ -86,22 +125,9 @@ class FoodRepository
 		return $foodCuisines;
 	}
 
-	public function GetFoodTimes() {
-		$stmt = $this->Conn->prepare("SELECT TIME(SessionStartDateTime) FROM FoodRestaurants WHERE RestaurantId = ? GROUP BY TIME(SessionStartDateTime)");
-		$stmt->bind_param("i", $id);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($SessionStartTime);
-		$foodTimes = array();
-		while ($stmt -> fetch()) {
-			$foodTime = array("SessionStartTime" => $SessionStartTime);
-			$foodTimes[] = $foodTime;
-		}
-		return $foodTimes;
-	}
-
+	// grab all dates from food
 	public function GetFoodDates() {
-		$stmt = $this->Conn->prepare("SELECT DATE(SessionStartDateTime) FROM FoodRestaurants GROUP BY DATE(SessionStartDateTime)");
+		$stmt = $this->conn->prepare("SELECT DATE(SessionStartDateTime) FROM FoodRestaurants GROUP BY DATE(SessionStartDateTime)");
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt->bind_result($SessionDate);
@@ -112,41 +138,14 @@ class FoodRepository
 		}
 		return $foodDates;
     }
-    
-	public function GetFoodDescriptionEnglish($name) {
-		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextEnglish FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
-		$stmt->bind_param("s", $name);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($descriptionText);
-		$pageTextContent = array();
-		while ($stmt -> fetch()) {
-			$pageText = $descriptionText;
-			$pageTextContent[] = $pageText;
-		}
-		return $pageTextContent;
-	}
 
-	public function GetFoodDescriptionDutch($name) {
-		$stmt = $this->Conn->prepare("SELECT ep.ParagraphTextDutch FROM Restaurants r JOIN EventParagraph ep ON r.Description = ep.Id WHERE r.Name LIKE ?");
-		$stmt->bind_param("s", $name);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($descriptionText);
-		$pageTextContent = array();
-		while ($stmt -> fetch()) {
-			$pageText = $descriptionText;
-			$pageTextContent[] = $pageText;
-		}
-		return $pageTextContent;
-	}
 
-	//get all tickets by customer
+	// get needed information from food event
 	public function GetEventInfoFood($Id) {
-		//clean Id
-		$IdSQL = mysqli_real_escape_string($this->Conn, $Id);
-		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT r.Name, fr.SessionStartDateTime, fr.SessionEndDateTime, r.ChildPrice, r.NormalPrice from FoodRestaurants fr JOIN Restaurants r ON r.Id = fr.RestaurantId WHERE fr.Id = ? limit 1");
+		// cleans Id
+		$IdSQL = mysqli_real_escape_string($this->conn, $Id);
+		// does a prepared query
+		$stmt = $this->conn->prepare("SELECT r.Name, fr.SessionStartDateTime, fr.SessionEndDateTime, r.ChildPrice, r.NormalPrice from FoodRestaurants fr JOIN Restaurants r ON r.Id = fr.RestaurantId WHERE fr.Id = ? limit 1");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
@@ -159,8 +158,10 @@ class FoodRepository
 		return $Ticket;
 	}
 	
+	// we have the food Date and need its correspding time(s), grab them from DB
 	public function GetFoodTimeByDate($date, $id) {
-		$stmt = $this->Conn->prepare("SELECT DATE_FORMAT(SessionStartDateTime, '%H:%i'), Id FROM FoodRestaurants WHERE RestaurantId = ? AND SessionStartDateTime LIKE ? GROUP BY TIME(SessionStartDateTime)");
+		// we know the date and restaurant Id, allowing us to pick up the exact corresponding times for the date selected by the user
+		$stmt = $this->conn->prepare("SELECT DATE_FORMAT(SessionStartDateTime, '%H:%i'), Id FROM FoodRestaurants WHERE RestaurantId = ? AND SessionStartDateTime LIKE ? GROUP BY TIME(SessionStartDateTime)");
 		$stmt->bind_param("is", $id, $date);
 		$stmt->execute();
 		$stmt->store_result();
