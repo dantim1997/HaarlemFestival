@@ -47,7 +47,7 @@ class HistoricOrderTicketsController
 		//Add the text of each ticket.
 		foreach ($tours as $tour) {
 			if ($this->OrderRepository->GetTicketAmountHistoric($tour->Id)['Amount'] >= 1) {
-				$normalTickets .= "<h5 class=ticket>".$tour->Language." Tour, ".date('H', $tour->StartDateTime)." - ".$tour->EndDateTime."</h5>";
+				$normalTickets .= "<h5 class=ticket>".$tour->Language." Tour, ".date("H:i",strtotime($tour->StartDateTime))." - ".date("H:i",strtotime($tour->EndDateTime))."</h5>";
 			}
 			else{
 				$this->NotAvailable .= "<br> - ".$tour->Description."</li>";
