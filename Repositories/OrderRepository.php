@@ -345,23 +345,23 @@ class OrderRepository
 	//get tickets
 	public function GetOrderTicketsTour($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info
+		$stmt = $this->Conn->prepare("SELECT ht.Id, 'St. Bavo Church' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info , count(ht.id) amount
 			FROM `Order` o
-			join OrderLine ol on ol.OrderId = o.id
+			join OrderLine ol on ol.OrderId = o.Id
 			join Tickets t on t.Id = ol.TicketId
 			join HistoricTours ht on ht.Id = t.EventId
 			WHERE o.OrderNumber = ? && t.TypeEvent = 3
-			group by ol.id");
+			group by ht.Id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info, $amount); 
 		$events = array();
 		while ($stmt -> fetch()) { 
 			if($description == ","){
 				$description = "";
 			}
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description. " (".$amount.")", "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info, "amount" => $amount);
 			$events[] = $event;
 		}
 		//return $array;
