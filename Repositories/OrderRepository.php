@@ -278,7 +278,7 @@ class OrderRepository
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
 			WHERE o.OrderNumber = ? && t.TypeEvent = 2
-			GROUP by ol.id && p.EventId");
+			GROUP by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
