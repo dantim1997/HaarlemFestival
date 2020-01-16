@@ -74,8 +74,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($artist, $description, $firstName, $lastName, $location, $address, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){
@@ -111,8 +111,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($reservation, $firstName, $lastName, $location, $address, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){
@@ -142,8 +142,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($artist, $firstName, $lastName, $location, $hall, $address, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){
@@ -172,8 +172,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($description, $firstName, $lastName, $location, $language, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){
@@ -278,7 +278,7 @@ class OrderRepository
 			join performingact as p on p.EventId = e.Id 
 			join DanceArtist a on a.Id = p.ArtistId
 			WHERE o.OrderNumber = ? && t.TypeEvent = 2
-			GROUP by ol.id && p.EventId");
+			GROUP by ol.id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
@@ -345,27 +345,45 @@ class OrderRepository
 	//get tickets
 	public function GetOrderTicketsTour($orderId){
 		//does a prepared query
-		$stmt = $this->Conn->prepare("SELECT ht.Id, 'startpunt' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info
+		$stmt = $this->Conn->prepare("SELECT ht.Id, 'St. Bavo Church' Name, ht.StartDateTime, ht.EndDateTime, ht.Description, '' info , count(ht.id) amount
 			FROM `Order` o
-			join OrderLine ol on ol.OrderId = o.id
+			join OrderLine ol on ol.OrderId = o.Id
 			join Tickets t on t.Id = ol.TicketId
 			join HistoricTours ht on ht.Id = t.EventId
 			WHERE o.OrderNumber = ? && t.TypeEvent = 3
-			group by ol.id");
+			group by ht.Id");
 		$stmt->bind_param("i", $orderId);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info); 
+		$stmt-> bind_result($id, $venue, $startDateTime, $endDateTime, $description, $info, $amount); 
 		$events = array();
 		while ($stmt -> fetch()) { 
 			if($description == ","){
 				$description = "";
 			}
-			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description, "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info);
+			$event = array("ID"=>$id, "Name" =>$venue, "description"=>$description. " (".$amount.")", "StartDateTime"=>$startDateTime, "EndDateTime"=>$endDateTime, "info"=>$info, "amount" => $amount);
 			$events[] = $event;
 		}
 		//return $array;
 		return $events;
+	}
+
+	public function GetInvoiceTicketsDanceArtist($eventId){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("select a.Name from DanceArtist a
+		join performingact p on p.ArtistId = a.Id
+		join DanceEvent e on e.Id = p.EventId
+		where e.Id= ?");
+		$stmt->bind_param("i", $eventId);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($name); 
+		$names = "";
+		while ($stmt -> fetch()) { 
+			$names .= $name ." ";
+		}
+		//return $array;
+		return $names;
 	}
 
 	public function GetInvoiceTicketsDance($orderId)
@@ -373,25 +391,24 @@ class OrderRepository
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("select  GROUP_CONCAT(a.Name) artist, e.Description, e.StartDateTime, e.EndDateTime,count(e.id) amount, t.Price, '9%' vat from `Order` o 
+		$stmt = $this->Conn->prepare("select e.Id, e.Description, e.StartDateTime, e.EndDateTime, count(t.id) amount, t.Price, '9%' vat, e.Special from `Order` o 
 		JOIN OrderLine ol on ol.OrderId = o.Id
 		JOIN Tickets t on t.Id = ol.TicketId
 		JOIN DanceEvent e on e.Id = t.EventId
-		JOIN performingact p on p.EventId = e.Id
-		JOIN DanceArtist a on a.Id = p.ArtistId
-		JOIN DanceVenue v on v.Id = e.VenueId
 		where o.Id = ? && t.TypeEvent = 2
-		GROUP by e.Id");
+		GROUP BY t.Id");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($artist, $description, $startdate, $enddate, $amount, $price, $vat);
+		$stmt-> bind_result($id, $description, $startdate, $enddate, $amount, $price, $vat, $special);
 		$invoiceTickets = array();
 		while ($stmt -> fetch()) { 
-			if($description == ","){
-				$description = "";
+			$artists = "";
+			if($special != "1"){
+				$name = $this->GetInvoiceTicketsDanceArtist($id);
+				$artists = $name;
 			}
-			$invoiceTicket = array($artist, $description, $startdate, $enddate, $amount, $price , $vat);
+			$invoiceTicket = array($artists, $description, $startdate, $enddate, $amount, $price , $vat);
 			$invoiceTickets[] = $invoiceTicket;
 		}
 		//return $array;
@@ -435,7 +452,7 @@ class OrderRepository
 		JOIN OrderLine ol on ol.OrderId = o.Id
 		JOIN Tickets t on t.Id = ol.TicketId
 		JOIN Jazz j on j.Id = t.EventId
-		where o.Id = ? && t.TypeEvent = 1
+		where o.Id = ? && t.TypeEvent = 4
 		GROUP by j.Id");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
@@ -462,7 +479,7 @@ class OrderRepository
 		JOIN OrderLine ol on ol.OrderId = o.Id
 		JOIN Tickets t on t.Id = ol.TicketId
 		JOIN HistoricTours h on h.Id = t.EventId
-		where o.Id = ? && t.TypeEvent = 1
+		where o.Id = ? && t.TypeEvent = 3
 		GROUP by h.Id");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();

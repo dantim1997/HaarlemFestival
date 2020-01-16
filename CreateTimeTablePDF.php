@@ -4,10 +4,6 @@ require "./fpdf181/fpdf.php";
 
 class Ticket extends FPDF{
 	public $User;
-
-	function header($OrderId){
-		
-	}
 	
 	function headerline($date, $OrderId){
 		$this->SetFont('Arial', 'B', 20);
@@ -51,16 +47,33 @@ class Ticket extends FPDF{
 	{
 		$this->SetFillColor($r, $g, $b);
 		$this->SetFont('Arial', '', 7);
-		//$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
-		$this->Cell(39.5,10,$event,1,0,'L',1);
+		if($event != ""){
+			$current_y = $this->GetY();
+			$current_x = $this->GetX();
+			$cell_width = 39.5;
+			$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+			$this->SetXY($current_x + $cell_width, $current_y);
+			$current_x = $this->GetX();
+		}
+		else{
+			$this->Cell(39.5,20,$event,1,0,'L',1);
+			
+		}
 	}
 	function LeftColumn($event = "", $r = 255, $g=255, $b=255)
 	{
 		$splitEvent = explode(",", $event);
 		$this->SetFillColor($r, $g, $b);
 		$this->SetFont('Arial', '', 7);
-		//$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
-		$this->Cell(39.5,10,$splitEvent[0],1,0,'L',1);
+		$current_y = $this->GetY();
+			$current_x = $this->GetX();
+			$cell_width = 39.5;
+			$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+		$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+		
+		$this->SetXY($current_x + $cell_width, $current_y);
+		$current_x = $this->GetX();
+		//$this->Cell(39.5,20,$splitEvent[0],1,0,'L',1);
 	}
 }
 if(isset($_GET)){
@@ -127,7 +140,9 @@ function SetRow($ticket, $typeEvent, $pdf){
 		$pdf->LeftColumn($ticket["Name"]);
 		foreach ($TijdelijkDate as $date) {
 			if($date == $startDate){
-				$pdf->column($ticket["description"] ." ". $ticket["info"], $r, $g, $b);
+				$startEndTime = date("H:i",strtotime($ticket["StartDateTime"]));
+				$endTime = date("H:i",strtotime($ticket["EndDateTime"]));
+				$pdf->column($ticket["description"] ." ". $ticket["info"]." ". $startEndTime."-".$endTime, $r, $g, $b);
 			}
 			else{
 				$pdf->column();

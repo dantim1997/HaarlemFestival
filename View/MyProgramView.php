@@ -40,6 +40,7 @@ class MyProgramView
 					    <div>
 					    ".$this->MyProgramController->CheckOrderNumber($pageContent)."
 						</div>
+						<div class='spacingBar'></div>
 					    <div class='col-sm-2'></div>
 				  	</div>
 				</div>
