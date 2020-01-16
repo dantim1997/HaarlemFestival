@@ -378,7 +378,7 @@ class OrderRepository
 		JOIN Tickets t on t.Id = ol.TicketId
 		JOIN DanceEvent e on e.Id = t.EventId
 		where o.Id = ? && t.TypeEvent = 2
-		GROUP BY t.id");
+		GROUP BY t.Id");
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
