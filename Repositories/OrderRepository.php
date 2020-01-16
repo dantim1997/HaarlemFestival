@@ -74,8 +74,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($artist, $description, $firstName, $lastName, $location, $address, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){
@@ -111,8 +111,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($reservation, $firstName, $lastName, $location, $address, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){
@@ -142,8 +142,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($artist, $firstName, $lastName, $location, $hall, $address, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){
@@ -172,8 +172,8 @@ class OrderRepository
 		$stmt->store_result();
 		$stmt-> bind_result($description, $firstName, $lastName, $location, $language, $startDate, $endDate, $price, $qrCode);
 		while ($stmt -> fetch()) { 
-			$startTime = date("H:i:s",strtotime($startDate));
-			$endTime = date("H:i:s",strtotime($endDate));
+			$startTime = date("H:i",strtotime($startDate));
+			$endTime = date("H:i",strtotime($endDate));
 			$date = date_format(date_create($startDate),"d/m/Y");
 			$duration =$startTime ." - ".$endTime;
 			if($startTime == "00:00:00"){

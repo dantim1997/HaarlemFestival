@@ -52,7 +52,7 @@ class Ticket extends FPDF{
 		$this->Cell(40,10,'*Use this number to see your program in my Program',0,0,'L');
 	}
 
-	function EventTicket($ticketInfo, $extraHeight, $qrImage){
+	function EventTicket($ticketInfo, $extraHeight, $qrImage, $last = false){
 		$this->Rect(7, 65 + $extraHeight, 190, 70);
 		$this->SetFont('Arial', 'B', 10);
 		
@@ -102,18 +102,39 @@ class Ticket extends FPDF{
 		$this->Ln(5);
 		$this->Cell( 40, 40, $this->Image('http://hfteam3.infhaarlem.nl/cms/Images/Home/Logo.png', $this->GetX() +5, $this->GetY() +14, 28), 0, 0, 'L', false );
 		//qrcode of event
-		$this->Cell(105);
-		$this->Cell( 25, 40, $this->Image($qrImage, $this->GetX()+ 6.5, $this->GetY()+10, 35), 0, 0, 'L', false );
-		$this->Ln(50);
+		
+		$this->Cell(104);
+		$this->Cell( 25, 40, $this->Image($qrImage, $this->GetX()+ 7.5, $this->GetY()+9, 35), 0, 0, 'L', false );
+		
+		if($last){
+			$this->Ln(42.9);
+			$this->Cell(148);
+			$this->Cell(10,0,next($ticketInfo),0,0,'L');
+		}
+		else{
+
+			$this->Ln(43);
+			$this->Cell(148);
+			$this->Cell(10,0,next($ticketInfo),0,0,'L');
+		}
+
+		//was 50
+		$this->Ln(7);
 	}
 
 }
+
 class PDFMaker{
 	public function MakePDF($customerInfo, $tickets)
 	{
-		/*$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655", 0);
+		$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655", 0);
 		$tickets = array();
-		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", 0);*/
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
 		
 		require_once( "Autoloader.php");
 		$qr  = new QrGenerator;
@@ -126,18 +147,23 @@ class PDFMaker{
 		$pdf->AddPage();
 		$amountOnPage = 0;
 		foreach($tickets as $ticket){
+			$test = false;
 			if($amountOnPage == 3){
 				$pdf->AddPage();
 				$height = 0;
 				$amountOnPage = 0;
 			}
+			if($amountOnPage == 2){
+				$test = true;
+
+			}
 			$qrimage = $qr->GenerateQRCode("http://cms.hfteam3.infhaarlem.nl/" ."CMSTicket.php?TicketCode=". $ticket[6], $ticket[6]);
-			$pdf->EventTicket($ticket, $height, $qrimage);
+			$pdf->EventTicket($ticket, $height, $qrimage, $test);
 			$height += 73;
 		
 			$amountOnPage++;
 		}
-		return $pdf->Output('attachment.pdf', 'S');
+		return $pdf->Output();//('attachment.pdf', 'S');
 	}
 }
 
