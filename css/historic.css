@@ -3,6 +3,7 @@
 
 body {
  background-image: url("http://hfteam3.infhaarlem.nl/cms/Images/Historic/backgroundHistoric.png");
+ background-clip: border-box;
  background-color: #cccccc;
  background-repeat: no-repeat;
  background-size: cover;

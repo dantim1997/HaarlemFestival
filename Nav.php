@@ -48,6 +48,11 @@ class Nav
 					<div class='Active'><a class='Link' href='index.php'><div class='NavActive'>".$event."</div></a></div>
 				</div>";
 			}
+			if ($event == 'MyProgram') {
+				return "<div class='ActiveWrapper'>
+					<div class='Active ActiveXtraWide'><a class='Link' href='".$event.".php'><div class='NavActive'>".$event."</div></a></div>
+				</div>";
+			}
 			return "<div class='ActiveWrapper'>
 					<div class='Active'><a class='Link' href='".$event.".php'><div class='NavActive'>".$event."</div></a></div>
 				</div>";
