@@ -65,8 +65,15 @@ class Ticket extends FPDF{
 		$splitEvent = explode(",", $event);
 		$this->SetFillColor($r, $g, $b);
 		$this->SetFont('Arial', '', 7);
-		//$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
-		$this->Cell(39.5,20,$splitEvent[0],1,0,'L',1);
+		$current_y = $this->GetY();
+			$current_x = $this->GetX();
+			$cell_width = 39.5;
+			$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+		$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+		
+		$this->SetXY($current_x + $cell_width, $current_y);
+		$current_x = $this->GetX();
+		//$this->Cell(39.5,20,$splitEvent[0],1,0,'L',1);
 	}
 }
 if(isset($_GET)){
