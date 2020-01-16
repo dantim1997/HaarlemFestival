@@ -11,7 +11,7 @@ class Invoice extends FPDF{
 	function content($customerinfo, $tickets){
 		$this->SetFont('Arial','B',16);
 		$this->Ln(50);
-		$this->Rect(10,50,120,55);
+		$this->Rect(10,50,110,55);
 		$this->Cell(1,0,'Personal Information:');
 		$this->SetFont('Arial','B',11);
 		$this->Ln(10);
