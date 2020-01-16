@@ -11,7 +11,7 @@ class Invoice extends FPDF{
 	function content($customerinfo, $tickets){
 		$this->SetFont('Arial','B',16);
 		$this->Ln(50);
-		$this->Rect(10,50,100,55);
+		$this->Rect(10,50,110,55);
 		$this->Cell(1,0,'Personal Information:');
 		$this->SetFont('Arial','B',11);
 		$this->Ln(10);
@@ -81,7 +81,7 @@ class Invoice extends FPDF{
 		$TotalPriceAmount = 0;
 		$TotalAmount = 0;
 		foreach($tickets as $ticket){
-			$TotalPriceAmount += $ticket[4];
+			$TotalPriceAmount += $ticket[4] * $ticket[3];
 			$TotalAmount += intval($ticket[3]);
 		}
 		$this->SetFont('Arial','B',14);
@@ -102,7 +102,7 @@ class Invoice extends FPDF{
 			$this->Cell(100);
 			$this->Cell(1,0,next($ticket));
 			$this->Cell(25);
-			$this->Cell(1,0,EURO." ".next($ticket));
+			$this->Cell(1,0,EURO." ".(next($ticket)* $ticket[3]));
 			$this->Cell(30);
 			$this->Cell(1,0, next($ticket));
 		}
