@@ -127,14 +127,9 @@ class Ticket extends FPDF{
 class PDFMaker{
 	public function MakePDF($customerInfo, $tickets)
 	{
-		$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655", 0);
+		/*$customerInfo = array("Tim", "Gras", "T@t.nl", "1544MK nieuwestraat 8", "061473655", 0);
 		$tickets = array();
-		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
-		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
-		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
-		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
-		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
-		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");
+		$tickets[] = array("Hardwell B2B", "5060.00",  "Jopenkerk", "1544MK nieuwestraat 8", "Dinsdag 20 november", "15:00 - 16:00", "0824418001577780878");*/
 		
 		require_once( "Autoloader.php");
 		$qr  = new QrGenerator;
