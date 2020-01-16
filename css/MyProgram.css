@@ -4,10 +4,6 @@
   table-layout: fixed;
 }
 
-.Footer{
-	position: relative;
-}
-
 .ActiveXtraWide{
 	width: 190px;
 }
@@ -56,6 +52,7 @@
 	height: 200px;
 	float: right;
 }
+
 
 
 .OrderNumber{
