@@ -102,7 +102,7 @@ class Invoice extends FPDF{
 			$this->Cell(100);
 			$this->Cell(1,0,next($ticket));
 			$this->Cell(25);
-			$this->Cell(1,0,EURO." ".next($ticket));
+			$this->Cell(1,0,EURO." ".(next($ticket)* $ticket[3]));
 			$this->Cell(30);
 			$this->Cell(1,0, next($ticket));
 		}
