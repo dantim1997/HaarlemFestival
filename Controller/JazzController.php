@@ -96,7 +96,7 @@ class JazzController
 
 	//define genre
 	private function DefineGenre($genre){
-		//Check witch css class must be returned
+		//Check which css class must be returned
 		switch ($genre) {
 			case "Blues":
 				return "genre1";
