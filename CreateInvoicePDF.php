@@ -81,7 +81,7 @@ class Invoice extends FPDF{
 		$TotalPriceAmount = 0;
 		$TotalAmount = 0;
 		foreach($tickets as $ticket){
-			$TotalPriceAmount += $ticket[4];
+			$TotalPriceAmount += $ticket[4] * $ticket[3];
 			$TotalAmount += intval($ticket[3]);
 		}
 		$this->SetFont('Arial','B',14);
