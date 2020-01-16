@@ -113,7 +113,12 @@ class PDFInvoiceMaker{
 	{
 		$pdf = new Invoice();
 		define('EURO',chr(128));
-		//$customerInfo = array("Tim", "Gras", "0000000000", "1544MK nieuwestraat 8", "061473655","T@t.nl", Date("d-m-Y"));
+		/*$customerInfo = array("Tim", "Gras", "0000000000", "1544MK nieuwestraat 8", "061473655","T@t.nl", Date("d-m-Y"));
+		$tickets = array();
+		$tickets[] = array("Hardwell B2B", "2020-07-12", "15:00 - 16:00", 5, "300.00", "9%");
+		$tickets[] = array("Hardwell B2B", "2020-07-12", "15:00 - 16:00", 5, "300.00", "9%");
+		$tickets[] = array("Hardwell B2B", "2020/-07-12", "15:00 - 16:00", 5, "300.00", "9%");*/
+
 		$pdf->AliasNbPages();
 		$pdf->AddPage();
 		$pdf->content($customerInfo, $tickets);
