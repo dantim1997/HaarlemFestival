@@ -368,12 +368,30 @@ class OrderRepository
 		return $events;
 	}
 
+	public function GetInvoiceTicketsDanceArtist($eventId){
+		//does a prepared query
+		$stmt = $this->Conn->prepare("select a.Name from DanceArtist a
+		join performingact p on p.ArtistId = a.Id
+		join DanceEvent e on e.Id = p.EventId
+		where e.Id= ?");
+		$stmt->bind_param("i", $eventId);
+		$stmt->execute();
+		$stmt->store_result();
+		$stmt-> bind_result($name); 
+		$names = "";
+		while ($stmt -> fetch()) { 
+			$names .= $name ." ";
+		}
+		//return $array;
+		return $names;
+	}
+
 	public function GetInvoiceTicketsDance($orderId)
 	{
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("select e.Id, e.Description, e.StartDateTime, e.EndDateTime, count(t.id) amount, t.Price, '9%' vat from `Order` o 
+		$stmt = $this->Conn->prepare("select e.Id, e.Description, e.StartDateTime, e.EndDateTime, count(t.id) amount, t.Price, '9%' vat, e.Special from `Order` o 
 		JOIN OrderLine ol on ol.OrderId = o.Id
 		JOIN Tickets t on t.Id = ol.TicketId
 		JOIN DanceEvent e on e.Id = t.EventId
@@ -382,22 +400,14 @@ class OrderRepository
 		$stmt->bind_param("i", $IdSQL);
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($id, $description, $startdate, $enddate, $amount, $price, $vat);
+		$stmt-> bind_result($id, $description, $startdate, $enddate, $amount, $price, $vat, $special);
 		$invoiceTickets = array();
 		while ($stmt -> fetch()) { 
-			$stmt = $this->Conn->prepare("select a.Name from DanceArtist a
-			join performingact p on p.ArtistId = a.Id
-			join DanceEvent e on e.Id = p.EventId
-			where e.Id= ?");
-			$stmt->bind_param("i", $id);
-			$stmt->execute();
-			$stmt->store_result();
-			$stmt-> bind_result($name);
 			$artists = "";
-			while ($stmt -> fetch()) { 
-				$artists .= $name." ";
+			if($special != "1"){
+				$name = $this->GetInvoiceTicketsDanceArtist($id);
+				$artists = $name;
 			}
-
 			$invoiceTicket = array($artists, $description, $startdate, $enddate, $amount, $price , $vat);
 			$invoiceTickets[] = $invoiceTicket;
 		}
