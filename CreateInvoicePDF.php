@@ -122,7 +122,7 @@ class PDFInvoiceMaker{
 		$pdf->AliasNbPages();
 		$pdf->AddPage();
 		$pdf->content($customerInfo, $tickets);
-		return $pdf->Output();//('attachment.pdf', 'S');
+		return $pdf->Output('attachment.pdf', 'S');
 	}
 }
 ?>
