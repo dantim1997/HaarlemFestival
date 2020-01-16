@@ -70,7 +70,7 @@ class JazzRepository
 	}
 
 	//get Programme for Jazz
-	public function GetArtistTableJazz($datetime){
+	public function GetArtistName($datetime){
 		//does a prepared query
 		$stmt = $this->Conn->prepare("SELECT ArtistName 
 		FROM Jazz 
