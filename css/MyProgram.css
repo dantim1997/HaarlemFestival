@@ -47,6 +47,14 @@
 .JazzBackground{
 	background-color: #66FF33;
 }
+.spacingBar{
+	margin-bottom: 452px;
+	width: 100px;
+	height: 200px;
+	float: right;
+}
+
+
 
 
 .OrderNumber{
