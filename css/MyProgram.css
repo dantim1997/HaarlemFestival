@@ -4,6 +4,10 @@
   table-layout: fixed;
 }
 
+.Footer{
+	position: relative;
+}
+
 
 .ActiveXtraWide{
 	width: 190px;
@@ -84,7 +88,9 @@
 	font-weight: bold;
 	padding-left: 5px;
 	background-color:  #DD042B;
-	margin-right: 5px;
+	margin-top: 20px;
+	margin-right: 2px;
+	margin-bottom: 458px;
 }
 
 .ProceeToCheckout:hover{
