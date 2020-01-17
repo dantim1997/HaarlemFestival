@@ -17,7 +17,62 @@ class DanceTimeTableController
 	public function GetConfig(){
 		return $this->Config;
 	}
+	
+	//makes the head of the timetable
+	public function MakeTimeTables(){
+		//get all dates of the events
+		$dates =$this->DanceRepository->GetDates();
 
+		// get all buttons of the timetables
+		$TimeTables = $this->GetDates($dates);
+
+		$hide = "";
+		//foreach date make an timetable with the events
+		foreach ($dates as $date) {
+			//makes the timetable but when $hide is "hide", to hide the timetable 
+			$TimeTables .= $this->MakeTimeTable($date["Date"], $hide);
+			//after the first one hide the rest(on page load)
+			$hide = "Hide";
+		}
+		//return all buttons and timetables
+		return $TimeTables;
+	}
+	
+	//get all the dates that an dance event is playing
+	public function GetDates($dates){
+		$days = "";
+		// foreach date make a button to show the events of that day 
+		foreach ($dates as $date) {
+			$SetDate = date('Y-m-d', strtotime($date["Date"]));
+			//gets the day name of the day (like monday)
+			$day = date('l', strtotime($SetDate));
+			//make a button from the day to switch days
+			$days .= "<div onclick='SelectedDay(".date('d', strtotime($date["Date"])).")' class='Day'>".$day."</div>";
+		}
+		$days .= "</div>";
+		//returns all day buttons
+		return $days;
+	}
+
+	//makes the timetable for all events
+	public function MakeTimeTable($date, $hide){
+		// return the timetable with all rows and time for one timetable
+		return "<div id='".date('d', strtotime($date))."' class='".$hide." HideTimeTable'>
+	    	<TABLE class='ArtistTimeTable'> 
+			  <THEAD>
+			    <TR>
+				  <TH colspan='3'></TH>
+				  ".$this->MakeHalfHours()."
+			    </TR>
+			  </THEAD>
+			  <TBODY>
+			    ".$this->AddEvent($date)."
+			   </TBODY>
+			</TABLE>
+			</div>";
+	}
+
+	
 	//makes each event in a row
 	public function AddEvent($date){
 		//get all events by date
@@ -32,32 +87,19 @@ class DanceTimeTableController
 		//return all rows
 		return $tableEvent;
 	}
-
-	// takes special tickets and put them in a row
-	public function GetSpecialTickets(){
-		// get all events in the dancevent where special is 1 and the amount is higher then 0
-		$specials = $this->DanceRepository->Get_AllSpecialEvents();
-
-		$specialTickets="";
-		// check if there is any special tickets
-		if(count($specials) > 0){
-
-			//foreach ticket make an row in the special table
-			foreach ($specials as $special) {
-				$specialTickets.= "
-				<tr>
-				<td>".$special["description"]."</td><td>&euro; ".$special["price"]."</td>
-				<td><input type='Button' class='AddButton'
-				onclick='AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
-				</tr>";
-			}
+	
+	public function MakeHalfHours()
+	{
+		$times = "";
+		//start time of the timetable
+		$time = '14:00';
+		//for each cell(is 25 cells) set the time in the header of the table 
+		for($i =0; $i < 25; $i++){
+			$times .="<TH>".$time."</TH>";
+			$time = date('H:i',strtotime('+30 minutes',strtotime($time)));
 		}
-		//if there are no tickets give an notification
-		else{
-			$specialTickets .= "<i style='color:red;'>There are no Sessions</i>";
-		}
-		// return the table rows or the notification
-		return $specialTickets;
+		//return all the TH times
+		return $times;
 	}
 
 	//for each event makes the row
@@ -97,7 +139,7 @@ class DanceTimeTableController
 		//returns the row with spacing
 	    return $fullRow;
 	}
-
+	
 	//calculate the span from 14:00 till the starttime of the event
 	//each cell is 30 minutes
 	public function CalculateTimeSpan($Date){
@@ -109,6 +151,33 @@ class DanceTimeTableController
 		$Span = (($hour + $minute) - 14) * 2;
 		//return amount cells that need to be empty
 		return $Span;
+	}
+
+	// takes special tickets and put them in a row
+	public function GetSpecialTickets(){
+		// get all events in the dancevent where special is 1 and the amount is higher then 0
+		$specials = $this->DanceRepository->Get_AllSpecialEvents();
+
+		$specialTickets="";
+		// check if there is any special tickets
+		if(count($specials) > 0){
+
+			//foreach ticket make an row in the special table
+			foreach ($specials as $special) {
+				$specialTickets.= "
+				<tr>
+				<td>".$special["description"]."</td><td>&euro; ".$special["price"]."</td>
+				<td><input type='Button' class='AddButton'
+				onclick='AddToCart(".$special["ID"].",2,1)' name='' value='Add to cart'></td>
+				</tr>";
+			}
+		}
+		//if there are no tickets give an notification
+		else{
+			$specialTickets .= "<i style='color:red;'>There are no Sessions</i>";
+		}
+		// return the table rows or the notification
+		return $specialTickets;
 	}
 
 	// get all artists and set them in the checkboxlist for advanced search
@@ -135,74 +204,6 @@ class DanceTimeTableController
 		}
 		// return all locations checkboxes
 		return $locationSearchlist;
-	}
-
-	//get all the dates that an dance event is playing
-	public function GetDates($dates){
-		$days = "";
-		// foreach date make a button to show the events of that day 
-		foreach ($dates as $date) {
-			$SetDate = date('Y-m-d', strtotime($date["Date"]));
-			//gets the day name of the day (like monday)
-			$day = date('l', strtotime($SetDate));
-			//make a button from the day to switch days
-			$days .= "<div onclick='SelectedDay(".date('d', strtotime($date["Date"])).")' class='Day'>".$day."</div>";
-		}
-		$days .= "</div>";
-		//returns all day buttons
-		return $days;
-	}
-
-	//makes the head of the timetable
-	public function MakeTimeTables(){
-		//get all dates of the events
-		$dates =$this->DanceRepository->GetDates();
-
-		// get all buttons of the timetables
-		$TimeTables = $this->GetDates($dates);
-
-		$hide = "";
-		//foreach date make an timetable with the events
-		foreach ($dates as $date) {
-			//makes the timetable but when $hide is "hide", to hide the timetable 
-			$TimeTables .= $this->MakeTimeTable($date["Date"], $hide);
-			//after the first one hide the rest(on page load)
-			$hide = "Hide";
-		}
-		//return all buttons and timetables
-		return $TimeTables;
-	}
-
-	//makes the timetable for all events
-	public function MakeTimeTable($date, $hide){
-		// return the timetable with all rows and time for one timetable
-		return "<div id='".date('d', strtotime($date))."' class='".$hide." HideTimeTable'>
-	    	<TABLE class='ArtistTimeTable'> 
-			  <THEAD>
-			    <TR>
-				  <TH colspan='3'></TH>
-				  ".$this->MakeHalfHours()."
-			    </TR>
-			  </THEAD>
-			  <TBODY>
-			    ".$this->AddEvent($date)."
-			   </TBODY>
-			</TABLE>
-			</div>";
-	}
-
-	public function MakeHalfHours()
-	{
-		$times = "";
-		//start time of the timetable
-		$time = '14:00';
-		//for each cell(is 25 cells) set the time in the header of the table 
-		for($i =0; $i < 25; $i++){
-			$times .="<TH>".$time."</TH>";
-			$time = date('H:i',strtotime('+30 minutes',strtotime($time)));
-		}
-		//return all the TH times
-		return $times;
 	}
 }
 ?>

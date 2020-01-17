@@ -39,7 +39,7 @@ class Ticket extends FPDF{
 
 	function row(){
 		$this->SetFont('Arial', '', 10);
-		$this->Ln(10);
+		$this->Ln(20);
 		
 	}
 	
@@ -51,7 +51,12 @@ class Ticket extends FPDF{
 			$current_y = $this->GetY();
 			$current_x = $this->GetX();
 			$cell_width = 39.5;
-			$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+			if(strlen($event) > 35){
+				$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+			}
+			else{
+				$this->MultiCell(39.5, 20, $event , 1, "B" , 1);
+			}
 			$this->SetXY($current_x + $cell_width, $current_y);
 			$current_x = $this->GetX();
 		}
@@ -66,10 +71,9 @@ class Ticket extends FPDF{
 		$this->SetFillColor($r, $g, $b);
 		$this->SetFont('Arial', '', 7);
 		$current_y = $this->GetY();
-			$current_x = $this->GetX();
-			$cell_width = 39.5;
-			$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
-		$this->MultiCell(39.5, 10, $event , 1, "B" , 1);
+		$current_x = $this->GetX();
+		$cell_width = 39.5;
+		$this->MultiCell(39.5, 20, $event , 1, "B" , 1);
 		
 		$this->SetXY($current_x + $cell_width, $current_y);
 		$current_x = $this->GetX();
