@@ -20,7 +20,7 @@ class MyProgramController
 
 	public function CheckOrderNumber($pageContent){
 		if(isset($_POST["OrderNumber"])){
-			setcookie('dsakjsdf891', EncryptionHelper::Encrypt($_POST["OrderNumber"]), time()+86400*30);
+			setcookie('dsakjsdf891', EncryptionHelper::Encrypt($_POST["OrderNumber"]), time()+3600);
 			return $this->GetTimeTable($_POST["OrderNumber"], $pageContent);
 		}
 		elseif (isset($_COOKIE["dsakjsdf891"])) {
