@@ -176,6 +176,7 @@ function SelectedDate(count, id) {
 	});
 }
 
+// removes ticket from cart
 function RemoveFromCart(self, eventId, typeEvent, price) {
      $.ajax({ url: 'RemoveFromCart.php',
 		data: {eventId: eventId, typeEvent: typeEvent},
@@ -200,6 +201,7 @@ function RemoveFromCart(self, eventId, typeEvent, price) {
 	});
 }
 
+// removes food reservation from cart
 function FoodRemoveFromCart(self, eventId, typeEvent, price, amountType) {
 	$.ajax({ url: 'RemoveFromCartFood.php',
 	data: {eventId: eventId, typeEvent: typeEvent, amountType: amountType},
