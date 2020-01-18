@@ -77,7 +77,7 @@ class FoodTimesController
 				if (!$first) {
 					$queryStringTimes .= " AND ";
 				}
-				$queryStringTimes .= "SessionStartDateTime LIKE '%".$timeCheckbox."%'";
+				$queryStringTimes .= "fr.SessionStartDateTime LIKE '%".$timeCheckbox."%'";
 				$first = false;
 			}
 		}
@@ -86,7 +86,7 @@ class FoodTimesController
 				if (!$first) {
 					$queryStringCuisines .= " AND ";
 				}
-				$queryStringCuisines .= "Cuisines LIKE '%".$cuisineCheckbox."%'";
+				$queryStringCuisines .= "r.Cuisines LIKE '%".$cuisineCheckbox."%'";
 				$first = false;
 			}
 		} else if (isset($_GET['restaurant'])) {
@@ -94,7 +94,7 @@ class FoodTimesController
 			if (strpos($restaurantName, "Mr.") !== false) {
 				$restaurantName = "Mr. & Mrs.";
 			}
-			$queryStringRestaurants = "Name LIKE '".$restaurantName."'";
+			$queryStringRestaurants = "r.Name LIKE '".$restaurantName."'";
 		}
 
 		// get restaurants from DB
@@ -229,7 +229,7 @@ class FoodTimesController
 	private function CheckPrice($givenPrice) {
 		return str_replace('.', ',', (string)$givenPrice);
 	}
-
+	
 	// get dates for reservation creation
 	private function GetDates($id) {
 		$dates = "";
