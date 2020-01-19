@@ -64,6 +64,7 @@ class Session
 				$added = true;
 			}
 			else {
+				// if this cartItem does not equal the ticket being added, ignore it
 				$newCartItems[] = $cartItem;
 			}
 		}
