@@ -420,7 +420,7 @@ class OrderRepository
 		//clean Id
 		$IdSQL = mysqli_real_escape_string($this->Conn, $orderId);
 		//does a prepared query
-		$stmt = $this->Conn->prepare("select  r.Name, '' description, fr.SessionStartDateTime, fr.SessionEndDateTime, count(fr.id) amount, t.Price, '9%' vat from `Order` o 
+		$stmt = $this->Conn->prepare("select  r.Name, '' description, fr.SessionStartDateTime, fr.SessionEndDateTime, count(fr.id) amount, 10, '9%' vat from `Order` o 
 		JOIN OrderLine ol on ol.OrderId = o.Id
 		JOIN Tickets t on t.Id = ol.TicketId
 		JOIN FoodRestaurants fr on fr.Id = t.EventId
