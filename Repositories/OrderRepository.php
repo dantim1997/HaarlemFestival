@@ -61,12 +61,12 @@ class OrderRepository
 		//does a prepared query
 		$stmt = $this->Conn->prepare("
 		select GROUP_CONCAT(a.Name) artist, e.Description, o.FirstName , o.LastName, v.Name, v.Location, e.StartDateTime, e.EndDateTime, t.Price, t.QRCode from `Order` o 
-		JOIN OrderLine ol on ol.OrderId = o.Id
-		JOIN Tickets t on t.Id = ol.TicketId
-		JOIN DanceEvent e on e.Id = t.EventId
-		JOIN performingact p on p.EventId = e.Id
-		JOIN DanceArtist a on a.Id = p.ArtistId
-		JOIN DanceVenue v on v.Id = e.VenueId
+		LEFT JOIN OrderLine ol on ol.OrderId = o.Id
+		LEFT JOIN Tickets t on t.Id = ol.TicketId
+		LEFT JOIN DanceEvent e on e.Id = t.EventId
+		LEFT JOIN performingact p on p.EventId = e.Id
+		LEFT JOIN DanceArtist a on a.Id = p.ArtistId
+		LEFT JOIN DanceVenue v on v.Id = e.VenueId
 		where o.Id = ? && t.TypeEvent = 2
 		GROUP by t.Id");
 		$stmt->bind_param("i", $IdSQL);
