@@ -11,7 +11,7 @@ class Config
 	{
 		/*if(!self::$instance)
 		{
-		self::$instance = new Config();d
+		self::$instance = new Config();
 		}*/
 		   return new Config();
 		//return self::$instance;
