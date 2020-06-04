@@ -23,7 +23,7 @@ class Config
 	
 	public function GetMollieKey(){
 		//return APIKey
-		return "*************************";
+		return "test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8";
 	}
 
 	public function GetWebURL(){
