@@ -17,7 +17,7 @@ class Config
 		//return self::$instance;
 	}
 	public function GetAPIKey(){
-		//return APIKey
+		//return AdPIKey
 		return "6LePibwUAAAAALoQwjvKnqjQEd_P2ZcDiHY54oTX";
 	}
 	
