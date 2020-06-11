@@ -29,7 +29,7 @@ class JazzView
 	private function Body(){
 		$nav = new Nav();
 		$pageTexts = $this->PageContentHelper->GetPageText("Jazz");
-		$dates = $this->JazzController->GetEventDates();
+		$dates = $this->JazzController->days;
 		return $nav->SetNavBar("Jazz"). "<div class='main'>
 			<div class='container'>
 				<div class='title'>".current($pageTexts)."</div>

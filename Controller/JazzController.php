@@ -7,11 +7,13 @@ class JazzController
 	private $Config;
 	private $genres;
 	private $artists;
+	public $days;
 
 	public function __construct($jazzModel){
 		$this->JazzModel = $jazzModel;
 		$this->Config = Config::getInstance();
 		$this->JazzRepository = new JazzRepository;
+		$this->SetEventDates();
 	}
 	
 	//get config
@@ -142,17 +144,14 @@ class JazzController
 			$timeEnd = date("H:i", strtotime($time["EndDateTime"]));
 			$newTimeEnd[] = $timeEnd;
 		}
-		
-		//Get event days and set variables
-		$days = $this->GetEventDates();
 
 		//create rows
 		for($i=0; $i < count($newTimeBegin); $i++) {
 			$time = $newTimeBegin[$i];
 			$programme .= "<tr><td class='tg-6jhs'>".$newTimeBegin[$i]." - ".$newTimeEnd[$i]."</td>";
 			//Add rows foreach day
-			for ($counter=0; $counter < count($days); $counter++) { 
-				$day = $days[$counter]["Dates"]; 
+			for ($counter=0; $counter < count($this->days); $counter++) { 
+				$day = $this->days[$counter]["Dates"]; 
 				$day = date('Y-m-d H:i:s', strtotime($day." $time"));
 				$programme .= "<td class='tg-m4n1'>".$this->GetArtistForProgramme($day)."</td>";
 			}
@@ -282,8 +281,8 @@ class JazzController
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Get Dates for JazzView
-	public function GetEventDates(){
-		return $this->JazzRepository->GetEventDates();
+	public function SetEventDates(){
+		$this->days = $this->JazzRepository->GetEventDates();
 	}
 }
 ?>
