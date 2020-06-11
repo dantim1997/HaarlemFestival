@@ -5,6 +5,8 @@ class JazzController
 	private $JazzModel;
 	private $Session;
 	private $Config;
+	private $genres;
+	private $artists;
 
 	public function __construct($jazzModel){
 		$this->JazzModel = $jazzModel;
@@ -23,9 +25,9 @@ class JazzController
 
 	//get filter for genre search
 	public function MakeGenreAdvancedSearch(){
-		$genres = $this->JazzRepository->GetGenresJazz();
+		$this->genres = $this->JazzRepository->GetGenresJazz();
 		$artistsSearchlist = "";
-		foreach ($genres as $genre) {
+		foreach ($this->genres as $genre) {
 			//Create genre filters
 			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$genre["Genre"]."><label>".$genre["Genre"]."</label><br/>";
 		}
@@ -34,31 +36,31 @@ class JazzController
 
 	//Get Carousel
 	public function MakeCarousel(){
-		$first = true;
+		$isFirst = true;
 
 		//Check if filter is set
 		if(isset($_GET['GenreCheckbox']))
 		{
-		   foreach ($_GET['GenreCheckbox'] as $genreCheckbox ) 
+			//Create SQL string		
+		   	foreach ($_GET['GenreCheckbox'] as $genreCheckbox ) 
 			{
-		   		if(!$first){
+		   		if(!$isFirst){
 					//Add "OR" to the mysql parameter for combining the select results
 		   			$searchStringGenre .= " OR ";
 				}
 		   		$searchStringGenre .= "n.Genre LIKE '%".$genreCheckbox."%'";
-				$first = false;
+				$isFirst = false;
 			}
 		}
-		$output = $this->GetArtistsCarousel($searchStringGenre);
-		return $output;
+		return $this->GetArtistsCarousel($searchStringGenre);
 	}
 
-	//Get Artists
+	//Get all artist cards
 	private function GetArtistsCarousel($filter = null){
 		//Get DB results based on the filter
-		$artists = $this->JazzRepository->GetArtistsJazz($filter);
+		$this->artists = $this->JazzRepository->GetArtistsJazz($filter);
 		$first = true;
-		foreach ($artists as $artist) {
+		foreach ($this->artists as $artist) {
 			$counter++;
 			//If is first item add div header
 			if ($first){
@@ -81,9 +83,8 @@ class JazzController
 				$carousel .= "</div></div>";
 			}
 		}
-		$check = $counter % 4;
 		//Close div section if items are not 0 (prevents empty slide)
-		if ($check != 0){
+		if ($counter % 4 != 0){
 			$carousel .= "</div></div>";
 		}
 		return $carousel;
@@ -128,18 +129,18 @@ class JazzController
 	//Make programme table
 	public function GetProgramme(){
 		//Get header (dates) of table
-		$output = $this->GetDates();
+		$programme = $this->GetTableHeader();
 
 		//get times (first column)
-		$time = $this->JazzRepository->GetTimesJazz();
+		$times = $this->JazzRepository->GetTimesJazz();
 
 		//collect all times (start and end date)
-		foreach ($time as $time) {
+		foreach ($times as $time) {
 			$timeBegin = date("H:i", strtotime($time["StartDateTime"]));
 			$newTimeBegin[] = $timeBegin;
 			
 			$timeEnd = date("H:i", strtotime($time["EndDateTime"]));
-			$newTimEend[] = $timeEnd;
+			$newTimeEnd[] = $timeEnd;
 		}
 		
 		//Get event days and set variables
@@ -148,51 +149,47 @@ class JazzController
 		//create rows
 		for($i=0; $i < count($newTimeBegin); $i++) {
 			$time = $newTimeBegin[$i];
-			$output .= "<tr><td class='tg-6jhs'>".$newTimeBegin[$i]." - ".$newTimEend[$i]."</td>";
+			$programme .= "<tr><td class='tg-6jhs'>".$newTimeBegin[$i]." - ".$newTimeEnd[$i]."</td>";
 			//Add rows foreach day
 			for ($counter=0; $counter < count($days); $counter++) { 
 				$day = $days[$counter]["Dates"]; 
 				$day = date('Y-m-d H:i:s', strtotime($day." $time"));
-				$output .= "<td class='tg-m4n1'>".$this->GetArtistForProgramme($day)."</td>";
+				$programme .= "<td class='tg-m4n1'>".$this->GetArtistForProgramme($day)."</td>";
 			}
-			$output .= "<tr>";
+			$programme .= "<tr>";
 		}
-		return $output;
+		return $programme;
 	}
 
 	//Get dates for programme table
-	private function GetDates(){
-		$date = $this->JazzRepository->GetDatesJazz();
+	private function GetTableHeader(){
+		$dates = $this->JazzRepository->GetDatesJazz();
 		$newdates = array();
-		foreach ($date as $date) {
+		foreach ($dates as $date) {
 			$tempdate = date("l - d F", strtotime($date["StartDateTime"]));
 			$newdates[] = $tempdate;
 		}
 		
-		$output = "
-		<tr>
-		<th class='tg-lh0f'></th>";
+		$tableHeader = "<tr><th class='tg-lh0f'></th>";
 
 		foreach ($newdates as $newdate) {
-			$output .= "<th class='tg-qcxk'><span style='font-weight:700'>".$newdate."</span></th>";
+			$tableHeader .= "<th class='tg-qcxk'><span style='font-weight:700'>".$newdate."</span></th>";
 		}
 
-		$output .= "</tr>";
-		return $output;
+		$tableHeader .= "</tr>";
+		return $tableHeader;
 	}
 
 	//Get artist/band name for programme table
 	private function GetArtistForProgramme($datetime){
 		$result = $this->JazzRepository->GetArtistName($datetime);
-		$output = "";
-		$count = 0;
 		if (!empty($result)){
 			foreach ($result as $result) {
-				if ($count >= 2){
+				if ($counter >= 2){
 					$output .= "<hr id='bordertable'>";
 				}
 				$output .= $result;
-				$count++;
+				$counter++;
 			}
 			return $output;
 		}
@@ -206,42 +203,37 @@ class JazzController
 	//get tickets for event day
 	public function FillTickets($date){
 		$date .= "%";
-		$ticket = $this->JazzRepository->GetTicketsJazz($date);
-		$tickets = "";
-		foreach ($ticket as $ticket) {
+		$tickets = $this->JazzRepository->GetTicketsJazz($date);
+		foreach ($tickets as $ticket) {
 			$starttime = strtotime($ticket["StartDateTime"]);
 			$endtime = strtotime($ticket["EndDateTime"]);
 
 			//Check if entry is free
 			if ($ticket["Price"] == "0.00"){
-				$tickets .= "
+				$ticketsTable .= "
 				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Name"]."<hr>
 				";
 			}
 			//Check if ticket is an all access pass
 			elseif (strpos($ticket["Name"], 'All Access') !== false){
-				$tickets .= "
+				$ticketsTable .= "
 				".$ticket["Name"]."&nbsp;&nbsp;&nbsp;&nbsp;<aside class='price' id='pricespec'>€".$ticket["Price"]."</aside><hr>
 				";
 			}
 			//Else show a normal ticket
 			else{
-				$tickets .= "
+				$ticketsTable .= "
 				".date("H:i", $starttime)." - ".date("H:i", $endtime)."&nbsp;&nbsp;".$ticket["Hall"]."&nbsp;&nbsp; <aside id='artistTicket'>".$ticket["Name"]."</aside><aside class='price'>€".$ticket["Price"]."</aside><hr>
 				";
 			}
 		}
-		return $tickets;
+		return $ticketsTable;
 	}
 
 	//Get all tickets for jazz
 	public function GetOrderForm($date){
 		$date .= "%";
 		$tickets = $this->JazzRepository->GetTicketsJazz($date);
-		
-		$addtocart = "";
-		$count = 1;
-		$id = "ID";
 
 		//Create input [Add/Remove/Input]
 		foreach ($tickets as $ticket => $info) {
@@ -251,7 +243,6 @@ class JazzController
 			<button onclick='ShoppingCartPlusJazz(".$info["ID"].")'>+</button>
 			<br>
 			";
-			$count++;
 		}
 		return $addtocart;
 	}
