@@ -23,19 +23,17 @@ class JazzController
 
 	//get filter for genre search
 	public function MakeGenreAdvancedSearch(){
-		$artist =$this->JazzRepository->GetGenresJazz();
+		$genres = $this->JazzRepository->GetGenresJazz();
 		$artistsSearchlist = "";
-		foreach ($artist as $artist) {
-			//Make input fields for the form
-			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$artist["Genre"]."><label>".$artist["Genre"]."</label><br/>";
+		foreach ($genres as $genre) {
+			//Create genre filters
+			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$genre["Genre"]."><label>".$genre["Genre"]."</label><br/>";
 		}
 		return $artistsSearchlist;
 	}
 
 	//Get Carousel
 	public function MakeCarousel(){
-		$searchStringGenre = "";
-		$output = "";
 		$first = true;
 
 		//Check if filter is set
@@ -51,47 +49,44 @@ class JazzController
 				$first = false;
 			}
 		}
-		$output = $this->GetArtists($searchStringGenre);
+		$output = $this->GetArtistsCarousel($searchStringGenre);
 		return $output;
 	}
 
 	//Get Artists
-	private function GetArtists($filter = null){
-		//Get DB results based on de filter
-		$artist = $this->JazzRepository->GetArtistsJazz($filter);
-		$artists = "";
-		$counter = 0;
+	private function GetArtistsCarousel($filter = null){
+		//Get DB results based on the filter
+		$artists = $this->JazzRepository->GetArtistsJazz($filter);
 		$first = true;
-		foreach ($artist as $artist) {
+		foreach ($artists as $artist) {
 			$counter++;
 			//If is first item add div header
 			if ($first){
-				$artists .= "<div class='carousel-item active'><div class='artists'>";
+				$carousel .= "<div class='carousel-item active'><div class='artists'>";
 			}
 			//else add normal item
 			else if ($counter == 1 && !$first){
-				$artists .= "<div class='carousel-item'><div class='artists'>";
+				$carousel .= "<div class='carousel-item'><div class='artists'>";
 			}
 			$first = false;
-			$artists .= "<div class='artist'>
+			$carousel .= "<div class='artist'>
 							<div class='artistname'>".$artist["Name"]."</div>
 							<div class='artistcontainer'>
 								<image class='artistimage' src='".$this->CheckImageIsSet($artist["Image"])."'>
 								<div class='".$this->DefineGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
-								<div class='genre0'>0</div> 
-						</div></div>";
+								<div class='genre0'>0</div></div></div>";
 			//Close artist section (1 row = 4 columns)
 			if ($counter == 4){
 				$counter = 0;
-				$artists .= "</div></div>";
+				$carousel .= "</div></div>";
 			}
 		}
 		$check = $counter % 4;
 		//Close div section if items are not 0 (prevents empty slide)
 		if ($check != 0){
-			$artists .= "</div></div>";
+			$carousel .= "</div></div>";
 		}
-		return $artists;
+		return $carousel;
 	}
 
 	//define genre
@@ -140,26 +135,25 @@ class JazzController
 
 		//collect all times (start and end date)
 		foreach ($time as $time) {
-			$timebegin = date("H:i", strtotime($time["StartDateTime"]));
-			$newtimebegin[] = $timebegin;
+			$timeBegin = date("H:i", strtotime($time["StartDateTime"]));
+			$newTimeBegin[] = $timeBegin;
 			
-			$timeend = date("H:i", strtotime($time["EndDateTime"]));
-			$newtimeend[] = $timeend;
+			$timeEnd = date("H:i", strtotime($time["EndDateTime"]));
+			$newTimEend[] = $timeEnd;
 		}
 		
 		//Get event days and set variables
 		$days = $this->GetEventDates();
-		$date0 = ""; $date1 = ""; $date2 = ""; $date3 = ""; $date4 = ""; $date5 = "";
 
 		//create rows
-		for($i=0; $i < count($newtimebegin); $i++) {
-			$time = $newtimebegin[$i];
-			$output .= "<tr><td class='tg-6jhs'>".$newtimebegin[$i]." - ".$newtimeend[$i]."</td>";
+		for($i=0; $i < count($newTimeBegin); $i++) {
+			$time = $newTimeBegin[$i];
+			$output .= "<tr><td class='tg-6jhs'>".$newTimeBegin[$i]." - ".$newTimEend[$i]."</td>";
 			//Add rows foreach day
 			for ($counter=0; $counter < count($days); $counter++) { 
-				${"date$counter"} = $days[$counter]["Dates"]; 
-				${"date$counter"} = date('Y-m-d H:i:s', strtotime(${"date$counter"}." $time"));
-				$output .= "<td class='tg-m4n1'>".$this->GetArtistForProgramme(${"date$counter"})."</td>";
+				$day = $days[$counter]["Dates"]; 
+				$day = date('Y-m-d H:i:s', strtotime($day." $time"));
+				$output .= "<td class='tg-m4n1'>".$this->GetArtistForProgramme($day)."</td>";
 			}
 			$output .= "<tr>";
 		}
@@ -202,9 +196,7 @@ class JazzController
 			}
 			return $output;
 		}
-		else{
-			return null;
-		}
+		return null;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -300,12 +292,7 @@ class JazzController
 
 	//Get Dates for JazzView
 	public function GetEventDates(){
-		$datetime = $this->JazzRepository->GetEventDates();
-		$date = array();
-		foreach ($datetime as $datetime) {
-			$date[] = $datetime;
-		}
-		return $date;
+		return $this->JazzRepository->GetEventDates();
 	}
 }
 ?>
