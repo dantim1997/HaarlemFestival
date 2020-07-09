@@ -1,9 +1,10 @@
 <?php
-require_once( "Autoloader.php");
+require_once("Autoloader.php");
+
 class JazzController 
 {
 	private $JazzModel;
-	private $Session;
+	private $JazzView;
 	private $Config;
 	private $genres;
 	private $artists;
@@ -11,6 +12,7 @@ class JazzController
 
 	public function __construct($jazzModel){
 		$this->JazzModel = $jazzModel;
+		$this->JazzView = new JazzView;
 		$this->Config = Config::getInstance();
 		$this->JazzRepository = new JazzRepository;
 		$this->SetEventDates();
@@ -28,10 +30,9 @@ class JazzController
 	//get filter for genre search
 	public function MakeGenreAdvancedSearch(){
 		$this->genres = $this->JazzRepository->GetGenresJazz();
-		$artistsSearchlist = "";
 		foreach ($this->genres as $genre) {
 			//Create genre filters
-			$artistsSearchlist .= "<input class='checkbox' type='checkbox' name='GenreCheckbox[]' value=".$genre["Genre"]."><label>".$genre["Genre"]."</label><br/>";
+			$artistsSearchlist .= $this->JazzView->FilterInputBox($genre->getGenre());
 		}
 		return $artistsSearchlist;
 	}
@@ -61,39 +62,11 @@ class JazzController
 	private function GetArtistsCarousel($filter = null){
 		//Get DB results based on the filter
 		$this->artists = $this->JazzRepository->GetArtistsJazz($filter);
-		$first = true;
-		foreach ($this->artists as $artist) {
-			$counter++;
-			//If is first item add div header
-			if ($first){
-				$carousel .= "<div class='carousel-item active'><div class='artists'>";
-			}
-			//else add normal item
-			else if ($counter == 1 && !$first){
-				$carousel .= "<div class='carousel-item'><div class='artists'>";
-			}
-			$first = false;
-			$carousel .= "<div class='artist'>
-							<div class='artistname'>".$artist["Name"]."</div>
-							<div class='artistcontainer'>
-								<image class='artistimage' src='".$this->CheckImageIsSet($artist["Image"])."'>
-								<div class='".$this->DefineGenre($artist["Genre"])."'>".$artist["Genre"]."</div>
-								<div class='genre0'>0</div></div></div>";
-			//Close artist section (1 row = 4 columns)
-			if ($counter == 4){
-				$counter = 0;
-				$carousel .= "</div></div>";
-			}
-		}
-		//Close div section if items are not 0 (prevents empty slide)
-		if ($counter % 4 != 0){
-			$carousel .= "</div></div>";
-		}
-		return $carousel;
+		return $this->JazzView->Carousel($this->artists);
 	}
 
 	//define genre
-	private function DefineGenre($genre){
+	public function DefineStyleGenre($genre){
 		//Check which css class must be returned
 		switch ($genre) {
 			case "Blues":
@@ -114,7 +87,7 @@ class JazzController
 	}
 
 	//check if image is set
-	private function CheckImageIsSet($image){
+	public function CheckImageIsSet($image){
 		//If image is not set, set a default image
 		if (empty($image)){
 			return "http://hfteam3.infhaarlem.nl/cms/Images/Jazz/unset.gif";
@@ -136,27 +109,17 @@ class JazzController
 		//get times (first column)
 		$times = $this->JazzRepository->GetTimesJazz();
 
-		//collect all times (start and end date)
+		//collect all times (start and end date) and convert to a time format
 		foreach ($times as $time) {
-			$timeBegin = date("H:i", strtotime($time["StartDateTime"]));
+			$timeBegin = date("H:i", strtotime($time->getStartDateTime()));
 			$newTimeBegin[] = $timeBegin;
 			
-			$timeEnd = date("H:i", strtotime($time["EndDateTime"]));
+			$timeEnd = date("H:i", strtotime($time->getEndDateTime()));
 			$newTimeEnd[] = $timeEnd;
 		}
 
 		//create rows
-		for($i=0; $i < count($newTimeBegin); $i++) {
-			$time = $newTimeBegin[$i];
-			$programme .= "<tr><td class='tg-6jhs'>".$newTimeBegin[$i]." - ".$newTimeEnd[$i]."</td>";
-			//Add rows foreach day
-			for ($counter=0; $counter < count($this->days); $counter++) { 
-				$day = $this->days[$counter]["Dates"]; 
-				$day = date('Y-m-d H:i:s', strtotime($day." $time"));
-				$programme .= "<td class='tg-m4n1'>".$this->GetArtistForProgramme($day)."</td>";
-			}
-			$programme .= "<tr>";
-		}
+		$programme .= $this->JazzView->TimeTableRows($newTimeBegin, $newTimeEnd, $this->days);
 		return $programme;
 	}
 
@@ -165,29 +128,22 @@ class JazzController
 		$dates = $this->JazzRepository->GetDatesJazz();
 		$newdates = array();
 		foreach ($dates as $date) {
-			$tempdate = date("l - d F", strtotime($date["StartDateTime"]));
+			$tempdate = date("l - d F", strtotime($date->getStartDateTime()));
 			$newdates[] = $tempdate;
 		}
 		
-		$tableHeader = "<tr><th class='tg-lh0f'></th>";
-
-		foreach ($newdates as $newdate) {
-			$tableHeader .= "<th class='tg-qcxk'><span style='font-weight:700'>".$newdate."</span></th>";
-		}
-
-		$tableHeader .= "</tr>";
-		return $tableHeader;
+		return $this->JazzView->TimeTableHeader($newdates);
 	}
 
 	//Get artist/band name for programme table
-	private function GetArtistForProgramme($datetime){
-		$result = $this->JazzRepository->GetArtistName($datetime);
-		if (!empty($result)){
-			foreach ($result as $result) {
+	public function GetArtistForProgramme($datetime){
+		$artistnames = $this->JazzRepository->GetArtistName($datetime);
+		if (!empty($artistnames)){
+			foreach ($artistnames as $artistname) {
 				if ($counter >= 2){
-					$output .= "<hr id='bordertable'>";
+					$output .= $this->JazzView->TimeTableSplit();
 				}
-				$output .= $result;
+				$output .= $artistname;
 				$counter++;
 			}
 			return $output;
