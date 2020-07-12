@@ -43,7 +43,10 @@ class JazzRepository
 		$stmt-> bind_result($Name, $Image, $Genre); 
 		$artists = array();
 		while ($stmt -> fetch()) { 
-			$artist = array("Name"=>$Name, "Image"=>"http://hfteam3.infhaarlem.nl/cms/".$Image, "Genre"=>$Genre);
+			$artist = new JazzModel();
+			$artist->setArtistName($Name);
+			$artist->setImage("http://hfteam3.infhaarlem.nl/cms/".$Image);
+			$artist->setGenre($Genre);
 			$artists[] = $artist;
 		}
 		return $artists;
@@ -95,10 +98,10 @@ class JazzRepository
 		GROUP BY Genre");
 		$stmt->execute();
 		$stmt->store_result();
-		$stmt-> bind_result($Genre); 
-		$genres = array();
+		$stmt-> bind_result($Genre);
 		while ($stmt -> fetch()) { 
-			$genre = array("Genre"=>$Genre);
+			$genre = new JazzModel();
+			$genre->setGenre($Genre);
 			$genres[] = $genre;
 		}
 		return $genres;
@@ -116,7 +119,9 @@ class JazzRepository
 		$stmt-> bind_result($StartDateTime, $EndDateTime); 
 		$dates = array();
 		while ($stmt -> fetch()) { 
-			$date = array("StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
+			$date = new JazzModel();
+			$date->setStartDateTime($StartDateTime);
+			$date->setEndDateTime($EndDateTime);
 			$dates[] = $date;
 		}
 		return $dates;
@@ -133,12 +138,14 @@ class JazzRepository
 		$stmt->execute();
 		$stmt->store_result();
 		$stmt-> bind_result($StartDateTime, $EndDateTime); 
-		$dates = array();
-		while ($stmt -> fetch()) { 
-			$date = array("StartDateTime"=>$StartDateTime, "EndDateTime"=>$EndDateTime);
-			$dates[] = $date;
+		$times = array();
+		while ($stmt -> fetch()) {
+			$time = new JazzModel();
+			$time->setStartDateTime($StartDateTime);
+			$time->setEndDateTime($EndDateTime);
+			$times[] = $time;
 		}
-		return $dates;
+		return $times;
 	}
 
 	//Get jazz location
